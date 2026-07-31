@@ -5,11 +5,22 @@ const router = express.Router();
 const Mcc = require("../models/Mcc");
 
 
+// MCC Test Route
 
-router.post("/predict", async(req,res)=>{
+router.get("/test", (req, res) => {
+
+    res.send("MCC route working");
+
+});
 
 
-    try{
+
+
+// NEET MCC Predictor
+
+router.post("/predict", async (req, res) => {
+
+    try {
 
 
         const {
@@ -20,38 +31,72 @@ router.post("/predict", async(req,res)=>{
 
 
 
+        console.log("MCC Request:", req.body);
+
+
+
+        if (!rank || !category || !quota) {
+
+            return res.status(400).json({
+
+                success:false,
+
+                message:"Rank, category and quota are required"
+
+            });
+
+        }
+
+
+
         const colleges = await Mcc.find({
 
             category: category,
 
             quota: quota,
 
-            closingRank:{
-                $gte:Number(rank)
+            closingRank: {
+
+                $gte: Number(rank)
+
             }
 
         });
 
 
 
-        res.json({
+        console.log("MCC Colleges Found:", colleges.length);
 
-            colleges: colleges
+
+
+        res.status(200).json({
+
+            success:true,
+
+            count: colleges.length,
+
+            data: colleges
 
         });
 
 
+
     }
 
-    catch(error){
+    catch(error) {
 
 
-        console.log(error);
+        console.log("MCC Error:", error);
+
 
 
         res.status(500).json({
 
-            message:"Server Error"
+            success:false,
+
+            message:"Prediction failed",
+
+            error:error.message
 
         });
 
@@ -60,7 +105,6 @@ router.post("/predict", async(req,res)=>{
 
 
 });
-
 
 
 module.exports = router;
