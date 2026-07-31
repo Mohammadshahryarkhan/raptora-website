@@ -5,12 +5,38 @@ const router = express.Router();
 const Josaa = require("../models/Josaa");
 
 
-router.post("/predict", async (req,res)=>{
+// JEE / JOSAA Rank Predictor
 
-    try{
+router.post("/predict", async (req, res) => {
 
-        const {rank, category, quota} = req.body;
+    try {
 
+
+        const {
+            rank,
+            category,
+            quota
+        } = req.body;
+
+
+
+        // Validation
+
+        if (!rank || !category || !quota) {
+
+            return res.status(400).json({
+
+                success: false,
+
+                message: "Rank, category and quota are required"
+
+            });
+
+        }
+
+
+
+        // Find eligible colleges
 
         const colleges = await Josaa.find({
 
@@ -18,32 +44,52 @@ router.post("/predict", async (req,res)=>{
 
             quota: quota,
 
-            closingRank:{
-                $gte: rank
+            closingRank: {
+
+                $gte: Number(rank)
+
             }
 
         });
 
 
-        res.json({
 
-            colleges: colleges
+        res.status(200).json({
+
+            success: true,
+
+            count: colleges.length,
+
+            data: colleges
 
         });
 
 
-    }
-    catch(error){
 
-        console.log(error);
+    }
+
+    catch (error) {
+
+
+        console.log("JOSAA Error:", error);
+
 
         res.status(500).json({
-            message:"Server Error"
+
+            success: false,
+
+            message: "Prediction failed",
+
+            error: error.message
+
         });
+
 
     }
 
+
 });
+
 
 
 module.exports = router;
