@@ -48,39 +48,8 @@ document.getElementById("loginForm").addEventListener("submit", async function(e
 
             window.location.href = "dashboard.html";
 
-        }
-
-        else {
-
-            alert(data.message || "Login Failed");
-
-        }
-
-
-    } catch(error) {
-
-        console.log("Error:", error);
-
-        alert("Backend connection failed.");
-
-    }
-
-});            localStorage.setItem("token", data.token);
-
-            localStorage.setItem("name", data.name);
-
-            localStorage.setItem("email", data.email);
-
-            localStorage.setItem("phone", data.phone);
-
-
-            alert("Login Successful");
-
-
-            window.location.href = "dashboard.html";
-
-        }
-
+        } 
+        
         else {
 
             alert(data.message || "Login Failed");
