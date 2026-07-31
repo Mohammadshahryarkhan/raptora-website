@@ -13,7 +13,7 @@ document.getElementById("loginForm").addEventListener("submit", async function(e
 
 
         const response = await fetch(
-            "http://localhost:8000/api/auth/login",
+            fetch("https://raptora-website-1.onrender.com/api/auth/login",
             {
 
                 method: "POST",
