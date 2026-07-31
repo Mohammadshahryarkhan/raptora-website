@@ -19,14 +19,7 @@ const app = express();
 
 
 // Middleware
-app.use(cors({
-    origin: [
-        "https://raptora.in",
-        "https://www.raptora.in",
-        "http://localhost:5500"
-    ],
-    credentials: true
-}));
+app.use(cors());
 
 app.use(express.json());
 
@@ -37,9 +30,11 @@ app.use(express.static(path.join(__dirname, "frontend")));
 
 // Home Route
 app.get("/", (req, res) => {
+
     res.sendFile(
-        path.join(__dirname, "index.html")
+        path.join(__dirname, "frontend", "index.html")
     );
+
 });
 
 
@@ -57,23 +52,34 @@ app.use("/api/mcc", mccRoutes);
 
 // Test Backend
 app.get("/test", (req, res) => {
+
     res.send("Backend working");
+
 });
 
 
 // MongoDB Connection
 mongoose.connect(process.env.MONGO_URI)
+
 .then(() => {
+
     console.log("MongoDB Connected");
+
 })
+
 .catch((err) => {
+
     console.log("MongoDB Error:", err);
+
 });
 
 
 // Start Server
 const PORT = process.env.PORT || 8000;
 
+
 app.listen(PORT, () => {
+
     console.log(`Server running on port ${PORT}`);
+
 });
