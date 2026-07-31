@@ -12,27 +12,34 @@ const josaaRoutes = require("./routes/josaaRoutes");
 const kcetRoutes = require("./routes/kcetRoutes");
 const comedkRoutes = require("./routes/comedkRoutes");
 const mccRoutes = require("./routes/mccRoutes");
+
+
 // Create App
 const app = express();
 
 
 // Middleware
-app.use(cors());
+app.use(cors({
+    origin: [
+        "https://raptora.in",
+        "https://www.raptora.in",
+        "http://localhost:5500"
+    ],
+    credentials: true
+}));
 
 app.use(express.json());
 
 
-// Frontend
+// Serve Frontend Files
 app.use(express.static(path.join(__dirname, "frontend")));
 
 
-// Home Page
-app.get("/", (req,res)=>{
-
+// Home Route
+app.get("/", (req, res) => {
     res.sendFile(
-        path.join(__dirname,"frontend","register.html")
+        path.join(__dirname, "frontend", "index.html")
     );
-
 });
 
 
@@ -42,39 +49,31 @@ app.use("/api/auth", authRoutes);
 app.use("/api/josaa", josaaRoutes);
 
 app.use("/api/kcet", kcetRoutes);
+
 app.use("/api/comedk", comedkRoutes);
 
 app.use("/api/mcc", mccRoutes);
-// Test Route
-app.get("/test",(req,res)=>{
 
+
+// Test Backend
+app.get("/test", (req, res) => {
     res.send("Backend working");
-
 });
 
 
-// MongoDB
+// MongoDB Connection
 mongoose.connect(process.env.MONGO_URI)
-
-.then(()=>{
-
+.then(() => {
     console.log("MongoDB Connected");
-
 })
-
-.catch((err)=>{
-
-    console.log("MongoDB Error:",err);
-
+.catch((err) => {
+    console.log("MongoDB Error:", err);
 });
 
 
-// Server
+// Start Server
 const PORT = process.env.PORT || 8000;
 
-
-app.listen(PORT,()=>{
-
+app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
-
 });
