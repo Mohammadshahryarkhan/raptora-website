@@ -105,7 +105,7 @@ let quota = document.getElementById("quota").value;
 
 
 
-if(marks===""){
+if(marks === ""){
 
 alert("Enter NEET Marks");
 
@@ -115,38 +115,38 @@ return;
 
 
 
-// Temporary marks to rank conversion
 
 let rank;
 
 
-if(marks>=700){
 
-rank=100;
+if(marks >= 700){
 
-}
-
-else if(marks>=650){
-
-rank=5000;
+rank = 100;
 
 }
 
-else if(marks>=600){
+else if(marks >= 650){
 
-rank=20000;
+rank = 5000;
 
 }
 
-else if(marks>=550){
+else if(marks >= 600){
 
-rank=50000;
+rank = 20000;
+
+}
+
+else if(marks >= 550){
+
+rank = 50000;
 
 }
 
 else{
 
-rank=100000;
+rank = 100000;
 
 }
 
@@ -156,9 +156,9 @@ rank=100000;
 try{
 
 
-let response = await fetch(
+const response = await fetch(
 
-"http://localhost:8000/api/mcc/predict",
+"https://raptora-website-1.onrender.com/api/mcc/predict",
 
 {
 
@@ -170,7 +170,6 @@ headers:{
 
 },
 
-
 body:JSON.stringify({
 
 rank:rank,
@@ -181,14 +180,25 @@ quota:quota
 
 })
 
-
 }
 
 );
 
 
 
-let data = await response.json();
+const data = await response.json();
+
+
+console.log("Server Response:", data);
+
+
+
+if(!response.ok){
+
+throw new Error(data.message || "Prediction failed");
+
+}
+
 
 
 
@@ -204,7 +214,8 @@ let output = `
 
 
 
-if(!data.colleges || data.colleges.length===0){
+
+if(!data.data || data.data.length === 0){
 
 
 output += "<p>No colleges found</p>";
@@ -215,7 +226,7 @@ output += "<p>No colleges found</p>";
 else{
 
 
-data.colleges.forEach(college=>{
+data.data.forEach(college=>{
 
 
 output += `
@@ -224,7 +235,7 @@ output += `
 <div class="college">
 
 
-<h3>${college.college}</h3>
+<h3>🏥 ${college.college}</h3>
 
 
 <p>
@@ -248,6 +259,13 @@ Quota: ${college.quota}
 </p>
 
 
+<p>
+
+Category: ${college.category}
+
+</p>
+
+
 </div>
 
 
@@ -261,23 +279,33 @@ Quota: ${college.quota}
 
 
 
-document.getElementById("result").innerHTML=output;
+document.getElementById("result").innerHTML = output;
 
 
 
 }
+
 
 
 catch(error){
 
 
-console.log(error);
+console.log("Error:", error);
 
 
-alert("Backend connection failed");
+
+document.getElementById("result").innerHTML = `
+
+<h3>Backend Error</h3>
+
+<p>${error.message}</p>
+
+`;
+
 
 
 }
+
 
 
 }
