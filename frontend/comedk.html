@@ -80,67 +80,56 @@ if(marks >=170){
 rank = 10;
 
 }
-
 else if(marks >=160){
 
 rank = 50;
 
 }
-
 else if(marks >=150){
 
 rank = 150;
 
 }
-
 else if(marks >=140){
 
 rank = 350;
 
 }
-
 else if(marks >=130){
 
 rank = 800;
 
 }
-
 else if(marks >=120){
 
 rank = 1700;
 
 }
-
 else if(marks >=110){
 
 rank = 3200;
 
 }
-
 else if(marks >=100){
 
 rank = 5500;
 
 }
-
 else if(marks >=90){
 
 rank = 9700;
 
 }
-
 else if(marks >=80){
 
 rank = 14000;
 
 }
-
 else if(marks >=70){
 
 rank = 23000;
 
 }
-
 else{
 
 rank = 40000;
@@ -156,16 +145,17 @@ return rank;
 
 
 
+
 async function predictComedk(){
 
 
-let marks=document.getElementById("marks").value;
+let marks = document.getElementById("marks").value;
 
-let category=document.getElementById("category").value;
+let category = document.getElementById("category").value;
 
 
 
-if(marks===""){
+if(marks === ""){
 
 alert("Enter COMEDK Marks");
 
@@ -175,7 +165,7 @@ return;
 
 
 
-let rank=calculateRank(Number(marks));
+let rank = calculateRank(Number(marks));
 
 
 
@@ -184,7 +174,7 @@ try{
 
 const response = await fetch(
 
-"http://localhost:8000/api/comedk/predict",
+"https://raptora-website-1.onrender.com/api/comedk/predict",
 
 {
 
@@ -198,9 +188,9 @@ headers:{
 
 body:JSON.stringify({
 
-rank:rank,
+rank: rank,
 
-category:category
+category: category
 
 })
 
@@ -210,11 +200,22 @@ category:category
 
 
 
-const data=await response.json();
+const data = await response.json();
+
+
+console.log("Server Response:", data);
 
 
 
-let output=`
+if(!response.ok){
+
+throw new Error(data.message || "Prediction failed");
+
+}
+
+
+
+let output = `
 
 <h2>Prediction Result</h2>
 
@@ -224,7 +225,7 @@ let output=`
 
 
 
-if(!data.colleges || data.colleges.length===0){
+if(!data.data || data.data.length === 0){
 
 
 output += "<p>No colleges found.</p>";
@@ -234,7 +235,7 @@ output += "<p>No colleges found.</p>";
 else{
 
 
-data.colleges.forEach(college=>{
+data.data.forEach(college=>{
 
 
 output += `
@@ -260,19 +261,26 @@ output += `
 
 
 
-document.getElementById("result").innerHTML=output;
+document.getElementById("result").innerHTML = output;
 
 
 
 }
 
+
 catch(error){
 
 
-console.log(error);
+console.log("Error:", error);
 
-alert("Backend connection failed");
 
+document.getElementById("result").innerHTML = `
+
+<h3>Backend Error</h3>
+
+<p>${error.message}</p>
+
+`;
 
 }
 
