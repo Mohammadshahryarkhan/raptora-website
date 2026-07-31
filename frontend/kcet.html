@@ -83,51 +83,41 @@ Predict Colleges
 
 
 
-
 <script>
-
 
 function calculateRank(marks){
 
     let rank;
-
 
     if(marks >= 160){
 
         rank = 500;
 
     }
-
     else if(marks >= 140){
 
         rank = 5000;
 
     }
-
     else if(marks >= 120){
 
         rank = 15000;
 
     }
-
     else if(marks >= 100){
 
         rank = 40000;
 
     }
-
     else{
 
         rank = 80000;
 
     }
 
-
     return rank;
 
 }
-
-
 
 
 
@@ -199,6 +189,14 @@ async function predictKCET(){
 
 
 
+        if(!response.ok){
+
+            throw new Error(data.message || "API Error");
+
+        }
+
+
+
         let output = `
 
         <h2>Prediction Result</h2>
@@ -221,7 +219,6 @@ async function predictKCET(){
 
         }
 
-
         else{
 
 
@@ -232,15 +229,15 @@ async function predictKCET(){
 
                 <div class="college">
 
-                <h3>🏛 ${college.college}</h3>
+                    <h3>🏛 ${college.college}</h3>
 
-                <p>📚 Branch: ${college.branch}</p>
+                    <p>📚 Branch: ${college.branch}</p>
 
-                <p>Category: ${college.category}</p>
+                    <p>Category: ${college.category}</p>
 
-                <p>Region: ${college.region}</p>
+                    <p>Region: ${college.region}</p>
 
-                <p>Closing Rank: ${college.closingRank}</p>
+                    <p>Closing Rank: ${college.closingRank}</p>
 
                 </div>
 
@@ -260,13 +257,19 @@ async function predictKCET(){
 
     }
 
-
     catch(error){
 
 
         console.log("Error:", error);
 
-        alert("Backend connection failed");
+
+        document.getElementById("result").innerHTML = `
+
+        <h3>Backend Error</h3>
+
+        <p>${error.message}</p>
+
+        `;
 
 
     }
@@ -274,7 +277,6 @@ async function predictKCET(){
 
 
 }
-
 
 </script>
 
