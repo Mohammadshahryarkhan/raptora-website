@@ -5,6 +5,17 @@ const router = express.Router();
 const Comedk = require("../models/Comedk");
 
 
+// COMEDK Test Route
+
+router.get("/test", (req, res) => {
+
+    res.send("COMEDK route working");
+
+});
+
+
+
+
 // COMEDK Predictor
 
 router.post("/predict", async (req, res) => {
@@ -16,6 +27,10 @@ router.post("/predict", async (req, res) => {
             rank,
             category
         } = req.body;
+
+
+
+        console.log("COMEDK Request:", req.body);
 
 
 
@@ -47,6 +62,10 @@ router.post("/predict", async (req, res) => {
 
 
 
+        console.log("Colleges Found:", colleges.length);
+
+
+
         res.status(200).json({
 
             success: true,
@@ -59,12 +78,13 @@ router.post("/predict", async (req, res) => {
 
 
 
-    }
-
+    } 
+    
     catch(error) {
 
 
-        console.log("COMEDK Error:", error);
+        console.log("COMEDK ERROR:", error);
+
 
 
         res.status(500).json({
@@ -82,6 +102,7 @@ router.post("/predict", async (req, res) => {
 
 
 });
+
 
 
 module.exports = router;
