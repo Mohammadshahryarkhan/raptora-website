@@ -2,59 +2,46 @@ const express = require("express");
 
 const router = express.Router();
 
-const Kcet = require("../models/Kcet");
+const Kcet = require("../models/kcet");
 
 
-router.post("/predict", async(req,res)=>{
+router.post("/predict", async (req, res) => {
 
-try{
+    try {
 
-
-const {
-rank,
-category,
-region
-}=req.body;
-
+        const {
+            rank,
+            category,
+            region
+        } = req.body;
 
 
-const colleges = await Kcet.find({
-
-category:category,
-
-region:region,
-
-closingRank:{
-$gte:Number(rank)
-}
-
-});
+        const result = await Kcet.find({
+            category: category,
+            region: region,
+            cutoffRank: { $gte: rank }
+        });
 
 
-
-res.json({
-
-colleges:colleges
-
-});
+        res.status(200).json({
+            success: true,
+            data: result
+        });
 
 
-}
+    } catch (error) {
 
-catch(error){
+        console.error(error);
 
-console.log(error);
+        res.status(500).json({
+            success: false,
+            message: "Prediction failed",
+            error: error.message
+        });
 
-res.status(500).json({
-
-message:"Server Error"
-
-});
-
-}
-
+    }
 
 });
 
 
-module.exports=router;
+module.exports = router;
