@@ -67,7 +67,6 @@ placeholder="Enter PCM Percentage">
 </select>
 
 
-
 <button onclick="predictKCET()">
 
 Predict Colleges
@@ -90,44 +89,44 @@ Predict Colleges
 
 function calculateRank(marks){
 
+    let rank;
 
-let rank;
+
+    if(marks >= 160){
+
+        rank = 500;
+
+    }
+
+    else if(marks >= 140){
+
+        rank = 5000;
+
+    }
+
+    else if(marks >= 120){
+
+        rank = 15000;
+
+    }
+
+    else if(marks >= 100){
+
+        rank = 40000;
+
+    }
+
+    else{
+
+        rank = 80000;
+
+    }
 
 
-if(marks >=160){
-
-rank = 500;
+    return rank;
 
 }
 
-else if(marks >=140){
-
-rank = 5000;
-
-}
-
-else if(marks >=120){
-
-rank = 15000;
-
-}
-
-else if(marks >=100){
-
-rank = 40000;
-
-}
-
-else{
-
-rank = 80000;
-
-}
-
-
-return rank;
-
-}
 
 
 
@@ -135,134 +134,143 @@ return rank;
 async function predictKCET(){
 
 
-let marks=document.getElementById("marks").value;
+    let marks = document.getElementById("marks").value;
 
-let puc=document.getElementById("puc").value;
+    let puc = document.getElementById("puc").value;
 
-let category=document.getElementById("category").value;
+    let category = document.getElementById("category").value;
 
-let region=document.getElementById("region").value;
+    let region = document.getElementById("region").value;
 
 
 
-if(marks==="" || puc===""){
+    if(marks === "" || puc === ""){
 
-alert("Enter KCET Marks and PUC Percentage");
+        alert("Enter KCET Marks and PUC Percentage");
 
-return;
+        return;
 
-}
+    }
 
 
 
-let rank=calculateRank(Number(marks));
+    let rank = calculateRank(Number(marks));
 
 
 
-try{
+    try{
 
 
-const response = await fetch(
+        const response = await fetch(
 
-"http://localhost:8000/api/kcet/predict",
+            "https://raptora-website-1.onrender.com/api/kcet/predict",
 
-{
+            {
 
-method:"POST",
+                method:"POST",
 
-headers:{
+                headers:{
 
-"Content-Type":"application/json"
+                    "Content-Type":"application/json"
 
-},
+                },
 
 
-body:JSON.stringify({
+                body:JSON.stringify({
 
-rank:rank,
+                    rank: rank,
 
-category:category,
+                    category: category,
 
-region:region
+                    region: region
 
-})
+                })
 
+            }
 
-}
+        );
 
-);
 
 
+        const data = await response.json();
 
-const data=await response.json();
 
+        console.log("Server Response:", data);
 
 
-let output=`
 
-<h2>Prediction Result</h2>
+        let output = `
 
-<p>Expected KCET Rank: ${rank}</p>
+        <h2>Prediction Result</h2>
 
-`;
+        <p>Expected KCET Rank: ${rank}</p>
 
+        `;
 
 
-if(!data.colleges || data.colleges.length===0){
 
+        if(!data.data || data.data.length === 0){
 
-output +=
 
-"<p>No colleges found for this rank.</p>";
+            output += `
 
+            <p>No colleges found for this rank.</p>
 
-}
+            `;
 
-else{
 
+        }
 
-data.colleges.forEach(college=>{
 
+        else{
 
-output += `
 
-<div class="college">
+            data.data.forEach(college=>{
 
-<h3>🏛 ${college.college}</h3>
 
-<p>📚 ${college.branch}</p>
+                output += `
 
-<p>Category: ${college.category}</p>
+                <div class="college">
 
-<p>Closing Rank: ${college.closingRank}</p>
+                <h3>🏛 ${college.college}</h3>
 
-</div>
+                <p>📚 Branch: ${college.branch}</p>
 
-`;
+                <p>Category: ${college.category}</p>
 
+                <p>Region: ${college.region}</p>
 
-});
+                <p>Closing Rank: ${college.closingRank}</p>
 
+                </div>
 
-}
+                `;
 
 
+            });
 
-document.getElementById("result").innerHTML=output;
 
+        }
 
 
-}
 
-catch(error){
+        document.getElementById("result").innerHTML = output;
 
 
-console.log(error);
 
-alert("Backend connection failed");
+    }
 
 
-}
+    catch(error){
+
+
+        console.log("Error:", error);
+
+        alert("Backend connection failed");
+
+
+    }
+
 
 
 }
