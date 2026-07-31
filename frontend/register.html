@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Raptora | Register</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+<link rel="stylesheet" href="css/register.css">
+
+</head>
+
+
+<body>
+
+
+<div class="container">
+
+
+<div class="left-panel">
+
+<div class="overlay">
+
+<h1>RAPTORA</h1>
+
+<p>
+Your Admission journey,Reimagined by Raptora
+</p>
+
+<img src="register.png" alt="Register">
+
+</div>
+
+</div>
+
+
+
+<div class="right-panel">
+
+
+<div class="register-box">
+
+
+<h2>Create Your Account</h2>
+
+<p>
+Start your journey with Raptora.
+</p>
+
+
+
+<form id="registerForm">
+
+
+
+<div class="input-group">
+
+<label>Full Name</label>
+
+<div class="input-field">
+
+<i class="fa-solid fa-user"></i>
+
+<input
+type="text"
+id="name"
+name="fullname"
+placeholder="Enter your full name"
+required>
+
+</div>
+
+</div>
+
+
+
+
+
+<div class="input-group">
+
+<label>Username</label>
+
+<div class="input-field">
+
+<i class="fa-solid fa-at"></i>
+
+<input
+type="text"
+name="username"
+placeholder="Choose a username"
+required>
+
+</div>
+
+</div>
+
+
+
+
+
+<div class="input-group">
+
+<label>Email</label>
+
+<div class="input-field">
+
+<i class="fa-solid fa-envelope"></i>
+
+<input
+type="email"
+id="email"
+name="email"
+placeholder="Enter your email"
+required>
+
+</div>
+
+</div>
+
+
+
+
+
+<div class="input-group">
+
+<label>Phone Number</label>
+
+<div class="input-field">
+
+<i class="fa-solid fa-phone"></i>
+
+<input
+type="tel"
+id="phone"
+name="phone"
+placeholder="Enter phone number"
+required>
+
+</div>
+
+</div>
+
+
+
+
+
+<div class="input-group">
+
+<label>Password</label>
+
+<div class="input-field">
+
+<i class="fa-solid fa-lock"></i>
+
+<input
+type="password"
+id="password"
+name="password"
+placeholder="Create password"
+required>
+
+
+<i class="fa-solid fa-eye eye"
+onclick="togglePassword('password')"></i>
+
+
+</div>
+
+</div>
+
+
+
+
+
+<div class="input-group">
+
+<label>Confirm Password</label>
+
+<div class="input-field">
+
+<i class="fa-solid fa-lock"></i>
+
+
+<input
+type="password"
+id="confirmPassword"
+name="confirmPassword"
+placeholder="Confirm password"
+required>
+
+
+<i class="fa-solid fa-eye eye"
+onclick="togglePassword('confirmPassword')"></i>
+
+
+</div>
+
+</div>
+
+
+
+
+
+<div class="terms">
+
+<input type="checkbox" required>
+
+<span>
+
+I agree to the
+
+<a href="#">
+Terms & Conditions
+</a>
+
+</span>
+
+</div>
+
+
+
+
+
+<button type="submit">
+
+Create Account
+
+</button>
+
+
+
+
+</form>
+
+
+
+
+
+<div class="divider">
+
+<span>OR</span>
+
+</div>
+
+
+
+
+
+<div class="social-login">
+
+
+<button class="google">
+
+<i class="fa-brands fa-google"></i>
+
+Google
+
+</button>
+
+
+</div>
+
+
+
+
+
+<div class="login-link">
+
+Already have an account?
+
+<a href="login.html">
+Login
+</a>
+
+
+</div>
+
+
+
+</div>
+
+</div>
+
+
+</div>
+
+
+
+
+
+<script>
+
+function togglePassword(id){
+
+let input=document.getElementById(id);
+
+
+if(input.type==="password"){
+
+input.type="text";
+
+}
+
+else{
+
+input.type="password";
+
+}
+
+}
+
+</script>
+
+
+<script src="js/register.js"></script>
+
+
+
+</body>
+
+</html>

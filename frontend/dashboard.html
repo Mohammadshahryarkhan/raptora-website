@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Raptora | Dashboard</title>
+
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/dashboard.css">
+
+</head>
+
+
+<body>
+
+
+<!-- Sidebar -->
+
+<div class="sidebar">
+
+
+    <h2>RAPTORA</h2>
+
+
+    <ul>
+
+
+        <li>
+            <a href="#">
+                <i class="fa-solid fa-house"></i>
+                Dashboard
+            </a>
+        </li>
+
+
+        <li>
+            <a href="profile.html">
+                <i class="fa-solid fa-user-graduate"></i>
+                Student Profile
+            </a>
+        </li>
+
+
+    </ul>
+
+
+</div>
+
+
+
+
+<!-- Main Content -->
+
+<div class="main">
+
+
+
+    <!-- Top Bar -->
+
+    <div class="topbar">
+
+
+        <h1>Student Dashboard</h1>
+
+
+        <button onclick="logout()">
+
+            <i class="fa-solid fa-right-from-bracket"></i>
+
+            Logout
+
+        </button>
+
+
+    </div>
+
+
+
+
+
+    <!-- Welcome Card -->
+
+    <div class="welcome-card">
+
+
+        <h2>
+
+            Welcome,
+
+            <span id="studentName"></span>
+
+            👋
+
+        </h2>
+
+
+
+        <p>
+
+            Welcome to Raptora. Explore colleges, courses and build your future with confidence.
+
+        </p>
+
+
+    </div>
+
+
+
+
+
+
+    <!-- Dashboard Cards -->
+
+    <div class="cards">
+
+
+
+        <!-- College Search -->
+
+        <div class="card">
+
+
+            <i class="fa-solid fa-building-columns"></i>
+
+
+            <h3>
+                College Search
+            </h3>
+
+
+            <p>
+                Search thousands of colleges.
+            </p>
+
+
+        </div>
+
+
+
+
+
+        <!-- Rank Predictor -->
+
+        <div class="card" onclick="openRankPredictor()" style="cursor:pointer;">
+
+
+            <i class="fa-solid fa-chart-line"></i>
+
+
+            <h3>
+                Rank Predictor
+            </h3>
+
+
+            <p>
+                Predict colleges for JEE, KCET, COMEDK & NEET.
+            </p>
+
+
+        </div>
+
+
+
+
+
+
+        <!-- My Profile -->
+
+        <div class="card" onclick="openProfile()" style="cursor:pointer;">
+
+
+            <i class="fa-solid fa-user"></i>
+
+
+            <h3>
+                My Profile
+            </h3>
+
+
+            <p>
+                Manage your account details.
+            </p>
+
+
+        </div>
+
+
+
+    </div>
+
+
+
+</div>
+
+
+
+
+
+<script>
+
+
+// Login Check
+
+const name = localStorage.getItem("name");
+
+
+if(!name){
+
+    window.location.href = "login.html";
+
+}
+
+
+
+document.getElementById("studentName").innerText = name;
+
+
+
+
+
+// Open Profile
+
+function openProfile(){
+
+    window.location.href = "profile.html";
+
+}
+
+
+
+
+
+// Open Rank Predictor
+
+function openRankPredictor(){
+
+    window.location.href = "rankpredictor.html";
+
+}
+
+
+
+
+
+// Logout
+
+function logout(){
+
+
+    localStorage.removeItem("token");
+
+    localStorage.removeItem("name");
+
+    localStorage.removeItem("email");
+
+    localStorage.removeItem("phone");
+
+
+
+    alert("Logged Out Successfully");
+
+
+    window.location.href = "login.html";
+
+
+}
+
+
+</script>
+
+
+
+</body>
+
+</html>

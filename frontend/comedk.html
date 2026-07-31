@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Raptora | COMEDK Predictor</title>
+
+<link rel="stylesheet" href="css/comedk.css">
+
+</head>
+
+
+<body>
+
+
+<div class="container">
+
+<div class="card">
+
+
+<h1>COMEDK College Predictor</h1>
+
+<p>Based on COMEDK Counselling Cutoff</p>
+
+
+<label>COMEDK Marks (out of 180)</label>
+
+<input 
+type="number"
+id="marks"
+placeholder="Enter COMEDK Marks">
+
+
+
+<label>Category</label>
+
+<select id="category">
+
+<option value="GM">GM</option>
+<option value="OBC">OBC</option>
+<option value="SC">SC</option>
+<option value="ST">ST</option>
+
+</select>
+
+
+
+<button onclick="predictComedk()">
+
+Predict Colleges
+
+</button>
+
+
+
+<div id="result"></div>
+
+
+
+</div>
+
+</div>
+
+
+
+<script>
+
+
+function calculateRank(marks){
+
+
+let rank;
+
+
+if(marks >=170){
+
+rank = 10;
+
+}
+
+else if(marks >=160){
+
+rank = 50;
+
+}
+
+else if(marks >=150){
+
+rank = 150;
+
+}
+
+else if(marks >=140){
+
+rank = 350;
+
+}
+
+else if(marks >=130){
+
+rank = 800;
+
+}
+
+else if(marks >=120){
+
+rank = 1700;
+
+}
+
+else if(marks >=110){
+
+rank = 3200;
+
+}
+
+else if(marks >=100){
+
+rank = 5500;
+
+}
+
+else if(marks >=90){
+
+rank = 9700;
+
+}
+
+else if(marks >=80){
+
+rank = 14000;
+
+}
+
+else if(marks >=70){
+
+rank = 23000;
+
+}
+
+else{
+
+rank = 40000;
+
+}
+
+
+return rank;
+
+
+}
+
+
+
+
+async function predictComedk(){
+
+
+let marks=document.getElementById("marks").value;
+
+let category=document.getElementById("category").value;
+
+
+
+if(marks===""){
+
+alert("Enter COMEDK Marks");
+
+return;
+
+}
+
+
+
+let rank=calculateRank(Number(marks));
+
+
+
+try{
+
+
+const response = await fetch(
+
+"http://localhost:8000/api/comedk/predict",
+
+{
+
+method:"POST",
+
+headers:{
+
+"Content-Type":"application/json"
+
+},
+
+body:JSON.stringify({
+
+rank:rank,
+
+category:category
+
+})
+
+}
+
+);
+
+
+
+const data=await response.json();
+
+
+
+let output=`
+
+<h2>Prediction Result</h2>
+
+<p>Expected COMEDK Rank: ${rank}</p>
+
+`;
+
+
+
+if(!data.colleges || data.colleges.length===0){
+
+
+output += "<p>No colleges found.</p>";
+
+}
+
+else{
+
+
+data.colleges.forEach(college=>{
+
+
+output += `
+
+<div class="college">
+
+<h3>🏛 ${college.college}</h3>
+
+<p>📚 Branch: ${college.branch}</p>
+
+<p>Category: ${college.category}</p>
+
+<p>Closing Rank: ${college.closingRank}</p>
+
+</div>
+
+`;
+
+});
+
+
+}
+
+
+
+document.getElementById("result").innerHTML=output;
+
+
+
+}
+
+catch(error){
+
+
+console.log(error);
+
+alert("Backend connection failed");
+
+
+}
+
+
+
+}
+
+
+</script>
+
+
+
+</body>
+
+</html>

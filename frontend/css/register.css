@@ -1,0 +1,257 @@
+/* ===========================
+   RAPTORA REGISTER CSS
+=========================== */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+body{
+    background:#0b0b0b;
+    color:white;
+}
+
+/* ===========================
+   MAIN CONTAINER
+=========================== */
+
+.container{
+    display:flex;
+    min-height:100vh;
+}
+
+/* ===========================
+   LEFT PANEL
+=========================== */
+
+.left-panel{
+    width:45%;
+    background:linear-gradient(135deg,#1a0000,#0b0b0b);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:40px;
+}
+
+.overlay{
+    text-align:center;
+}
+
+.overlay h1{
+    font-size:55px;
+    color:#ff1f3d;
+    letter-spacing:3px;
+    margin-bottom:15px;
+}
+
+.overlay p{
+    color:#d0d0d0;
+    font-size:18px;
+    margin-bottom:40px;
+}
+
+.overlay img{
+    width:90%;
+    max-width:450px;
+}
+
+/* ===========================
+   RIGHT PANEL
+=========================== */
+
+.right-panel{
+    width:55%;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:40px;
+}
+
+.register-box{
+    width:100%;
+    max-width:500px;
+    background:#181818;
+    padding:40px;
+    border-radius:18px;
+    box-shadow:0 0 25px rgba(255,0,0,.25);
+}
+
+.register-box h2{
+    font-size:32px;
+    margin-bottom:10px;
+}
+
+.register-box p{
+    color:#bdbdbd;
+    margin-bottom:30px;
+}
+
+/* ===========================
+   INPUTS
+=========================== */
+
+.input-group{
+    margin-bottom:20px;
+}
+
+.input-group label{
+    display:block;
+    margin-bottom:8px;
+    font-size:14px;
+}
+
+.input-field{
+    display:flex;
+    align-items:center;
+    background:#252525;
+    border:1px solid #333;
+    border-radius:10px;
+    padding:0 15px;
+}
+
+.input-field i{
+    color:#ff1f3d;
+    margin-right:12px;
+}
+
+.input-field input{
+    width:100%;
+    padding:15px 0;
+    border:none;
+    outline:none;
+    background:transparent;
+    color:white;
+    font-size:15px;
+}
+
+.eye{
+    cursor:pointer;
+}
+
+/* ===========================
+   TERMS
+=========================== */
+
+.terms{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    margin:20px 0;
+    color:#ccc;
+    font-size:14px;
+}
+
+.terms a{
+    color:#ff1f3d;
+    text-decoration:none;
+}
+
+.terms a:hover{
+    text-decoration:underline;
+}
+
+/* ===========================
+   BUTTON
+=========================== */
+
+button{
+    width:100%;
+    padding:15px;
+    background:#e50914;
+    border:none;
+    border-radius:10px;
+    color:white;
+    font-size:17px;
+    font-weight:600;
+    cursor:pointer;
+    transition:.3s;
+}
+
+button:hover{
+    background:#ff2b45;
+    transform:translateY(-2px);
+    box-shadow:0 0 20px rgba(255,0,0,.5);
+}
+
+/* ===========================
+   DIVIDER
+=========================== */
+
+.divider{
+    text-align:center;
+    margin:30px 0;
+    color:#888;
+}
+
+/* ===========================
+   SOCIAL LOGIN
+=========================== */
+
+.social-login{
+    display:flex;
+    gap:15px;
+}
+
+.google,
+.github{
+    background:#252525;
+    border:1px solid #333;
+}
+
+.google:hover,
+.github:hover{
+    background:#303030;
+}
+
+/* ===========================
+   LOGIN LINK
+=========================== */
+
+.login-link{
+    text-align:center;
+    margin-top:25px;
+    color:#bbb;
+}
+
+.login-link a{
+    color:#ff1f3d;
+    text-decoration:none;
+    font-weight:600;
+}
+
+.login-link a:hover{
+    text-decoration:underline;
+}
+
+/* ===========================
+   RESPONSIVE
+=========================== */
+
+@media(max-width:900px){
+
+.container{
+    flex-direction:column;
+}
+
+.left-panel{
+    display:none;
+}
+
+.right-panel{
+    width:100%;
+    padding:25px;
+}
+
+.register-box{
+    max-width:100%;
+    padding:30px;
+}
+
+.social-login{
+    flex-direction:column;
+}
+
+}

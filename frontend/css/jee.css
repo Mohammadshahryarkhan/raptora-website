@@ -1,0 +1,202 @@
+*{
+
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+
+}
+
+
+
+body{
+
+    min-height:100vh;
+
+    background:#050505;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    color:white;
+
+}
+
+
+
+
+.container{
+
+    width:100%;
+
+    display:flex;
+
+    justify-content:center;
+
+}
+
+
+
+
+.card{
+
+    width:450px;
+
+    background:#111;
+
+    padding:40px;
+
+    border-radius:20px;
+
+    box-shadow:0 0 30px rgba(255,0,0,0.4);
+
+}
+
+
+
+
+h1{
+
+    text-align:center;
+
+    color:red;
+
+    margin-bottom:10px;
+
+}
+
+
+
+
+p{
+
+    text-align:center;
+
+    color:#ccc;
+
+    margin-bottom:25px;
+
+}
+
+
+
+label{
+
+    display:block;
+
+    margin-top:15px;
+
+    margin-bottom:8px;
+
+    color:white;
+
+}
+
+
+
+input,
+select{
+
+    width:100%;
+
+    padding:14px;
+
+    background:#222;
+
+    border:none;
+
+    border-radius:10px;
+
+    color:white;
+
+    font-size:15px;
+
+}
+
+
+
+button{
+
+    width:100%;
+
+    margin-top:25px;
+
+    padding:15px;
+
+    background:red;
+
+    color:white;
+
+    border:none;
+
+    border-radius:10px;
+
+    font-size:17px;
+
+    cursor:pointer;
+
+    font-weight:600;
+
+}
+
+
+
+button:hover{
+
+    background:#b30000;
+
+}
+
+
+
+#result{
+
+    margin-top:30px;
+
+    background:#1a1a1a;
+
+    padding:20px;
+
+    border-radius:15px;
+
+    border-left:4px solid red;
+
+}
+
+
+
+#result h2,
+#result h3{
+
+    color:red;
+
+    margin-bottom:15px;
+
+}
+
+
+
+#result p{
+
+    text-align:left;
+
+    color:white;
+
+}
+
+
+
+.college{
+
+    background:#222;
+
+    padding:12px;
+
+    margin:10px 0;
+
+    border-radius:8px;
+
+}

@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Raptora | JEE Rank Predictor</title>
+
+<link rel="stylesheet" href="css/jee.css">
+
+</head>
+
+
+<body>
+
+
+<div class="container">
+
+
+<div class="card">
+
+
+<h1>JEE Rank Predictor</h1>
+
+<p>Predict your college chances through JoSAA counselling</p>
+
+
+
+<label>JEE Main Marks</label>
+
+<input 
+type="number"
+id="marks"
+placeholder="Enter marks out of 300">
+
+
+
+<label>Category</label>
+
+<select id="category">
+
+<option>General</option>
+<option>OBC-NCL</option>
+<option>EWS</option>
+<option>SC</option>
+<option>ST</option>
+
+</select>
+
+
+
+<label>Quota</label>
+
+<select id="quota">
+
+<option value="OS">Other State</option>
+<option value="HS">Home State</option>
+
+</select>
+
+
+
+<button onclick="predictRank()">
+
+Predict Colleges
+
+</button>
+
+
+
+<div id="result"></div>
+
+
+
+</div>
+
+</div>
+
+
+
+
+
+<script>
+
+async function predictRank(){
+
+
+let marks = document.getElementById("marks").value;
+
+let category = document.getElementById("category").value;
+
+let quota = document.getElementById("quota").value;
+
+
+
+if(marks===""){
+
+alert("Enter JEE marks");
+
+return;
+
+}
+
+
+
+let rank;
+
+
+if(marks >= 280){
+
+rank = 100;
+
+}
+else if(marks >=250){
+
+rank = 5000;
+
+}
+else if(marks >=200){
+
+rank = 15000;
+
+}
+else if(marks >=150){
+
+rank = 50000;
+
+}
+else{
+
+rank = 120000;
+
+}
+
+
+
+
+
+try{
+
+
+let response = await fetch(
+"http://localhost:8000/api/josaa/predict",
+{
+
+method:"POST",
+
+headers:{
+
+"Content-Type":"application/json"
+
+},
+
+body:JSON.stringify({
+
+rank:rank,
+
+category:category,
+
+quota:quota
+
+})
+
+}
+
+);
+
+
+
+let data = await response.json();
+
+
+
+let output = `
+
+<h2>Prediction Result</h2>
+
+<p>Expected Rank: ${rank}</p>
+
+<h3>Eligible Colleges</h3>
+
+`;
+
+
+
+if(!data.colleges || data.colleges.length===0){
+
+
+output += "<p>No colleges found</p>";
+
+
+}
+
+else{
+
+
+data.colleges.forEach(college=>{
+
+
+output += `
+
+<div class="college">
+
+🏛 ${college.college}
+
+<br>
+
+📚 ${college.branch}
+
+<br>
+
+Closing Rank: ${college.closingRank}
+
+</div>
+
+`;
+
+
+});
+
+
+}
+
+
+
+document.getElementById("result").innerHTML = output;
+
+
+
+}
+
+catch(error){
+
+
+console.log(error);
+
+alert("Backend connection failed");
+
+
+}
+
+
+}
+
+
+</script>
+
+
+
+</body>
+
+</html>

@@ -1,0 +1,374 @@
+/* ===========================
+   RAPTORA LOGIN CSS
+=========================== */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+body{
+    width:100%;
+    height:100vh;
+    background:#0b0b0b;
+    overflow:hidden;
+}
+
+/* ===========================
+   MAIN CONTAINER
+=========================== */
+
+.container{
+    display:flex;
+    width:100%;
+    height:100vh;
+}
+
+/* ===========================
+   LEFT PANEL
+=========================== */
+
+.left-panel{
+    width:50%;
+    background:linear-gradient(135deg,#1a0000,#0b0b0b);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    position:relative;
+}
+
+.overlay{
+    text-align:center;
+    color:white;
+    padding:40px;
+}
+
+.overlay h1{
+    font-size:60px;
+    color:#ff1f3d;
+    letter-spacing:3px;
+    margin-bottom:20px;
+}
+
+.overlay p{
+    color:#d6d6d6;
+    font-size:18px;
+    margin-bottom:40px;
+}
+
+.overlay img{
+    width:80%;
+    max-width:450px;
+}
+
+/* ===========================
+   RIGHT PANEL
+=========================== */
+
+.right-panel{
+    width:50%;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:#111;
+}
+
+.login-box{
+
+    width:420px;
+
+    background:#181818;
+
+    padding:45px;
+
+    border-radius:18px;
+
+    box-shadow:0 0 30px rgba(255,0,0,.25);
+
+}
+
+.login-box h2{
+
+    color:white;
+
+    font-size:32px;
+
+    margin-bottom:10px;
+
+}
+
+.login-box p{
+
+    color:#bdbdbd;
+
+    margin-bottom:30px;
+
+}
+
+/* ===========================
+   INPUTS
+=========================== */
+
+.input-group{
+
+    margin-bottom:22px;
+
+}
+
+.input-group label{
+
+    color:white;
+
+    display:block;
+
+    margin-bottom:8px;
+
+    font-size:14px;
+
+}
+
+.input-field{
+
+    display:flex;
+
+    align-items:center;
+
+    background:#252525;
+
+    border-radius:10px;
+
+    padding:0 15px;
+
+    border:1px solid #333;
+
+}
+
+.input-field i{
+
+    color:#ff1f3d;
+
+    margin-right:12px;
+
+}
+
+.input-field input{
+
+    width:100%;
+
+    padding:15px 0;
+
+    border:none;
+
+    outline:none;
+
+    background:transparent;
+
+    color:white;
+
+    font-size:15px;
+
+}
+
+.eye{
+
+    cursor:pointer;
+
+    margin-left:10px;
+
+}
+
+/* ===========================
+   OPTIONS
+=========================== */
+
+.options{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin-bottom:25px;
+
+    color:white;
+
+    font-size:14px;
+
+}
+
+.options label{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:8px;
+
+}
+
+.options a{
+
+    color:#ff1f3d;
+
+    text-decoration:none;
+
+}
+
+.options a:hover{
+
+    text-decoration:underline;
+
+}
+
+/* ===========================
+   BUTTON
+=========================== */
+
+button{
+
+    width:100%;
+
+    padding:15px;
+
+    border:none;
+
+    border-radius:10px;
+
+    background:#e50914;
+
+    color:white;
+
+    font-size:17px;
+
+    font-weight:600;
+
+    cursor:pointer;
+
+    transition:.3s;
+
+}
+
+button:hover{
+
+    background:#ff2b45;
+
+    transform:translateY(-2px);
+
+    box-shadow:0 0 20px rgba(255,0,0,.5);
+
+}
+
+/* ===========================
+   DIVIDER
+=========================== */
+
+.divider{
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    margin:30px 0;
+
+    color:#aaa;
+
+}
+
+.divider span{
+
+    background:#181818;
+
+    padding:0 15px;
+
+}
+
+/* ===========================
+   SOCIAL LOGIN
+=========================== */
+
+.social-login{
+
+    display:flex;
+
+    gap:15px;
+
+}
+
+.social-login button{
+
+    background:#252525;
+
+    border:1px solid #333;
+
+    font-size:15px;
+
+}
+
+.social-login button:hover{
+
+    background:#2d2d2d;
+
+}
+
+/* ===========================
+   REGISTER LINK
+=========================== */
+
+.register{
+
+    text-align:center;
+
+    color:#bbb;
+
+    margin-top:25px;
+
+}
+
+.register a{
+
+    color:#ff1f3d;
+
+    text-decoration:none;
+
+    font-weight:600;
+
+}
+
+.register a:hover{
+
+    text-decoration:underline;
+
+}
+
+/* ===========================
+   RESPONSIVE
+=========================== */
+
+@media(max-width:900px){
+
+.left-panel{
+
+display:none;
+
+}
+
+.right-panel{
+
+width:100%;
+
+}
+
+.login-box{
+
+width:90%;
+
+padding:35px;
+
+}
+
+}

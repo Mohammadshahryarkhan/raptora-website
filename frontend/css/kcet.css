@@ -1,0 +1,166 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+
+body{
+
+    min-height:100vh;
+
+    background:#000;
+
+    color:white;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+}
+
+
+.container{
+
+    width:100%;
+
+    display:flex;
+
+    justify-content:center;
+
+}
+
+
+.card{
+
+    width:420px;
+
+    padding:35px;
+
+    background:#151515;
+
+    border-radius:20px;
+
+    border:2px solid red;
+
+    box-shadow:0 0 20px red;
+
+}
+
+
+
+h1{
+
+    color:red;
+
+    text-align:center;
+
+    margin-bottom:10px;
+
+}
+
+
+.card p{
+
+    text-align:center;
+
+    color:#ccc;
+
+    margin-bottom:20px;
+
+}
+
+
+
+label{
+
+    display:block;
+
+    margin-top:15px;
+
+    color:#ff3333;
+
+}
+
+
+
+input,
+select{
+
+    width:100%;
+
+    padding:12px;
+
+    margin-top:8px;
+
+    background:#222;
+
+    color:white;
+
+    border:1px solid red;
+
+    border-radius:8px;
+
+}
+
+
+
+button{
+
+    display:block;
+
+    width:100%;
+
+    margin-top:25px;
+
+    padding:14px;
+
+    background:red;
+
+    color:white;
+
+    border:none;
+
+    border-radius:10px;
+
+    font-size:18px;
+
+    font-weight:bold;
+
+    cursor:pointer;
+
+}
+
+
+button:hover{
+
+    background:#990000;
+
+}
+
+
+
+#result{
+
+    margin-top:25px;
+
+}
+
+
+
+.college{
+
+    margin-top:15px;
+
+    padding:15px;
+
+    background:#222;
+
+    border-left:5px solid red;
+
+    border-radius:10px;
+
+}

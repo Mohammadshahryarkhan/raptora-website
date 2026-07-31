@@ -1,0 +1,104 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+
+body{
+
+    min-height:100vh;
+
+    background:#0b0b0b;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+}
+
+
+.profile-container{
+
+    width:100%;
+
+    display:flex;
+
+    justify-content:center;
+
+}
+
+
+.profile-card{
+
+    background:#151515;
+
+    color:white;
+
+    width:400px;
+
+    padding:40px;
+
+    border-radius:20px;
+
+    text-align:center;
+
+    box-shadow:0 0 25px rgba(255,0,0,0.3);
+
+}
+
+
+.profile-icon{
+
+    font-size:60px;
+
+    color:red;
+
+}
+
+
+.profile-card h1{
+
+    margin:20px 0;
+
+}
+
+
+.details{
+
+    text-align:left;
+
+    margin-top:25px;
+
+}
+
+
+.details p{
+
+    margin:15px 0;
+
+    font-size:16px;
+
+}
+
+
+button{
+
+    margin-top:25px;
+
+    padding:12px 20px;
+
+    border:none;
+
+    border-radius:10px;
+
+    background:red;
+
+    color:white;
+
+    cursor:pointer;
+
+}
