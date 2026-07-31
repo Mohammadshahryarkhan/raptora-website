@@ -15,7 +15,7 @@ document.getElementById("registerForm").addEventListener("submit", async functio
 
     try {
 
-        const response = await fetch("http://localhost:8000/api/auth/register", {
+        const response = await fetch("https://raptora-website-1.onrender.com/api/auth/register", {
 
             method: "POST",
 
