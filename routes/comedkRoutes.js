@@ -5,43 +5,81 @@ const router = express.Router();
 const Comedk = require("../models/Comedk");
 
 
-router.post("/predict", async(req,res)=>{
+// COMEDK Predictor
 
-    try{
+router.post("/predict", async (req, res) => {
 
-        const {rank, category} = req.body;
+    try {
+
+
+        const {
+            rank,
+            category
+        } = req.body;
+
+
+
+        if (!rank || !category) {
+
+            return res.status(400).json({
+
+                success: false,
+
+                message: "Rank and category are required"
+
+            });
+
+        }
+
 
 
         const colleges = await Comedk.find({
 
             category: category,
 
-            closingRank:{
-                $gte:Number(rank)
+            closingRank: {
+
+                $gte: Number(rank)
+
             }
 
         });
 
 
-        res.json({
 
-            colleges: colleges
+        res.status(200).json({
+
+            success: true,
+
+            count: colleges.length,
+
+            data: colleges
 
         });
 
 
-    }
-    catch(error){
 
-        console.log(error);
+    }
+
+    catch(error) {
+
+
+        console.log("COMEDK Error:", error);
+
 
         res.status(500).json({
 
-            message:"Server Error"
+            success: false,
+
+            message: "Prediction failed",
+
+            error: error.message
 
         });
 
+
     }
+
 
 });
 
