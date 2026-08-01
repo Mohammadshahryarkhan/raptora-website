@@ -1,0 +1,812 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+```
+<title>Mentors & Seniors | RAPTORA</title>
+
+<!-- Font Awesome -->
+<link rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<meta name="description"
+      content="Learn how mentors and seniors can help students make smarter college admission decisions with RAPTORA.">
+
+<style>
+
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    html {
+        scroll-behavior: smooth;
+    }
+
+    body {
+        font-family: Arial, Helvetica, sans-serif;
+        background: #080808;
+        color: #f5f5f5;
+        line-height: 1.8;
+    }
+
+    /* ================= NAVBAR ================= */
+
+    .navbar {
+        width: 100%;
+        padding: 18px 7%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        background: #050505;
+        border-bottom: 1px solid #222;
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+    }
+
+    .logo-container {
+        display: flex;
+        align-items: center;
+    }
+
+    .logo {
+        width: 55px;
+        height: 55px;
+        object-fit: contain;
+    }
+
+    .logo-text {
+        margin-left: 10px;
+        font-size: 22px;
+        font-weight: 800;
+        letter-spacing: 2px;
+        color: #fff;
+    }
+
+    .nav-links {
+        display: flex;
+        list-style: none;
+        gap: 30px;
+    }
+
+    .nav-links a {
+        color: #ddd;
+        text-decoration: none;
+        font-size: 15px;
+        transition: 0.3s;
+    }
+
+    .nav-links a:hover {
+        color: #ff1e1e;
+    }
+
+    .back-btn {
+        text-decoration: none;
+        color: #fff;
+        border: 1px solid #ff1e1e;
+        padding: 9px 18px;
+        border-radius: 6px;
+        transition: 0.3s;
+    }
+
+    .back-btn:hover {
+        background: #ff1e1e;
+        color: #fff;
+    }
+
+    /* ================= HERO ================= */
+
+    .blog-hero {
+        min-height: 430px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding: 80px 20px;
+        background:
+            radial-gradient(circle at center, #3a0000 0%, #100000 35%, #080808 75%);
+    }
+
+    .hero-content {
+        max-width: 950px;
+    }
+
+    .hero-icon {
+        font-size: 55px;
+        color: #ff1e1e;
+        margin-bottom: 20px;
+    }
+
+    .blog-hero h1 {
+        font-size: clamp(35px, 5vw, 65px);
+        line-height: 1.15;
+        margin-bottom: 20px;
+        font-weight: 800;
+    }
+
+    .highlight {
+        color: #ff1e1e;
+    }
+
+    .hero-subtitle {
+        max-width: 750px;
+        margin: auto;
+        color: #bbb;
+        font-size: 18px;
+    }
+
+    /* ================= BLOG ================= */
+
+    .blog-container {
+        max-width: 900px;
+        margin: 70px auto;
+        padding: 0 25px;
+    }
+
+    .blog-content {
+        background: #111;
+        border: 1px solid #242424;
+        border-radius: 15px;
+        padding: 55px;
+        box-shadow: 0 0 40px rgba(255, 0, 0, 0.08);
+    }
+
+    .blog-content h2 {
+        font-size: 30px;
+        margin-top: 45px;
+        margin-bottom: 15px;
+        color: #fff;
+        line-height: 1.3;
+    }
+
+    .blog-content h2:first-child {
+        margin-top: 0;
+    }
+
+    .blog-content h2::before {
+        content: "";
+        display: inline-block;
+        width: 5px;
+        height: 28px;
+        background: #ff1e1e;
+        margin-right: 12px;
+        vertical-align: middle;
+        border-radius: 5px;
+    }
+
+    .blog-content p {
+        color: #cfcfcf;
+        font-size: 17px;
+        margin-bottom: 18px;
+    }
+
+    .blog-content strong {
+        color: #fff;
+    }
+
+    .blog-content ul {
+        margin: 20px 0 30px 25px;
+    }
+
+    .blog-content li {
+        color: #ccc;
+        margin: 8px 0;
+        padding-left: 5px;
+    }
+
+    .blog-content li::marker {
+        color: #ff1e1e;
+    }
+
+    .quote {
+        margin: 30px 0;
+        padding: 22px 25px;
+        border-left: 4px solid #ff1e1e;
+        background: #181818;
+        color: #fff;
+        font-size: 19px;
+        font-weight: 600;
+        border-radius: 0 8px 8px 0;
+    }
+
+    .final-message {
+        margin-top: 45px;
+        padding: 35px;
+        background: linear-gradient(135deg, #1b0000, #100000);
+        border: 1px solid #5c0000;
+        border-radius: 12px;
+        text-align: center;
+    }
+
+    .final-message h3 {
+        color: #ff1e1e;
+        font-size: 25px;
+        margin-bottom: 10px;
+    }
+
+    .final-message p {
+        margin-bottom: 5px;
+    }
+
+    /* ================= BACK BUTTON ================= */
+
+    .bottom-navigation {
+        text-align: center;
+        margin: 45px 0 70px;
+    }
+
+    .home-btn {
+        display: inline-block;
+        text-decoration: none;
+        color: white;
+        background: #ff1e1e;
+        padding: 13px 28px;
+        border-radius: 7px;
+        font-weight: bold;
+        transition: 0.3s;
+    }
+
+    .home-btn:hover {
+        background: #d40000;
+        transform: translateY(-2px);
+    }
+
+    /* ================= FOOTER ================= */
+
+    footer {
+        text-align: center;
+        padding: 35px 20px;
+        border-top: 1px solid #222;
+        background: #050505;
+    }
+
+    .footer-top {
+        color: #aaa;
+        font-size: 13px;
+        letter-spacing: 1px;
+        margin-bottom: 12px;
+    }
+
+    .footer-motto {
+        color: #fff;
+    }
+
+    .footer-bottom {
+        color: #666;
+        font-size: 13px;
+    }
+
+    /* ================= MOBILE ================= */
+
+    @media (max-width: 768px) {
+
+        .navbar {
+            padding: 15px 5%;
+        }
+
+        .nav-links {
+            display: none;
+        }
+
+        .blog-hero {
+            min-height: 380px;
+            padding: 60px 20px;
+        }
+
+        .blog-hero h1 {
+            font-size: 38px;
+        }
+
+        .hero-subtitle {
+            font-size: 16px;
+        }
+
+        .blog-container {
+            margin: 40px auto;
+            padding: 0 15px;
+        }
+
+        .blog-content {
+            padding: 30px 22px;
+        }
+
+        .blog-content h2 {
+            font-size: 25px;
+        }
+
+        .blog-content p,
+        .blog-content li {
+            font-size: 16px;
+        }
+
+    }
+
+</style>
+```
+
+</head>
+
+<body>
+
+<!-- ================= NAVBAR ================= -->
+
+<header class="navbar">
+
+```
+<div class="logo-container">
+
+    <img src="register.png"
+         alt="RAPTORA Logo"
+         class="logo">
+
+    <span class="logo-text">
+        RAPTORA
+    </span>
+
+</div>
+
+
+<nav>
+
+    <ul class="nav-links">
+
+        <li>
+            <a href="index.html#home">
+                Home
+            </a>
+        </li>
+
+        <li>
+            <a href="index.html#features">
+                Features
+            </a>
+        </li>
+
+        <li>
+            <a href="index.html#resources">
+                Resources
+            </a>
+        </li>
+
+        <li>
+            <a href="index.html#connect">
+                Connect
+            </a>
+        </li>
+
+    </ul>
+
+</nav>
+
+
+<a href="index.html"
+   class="back-btn">
+
+    <i class="fa-solid fa-arrow-left"></i>
+    Back
+
+</a>
+```
+
+</header>
+
+<!-- ================= HERO ================= -->
+
+<section class="blog-hero">
+
+```
+<div class="hero-content">
+
+    <div class="hero-icon">
+        <i class="fa-solid fa-user-tie"></i>
+    </div>
+
+    <h1>
+        Mentors & Seniors:
+        <br>
+        Sometimes, You Just Need
+        <span class="highlight">
+            Someone Who's Been There.
+        </span>
+    </h1>
+
+    <p class="hero-subtitle">
+        Real experiences. Honest conversations.
+        Better decisions for your college journey.
+    </p>
+
+</div>
+```
+
+</section>
+
+<!-- ================= BLOG ================= -->
+
+<main class="blog-container">
+
+```
+<article class="blog-content">
+
+
+    <p>
+        Choosing a college sounds exciting until you actually
+        have to do it.
+    </p>
+
+    <p>
+        Suddenly, there are so many things to think about —
+        your rank, college cutoffs, branches, fees, placements,
+        hostel, location, campus life and, of course, the
+        biggest question:
+    </p>
+
+
+    <div class="quote">
+        “Am I making the right choice?”
+    </div>
+
+
+    <p>
+        You can search for answers online, watch hundreds of
+        videos and read reviews, but sometimes you still feel
+        confused.
+    </p>
+
+    <p>
+        That’s where talking to a senior or mentor can make
+        a huge difference.
+    </p>
+
+
+    <!-- SECTION -->
+
+    <h2>
+        Why Talk to a Senior?
+    </h2>
+
+    <p>
+        Seniors have already gone through what you're about
+        to experience.
+    </p>
+
+    <p>
+        They've dealt with counselling, college choices,
+        first-day nerves, difficult subjects, assignments,
+        exams, internships and all the little things that
+        you usually don't find in a college brochure.
+    </p>
+
+    <p>
+        You can ask them things like:
+    </p>
+
+
+    <ul>
+
+        <li>
+            Is this college actually good for my branch?
+        </li>
+
+        <li>
+            How are the teachers?
+        </li>
+
+        <li>
+            What's the campus atmosphere like?
+        </li>
+
+        <li>
+            Is hostel life manageable?
+        </li>
+
+        <li>
+            How strict is attendance?
+        </li>
+
+        <li>
+            Are internships easy to find?
+        </li>
+
+        <li>
+            How are the placements?
+        </li>
+
+        <li>
+            What should I know before joining?
+        </li>
+
+        <li>
+            If you had to choose again, would you pick
+            the same college?
+        </li>
+
+    </ul>
+
+
+    <p>
+        These questions might seem simple, but getting an
+        honest answer from someone who's actually experienced
+        it can be incredibly helpful.
+    </p>
+
+
+    <!-- SECTION -->
+
+    <h2>
+        Not Everything Is on Google
+    </h2>
+
+    <p>
+        The internet can tell you a college's placement
+        percentage.
+    </p>
+
+    <p>
+        It can tell you the fees.
+    </p>
+
+    <p>
+        It can show you rankings and cutoff numbers.
+    </p>
+
+    <p>
+        But it can't always tell you what it
+        <strong>
+            feels like to actually study there.
+        </strong>
+    </p>
+
+    <p>
+        Maybe the college has great placements but a very
+        hectic academic schedule.
+    </p>
+
+    <p>
+        Maybe the campus isn't huge, but the student
+        community is amazing.
+    </p>
+
+    <p>
+        Maybe a particular branch has opportunities that
+        aren't obvious from the website.
+    </p>
+
+    <p>
+        These are the things you often discover by talking
+        to people who are already there.
+    </p>
+
+
+    <!-- SECTION -->
+
+    <h2>
+        Mentors Can Help You Think, Not Decide
+    </h2>
+
+    <p>
+        A good mentor isn't someone who simply says:
+    </p>
+
+    <div class="quote">
+        “Take this college.”
+    </div>
+
+    <p>
+        Instead, they help you understand your options.
+    </p>
+
+    <p>
+        They can share what worked for them, what didn't,
+        and what they wish they had known earlier.
+    </p>
+
+    <p>
+        But your decision is still yours.
+    </p>
+
+    <p>
+        Your interests, goals, budget and priorities are
+        different from theirs. Their experience should help
+        you make a more informed decision — not make the
+        decision for you.
+    </p>
+
+
+    <!-- SECTION -->
+
+    <h2>
+        What Can You Talk About?
+    </h2>
+
+    <p>
+        Honestly, almost anything related to your journey.
+    </p>
+
+    <p>
+        You can talk about choosing a branch, preparing for
+        counselling, adjusting to college, finding internships,
+        building projects, dealing with academics or even
+        figuring out what you want to do after graduation.
+    </p>
+
+    <p>
+        And you don't have to wait until you're completely
+        confused.
+    </p>
+
+    <p>
+        Sometimes even a simple conversation like:
+    </p>
+
+    <div class="quote">
+        “Hey, I'm considering this college. What do you
+        honestly think about it?”
+    </div>
+
+    <p>
+        can give you a completely different perspective.
+    </p>
+
+
+    <!-- SECTION -->
+
+    <h2>
+        That's What RAPTORA Is Trying to Build
+    </h2>
+
+    <p>
+        At <strong>RAPTORA</strong>, we believe that students
+        shouldn't have to figure everything out alone.
+    </p>
+
+    <p>
+        Our <strong>Mentors & Seniors</strong> feature is about
+        creating a space where students can connect with people
+        who have already experienced the journey they're about
+        to begin.
+    </p>
+
+    <p>
+        Not polished advertisements.
+    </p>
+
+    <p>
+        Not random internet opinions.
+    </p>
+
+    <p>
+        Just conversations, experiences and guidance from
+        people who understand what you're going through.
+    </p>
+
+    <p>
+        Because sometimes, you don't need another search result.
+    </p>
+
+    <div class="quote">
+        You just need someone who has been there.
+    </div>
+
+
+    <!-- SECTION -->
+
+    <h2>
+        Your Questions. Their Experience. Your Journey.
+    </h2>
+
+    <p>
+        College is a big step, and it's completely normal
+        to have questions.
+    </p>
+
+    <p>
+        Ask them.
+    </p>
+
+    <p>
+        Talk to people.
+    </p>
+
+    <p>
+        Learn from their mistakes.
+    </p>
+
+    <p>
+        Listen to different experiences.
+    </p>
+
+    <p>
+        Then choose what feels right for
+        <strong>you</strong>.
+    </p>
+
+    <p>
+        Because at the end of the day, your journey is
+        your own.
+    </p>
+
+    <p>
+        <strong>
+            RAPTORA is here to help you make it a little
+            less confusing.
+        </strong>
+    </p>
+
+
+    <!-- FINAL -->
+
+    <div class="final-message">
+
+        <h3>
+            Find. Predict. Compare. Connect. Succeed.
+        </h3>
+
+        <p>
+            Your admission journey,
+            reimagined by RAPTORA.
+        </p>
+
+    </div>
+
+
+</article>
+
+
+<!-- BACK BUTTON -->
+
+<div class="bottom-navigation">
+
+    <a href="index.html#features"
+       class="home-btn">
+
+        <i class="fa-solid fa-arrow-left"></i>
+
+        Back to RAPTORA Features
+
+    </a>
+
+</div>
+```
+
+</main>
+
+<!-- ================= FOOTER ================= -->
+
+<footer>
+
+```
+<div class="footer-top">
+
+    <span class="footer-motto">
+        SMARTER CHOICES.
+    </span>
+
+    &nbsp; | &nbsp;
+
+    <span class="footer-motto">
+        BETTER COLLEGES.
+    </span>
+
+    &nbsp; | &nbsp;
+
+    <span class="footer-motto">
+        BRIGHTER FUTURES.
+    </span>
+
+</div>
+
+<p class="footer-bottom">
+    RAPTORA &mdash;
+    YOUR ADMISSION PARTNER FOR LIFE. ❤️
+</p>
+```
+
+</footer>
+
+</body>
+</html>
