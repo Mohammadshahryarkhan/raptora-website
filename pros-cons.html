@@ -1,0 +1,1399 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Pros & Cons of Colleges | RAPTORA</title>
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: #080808;
+            color: white;
+            line-height: 1.8;
+        }
+
+        /* ================= NAVBAR ================= */
+
+        .navbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px 7%;
+            background: #050505;
+            border-bottom: 1px solid #252525;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo {
+            width: 55px;
+            height: 55px;
+            object-fit: contain;
+        }
+
+        .logo-text {
+            color: white;
+            font-size: 22px;
+            font-weight: bold;
+            margin-left: 10px;
+            letter-spacing: 2px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: #ddd;
+            text-decoration: none;
+            transition: 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #ff1e1e;
+        }
+
+        .back-btn {
+            color: white;
+            text-decoration: none;
+            border: 1px solid #ff1e1e;
+            padding: 8px 18px;
+            border-radius: 6px;
+            transition: 0.3s;
+        }
+
+        .back-btn:hover {
+            background: #ff1e1e;
+            color: white;
+        }
+
+        /* ================= HERO ================= */
+
+        .blog-hero {
+            min-height: 430px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 70px 20px;
+
+            background:
+                radial-gradient(
+                    circle at center,
+                    #3b0000 0%,
+                    #150000 35%,
+                    #080808 75%
+                );
+        }
+
+        .hero-content {
+            max-width: 900px;
+        }
+
+        .hero-icon {
+            font-size: 60px;
+            color: #ff1e1e;
+            margin-bottom: 20px;
+        }
+
+        .blog-hero h1 {
+            font-size: clamp(40px, 6vw, 65px);
+            line-height: 1.2;
+            margin-bottom: 20px;
+        }
+
+        .highlight {
+            color: #ff1e1e;
+        }
+
+        .hero-subtitle {
+            color: #bbb;
+            font-size: 18px;
+            max-width: 700px;
+            margin: auto;
+        }
+
+        /* ================= BLOG ================= */
+
+        .blog-container {
+            max-width: 900px;
+            margin: 70px auto;
+            padding: 0 20px;
+        }
+
+        .blog-content {
+            background: #111;
+            border: 1px solid #252525;
+            border-radius: 15px;
+            padding: 55px;
+            box-shadow: 0 0 40px rgba(255, 0, 0, 0.08);
+        }
+
+        .blog-content h2 {
+            font-size: 30px;
+            margin-top: 45px;
+            margin-bottom: 15px;
+            line-height: 1.3;
+        }
+
+        .blog-content h2:first-child {
+            margin-top: 0;
+        }
+
+        .blog-content p {
+            color: #ccc;
+            font-size: 17px;
+            margin-bottom: 18px;
+        }
+
+        .blog-content strong {
+            color: white;
+        }
+
+        .blog-content ul {
+            margin: 20px 0 30px 25px;
+        }
+
+        .blog-content li {
+            color: #ccc;
+            margin: 8px 0;
+        }
+
+        .blog-content li::marker {
+            color: #ff1e1e;
+        }
+
+        /* ================= QUOTE ================= */
+
+        .quote {
+            margin: 25px 0;
+            padding: 20px 25px;
+            background: #181818;
+            border-left: 4px solid #ff1e1e;
+            border-radius: 0 8px 8px 0;
+            color: white;
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        /* ================= TABLE ================= */
+
+        .table-container {
+            width: 100%;
+            overflow-x: auto;
+            margin: 30px 0;
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 550px;
+        }
+
+        .comparison-table th,
+        .comparison-table td {
+            border: 1px solid #333;
+            padding: 14px;
+            text-align: left;
+        }
+
+        .comparison-table th {
+            background: #250000;
+            color: #ff3333;
+        }
+
+        .comparison-table td {
+            background: #151515;
+            color: #ccc;
+        }
+
+        /* ================= CONNECT BUTTON ================= */
+
+        .connect-container {
+            text-align: center;
+            margin: 60px 20px 35px;
+        }
+
+        .connect-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+
+            padding: 15px 32px;
+
+            background: #ff1e1e;
+            color: white !important;
+
+            text-decoration: none;
+
+            border-radius: 8px;
+
+            font-size: 17px;
+            font-weight: bold;
+
+            transition: 0.3s;
+        }
+
+        .connect-btn:hover {
+            background: #d40000;
+            color: white !important;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(255, 0, 0, 0.25);
+        }
+
+        /* ================= BACK BUTTON ================= */
+
+        .bottom-buttons {
+            text-align: center;
+            margin: 35px 0 60px;
+        }
+
+        .home-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+
+            padding: 13px 25px;
+
+            background: #ff1e1e;
+            color: white;
+
+            text-decoration: none;
+
+            border-radius: 7px;
+            font-weight: bold;
+
+            transition: 0.3s;
+        }
+
+        .home-btn:hover {
+            background: #d40000;
+            transform: translateY(-2px);
+        }
+
+        /* ================= FOOTER ================= */
+
+        footer {
+            background: #050505;
+            border-top: 1px solid #222;
+            text-align: center;
+            padding: 35px 20px;
+        }
+
+        .footer-top {
+            color: #aaa;
+            font-size: 13px;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+        }
+
+        .footer-motto {
+            color: white;
+        }
+
+        .footer-bottom {
+            color: #666;
+            font-size: 13px;
+        }
+
+        /* ================= MOBILE ================= */
+
+        @media (max-width: 768px) {
+
+            .navbar {
+                padding: 12px 5%;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .blog-hero {
+                min-height: 350px;
+            }
+
+            .blog-hero h1 {
+                font-size: 40px;
+            }
+
+            .blog-content {
+                padding: 30px 22px;
+            }
+
+            .blog-content h2 {
+                font-size: 25px;
+            }
+
+            .blog-content p,
+            .blog-content li {
+                font-size: 16px;
+            }
+
+            .connect-btn {
+                width: 90%;
+                max-width: 350px;
+            }
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+
+<!-- ================= NAVBAR ================= -->
+
+<header class="navbar">
+
+    <div class="logo-container">
+
+        <img src="frontend/register.png"
+             alt="RAPTORA Logo"
+             class="logo">
+
+        <span class="logo-text">
+            RAPTORA
+        </span>
+
+    </div>
+
+    <nav>
+
+        <ul class="nav-links">
+
+            <li>
+                <a href="index.html#home">Home</a>
+            </li>
+
+            <li>
+                <a href="index.html#features">Features</a>
+            </li>
+
+            <li>
+                <a href="index.html#resources">Resources</a>
+            </li>
+
+            <li>
+                <a href="index.html#connect">Connect</a>
+            </li>
+
+        </ul>
+
+    </nav>
+
+    <a href="index.html" class="back-btn">
+        <i class="fa-solid fa-arrow-left"></i>
+        Back
+    </a>
+
+</header>
+
+
+<!-- ================= HERO ================= -->
+
+<section class="blog-hero">
+
+    <div class="hero-content">
+
+        <div class="hero-icon">
+            <i class="fa-solid fa-list-check"></i>
+        </div>
+
+        <h1>
+            Pros &
+            <span class="highlight">Cons</span>
+            of Colleges
+        </h1>
+
+        <p class="hero-subtitle">
+            Because no college is perfect. See both sides,
+            understand the reality, and choose what works for you.
+        </p>
+
+    </div>
+
+</section>
+
+
+<!-- ================= BLOG ================= -->
+
+<main class="blog-container">
+
+    <article class="blog-content">
+
+        <p>
+            Every college looks great on a website.
+        </p>
+
+        <p>
+            Beautiful campus pictures. Big buildings.
+            Impressive placement numbers. Awards. Rankings.
+        </p>
+
+        <p>
+            And a long list of things that make you think:
+        </p>
+
+        <div class="quote">
+            “This has to be the perfect college.”
+        </div>
+
+        <p>
+            But then you actually start talking to students.
+        </p>
+
+        <p>
+            And suddenly, you hear a completely different side
+            of the story.
+        </p>
+
+        <p>
+            Maybe the campus is amazing, but the attendance rules
+            are strict.
+        </p>
+
+        <p>
+            Maybe the placements are great, but the workload is
+            intense.
+        </p>
+
+        <p>
+            Maybe the fees are affordable, but the hostel isn't
+            everyone's favourite.
+        </p>
+
+        <p>
+            Maybe the college isn't highly ranked, but the students
+            absolutely love the environment.
+        </p>
+
+        <p>
+            And that's exactly why looking at both the
+            <strong>pros and cons</strong> of a college matters.
+        </p>
+
+
+        <!-- SECTION 1 -->
+
+        <h2>
+            The Perfect College Doesn't Exist
+        </h2>
+
+        <p>
+            Let's be honest.
+        </p>
+
+        <p>
+            Every college has something good about it.
+            And every college has something that could be better.
+        </p>
+
+        <p>
+            That's normal.
+        </p>
+
+        <p>
+            The problem starts when we only look at one side.
+        </p>
+
+        <p>
+            A college brochure will obviously tell you about its
+            strengths.
+        </p>
+
+        <p>
+            But as a student, you also need to know:
+        </p>
+
+        <div class="quote">
+            “What could be difficult about studying here?”
+        </div>
+
+        <p>
+            That's not being negative.
+            That's being prepared.
+        </p>
+
+
+        <!-- SECTION 2 -->
+
+        <h2>
+            What Looks Good on Paper Isn't Always the Whole Story
+        </h2>
+
+        <p>
+            You might read:
+        </p>
+
+        <div class="quote">
+            “Excellent placement opportunities.”
+        </div>
+
+        <p>
+            Sounds great.
+        </p>
+
+        <p>
+            But you may still want to know:
+        </p>
+
+        <ul>
+
+            <li>How many students actually get placed?</li>
+
+            <li>Which branches get the most opportunities?</li>
+
+            <li>What is the average package?</li>
+
+            <li>Which companies visit?</li>
+
+            <li>How helpful is the placement cell?</li>
+
+        </ul>
+
+        <p>
+            Similarly, you might read:
+        </p>
+
+        <div class="quote">
+            “Beautiful campus and excellent facilities.”
+        </div>
+
+        <p>
+            But you may want to ask:
+        </p>
+
+        <ul>
+
+            <li>Are the facilities actually accessible to students?</li>
+
+            <li>Are the labs well maintained?</li>
+
+            <li>How crowded are they?</li>
+
+            <li>What is the day-to-day campus experience like?</li>
+
+        </ul>
+
+
+        <!-- SECTION 3 -->
+
+        <h2>
+            Ask Students Who Actually Go There
+        </h2>
+
+        <p>
+            This is where student experiences can be incredibly
+            useful.
+        </p>
+
+        <p>
+            A current student might tell you something that you
+            won't find in a brochure.
+        </p>
+
+        <div class="quote">
+            “The professors are really supportive.”
+        </div>
+
+        <div class="quote">
+            “The workload is quite heavy, so manage your time properly.”
+        </div>
+
+        <div class="quote">
+            “The campus is great, but getting around without a
+            vehicle can be difficult.”
+        </div>
+
+        <p>
+            These small details can help you imagine what your
+            everyday life might actually look like.
+        </p>
+
+
+        <!-- SECTION 4 -->
+
+        <h2>
+            What Should You Look For?
+        </h2>
+
+        <p>
+            When comparing colleges, don't just ask:
+        </p>
+
+        <div class="quote">
+            “Is this college good?”
+        </div>
+
+        <p>
+            That's too broad.
+        </p>
+
+        <p>
+            Instead, break it down.
+        </p>
+
+
+        <h3>Academics</h3>
+
+        <ul>
+
+            <li>Teaching quality</li>
+
+            <li>Faculty support</li>
+
+            <li>Attendance requirements</li>
+
+            <li>Academic workload</li>
+
+            <li>Labs and practical learning</li>
+
+            <li>Projects and assignments</li>
+
+        </ul>
+
+        <p>
+            A college may have excellent academics but a demanding
+            schedule.
+        </p>
+
+        <p>
+            That's not necessarily bad. It just means you should
+            know what you're getting into.
+        </p>
+
+
+        <h3>Campus Life</h3>
+
+        <p>
+            College isn't only about classes.
+        </p>
+
+        <ul>
+
+            <li>Clubs</li>
+
+            <li>Events</li>
+
+            <li>Festivals</li>
+
+            <li>Sports</li>
+
+            <li>Student communities</li>
+
+            <li>Campus atmosphere</li>
+
+        </ul>
+
+        <p>
+            Some students love a busy and active campus.
+            Others prefer something quieter.
+        </p>
+
+        <p>
+            There's no right answer. It depends on you.
+        </p>
+
+
+        <h3>Hostel Life</h3>
+
+        <p>
+            If you're planning to stay away from home, hostel life
+            becomes a big part of your college experience.
+        </p>
+
+        <ul>
+
+            <li>Food</li>
+
+            <li>Room conditions</li>
+
+            <li>Rules</li>
+
+            <li>Curfew</li>
+
+            <li>Cleanliness</li>
+
+            <li>Internet</li>
+
+            <li>Safety</li>
+
+            <li>Distance from campus</li>
+
+        </ul>
+
+
+        <h3>Placements</h3>
+
+        <p>
+            Placement information is important, but don't stop at
+            the highest package.
+        </p>
+
+        <ul>
+
+            <li>Average package</li>
+
+            <li>Median package</li>
+
+            <li>Placement percentage</li>
+
+            <li>Recruiting companies</li>
+
+            <li>Branch-wise opportunities</li>
+
+            <li>Internship support</li>
+
+        </ul>
+
+        <p>
+            And remember:
+        </p>
+
+        <div class="quote">
+            One student's placement experience doesn't represent
+            everyone's experience.
+        </div>
+
+
+        <!-- SECTION 5 -->
+
+        <h2>
+            Pros and Cons Can Be Personal
+        </h2>
+
+        <p>
+            Here's something important.
+        </p>
+
+        <p>
+            The same thing can be a
+            <strong>pro for one student and a con for another.</strong>
+        </p>
+
+        <p>
+            For example:
+        </p>
+
+        <div class="quote">
+            Strict attendance
+        </div>
+
+        <p>
+            One student might think:
+        </p>
+
+        <div class="quote">
+            “That's annoying.”
+        </div>
+
+        <p>
+            Another might think:
+        </p>
+
+        <div class="quote">
+            “It keeps me disciplined.”
+        </div>
+
+        <p>
+            That's why you shouldn't blindly copy someone else's
+            opinion.
+        </p>
+
+        <p>
+            Their experience can inform your decision.
+            It shouldn't make the decision for you.
+        </p>
+
+
+        <!-- SECTION 6 -->
+
+        <h2>
+            Don't Believe Every Review You See
+        </h2>
+
+        <p>
+            Reviews can be helpful.
+            But you also need to be careful.
+        </p>
+
+        <p>
+            One extremely positive review doesn't automatically
+            mean the college is perfect.
+        </p>
+
+        <p>
+            One extremely negative review doesn't automatically
+            mean the college is terrible.
+        </p>
+
+        <p>
+            People have different experiences.
+        </p>
+
+        <p>
+            Someone may have had a great experience because of
+            their branch, friends, teachers or personal circumstances.
+        </p>
+
+        <p>
+            Someone else may have had a difficult experience for
+            completely different reasons.
+        </p>
+
+        <p>
+            So instead of asking:
+        </p>
+
+        <div class="quote">
+            “Which review should I believe?”
+        </div>
+
+        <p>
+            Look for <strong>patterns.</strong>
+        </p>
+
+        <p>
+            If many students independently mention the same thing,
+            that's worth paying attention to.
+        </p>
+
+
+        <!-- SECTION 7 -->
+
+        <h2>
+            Look for Honest Experiences
+        </h2>
+
+        <p>
+            The most useful reviews aren't always the ones saying:
+        </p>
+
+        <div class="quote">
+            “Best college ever!”
+        </div>
+
+        <p>
+            They're often the balanced ones.
+        </p>
+
+        <div class="quote">
+            “The placements are good, but the academic schedule
+            can be hectic.”
+        </div>
+
+        <div class="quote">
+            “The campus is small, but the student community is
+            really good.”
+        </div>
+
+        <div class="quote">
+            “The fees are reasonable, but hostel facilities could
+            be better.”
+        </div>
+
+        <p>
+            Those kinds of experiences give you a much clearer
+            picture.
+        </p>
+
+        <p>
+            You don't need a college that has zero problems.
+        </p>
+
+        <p>
+            You need to know what those problems are before you
+            choose.
+        </p>
+
+
+        <!-- SECTION 8 -->
+
+        <h2>
+            Make Your Own Pros & Cons List
+        </h2>
+
+        <p>
+            One simple thing you can do is create your own list.
+        </p>
+
+        <div class="table-container">
+
+            <table class="comparison-table">
+
+                <thead>
+
+                    <tr>
+                        <th>Pros</th>
+                        <th>Cons</th>
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    <tr>
+                        <td>Good placements</td>
+                        <td>Strict attendance</td>
+                    </tr>
+
+                    <tr>
+                        <td>Affordable fees</td>
+                        <td>Limited campus space</td>
+                    </tr>
+
+                    <tr>
+                        <td>Strong faculty</td>
+                        <td>Heavy workload</td>
+                    </tr>
+
+                    <tr>
+                        <td>Good location</td>
+                        <td>Hostel could improve</td>
+                    </tr>
+
+                    <tr>
+                        <td>Active clubs</td>
+                        <td>Crowded facilities</td>
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+        <p>
+            Now you can actually see the trade-offs.
+        </p>
+
+        <p>
+            And that's much more useful than simply saying:
+        </p>
+
+        <div class="quote">
+            “This college is good.”
+        </div>
+
+
+        <!-- SECTION 9 -->
+
+        <h2>
+            Talk to More Than One Student
+        </h2>
+
+        <p>
+            If possible, don't base your entire decision on one
+            person's experience.
+        </p>
+
+        <p>
+            Try talking to students from:
+        </p>
+
+        <ul>
+
+            <li>Different years</li>
+
+            <li>Different branches</li>
+
+            <li>Different backgrounds</li>
+
+        </ul>
+
+        <p>
+            A first-year student's experience might be very
+            different from a final-year student's experience.
+        </p>
+
+        <p>
+            A CSE student's experience might be different from
+            an ECE student's.
+        </p>
+
+        <p>
+            And someone living in the hostel may have a completely
+            different perspective from someone who lives nearby.
+        </p>
+
+        <p>
+            The more perspectives you hear, the clearer the picture
+            becomes.
+        </p>
+
+
+        <!-- SECTION 10 -->
+
+        <h2>
+            That's What RAPTORA Wants to Make Easier
+        </h2>
+
+        <p>
+            At <strong>RAPTORA</strong>, we believe students
+            deserve more than polished college advertisements.
+        </p>
+
+        <p>
+            You should be able to understand both sides.
+        </p>
+
+        <p>
+            The good.
+        </p>
+
+        <p>
+            The difficult.
+        </p>
+
+        <p>
+            The exciting.
+        </p>
+
+        <p>
+            The frustrating.
+        </p>
+
+        <p>
+            The opportunities.
+        </p>
+
+        <p>
+            And the things you might want to think about before
+            joining.
+        </p>
+
+        <p>
+            That's why our
+            <strong>Pros & Cons of Colleges</strong>
+            feature focuses on helping students look beyond
+            the brochure.
+        </p>
+
+        <ul>
+
+            <li>Genuine student experiences</li>
+
+            <li>Campus pros and cons</li>
+
+            <li>Academic experiences</li>
+
+            <li>Placement experiences</li>
+
+            <li>Hostel feedback</li>
+
+            <li>Infrastructure opinions</li>
+
+            <li>Branch-specific experiences</li>
+
+            <li>Different student perspectives</li>
+
+        </ul>
+
+        <p>
+            Because choosing a college is a big decision.
+        </p>
+
+        <p>
+            And you deserve to see the bigger picture.
+        </p>
+
+
+        <!-- SECTION 11 -->
+
+        <h2>
+            Your Experience May Be Different
+        </h2>
+
+        <p>
+            Even after reading reviews and talking to students,
+            remember one thing:
+        </p>
+
+        <div class="quote">
+            Your college experience will be your own.
+        </div>
+
+        <p>
+            You might love a place that someone else disliked.
+        </p>
+
+        <p>
+            You might struggle with something another student found
+            easy.
+        </p>
+
+        <p>
+            That's completely normal.
+        </p>
+
+        <p>
+            Use other people's experiences as information.
+        </p>
+
+        <p>
+            Not as a final verdict.
+        </p>
+
+
+        <!-- SECTION 12 -->
+
+        <h2>
+            Don't Search for Perfect. Search for Right.
+        </h2>
+
+        <p>
+            Instead of asking:
+        </p>
+
+        <div class="quote">
+            “Which college has no disadvantages?”
+        </div>
+
+        <p>
+            ask:
+        </p>
+
+        <div class="quote">
+            “Which college's advantages matter most to me,
+            and which disadvantages can I live with?”
+        </div>
+
+        <p>
+            Maybe you care most about placements.
+        </p>
+
+        <p>
+            Maybe fees are your biggest concern.
+        </p>
+
+        <p>
+            Maybe campus life matters more.
+        </p>
+
+        <p>
+            Maybe you're focused on a particular branch.
+        </p>
+
+        <p>
+            Maybe location is extremely important.
+        </p>
+
+        <p>
+            Your priorities are what make the decision personal.
+        </p>
+
+
+        <!-- SECTION 13 -->
+
+        <h2>
+            Before You Choose, Ask Yourself
+        </h2>
+
+        <ul>
+
+            <li>
+                What are the biggest advantages of this college?
+            </li>
+
+            <li>
+                What are the biggest disadvantages?
+            </li>
+
+            <li>
+                Do the pros actually matter to me?
+            </li>
+
+            <li>
+                Can I handle the cons?
+            </li>
+
+            <li>
+                Have I spoken to students who are actually
+                studying there?
+            </li>
+
+            <li>
+                Have I looked at more than one opinion?
+            </li>
+
+        </ul>
+
+        <p>
+            If you can answer those questions honestly, you'll
+            already be making a much more informed decision.
+        </p>
+
+
+        <!-- FINAL -->
+
+        <h2>
+            A Realistic College Decision Is Better Than a
+            Perfect-Sounding One
+        </h2>
+
+        <p>
+            No college is perfect.
+        </p>
+
+        <p>
+            And that's okay.
+        </p>
+
+        <p>
+            You don't need a college where everything is amazing.
+        </p>
+
+        <p>
+            You need a college where the
+            <strong>good things outweigh the things you're not
+            comfortable with.</strong>
+        </p>
+
+        <p>
+            Look beyond rankings.
+        </p>
+
+        <p>
+            Look beyond advertisements.
+        </p>
+
+        <p>
+            Look beyond one review.
+        </p>
+
+        <p>
+            Talk to students.
+        </p>
+
+        <p>
+            Compare experiences.
+        </p>
+
+        <p>
+            Ask questions.
+        </p>
+
+        <p>
+            Understand the reality.
+        </p>
+
+        <p>
+            Then make your choice.
+        </p>
+
+        <div class="quote">
+            Don't choose the college that looks perfect on paper.
+        </div>
+
+        <div class="quote">
+            Choose the college that feels right after you've seen
+            the whole picture.
+        </div>
+
+        <p>
+            <strong>
+                See Both Sides. Choose With Confidence.
+            </strong>
+        </p>
+
+        <p>
+            Your admission journey, reimagined by RAPTORA.
+        </p>
+
+    </article>
+
+</main>
+
+
+<!-- ================= CONNECT WITH US ================= -->
+
+<div class="connect-container">
+
+    <a href="index.html#connect" class="connect-btn">
+
+        <i class="fa-solid fa-users"></i>
+
+        CONNECT WITH US
+
+    </a>
+
+</div>
+
+
+<!-- ================= BACK TO FEATURES ================= -->
+
+<div class="bottom-buttons">
+
+    <a href="index.html#features" class="home-btn">
+
+        <i class="fa-solid fa-arrow-left"></i>
+
+        Back to RAPTORA Features
+
+    </a>
+
+</div>
+
+
+<!-- ================= FOOTER ================= -->
+
+<footer>
+
+    <div class="footer-top">
+
+        <span class="footer-motto">
+            SMARTER CHOICES.
+        </span>
+
+        |
+
+        <span class="footer-motto">
+            BETTER COLLEGES.
+        </span>
+
+        |
+
+        <span class="footer-motto">
+            BRIGHTER FUTURES.
+        </span>
+
+    </div>
+
+    <p class="footer-bottom">
+        RAPTORA &mdash; YOUR ADMISSION PARTNER FOR LIFE. ❤️
+    </p>
+
+</footer>
+
+</body>
+</html>
+
