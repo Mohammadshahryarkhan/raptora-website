@@ -1,0 +1,1202 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Content Hub & Guidance | RAPTORA</title>
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: #080808;
+            color: white;
+            line-height: 1.8;
+        }
+
+        /* ================= NAVBAR ================= */
+
+        .navbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px 7%;
+            background: #050505;
+            border-bottom: 1px solid #252525;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo {
+            width: 55px;
+            height: 55px;
+            object-fit: contain;
+        }
+
+        .logo-text {
+            color: white;
+            font-size: 22px;
+            font-weight: bold;
+            margin-left: 10px;
+            letter-spacing: 2px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: #ddd;
+            text-decoration: none;
+            transition: 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #ff1e1e;
+        }
+
+        .back-btn {
+            color: white;
+            text-decoration: none;
+            border: 1px solid #ff1e1e;
+            padding: 8px 18px;
+            border-radius: 6px;
+            transition: 0.3s;
+        }
+
+        .back-btn:hover {
+            background: #ff1e1e;
+            color: white;
+        }
+
+        /* ================= HERO ================= */
+
+        .blog-hero {
+            min-height: 430px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 70px 20px;
+
+            background:
+                radial-gradient(
+                    circle at center,
+                    #3b0000 0%,
+                    #150000 35%,
+                    #080808 75%
+                );
+        }
+
+        .hero-content {
+            max-width: 900px;
+        }
+
+        .hero-icon {
+            font-size: 60px;
+            color: #ff1e1e;
+            margin-bottom: 20px;
+        }
+
+        .blog-hero h1 {
+            font-size: clamp(40px, 6vw, 65px);
+            line-height: 1.2;
+            margin-bottom: 20px;
+        }
+
+        .highlight {
+            color: #ff1e1e;
+        }
+
+        .hero-subtitle {
+            color: #bbb;
+            font-size: 18px;
+            max-width: 700px;
+            margin: auto;
+        }
+
+        /* ================= BLOG ================= */
+
+        .blog-container {
+            max-width: 900px;
+            margin: 70px auto;
+            padding: 0 20px;
+        }
+
+        .blog-content {
+            background: #111;
+            border: 1px solid #252525;
+            border-radius: 15px;
+            padding: 55px;
+            box-shadow: 0 0 40px rgba(255, 0, 0, 0.08);
+        }
+
+        .blog-content h2 {
+            font-size: 30px;
+            margin-top: 45px;
+            margin-bottom: 15px;
+            line-height: 1.3;
+        }
+
+        .blog-content h2:first-child {
+            margin-top: 0;
+        }
+
+        .blog-content h3 {
+            color: #ff1e1e;
+            font-size: 23px;
+            margin-top: 30px;
+            margin-bottom: 12px;
+        }
+
+        .blog-content p {
+            color: #ccc;
+            font-size: 17px;
+            margin-bottom: 18px;
+        }
+
+        .blog-content strong {
+            color: white;
+        }
+
+        .blog-content ul {
+            margin: 20px 0 30px 25px;
+        }
+
+        .blog-content li {
+            color: #ccc;
+            margin: 8px 0;
+        }
+
+        .blog-content li::marker {
+            color: #ff1e1e;
+        }
+
+        /* ================= QUOTE ================= */
+
+        .quote {
+            margin: 25px 0;
+            padding: 20px 25px;
+            background: #181818;
+            border-left: 4px solid #ff1e1e;
+            border-radius: 0 8px 8px 0;
+            color: white;
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        /* ================= INFO BOX ================= */
+
+        .info-box {
+            margin: 30px 0;
+            padding: 28px;
+            background: #180000;
+            border: 1px solid #4a0000;
+            border-radius: 12px;
+        }
+
+        .info-box h3 {
+            color: #ff1e1e;
+            margin-top: 0;
+        }
+
+        /* ================= CONNECT BUTTON ================= */
+
+        .connect-container {
+            text-align: center;
+            margin: 60px 20px 35px;
+        }
+
+        .connect-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+
+            padding: 15px 32px;
+
+            background: #ff1e1e;
+            color: white !important;
+
+            text-decoration: none;
+
+            border-radius: 8px;
+
+            font-size: 17px;
+            font-weight: bold;
+
+            transition: 0.3s;
+        }
+
+        .connect-btn:hover {
+            background: #d40000;
+            color: white !important;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(255, 0, 0, 0.25);
+        }
+
+        /* ================= BACK BUTTON ================= */
+
+        .bottom-buttons {
+            text-align: center;
+            margin: 35px 0 60px;
+        }
+
+        .home-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+
+            padding: 13px 25px;
+
+            background: #ff1e1e;
+            color: white;
+
+            text-decoration: none;
+
+            border-radius: 7px;
+            font-weight: bold;
+
+            transition: 0.3s;
+        }
+
+        .home-btn:hover {
+            background: #d40000;
+            transform: translateY(-2px);
+        }
+
+        /* ================= FOOTER ================= */
+
+        footer {
+            background: #050505;
+            border-top: 1px solid #222;
+            text-align: center;
+            padding: 35px 20px;
+        }
+
+        .footer-top {
+            color: #aaa;
+            font-size: 13px;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+        }
+
+        .footer-motto {
+            color: white;
+        }
+
+        .footer-bottom {
+            color: #666;
+            font-size: 13px;
+        }
+
+        /* ================= MOBILE ================= */
+
+        @media (max-width: 768px) {
+
+            .navbar {
+                padding: 12px 5%;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .blog-hero {
+                min-height: 350px;
+            }
+
+            .blog-hero h1 {
+                font-size: 40px;
+            }
+
+            .blog-content {
+                padding: 30px 22px;
+            }
+
+            .blog-content h2 {
+                font-size: 25px;
+            }
+
+            .blog-content p,
+            .blog-content li {
+                font-size: 16px;
+            }
+
+            .connect-btn {
+                width: 90%;
+                max-width: 350px;
+            }
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+
+<!-- ================= NAVBAR ================= -->
+
+<header class="navbar">
+
+    <div class="logo-container">
+
+        <img src="frontend/register.png"
+             alt="RAPTORA Logo"
+             class="logo">
+
+        <span class="logo-text">
+            RAPTORA
+        </span>
+
+    </div>
+
+    <nav>
+
+        <ul class="nav-links">
+
+            <li>
+                <a href="index.html#home">Home</a>
+            </li>
+
+            <li>
+                <a href="index.html#features">Features</a>
+            </li>
+
+            <li>
+                <a href="index.html#resources">Resources</a>
+            </li>
+
+            <li>
+                <a href="index.html#connect">Connect</a>
+            </li>
+
+        </ul>
+
+    </nav>
+
+    <a href="index.html" class="back-btn">
+        <i class="fa-solid fa-arrow-left"></i>
+        Back
+    </a>
+
+</header>
+
+
+<!-- ================= HERO ================= -->
+
+<section class="blog-hero">
+
+    <div class="hero-content">
+
+        <div class="hero-icon">
+            <i class="fa-solid fa-book-open-reader"></i>
+        </div>
+
+        <h1>
+            Content Hub &
+            <span class="highlight">Guidance</span>
+        </h1>
+
+        <p class="hero-subtitle">
+            Because sometimes you don't need more information.
+            You just need someone to explain it properly.
+        </p>
+
+    </div>
+
+</section>
+
+
+<!-- ================= BLOG ================= -->
+
+<main class="blog-container">
+
+    <article class="blog-content">
+
+        <p>
+            Let's be honest.
+        </p>
+
+        <p>
+            The college admission process can feel like a lot.
+        </p>
+
+        <p>
+            One minute you're thinking about your entrance exam.
+        </p>
+
+        <p>
+            Then suddenly you're searching for cutoffs.
+        </p>
+
+        <p>
+            Then counselling dates.
+        </p>
+
+        <p>
+            Then documents.
+        </p>
+
+        <p>
+            Then college choices.
+        </p>
+
+        <p>
+            Then branches.
+        </p>
+
+        <p>
+            Then fees.
+        </p>
+
+        <p>
+            And somewhere in between all of this, you're wondering:
+        </p>
+
+        <div class="quote">
+            “Wait… what am I actually supposed to do next?”
+        </div>
+
+        <p>
+            We've all been there.
+        </p>
+
+        <p>
+            And sometimes the problem isn't that information isn't
+            available.
+        </p>
+
+        <p>
+            The problem is that there's <strong>too much of it.</strong>
+        </p>
+
+        <p>
+            That's where the
+            <strong>RAPTORA Content Hub & Guidance</strong>
+            comes in.
+        </p>
+
+
+        <!-- SECTION 1 -->
+
+        <h2>
+            Information Is Everywhere. Clear Information Is Not.
+        </h2>
+
+        <p>
+            You can search almost anything online.
+        </p>
+
+        <div class="quote">
+            “KCET counselling process.”
+        </div>
+
+        <div class="quote">
+            “JEE college choices.”
+        </div>
+
+        <div class="quote">
+            “NEET counselling documents.”
+        </div>
+
+        <div class="quote">
+            “COMEDK cutoff.”
+        </div>
+
+        <p>
+            You'll find hundreds of results.
+        </p>
+
+        <p>
+            But then you open one page and it's full of complicated
+            terms.
+        </p>
+
+        <p>
+            You open another and the information is outdated.
+        </p>
+
+        <p>
+            Another one explains only half the process.
+        </p>
+
+        <p>
+            And after reading five different websites, you're
+            somehow even more confused.
+        </p>
+
+        <p>
+            <strong>That's the problem we want to solve.</strong>
+        </p>
+
+        <p>
+            RAPTORA aims to bring useful admission information
+            together and explain it in a way that actually makes
+            sense to students.
+        </p>
+
+
+        <!-- SECTION 2 -->
+
+        <h2>
+            What Can You Find in the Content Hub?
+        </h2>
+
+        <p>
+            The Content Hub is designed to be more than just a
+            collection of random articles.
+        </p>
+
+        <p>
+            It's a place where you can find information that helps
+            you understand your admission journey.
+        </p>
+
+
+        <h3>
+            Admission Blogs
+        </h3>
+
+        <p>
+            Not everyone wants to read complicated official
+            documents all day.
+        </p>
+
+        <p>
+            Sometimes you just want someone to explain things
+            normally.
+        </p>
+
+        <p>
+            Our blogs can cover topics like:
+        </p>
+
+        <ul>
+
+            <li>How counselling works</li>
+
+            <li>How to choose a college</li>
+
+            <li>How to compare branches</li>
+
+            <li>What to check before accepting a seat</li>
+
+            <li>Understanding college cutoffs</li>
+
+            <li>Things students should know before joining</li>
+
+            <li>Common admission mistakes</li>
+
+        </ul>
+
+        <p>
+            The goal is simple:
+        </p>
+
+        <div class="quote">
+            Explain complicated things without making them feel
+            complicated.
+        </div>
+
+
+        <!-- SECTION 3 -->
+
+        <h2>
+            Admission Roadmaps
+        </h2>
+
+        <p>
+            One of the most confusing parts of admission is knowing
+            what comes next.
+        </p>
+
+        <p>
+            You finish your exam.
+        </p>
+
+        <div class="quote">
+            Then what?
+        </div>
+
+        <ul>
+
+            <li>Results?</li>
+
+            <li>Counselling?</li>
+
+            <li>Registration?</li>
+
+            <li>Choice filling?</li>
+
+            <li>Seat allotment?</li>
+
+            <li>Document verification?</li>
+
+            <li>Reporting?</li>
+
+        </ul>
+
+        <p>
+            There can be a lot of steps.
+        </p>
+
+        <p>
+            A roadmap can help you see the process from beginning
+            to end.
+        </p>
+
+        <p>
+            Instead of thinking:
+        </p>
+
+        <div class="quote">
+            “What do I do now?”
+        </div>
+
+        <p>
+            you can simply follow the journey step by step.
+        </p>
+
+
+        <!-- SECTION 4 -->
+
+        <h2>
+            Career Guidance
+        </h2>
+
+        <p>
+            Choosing a college is important.
+        </p>
+
+        <p>
+            But choosing what you want to do with your degree
+            matters too.
+        </p>
+
+        <p>
+            Maybe you're interested in software.
+        </p>
+
+        <p>
+            Maybe AI and machine learning sounds exciting.
+        </p>
+
+        <p>
+            Maybe you want to become a doctor.
+        </p>
+
+        <p>
+            Maybe you're interested in finance, law, design,
+            research or something completely different.
+        </p>
+
+        <p>
+            You don't need to have your entire life figured out
+            at 18 or 19.
+        </p>
+
+        <p>
+            But having some direction can help.
+        </p>
+
+        <p>
+            Career guidance can help you understand different
+            options, skills, career paths and what you might want
+            to explore.
+        </p>
+
+
+        <!-- SECTION 5 -->
+
+        <h2>
+            State-Wise Quota Breakdown
+        </h2>
+
+        <p>
+            This is one of those things that can get
+            <strong>really confusing.</strong>
+        </p>
+
+        <p>
+            Different states can have different counselling systems,
+            quotas, eligibility rules and admission processes.
+        </p>
+
+        <p>
+            And if you're applying through multiple exams or
+            counselling systems, it can become even harder to keep
+            track.
+        </p>
+
+        <p>
+            That's why understanding things like:
+        </p>
+
+        <ul>
+
+            <li>State quota</li>
+
+            <li>All India quota</li>
+
+            <li>Home-state eligibility</li>
+
+            <li>Reservation categories</li>
+
+            <li>Counselling authorities</li>
+
+            <li>Seat distribution</li>
+
+        </ul>
+
+        <p>
+            can make a big difference.
+        </p>
+
+        <p>
+            The more you understand the system, the easier it
+            becomes to make informed choices.
+        </p>
+
+
+        <!-- SECTION 6 -->
+
+        <h2>
+            You Don't Have to Read Everything
+        </h2>
+
+        <p>
+            Here's something important.
+        </p>
+
+        <p>
+            The Content Hub isn't about making you read hundreds
+            of pages.
+        </p>
+
+        <p>
+            It's about helping you find the
+            <strong>right information at the right time.</strong>
+        </p>
+
+        <div class="info-box">
+
+            <h3>
+                Need Help With Something Specific?
+            </h3>
+
+            <ul>
+
+                <li>
+                    Preparing for counselling?
+                    Read the counselling guide.
+                </li>
+
+                <li>
+                    Confused about branches?
+                    Check the branch guidance.
+                </li>
+
+                <li>
+                    Comparing colleges?
+                    Read the comparison and ROI content.
+                </li>
+
+                <li>
+                    Trying to understand quotas?
+                    Go through the relevant quota guide.
+                </li>
+
+            </ul>
+
+        </div>
+
+        <p>
+            Your admission journey changes over time.
+        </p>
+
+        <p>
+            Your information should change with it.
+        </p>
+
+
+        <!-- SECTION 7 -->
+
+        <h2>
+            What About Students Who Are Completely New to This?
+        </h2>
+
+        <p>
+            That's exactly who needs guidance the most.
+        </p>
+
+        <p>
+            You shouldn't need to already understand every
+            admission term before you can find help.
+        </p>
+
+        <p>
+            Terms like:
+        </p>
+
+        <ul>
+
+            <li>Choice filling</li>
+
+            <li>Seat matrix</li>
+
+            <li>Round-wise cutoff</li>
+
+            <li>All India quota</li>
+
+            <li>Home-state quota</li>
+
+        </ul>
+
+        <p>
+            can sound confusing when you first hear them.
+        </p>
+
+        <p>
+            Good guidance should explain these things instead of
+            assuming you already know them.
+        </p>
+
+
+        <!-- SECTION 8 -->
+
+        <h2>
+            Learn Before You Decide
+        </h2>
+
+        <p>
+            One of the biggest mistakes students can make is
+            making a decision simply because everyone else is doing
+            it.
+        </p>
+
+        <p>
+            Your friend chose a college.
+        </p>
+
+        <p>
+            Someone on Instagram recommended another one.
+        </p>
+
+        <p>
+            A random video says one branch is “the best.”
+        </p>
+
+        <p>
+            And suddenly you're thinking about making the same
+            choice.
+        </p>
+
+        <p>
+            But your situation may be completely different.
+        </p>
+
+        <ul>
+
+            <li>Your rank</li>
+
+            <li>Your budget</li>
+
+            <li>Your interests</li>
+
+            <li>Your location</li>
+
+            <li>Your career plans</li>
+
+            <li>Your priorities</li>
+
+        </ul>
+
+        <p>
+            All of these matter.
+        </p>
+
+        <p>
+            That's why information should help you
+            <strong>think</strong>, not simply tell you what to do.
+        </p>
+
+
+        <!-- SECTION 9 -->
+
+        <h2>
+            That's What RAPTORA Is Building
+        </h2>
+
+        <p>
+            At <strong>RAPTORA</strong>, we want students to have
+            a place where they can come when they're confused.
+        </p>
+
+        <p>
+            Not just for one exam.
+        </p>
+
+        <p>
+            Not just for one college.
+        </p>
+
+        <p>
+            Not just for one stage of admission.
+        </p>
+
+        <p>
+            But throughout the journey.
+        </p>
+
+        <div class="quote">
+            “Which exam should I prepare for?”
+        </div>
+
+        <div class="quote">
+            “Which colleges can I consider?”
+        </div>
+
+        <div class="quote">
+            “How does counselling work?”
+        </div>
+
+        <div class="quote">
+            “Which branch should I choose?”
+        </div>
+
+        <div class="quote">
+            “What should I do after getting my seat?”
+        </div>
+
+        <p>
+            The idea is to make the journey feel a little less
+            overwhelming.
+        </p>
+
+
+        <!-- SECTION 10 -->
+
+        <h2>
+            One Place. Different Questions. Clearer Answers.
+        </h2>
+
+        <p>
+            The admission process can already be stressful.
+        </p>
+
+        <p>
+            You shouldn't have to spend hours jumping between
+            random websites just to understand one simple thing.
+        </p>
+
+        <p>
+            That's why the
+            <strong>Content Hub & Guidance</strong>
+            feature brings together:
+        </p>
+
+        <ul>
+
+            <li>In-depth admission blogs</li>
+
+            <li>Admission roadmaps</li>
+
+            <li>Career guidance</li>
+
+            <li>Counselling explanations</li>
+
+            <li>State-wise quota information</li>
+
+            <li>College and branch guidance</li>
+
+            <li>Helpful tips and checklists</li>
+
+        </ul>
+
+        <p>
+            All with one goal:
+        </p>
+
+        <div class="quote">
+            Make complicated admission information easier to
+            understand.
+        </div>
+
+
+        <!-- SECTION 11 -->
+
+        <h2>
+            Your Questions Are Part of the Journey
+        </h2>
+
+        <p>
+            It's completely okay if you have questions.
+        </p>
+
+        <p>
+            It's okay if you don't understand counselling the
+            first time.
+        </p>
+
+        <p>
+            It's okay if you aren't sure which branch to choose.
+        </p>
+
+        <p>
+            It's okay if you change your mind.
+        </p>
+
+        <p>
+            It's okay if you need someone to explain something
+            again.
+        </p>
+
+        <p>
+            The important thing is to
+            <strong>ask, learn and understand before making a
+            decision.</strong>
+        </p>
+
+        <p>
+            Because your admission journey shouldn't be based on
+            confusion.
+        </p>
+
+        <p>
+            It should be based on information you actually
+            understand.
+        </p>
+
+
+        <!-- FINAL -->
+
+        <h2>
+            Don't Just Search. Understand.
+        </h2>
+
+        <p>
+            There is a difference between finding information and
+            actually understanding it.
+        </p>
+
+        <p>
+            You can read ten articles and still feel lost.
+        </p>
+
+        <p>
+            Or you can find one clear explanation that finally
+            makes everything click.
+        </p>
+
+        <p>
+            That's what we're aiming for with RAPTORA.
+        </p>
+
+        <div class="quote">
+            Less confusion. More clarity. Better decisions.
+        </div>
+
+        <p>
+            <strong>
+                Learn. Understand. Choose With Confidence.
+            </strong>
+        </p>
+
+        <p>
+            Your admission journey, reimagined by RAPTORA.
+        </p>
+
+    </article>
+
+</main>
+
+
+<!-- ================= CONNECT WITH US ================= -->
+
+<div class="connect-container">
+
+    <a href="index.html#connect" class="connect-btn">
+
+        <i class="fa-solid fa-users"></i>
+
+        CONNECT WITH US
+
+    </a>
+
+</div>
+
+
+<!-- ================= BACK TO FEATURES ================= -->
+
+<div class="bottom-buttons">
+
+    <a href="index.html#features" class="home-btn">
+
+        <i class="fa-solid fa-arrow-left"></i>
+
+        Back to RAPTORA Features
+
+    </a>
+
+</div>
+
+
+<!-- ================= FOOTER ================= -->
+
+<footer>
+
+    <div class="footer-top">
+
+        <span class="footer-motto">
+            SMARTER CHOICES.
+        </span>
+
+        
+
+        <span class="footer-motto">
+            BETTER COLLEGES.
+        </span>
+
+        
+
+        <span class="footer-motto">
+            BRIGHTER FUTURES.
+        </span>
+
+    </div>
+
+    <p class="footer-bottom">
+        RAPTORA &mdash; YOUR ADMISSION PARTNER FOR LIFE. ❤️
+    </p>
+
+</footer>
+
+</body>
+</html>
