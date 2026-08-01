@@ -1,0 +1,1103 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>ROI Analysis | RAPTORA</title>
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: #080808;
+            color: white;
+            line-height: 1.8;
+        }
+
+        /* NAVBAR */
+
+        .navbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px 7%;
+            background: #050505;
+            border-bottom: 1px solid #252525;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo {
+            width: 55px;
+            height: 55px;
+            object-fit: contain;
+        }
+
+        .logo-text {
+            color: white;
+            font-size: 22px;
+            font-weight: bold;
+            margin-left: 10px;
+            letter-spacing: 2px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: #ddd;
+            text-decoration: none;
+            transition: 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #ff1e1e;
+        }
+
+        .back-btn {
+            color: white;
+            text-decoration: none;
+            border: 1px solid #ff1e1e;
+            padding: 8px 18px;
+            border-radius: 6px;
+            transition: 0.3s;
+        }
+
+        .back-btn:hover {
+            background: #ff1e1e;
+            color: white;
+        }
+
+        /* HERO */
+
+        .blog-hero {
+            min-height: 430px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 70px 20px;
+
+            background:
+                radial-gradient(
+                    circle at center,
+                    #3b0000 0%,
+                    #150000 35%,
+                    #080808 75%
+                );
+        }
+
+        .hero-content {
+            max-width: 900px;
+        }
+
+        .hero-icon {
+            font-size: 60px;
+            color: #ff1e1e;
+            margin-bottom: 20px;
+        }
+
+        .blog-hero h1 {
+            font-size: clamp(40px, 6vw, 65px);
+            line-height: 1.2;
+            margin-bottom: 20px;
+        }
+
+        .highlight {
+            color: #ff1e1e;
+        }
+
+        .hero-subtitle {
+            color: #bbb;
+            font-size: 18px;
+            max-width: 700px;
+            margin: auto;
+        }
+
+        /* BLOG */
+
+        .blog-container {
+            max-width: 900px;
+            margin: 70px auto;
+            padding: 0 20px;
+        }
+
+        .blog-content {
+            background: #111;
+            border: 1px solid #252525;
+            border-radius: 15px;
+            padding: 55px;
+            box-shadow: 0 0 40px rgba(255, 0, 0, 0.08);
+        }
+
+        .blog-content h2 {
+            font-size: 30px;
+            margin-top: 45px;
+            margin-bottom: 15px;
+            line-height: 1.3;
+        }
+
+        .blog-content h2:first-child {
+            margin-top: 0;
+        }
+
+        .blog-content h3 {
+            color: #ff1e1e;
+            margin-top: 25px;
+            margin-bottom: 10px;
+        }
+
+        .blog-content p {
+            color: #ccc;
+            font-size: 17px;
+            margin-bottom: 18px;
+        }
+
+        .blog-content strong {
+            color: white;
+        }
+
+        .blog-content ul {
+            margin: 20px 0 30px 25px;
+        }
+
+        .blog-content li {
+            color: #ccc;
+            margin: 8px 0;
+        }
+
+        .blog-content li::marker {
+            color: #ff1e1e;
+        }
+
+        /* QUOTE */
+
+        .quote {
+            margin: 25px 0;
+            padding: 20px 25px;
+            background: #181818;
+            border-left: 4px solid #ff1e1e;
+            border-radius: 0 8px 8px 0;
+            color: white;
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        /* INFO BOX */
+
+        .info-box {
+            margin: 30px 0;
+            padding: 28px;
+            background: #180000;
+            border: 1px solid #4a0000;
+            border-radius: 12px;
+        }
+
+        .info-box h3 {
+            color: #ff1e1e;
+            margin-top: 0;
+        }
+
+        /* TABLE */
+
+        .table-container {
+            width: 100%;
+            overflow-x: auto;
+            margin: 30px 0;
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 600px;
+        }
+
+        .comparison-table th,
+        .comparison-table td {
+            border: 1px solid #333;
+            padding: 14px;
+            text-align: left;
+        }
+
+        .comparison-table th {
+            background: #250000;
+            color: #ff3333;
+        }
+
+        .comparison-table td {
+            background: #151515;
+            color: #ccc;
+        }
+
+        .comparison-table tr:hover td {
+            background: #1d1d1d;
+        }
+
+        /* CONNECT */
+
+        .connect-button-container {
+            text-align: center;
+            margin: 60px 20px;
+        }
+
+        .connect-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+
+            padding: 15px 32px;
+
+            background: #ff1e1e;
+            color: white !important;
+
+            text-decoration: none;
+
+            border-radius: 8px;
+
+            font-size: 17px;
+            font-weight: bold;
+
+            transition: 0.3s ease;
+        }
+
+        .connect-btn:hover {
+            background: #d40000;
+            color: white !important;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(255, 0, 0, 0.25);
+        }
+
+        /* BACK BUTTON */
+
+        .bottom-buttons {
+            text-align: center;
+            margin: 40px 0 60px;
+        }
+
+        .home-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+
+            padding: 13px 25px;
+
+            background: #ff1e1e;
+            color: white;
+
+            text-decoration: none;
+
+            border-radius: 7px;
+            font-weight: bold;
+
+            transition: 0.3s;
+        }
+
+        .home-btn:hover {
+            background: #d40000;
+            transform: translateY(-2px);
+        }
+
+        /* FOOTER */
+
+        footer {
+            background: #050505;
+            border-top: 1px solid #222;
+            text-align: center;
+            padding: 35px 20px;
+        }
+
+        .footer-top {
+            color: #aaa;
+            font-size: 13px;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+        }
+
+        .footer-motto {
+            color: white;
+        }
+
+        .footer-bottom {
+            color: #666;
+            font-size: 13px;
+        }
+
+        /* MOBILE */
+
+        @media (max-width: 768px) {
+
+            .navbar {
+                padding: 12px 5%;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .blog-hero {
+                min-height: 350px;
+            }
+
+            .blog-hero h1 {
+                font-size: 40px;
+            }
+
+            .blog-content {
+                padding: 30px 22px;
+            }
+
+            .blog-content h2 {
+                font-size: 25px;
+            }
+
+            .blog-content p,
+            .blog-content li {
+                font-size: 16px;
+            }
+
+            .connect-btn {
+                width: 90%;
+                max-width: 350px;
+            }
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+
+<!-- ================= NAVBAR ================= -->
+
+<header class="navbar">
+
+    <div class="logo-container">
+
+        <img src="frontend/register.png"
+             alt="RAPTORA Logo"
+             class="logo">
+
+        <span class="logo-text">
+            RAPTORA
+        </span>
+
+    </div>
+
+    <nav>
+
+        <ul class="nav-links">
+
+            <li>
+                <a href="index.html#home">Home</a>
+            </li>
+
+            <li>
+                <a href="index.html#features">Features</a>
+            </li>
+
+            <li>
+                <a href="index.html#resources">Resources</a>
+            </li>
+
+            <li>
+                <a href="index.html#connect">Connect</a>
+            </li>
+
+        </ul>
+
+    </nav>
+
+    <a href="index.html" class="back-btn">
+
+        <i class="fa-solid fa-arrow-left"></i>
+        Back
+
+    </a>
+
+</header>
+
+
+<!-- ================= HERO ================= -->
+
+<section class="blog-hero">
+
+    <div class="hero-content">
+
+        <div class="hero-icon">
+
+            <i class="fa-solid fa-sack-dollar"></i>
+
+        </div>
+
+        <h1>
+
+            ROI
+            <span class="highlight">Analysis</span>
+
+        </h1>
+
+        <p class="hero-subtitle">
+
+            Because choosing a college isn't only about
+            getting in. It's also about knowing what you're
+            investing in.
+
+        </p>
+
+    </div>
+
+</section>
+
+
+<!-- ================= BLOG ================= -->
+
+<main class="blog-container">
+
+    <article class="blog-content">
+
+
+        <p>
+            Choosing a college isn't only about finding a good
+            campus or a popular name.
+        </p>
+
+        <p>
+            There's another question that quietly sits in the
+            back of every student's mind:
+        </p>
+
+        <div class="quote">
+            “Is it actually worth the money?”
+        </div>
+
+        <p>
+            College can be a huge financial commitment.
+        </p>
+
+        <p>
+            Tuition fees, hostel expenses, transportation, books,
+            food and other costs can add up quickly.
+        </p>
+
+        <p>
+            And while nobody can predict exactly what your future
+            salary will be, you can still look at the numbers and
+            ask an important question:
+        </p>
+
+        <div class="quote">
+            “What am I getting in return for what I'm spending?”
+        </div>
+
+
+        <!-- SECTION 1 -->
+
+        <h2>
+            What Does ROI Actually Mean?
+        </h2>
+
+        <p>
+            Don't let the term sound complicated.
+        </p>
+
+        <p>
+            ROI means <strong>Return on Investment.</strong>
+        </p>
+
+        <p>
+            In simple words, it means thinking about what you're
+            spending on your education and comparing it with the
+            opportunities and financial returns you may get after
+            graduation.
+        </p>
+
+
+        <div class="info-box">
+
+            <h3>
+                Simple Example
+            </h3>
+
+            <p>
+                <strong>College A</strong><br>
+                Total education cost: ₹8 lakh<br>
+                Average placement package: ₹7 LPA
+            </p>
+
+            <p>
+                <strong>College B</strong><br>
+                Total education cost: ₹15 lakh<br>
+                Average placement package: ₹8 LPA
+            </p>
+
+            <p>
+                College B has a higher average package, but does
+                that automatically mean it's the better investment?
+            </p>
+
+        </div>
+
+
+        <!-- SECTION 2 -->
+
+        <h2>
+            The Highest Package Isn't Everything
+        </h2>
+
+        <p>
+            This is one of the biggest mistakes students make.
+        </p>
+
+        <p>
+            You see:
+        </p>
+
+        <div class="quote">
+            “Highest Package — ₹50 LPA”
+        </div>
+
+        <p>
+            And suddenly the college looks amazing.
+        </p>
+
+        <p>
+            But wait.
+        </p>
+
+        <p>
+            Ask a few more questions.
+        </p>
+
+        <ul>
+
+            <li>What is the average package?</li>
+
+            <li>What is the median package?</li>
+
+            <li>How many students actually got placed?</li>
+
+            <li>Which companies recruited?</li>
+
+            <li>Which branches received those offers?</li>
+
+        </ul>
+
+        <p>
+            A single highest-package number doesn't tell the
+            whole story.
+        </p>
+
+
+        <!-- SECTION 3 -->
+
+        <h2>
+            Look at the Total Cost
+        </h2>
+
+        <p>
+            When you're thinking about ROI, don't consider only
+            tuition fees.
+        </p>
+
+        <p>
+            Your actual college expenses may include:
+        </p>
+
+        <ul>
+
+            <li>Tuition fees</li>
+
+            <li>Hostel fees</li>
+
+            <li>Food</li>
+
+            <li>Transportation</li>
+
+            <li>Books and study materials</li>
+
+            <li>Examination fees</li>
+
+            <li>Laptop or equipment expenses</li>
+
+            <li>Other college charges</li>
+
+        </ul>
+
+        <p>
+            Understanding the total cost can help you avoid
+            surprises later.
+        </p>
+
+
+        <!-- SECTION 4 -->
+
+        <h2>
+            ROI Isn't Just About Salary
+        </h2>
+
+        <p>
+            This is important.
+        </p>
+
+        <p>
+            A good college experience isn't measured only by
+            your first salary.
+        </p>
+
+        <p>
+            You should also consider what opportunities the college
+            gives you to grow.
+        </p>
+
+        <ul>
+
+            <li>Internship opportunities</li>
+
+            <li>Industry exposure</li>
+
+            <li>Placement support</li>
+
+            <li>Skill development</li>
+
+            <li>Projects</li>
+
+            <li>Networking</li>
+
+            <li>Alumni connections</li>
+
+            <li>Higher-study opportunities</li>
+
+            <li>Entrepreneurship support</li>
+
+        </ul>
+
+
+        <!-- SECTION 5 -->
+
+        <h2>
+            Your Branch Matters
+        </h2>
+
+        <p>
+            ROI can also look very different depending on your
+            branch.
+        </p>
+
+        <p>
+            A college may have excellent overall placement
+            statistics, but that doesn't mean every branch has
+            the same results.
+        </p>
+
+        <p>
+            Before making a decision, try to understand:
+        </p>
+
+        <div class="quote">
+            “How does my specific branch perform?”
+        </div>
+
+        <p>
+            Look at branch-wise placement information where
+            available.
+        </p>
+
+        <p>
+            Check what companies recruit from that branch.
+        </p>
+
+        <p>
+            Understand the kinds of roles students get.
+        </p>
+
+
+        <!-- SECTION 6 -->
+
+        <h2>
+            Don't Choose the Cheapest College Either
+        </h2>
+
+        <p>
+            ROI doesn't simply mean:
+        </p>
+
+        <div class="quote">
+            “Choose the college with the lowest fees.”
+        </div>
+
+        <p>
+            Sometimes paying more can make sense if the additional
+            cost gives you significantly better opportunities.
+        </p>
+
+        <p>
+            A slightly more expensive college may offer stronger
+            placements, better industry exposure, better
+            infrastructure or stronger internship opportunities.
+        </p>
+
+        <p>
+            The point isn't simply to spend less.
+        </p>
+
+        <p>
+            The point is to understand
+            <strong>what you're paying for.</strong>
+        </p>
+
+
+        <!-- SECTION 7 -->
+
+        <h2>
+            Don't Choose an Expensive College Just Because It Looks Impressive
+        </h2>
+
+        <p>
+            The opposite can also happen.
+        </p>
+
+        <p>
+            A college may have a huge campus, expensive facilities
+            and impressive marketing.
+        </p>
+
+        <p>
+            But if the fees are extremely high and the placement
+            opportunities don't justify the additional cost,
+            you should think carefully.
+        </p>
+
+        <div class="quote">
+            A fancy brochure doesn't automatically mean better ROI.
+        </div>
+
+
+        <!-- SECTION 8 -->
+
+        <h2>
+            Compare Before You Commit
+        </h2>
+
+        <p>
+            Let's say you're confused between three colleges.
+        </p>
+
+        <p>
+            Instead of simply looking at rankings, create a basic
+            comparison.
+        </p>
+
+
+        <div class="table-container">
+
+            <table class="comparison-table">
+
+                <thead>
+
+                    <tr>
+
+                        <th>Factor</th>
+                        <th>College A</th>
+                        <th>College B</th>
+                        <th>College C</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    <tr>
+                        <td>Total Fees</td>
+                        <td>₹X</td>
+                        <td>₹Y</td>
+                        <td>₹Z</td>
+                    </tr>
+
+                    <tr>
+                        <td>Average Package</td>
+                        <td>X LPA</td>
+                        <td>Y LPA</td>
+                        <td>Z LPA</td>
+                    </tr>
+
+                    <tr>
+                        <td>Median Package</td>
+                        <td>X LPA</td>
+                        <td>Y LPA</td>
+                        <td>Z LPA</td>
+                    </tr>
+
+                    <tr>
+                        <td>Placement Rate</td>
+                        <td>X%</td>
+                        <td>Y%</td>
+                        <td>Z%</td>
+                    </tr>
+
+                    <tr>
+                        <td>Internships</td>
+                        <td>Good</td>
+                        <td>Very Good</td>
+                        <td>Good</td>
+                    </tr>
+
+                    <tr>
+                        <td>Branch Opportunities</td>
+                        <td>Good</td>
+                        <td>Excellent</td>
+                        <td>Good</td>
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+
+        <!-- SECTION 9 -->
+
+        <h2>
+            Your ROI Will Be Different From Someone Else's
+        </h2>
+
+        <p>
+            There's no universal answer.
+        </p>
+
+        <p>
+            Maybe you have a limited budget.
+        </p>
+
+        <p>
+            Maybe you're willing to spend more for better
+            opportunities.
+        </p>
+
+        <p>
+            Maybe staying close to home is important to you.
+        </p>
+
+        <p>
+            Maybe you're focused on a specific branch.
+        </p>
+
+        <p>
+            Maybe you want to pursue higher studies rather than
+            immediately enter the workforce.
+        </p>
+
+        <p>
+            All of these factors matter.
+        </p>
+
+        <div class="quote">
+            Your ROI isn't just a number. It's personal.
+        </div>
+
+
+        <!-- SECTION 10 -->
+
+        <h2>
+            That's What RAPTORA Is Trying to Make Easier
+        </h2>
+
+        <p>
+            At <strong>RAPTORA</strong>, we know that students
+            already have enough to worry about.
+        </p>
+
+        <p>
+            Ranks. Cutoffs. Counselling rounds. Fees. Branches.
+            Placements.
+        </p>
+
+        <p>
+            And then someone says:
+        </p>
+
+        <div class="quote">
+            “Just compare all the colleges and choose the best one.”
+        </div>
+
+        <p>
+            Okay… but <strong>how?</strong>
+        </p>
+
+        <p>
+            That's exactly what our
+            <strong>ROI Analysis</strong> feature is meant to help
+            with.
+        </p>
+
+        <ul>
+
+            <li>Compare college fees.</li>
+
+            <li>Look at placement figures.</li>
+
+            <li>Understand branch-wise opportunities.</li>
+
+            <li>Think about internships.</li>
+
+            <li>Consider career growth.</li>
+
+            <li>Understand the overall investment.</li>
+
+        </ul>
+
+
+        <!-- FINAL -->
+
+        <h2>
+            Think Before You Spend
+        </h2>
+
+        <p>
+            Before you choose a college, ask yourself:
+        </p>
+
+        <ul>
+
+            <li>What am I paying?</li>
+
+            <li>What opportunities am I getting?</li>
+
+            <li>What are realistic placement outcomes?</li>
+
+            <li>Does this branch fit my goals?</li>
+
+            <li>Will this investment make sense for my future plans?</li>
+
+        </ul>
+
+        <p>
+            You don't need to predict your entire career.
+        </p>
+
+        <p>
+            You just need enough information to make a smarter
+            decision today.
+        </p>
+
+        <p>
+            Because college isn't just an expense.
+        </p>
+
+        <div class="quote">
+            It's an investment in your future.
+        </div>
+
+        <p>
+            And the smartest investment is one you understand
+            before you make it.
+        </p>
+
+        <div class="quote">
+            Spend Smart. Compare Better. Choose Wisely.
+        </div>
+
+        <p>
+            <strong>
+                Your admission journey, reimagined by RAPTORA.
+            </strong>
+        </p>
+
+    </article>
+
+</main>
+
+
+<!-- ================= CONNECT WITH US ================= -->
+
+<div class="connect-button-container">
+
+    <a href="index.html#connect" class="connect-btn">
+
+        <i class="fa-solid fa-users"></i>
+
+        CONNECT WITH US
+
+    </a>
+
+</div>
+
+
+<!-- ================= BACK ================= -->
+
+<div class="bottom-buttons">
+
+    <a href="index.html#features" class="home-btn">
+
+        <i class="fa-solid fa-arrow-left"></i>
+
+        Back to RAPTORA Features
+
+    </a>
+
+</div>
+
+
+<!-- ================= FOOTER ================= -->
+
+<footer>
+
+    <div class="footer-top">
+
+        <span class="footer-motto">
+            SMARTER CHOICES.
+        </span>
+
+        |
+
+        <span class="footer-motto">
+            BETTER COLLEGES.
+        </span>
+
+        |
+
+        <span class="footer-motto">
+            BRIGHTER FUTURES.
+        </span>
+
+    </div>
+
+    <p class="footer-bottom">
+        RAPTORA &mdash; YOUR ADMISSION PARTNER FOR LIFE. ❤️
+    </p>
+
+</footer>
+
+
+</body>
+</html>
+
