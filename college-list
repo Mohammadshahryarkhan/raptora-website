@@ -61,11 +61,11 @@
 
                 <div
                     class="raptora-poster"
-                    onclick="raptoraOpenPoster('bmsce.jpeg')"
+                    onclick="raptoraOpenPoster('images/bmsce.jpeg')"
                 >
 
                     <img
-                        src="bmsce.jpeg"
+                        src="images/bmsce.jpeg"
                         alt="BMS College of Engineering"
                         loading="lazy"
                     >
@@ -109,7 +109,7 @@
                     <div class="raptora-buttons">
 
                         <button
-                            onclick="raptoraOpenPoster('bmsce.jpeg')"
+                            onclick="raptoraOpenPoster('images/bmsce.jpeg')"
                         >
                             View Details
                         </button>
@@ -140,11 +140,11 @@
 
                 <div
                     class="raptora-poster"
-                    onclick="raptoraOpenPoster('rvce.jpeg')"
+                    onclick="raptoraOpenPoster('images/rvce.jpeg')"
                 >
 
                     <img
-                        src="rvce.jpeg"
+                        src="images/rvce.jpeg"
                         alt="RV College of Engineering"
                         loading="lazy"
                     >
@@ -188,7 +188,7 @@
                     <div class="raptora-buttons">
 
                         <button
-                            onclick="raptoraOpenPoster('rvce.jpeg')"
+                            onclick="raptoraOpenPoster('images/rvce.jpeg')"
                         >
                             View Details
                         </button>
@@ -219,11 +219,11 @@
 
                 <div
                     class="raptora-poster"
-                    onclick="raptoraOpenPoster('christ-university.jpeg')"
+                    onclick="raptoraOpenPoster('images/christ-university.jpeg')"
                 >
 
                     <img
-                        src="christ-university.jpeg"
+                        src="images/christ-university.jpeg"
                         alt="Christ University"
                         loading="lazy"
                     >
@@ -267,7 +267,7 @@
                     <div class="raptora-buttons">
 
                         <button
-                            onclick="raptoraOpenPoster('christ-university.jpeg')"
+                            onclick="raptoraOpenPoster('images/christ-university.jpeg')"
                         >
                             View Details
                         </button>
@@ -298,7 +298,7 @@
 
                 <div
                     class="raptora-poster"
-                    onclick="raptoraOpenPoster('msrit.jpeg')"
+                    onclick="raptoraOpenPoster('images/msrit.jpeg')"
                 >
 
                     <img
@@ -346,7 +346,7 @@
                     <div class="raptora-buttons">
 
                         <button
-                            onclick="raptoraOpenPoster('msrit.jpeg')"
+                            onclick="raptoraOpenPoster('images/msrit.jpeg')"
                         >
                             View Details
                         </button>
@@ -377,11 +377,11 @@
 
                 <div
                     class="raptora-poster"
-                    onclick="raptoraOpenPoster('pes-university.jpeg')"
+                    onclick="raptoraOpenPoster('images/pes-university.jpeg')"
                 >
 
                     <img
-                        src="pes-university.jpeg"
+                        src="images/pes-university.jpeg"
                         alt="PES University"
                         loading="lazy"
                     >
@@ -425,7 +425,7 @@
                     <div class="raptora-buttons">
 
                         <button
-                            onclick="raptoraOpenPoster('pes-university.jpeg')"
+                            onclick="raptoraOpenPoster('images/pes-university.jpeg')"
                         >
                             View Details
                         </button>
