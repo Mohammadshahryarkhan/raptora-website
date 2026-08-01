@@ -459,3 +459,8 @@ footer {
     color: var(--accent-red);
     text-decoration: underline;
 }
+.feature-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
