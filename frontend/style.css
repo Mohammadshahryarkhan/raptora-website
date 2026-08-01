@@ -460,15 +460,27 @@ footer {
     text-decoration: underline;
 }
 .feature-link {
-    text-decoration: none;
-    color: var(--text-white);
     display: block;
+    text-decoration: none !important;
+    color: var(--text-white) !important;
+}
+
+.feature-link:visited {
+    color: var(--text-white) !important;
+    text-decoration: none !important;
+}
+
+.feature-link:hover {
+    color: var(--text-white) !important;
+    text-decoration: none !important;
 }
 
 .feature-link h3 {
-    color: var(--text-white);
+    color: var(--text-white) !important;
+    text-decoration: none !important;
 }
 
 .feature-link p {
-    color: var(--text-gray);
+    color: var(--text-gray) !important;
+    text-decoration: none !important;
 }
