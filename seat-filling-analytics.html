@@ -1,0 +1,1275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Seat Filling Analytics | RAPTORA</title>
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: #080808;
+            color: #fff;
+            line-height: 1.8;
+        }
+
+        /* ================= NAVBAR ================= */
+
+        .navbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px 7%;
+            background: #050505;
+            border-bottom: 1px solid #252525;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo {
+            width: 55px;
+            height: 55px;
+            object-fit: contain;
+        }
+
+        .logo-text {
+            color: #fff;
+            font-size: 22px;
+            font-weight: bold;
+            margin-left: 10px;
+            letter-spacing: 2px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: #ddd;
+            text-decoration: none;
+            transition: 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #ff1e1e;
+        }
+
+        .back-btn {
+            color: #fff;
+            text-decoration: none;
+            border: 1px solid #ff1e1e;
+            padding: 8px 18px;
+            border-radius: 6px;
+            transition: 0.3s;
+        }
+
+        .back-btn:hover {
+            background: #ff1e1e;
+            color: #fff;
+        }
+
+        /* ================= HERO ================= */
+
+        .blog-hero {
+            min-height: 420px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 70px 20px;
+
+            background:
+                radial-gradient(
+                    circle at center,
+                    #3b0000 0%,
+                    #150000 35%,
+                    #080808 75%
+                );
+        }
+
+        .hero-content {
+            max-width: 900px;
+        }
+
+        .hero-icon {
+            font-size: 55px;
+            color: #ff1e1e;
+            margin-bottom: 20px;
+        }
+
+        .blog-hero h1 {
+            font-size: clamp(40px, 6vw, 65px);
+            line-height: 1.2;
+            margin-bottom: 20px;
+        }
+
+        .highlight {
+            color: #ff1e1e;
+        }
+
+        .hero-subtitle {
+            color: #bbb;
+            font-size: 18px;
+            max-width: 700px;
+            margin: auto;
+        }
+
+        /* ================= BLOG ================= */
+
+        .blog-container {
+            max-width: 900px;
+            margin: 70px auto;
+            padding: 0 20px;
+        }
+
+        .blog-content {
+            background: #111;
+            border: 1px solid #252525;
+            border-radius: 15px;
+            padding: 55px;
+            box-shadow: 0 0 40px rgba(255, 0, 0, 0.08);
+        }
+
+        .blog-content h2 {
+            font-size: 30px;
+            margin-top: 45px;
+            margin-bottom: 15px;
+            line-height: 1.3;
+        }
+
+        .blog-content h2:first-child {
+            margin-top: 0;
+        }
+
+        .blog-content p {
+            color: #ccc;
+            font-size: 17px;
+            margin-bottom: 18px;
+        }
+
+        .blog-content strong {
+            color: #fff;
+        }
+
+        .blog-content ul {
+            margin: 20px 0 30px 25px;
+        }
+
+        .blog-content li {
+            color: #ccc;
+            margin: 8px 0;
+        }
+
+        .blog-content li::marker {
+            color: #ff1e1e;
+        }
+
+        /* ================= QUOTE ================= */
+
+        .quote {
+            margin: 25px 0;
+            padding: 20px 25px;
+            background: #181818;
+            border-left: 4px solid #ff1e1e;
+            border-radius: 0 8px 8px 0;
+            color: #fff;
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        /* ================= INFO BOX ================= */
+
+        .info-box {
+            margin: 30px 0;
+            padding: 28px;
+            background: #180000;
+            border: 1px solid #4a0000;
+            border-radius: 12px;
+        }
+
+        .info-box h3 {
+            color: #ff1e1e;
+            margin-bottom: 10px;
+        }
+
+        /* ================= CONNECT BOX ================= */
+
+        .connect-section {
+            margin-top: 70px;
+            padding: 60px 30px;
+            background:
+                radial-gradient(
+                    circle at center,
+                    #350000 0%,
+                    #120000 45%,
+                    #080808 100%
+                );
+        }
+
+        .connect-box {
+            max-width: 950px;
+            margin: auto;
+            padding: 50px;
+            border: 1px solid #4b0000;
+            border-radius: 18px;
+            background: rgba(10, 10, 10, 0.92);
+            text-align: center;
+            box-shadow: 0 0 40px rgba(255, 0, 0, 0.12);
+        }
+
+        .connect-box h2 {
+            font-size: 34px;
+            margin-bottom: 10px;
+        }
+
+        .connect-box h2 span {
+            color: #ff1e1e;
+        }
+
+        .connect-subtext {
+            color: #aaa;
+            margin-bottom: 35px;
+            font-size: 17px;
+        }
+
+        .social-connect {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 70px;
+            flex-wrap: wrap;
+        }
+
+        .qr-container {
+            text-align: center;
+        }
+
+        .qr-code {
+            width: 200px;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 10px;
+            border: 3px solid #fff;
+        }
+
+        .qr-container span {
+            display: block;
+            margin-top: 12px;
+            color: #aaa;
+            font-size: 13px;
+            letter-spacing: 2px;
+        }
+
+        .social-details {
+            text-align: left;
+        }
+
+        .social-details p {
+            margin-bottom: 18px;
+            color: #ddd;
+            font-size: 17px;
+        }
+
+        .social-details i {
+            color: #ff1e1e;
+            width: 25px;
+        }
+
+        .social-link {
+            color: #fff !important;
+            text-decoration: none;
+            transition: 0.3s;
+        }
+
+        .social-link:hover {
+            color: #ff1e1e !important;
+        }
+
+        .instagram-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: #ff1e1e;
+            color: #fff !important;
+            text-decoration: none;
+            padding: 13px 22px;
+            border-radius: 7px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .instagram-btn:hover {
+            background: #d40000;
+            transform: translateY(-2px);
+            color: #fff !important;
+        }
+
+        /* ================= BOTTOM BUTTON ================= */
+
+        .bottom-buttons {
+            text-align: center;
+            margin: 40px 0;
+        }
+
+        .home-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 13px 25px;
+            background: #ff1e1e;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 7px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .home-btn:hover {
+            background: #d40000;
+            transform: translateY(-2px);
+        }
+
+        /* ================= FOOTER ================= */
+
+        footer {
+            background: #050505;
+            border-top: 1px solid #222;
+            text-align: center;
+            padding: 35px 20px;
+        }
+
+        .footer-top {
+            color: #aaa;
+            font-size: 13px;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+        }
+
+        .footer-motto {
+            color: #fff;
+        }
+
+        .footer-bottom {
+            color: #666;
+            font-size: 13px;
+        }
+
+        /* ================= MOBILE ================= */
+
+        @media (max-width: 768px) {
+
+            .navbar {
+                padding: 12px 5%;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .blog-hero {
+                min-height: 350px;
+            }
+
+            .blog-hero h1 {
+                font-size: 40px;
+            }
+
+            .blog-content {
+                padding: 30px 22px;
+            }
+
+            .blog-content h2 {
+                font-size: 25px;
+            }
+
+            .blog-content p,
+            .blog-content li {
+                font-size: 16px;
+            }
+
+            .connect-box {
+                padding: 35px 20px;
+            }
+
+            .social-connect {
+                gap: 35px;
+            }
+
+            .social-details {
+                text-align: center;
+            }
+
+            .social-details p {
+                font-size: 15px;
+            }
+
+            .instagram-btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+
+    </style>
+</head>
+
+<body>
+
+<!-- ================= NAVBAR ================= -->
+
+<header class="navbar">
+
+    <div class="logo-container">
+
+        <img src="frontend/register.png"
+             alt="RAPTORA Logo"
+             class="logo">
+
+        <span class="logo-text">
+            RAPTORA
+        </span>
+
+    </div>
+
+    <nav>
+        <ul class="nav-links">
+
+            <li>
+                <a href="index.html#home">Home</a>
+            </li>
+
+            <li>
+                <a href="index.html#features">Features</a>
+            </li>
+
+            <li>
+                <a href="index.html#resources">Resources</a>
+            </li>
+
+            <li>
+                <a href="index.html#connect">Connect</a>
+            </li>
+
+        </ul>
+    </nav>
+
+    <a href="index.html" class="back-btn">
+        <i class="fa-solid fa-arrow-left"></i>
+        Back
+    </a>
+
+</header>
+
+
+<!-- ================= HERO ================= -->
+
+<section class="blog-hero">
+
+    <div class="hero-content">
+
+        <div class="hero-icon">
+            <i class="fa-solid fa-chart-line"></i>
+        </div>
+
+        <h1>
+            Seat Filling
+            <span class="highlight">Analytics</span>
+        </h1>
+
+        <p class="hero-subtitle">
+            Because every counselling round can change things.
+        </p>
+
+    </div>
+
+</section>
+
+
+<!-- ================= BLOG ================= -->
+
+<main class="blog-container">
+
+    <article class="blog-content">
+
+        <p>
+            Counselling can be stressful.
+        </p>
+
+        <p>
+            You have your rank in front of you, a list of colleges
+            you're interested in, a few branches you really want,
+            and then suddenly you're expected to make decisions
+            based on cutoffs, seats and counselling rounds.
+        </p>
+
+        <p>
+            And one thought keeps coming back:
+        </p>
+
+        <div class="quote">
+            “What if the seats fill up before I get my turn?”
+        </div>
+
+        <p>
+            Honestly, almost every student going through counselling
+            has thought about this.
+        </p>
+
+        <p>
+            That's why it helps to understand what's actually
+            happening with seats during each round.
+        </p>
+
+
+        <!-- SECTION -->
+
+        <h2>
+            So, What Is Seat Filling Analytics?
+        </h2>
+
+        <p>
+            In simple words, it's about understanding
+            <strong>how seats are getting filled during counselling.</strong>
+        </p>
+
+        <p>
+            Instead of looking at just one cutoff number,
+            you can look at what happens across different rounds.
+        </p>
+
+        <ul>
+
+            <li>Which branches are filling quickly?</li>
+
+            <li>Which colleges still have seats available?</li>
+
+            <li>How is the closing rank changing?</li>
+
+            <li>What happened in previous counselling rounds?</li>
+
+            <li>Which branches seem to be more in demand?</li>
+
+            <li>Are some options still available later in counselling?</li>
+
+        </ul>
+
+        <p>
+            When you can actually see these patterns,
+            counselling can feel a little less confusing.
+        </p>
+
+
+        <!-- SECTION -->
+
+        <h2>
+            Why Should You Care About It?
+        </h2>
+
+        <p>
+            Imagine you're choosing between two branches.
+        </p>
+
+        <p>
+            One usually fills up pretty quickly, while the other
+            tends to remain available for a few more rounds.
+        </p>
+
+        <p>
+            That doesn't mean you can predict exactly what will
+            happen this year.
+        </p>
+
+        <p>
+            But it gives you something useful to think about.
+        </p>
+
+        <p>
+            Instead of randomly wondering:
+        </p>
+
+        <div class="quote">
+            “Should I wait?”
+        </div>
+
+        <p>
+            You can ask:
+        </p>
+
+        <div class="quote">
+            “Based on what has happened before, does waiting
+            make sense for me?”
+        </div>
+
+        <p>
+            That small difference can make your decision much
+            more thoughtful.
+        </p>
+
+
+        <!-- SECTION -->
+
+        <h2>
+            But Remember — Trends Aren't Guarantees
+        </h2>
+
+        <p>
+            This is probably the most important thing to understand.
+        </p>
+
+        <p>
+            Just because a branch filled quickly last year doesn't
+            mean it'll do exactly the same thing this year.
+        </p>
+
+        <p>
+            Student preferences change.
+        </p>
+
+        <p>
+            Ranks change.
+        </p>
+
+        <p>
+            The number of seats can change.
+        </p>
+
+        <p>
+            Counselling patterns can change.
+        </p>
+
+        <div class="info-box">
+
+            <h3>
+                <i class="fa-solid fa-circle-info"></i>
+                Important
+            </h3>
+
+            <p>
+                Seat-filling data isn't a crystal ball.
+                It's simply information that can help you
+                make a better decision.
+            </p>
+
+        </div>
+
+
+        <!-- SECTION -->
+
+        <h2>
+            Look at the Branch, Not Just the College
+        </h2>
+
+        <p>
+            Sometimes we get too focused on the college name.
+        </p>
+
+        <p>
+            We see a college we like and immediately think:
+        </p>
+
+        <div class="quote">
+            “I want this college.”
+        </div>
+
+        <p>
+            But then comes the more important question:
+        </p>
+
+        <div class="quote">
+            “Which branch?”
+        </div>
+
+        <p>
+            Different branches in the same college can have
+            very different demand.
+        </p>
+
+        <p>
+            One might fill up quickly, while another might have
+            more seats available during later rounds.
+        </p>
+
+        <p>
+            So when you're looking at counselling data, don't
+            just look at the college.
+        </p>
+
+        <p>
+            Look at the
+            <strong>college + branch + counselling round</strong>
+            together.
+        </p>
+
+        <p>
+            That's where things become much more useful.
+        </p>
+
+
+        <!-- SECTION -->
+
+        <h2>
+            What Can You Actually Learn From the Data?
+        </h2>
+
+        <p>
+            You don't need to be a data scientist to understand it.
+        </p>
+
+        <p>
+            You can simply look for patterns.
+        </p>
+
+        <h3 style="color:#ff1e1e; margin-top:25px;">
+            Some Options Fill Quickly
+        </h3>
+
+        <p>
+            Popular colleges and branches can sometimes fill up
+            early because many students prefer them.
+        </p>
+
+        <p>
+            If something is high on your priority list, it's worth
+            keeping that in mind while arranging your choices.
+        </p>
+
+        <h3 style="color:#ff1e1e; margin-top:25px;">
+            Some Options Stay Open Longer
+        </h3>
+
+        <p>
+            Some branches may continue to have availability in
+            later rounds.
+        </p>
+
+        <p>
+            These can be useful options to keep in mind, especially
+            when you're building backup choices.
+        </p>
+
+        <h3 style="color:#ff1e1e; margin-top:25px;">
+            Cutoffs Can Move
+        </h3>
+
+        <p>
+            Closing ranks don't always stay the same from one
+            round to another.
+        </p>
+
+        <p>
+            Watching how they move can give you a better idea
+            of what's happening during counselling instead of
+            looking at just one year's final cutoff.
+        </p>
+
+
+        <!-- SECTION -->
+
+        <h2>
+            Your Preference List Matters
+        </h2>
+
+        <p>
+            Seat-filling information becomes much more useful
+            when you combine it with a sensible preference list.
+        </p>
+
+        <p>
+            Think about your choices in three groups.
+        </p>
+
+        <div class="info-box">
+
+            <h3>Dream Choices</h3>
+
+            <p>
+                These are the colleges or branches you really want.
+                Even if they're a little difficult to get, you may
+                still want to keep them high on your list.
+            </p>
+
+        </div>
+
+        <div class="info-box">
+
+            <h3>Realistic Choices</h3>
+
+            <p>
+                These are the options that seem more achievable
+                based on your rank, previous trends and preferences.
+                These can become the main part of your list.
+            </p>
+
+        </div>
+
+        <div class="info-box">
+
+            <h3>Backup Choices</h3>
+
+            <p>
+                These are colleges or branches you'd actually be
+                okay with if your first choices don't work out.
+            </p>
+
+            <p>
+                Having backup options isn't a sign that you're
+                expecting the worst.
+            </p>
+
+            <p>
+                <strong>It's just smart planning.</strong>
+            </p>
+
+        </div>
+
+
+        <!-- SECTION -->
+
+        <h2>
+            What RAPTORA Wants to Do
+        </h2>
+
+        <p>
+            At <strong>RAPTORA</strong>, we know how overwhelming
+            counselling information can become.
+        </p>
+
+        <p>
+            You start with your rank.
+        </p>
+
+        <p>
+            Then you look at cutoffs.
+        </p>
+
+        <p>
+            Then seats.
+        </p>
+
+        <p>
+            Then rounds.
+        </p>
+
+        <p>
+            Then categories.
+        </p>
+
+        <p>
+            Then quotas.
+        </p>
+
+        <p>
+            And suddenly you have twenty tabs open and you're
+            still wondering:
+        </p>
+
+        <div class="quote">
+            “So what should I actually choose?”
+        </div>
+
+        <p>
+            That's the problem we're trying to make easier.
+        </p>
+
+        <p>
+            With <strong>Seat Filling Analytics</strong>, the idea
+            is to make the information easier to understand instead
+            of making students dig through endless tables and numbers.
+        </p>
+
+        <p>
+            You should be able to look at the data and understand:
+        </p>
+
+        <ul>
+
+            <li>What's filling quickly?</li>
+
+            <li>What's still available?</li>
+
+            <li>How are things changing between rounds?</li>
+
+            <li>What happened in previous years?</li>
+
+            <li>What does all of this mean for my choices?</li>
+
+        </ul>
+
+
+        <!-- SECTION -->
+
+        <h2>
+            Data Can Help You. It Can't Choose For You.
+        </h2>
+
+        <p>
+            This part matters.
+        </p>
+
+        <p>
+            A chart can show you a trend.
+        </p>
+
+        <p>
+            A previous cutoff can give you some context.
+        </p>
+
+        <p>
+            Seat availability can help you understand your options.
+        </p>
+
+        <p>
+            But none of these things know what <strong>you</strong>
+            want.
+        </p>
+
+        <p>
+            Maybe you care more about your branch than the college name.
+        </p>
+
+        <p>
+            Maybe location is important.
+        </p>
+
+        <p>
+            Maybe fees are your biggest concern.
+        </p>
+
+        <p>
+            Maybe you're focused on placements.
+        </p>
+
+        <p>
+            Maybe you already have a particular career in mind.
+        </p>
+
+        <div class="quote">
+            Use the data to understand your options.
+            Then make the choice that feels right for you.
+        </div>
+
+
+        <!-- SECTION -->
+
+        <h2>
+            Don't Panic When You See Seats Filling
+        </h2>
+
+        <p>
+            Seeing seats disappear during counselling can be scary.
+        </p>
+
+        <div class="quote">
+            “That's it. I've lost my chance.”
+        </div>
+
+        <p>
+            But don't make a decision just because you're panicking.
+        </p>
+
+        <p>
+            Counselling happens across rounds, and availability
+            can change.
+        </p>
+
+        <p>
+            Take a breath.
+        </p>
+
+        <p>
+            Look at your options.
+        </p>
+
+        <p>
+            Check your preference list.
+        </p>
+
+        <p>
+            Think about your next move.
+        </p>
+
+        <p>
+            And remember that one seat filling doesn't automatically
+            mean your entire admission plan is over.
+        </p>
+
+
+        <!-- SECTION -->
+
+        <h2>
+            Counselling Doesn't Have to Feel Like Guesswork
+        </h2>
+
+        <p>
+            Nobody can tell you exactly what will happen in every
+            counselling round.
+        </p>
+
+        <p>
+            And honestly, that's okay.
+        </p>
+
+        <p>
+            What you <em>can</em> do is understand the information
+            available to you.
+        </p>
+
+        <p>
+            Look at previous trends.
+        </p>
+
+        <p>
+            See how seats are moving.
+        </p>
+
+        <p>
+            Compare branches.
+        </p>
+
+        <p>
+            Understand your options.
+        </p>
+
+        <p>
+            Keep realistic choices.
+        </p>
+
+        <p>
+            And have backups you're genuinely comfortable with.
+        </p>
+
+        <p>
+            That's what RAPTORA is trying to help with.
+        </p>
+
+        <p>
+            Not promises.
+        </p>
+
+        <p>
+            Not unrealistic predictions.
+        </p>
+
+        <p>
+            Just <strong>clearer information to help you make
+            smarter decisions.</strong>
+        </p>
+
+
+        <!-- SECTION -->
+
+        <h2>
+            Your Rank Is Only the Beginning
+        </h2>
+
+        <p>
+            Your rank tells you where you stand.
+        </p>
+
+        <p>
+            But what you do with that rank is what really matters.
+        </p>
+
+        <p>
+            Counselling isn't just about waiting and hoping.
+        </p>
+
+        <p>
+            It's about understanding your choices and making
+            decisions with as much information as possible.
+        </p>
+
+        <p>
+            So look at the trends.
+        </p>
+
+        <p>
+            Ask questions.
+        </p>
+
+        <p>
+            Compare your options.
+        </p>
+
+        <p>
+            Don't rush because you're scared.
+        </p>
+
+        <p>
+            And don't choose something just because everyone
+            else is choosing it.
+        </p>
+
+        <div class="quote">
+            Your admission journey is yours.
+        </div>
+
+        <p>
+            And RAPTORA is here to make that journey a little
+            less confusing.
+        </p>
+
+    </article>
+
+</main>
+
+
+<!-- ================= CONNECT BOX ================= -->
+
+<section class="connect-section" id="connect">
+
+    <div class="connect-box">
+
+        <h2>
+            CONNECT <span>WITH US.</span>
+        </h2>
+
+        <p class="connect-subtext">
+            Have questions? Want guidance? Let's connect.
+        </p>
+
+        <div class="social-connect">
+
+            <!-- QR CODE -->
+
+            <div class="qr-container">
+
+                <img
+                    src="WhatsApp Image 2026-07-25 at 4.22.08 PM.jpeg"
+                    alt="RAPTORA Instagram QR Code"
+                    class="qr-code">
+
+                <span>
+                    SCAN TO CONNECT
+                </span>
+
+            </div>
+
+
+            <!-- SOCIAL DETAILS -->
+
+            <div class="social-details">
+
+                <p>
+                    <i class="fa-brands fa-instagram"></i>
+
+                    <a
+                        href="https://www.instagram.com/raptora247?igsh=MWp1c2RvMzloMTc1aQ=="
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="social-link">
+
+                        @RAPTORA247
+
+                    </a>
+                </p>
+
+
+                <p>
+
+                    <i class="fa-solid fa-envelope"></i>
+
+                    <a
+                        href="mailto:raptora247@gmail.com"
+                        class="social-link">
+
+                        raptora247@gmail.com
+
+                    </a>
+
+                </p>
+
+
+                <a
+                    href="https://www.instagram.com/raptora247?igsh=MWp1c2RvMzloMTc1aQ=="
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="instagram-btn">
+
+                    Follow on Instagram
+
+                    <i class="fa-solid fa-arrow-up-right-from-square"></i>
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= BACK BUTTON ================= -->
+
+<div class="bottom-buttons">
+
+    <a
+        href="index.html#features"
+        class="home-btn">
+
+        <i class="fa-solid fa-arrow-left"></i>
+
+        Back to RAPTORA Features
+
+    </a>
+
+</div>
+
+
+<!-- ================= FOOTER ================= -->
+
+<footer>
+
+    <div class="footer-top">
+
+        <span class="footer-motto">
+            SMARTER CHOICES.
+        </span>
+
+        |
+
+        <span class="footer-motto">
+            BETTER COLLEGES.
+        </span>
+
+        |
+
+        <span class="footer-motto">
+            BRIGHTER FUTURES.
+        </span>
+
+    </div>
+
+    <p class="footer-bottom">
+        RAPTORA &mdash; YOUR ADMISSION PARTNER FOR LIFE. ❤️
+    </p>
+
+</footer>
+
+</body>
+</html>
