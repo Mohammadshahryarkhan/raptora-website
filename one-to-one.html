@@ -6,15 +6,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-```
+
 <title>One-to-One Interactions | RAPTORA</title>
 
-<!-- Font Awesome -->
 <link rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
-<meta name="description"
-    content="Get personalized college admission guidance through RAPTORA's one-to-one interactions, Google Meet sessions and live Q&As.">
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
 <style>
 
@@ -31,7 +27,7 @@
     body {
         font-family: Arial, Helvetica, sans-serif;
         background: #080808;
-        color: #f5f5f5;
+        color: #fff;
         line-height: 1.8;
     }
 
@@ -66,7 +62,6 @@
         font-size: 22px;
         font-weight: 800;
         letter-spacing: 2px;
-        color: #fff;
     }
 
     .nav-links {
@@ -78,7 +73,6 @@
     .nav-links a {
         color: #ddd;
         text-decoration: none;
-        font-size: 15px;
         transition: 0.3s;
     }
 
@@ -88,7 +82,7 @@
 
     .back-btn {
         text-decoration: none;
-        color: #fff;
+        color: white;
         border: 1px solid #ff1e1e;
         padding: 9px 18px;
         border-radius: 6px;
@@ -97,6 +91,7 @@
 
     .back-btn:hover {
         background: #ff1e1e;
+        color: white;
     }
 
     /* ================= HERO ================= */
@@ -129,10 +124,9 @@
     }
 
     .blog-hero h1 {
-        font-size: clamp(35px, 5vw, 65px);
+        font-size: clamp(38px, 5vw, 65px);
         line-height: 1.15;
         margin-bottom: 20px;
-        font-weight: 800;
     }
 
     .highlight {
@@ -146,66 +140,11 @@
         font-size: 18px;
     }
 
-    /* ================= ACTION BUTTONS ================= */
-
-    .action-section {
-        max-width: 900px;
-        margin: -35px auto 50px;
-        padding: 0 25px;
-        position: relative;
-        z-index: 5;
-    }
-
-    .action-box {
-        background: #111;
-        border: 1px solid #292929;
-        border-radius: 14px;
-        padding: 30px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        gap: 20px;
-        flex-wrap: wrap;
-        box-shadow: 0 0 30px rgba(255, 0, 0, 0.08);
-    }
-
-    .action-btn {
-        display: inline-flex;
-        align-items: center;
-        gap: 10px;
-        text-decoration: none;
-        padding: 13px 22px;
-        border-radius: 7px;
-        font-weight: bold;
-        transition: 0.3s;
-    }
-
-    .form-btn {
-        background: #ff1e1e;
-        color: white;
-    }
-
-    .form-btn:hover {
-        background: #d40000;
-        transform: translateY(-2px);
-    }
-
-    .meet-btn {
-        border: 1px solid #ff1e1e;
-        color: white;
-        background: transparent;
-    }
-
-    .meet-btn:hover {
-        background: #ff1e1e;
-        transform: translateY(-2px);
-    }
-
     /* ================= BLOG ================= */
 
     .blog-container {
         max-width: 900px;
-        margin: 40px auto;
+        margin: 70px auto;
         padding: 0 25px;
     }
 
@@ -221,7 +160,6 @@
         font-size: 30px;
         margin-top: 45px;
         margin-bottom: 15px;
-        color: #fff;
         line-height: 1.3;
     }
 
@@ -247,7 +185,7 @@
     }
 
     .blog-content strong {
-        color: #fff;
+        color: white;
     }
 
     .blog-content ul {
@@ -257,7 +195,6 @@
     .blog-content li {
         color: #ccc;
         margin: 8px 0;
-        padding-left: 5px;
     }
 
     .blog-content li::marker {
@@ -271,7 +208,7 @@
         padding: 22px 25px;
         border-left: 4px solid #ff1e1e;
         background: #181818;
-        color: #fff;
+        color: white;
         font-size: 19px;
         font-weight: 600;
         border-radius: 0 8px 8px 0;
@@ -280,21 +217,20 @@
     /* ================= GUIDANCE BOX ================= */
 
     .guidance-box {
-        margin-top: 45px;
-        padding: 35px;
-        background: linear-gradient(135deg, #1b0000, #100000);
-        border: 1px solid #5c0000;
+        margin: 30px 0;
+        padding: 30px;
+        background: #160000;
+        border: 1px solid #450000;
         border-radius: 12px;
     }
 
     .guidance-box h3 {
         color: #ff1e1e;
-        font-size: 25px;
-        margin-bottom: 12px;
+        margin-bottom: 15px;
     }
 
     .guidance-box p {
-        margin-bottom: 8px;
+        margin-bottom: 10px;
     }
 
     /* ================= FINAL ================= */
@@ -314,30 +250,47 @@
         margin-bottom: 10px;
     }
 
-    .final-message p {
-        margin-bottom: 5px;
-    }
-
-    /* ================= BOTTOM BUTTON ================= */
+    /* ================= BUTTONS ================= */
 
     .bottom-navigation {
         text-align: center;
-        margin: 45px 0 70px;
+        margin: 30px 0;
     }
 
-    .home-btn {
-        display: inline-block;
+    .home-btn,
+    .connect-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+
         text-decoration: none;
-        color: white;
-        background: #ff1e1e;
+        color: white !important;
+
         padding: 13px 28px;
         border-radius: 7px;
+
         font-weight: bold;
         transition: 0.3s;
     }
 
+    .home-btn {
+        background: #ff1e1e;
+    }
+
     .home-btn:hover {
         background: #d40000;
+        color: white !important;
+        transform: translateY(-2px);
+    }
+
+    .connect-btn {
+        background: #ff1e1e;
+    }
+
+    .connect-btn:hover {
+        background: #d40000;
+        color: white !important;
         transform: translateY(-2px);
     }
 
@@ -355,10 +308,6 @@
         font-size: 13px;
         letter-spacing: 1px;
         margin-bottom: 12px;
-    }
-
-    .footer-motto {
-        color: #fff;
     }
 
     .footer-bottom {
@@ -380,20 +329,10 @@
 
         .blog-hero {
             min-height: 380px;
-            padding: 60px 20px;
         }
 
         .blog-hero h1 {
             font-size: 38px;
-        }
-
-        .hero-subtitle {
-            font-size: 16px;
-        }
-
-        .blog-container {
-            margin: 40px auto;
-            padding: 0 15px;
         }
 
         .blog-content {
@@ -409,23 +348,15 @@
             font-size: 16px;
         }
 
-        .action-section {
-            padding: 0 15px;
-        }
-
-        .action-box {
-            padding: 25px 15px;
-        }
-
-        .action-btn {
+        .home-btn,
+        .connect-btn {
             width: 100%;
-            justify-content: center;
+            max-width: 300px;
         }
-
     }
 
 </style>
-```
+
 
 </head>
 
@@ -434,11 +365,11 @@
 <!-- ================= NAVBAR ================= -->
 
 <header class="navbar">
+    
 
-```
 <div class="logo-container">
 
-    <img src="register.png"
+    <img src="frontend/register.png"
          alt="RAPTORA Logo"
          class="logo">
 
@@ -448,48 +379,35 @@
 
 </div>
 
-
 <nav>
 
     <ul class="nav-links">
 
         <li>
-            <a href="index.html#home">
-                Home
-            </a>
+            <a href="index.html#home">Home</a>
         </li>
 
         <li>
-            <a href="index.html#features">
-                Features
-            </a>
+            <a href="index.html#features">Features</a>
         </li>
 
         <li>
-            <a href="index.html#resources">
-                Resources
-            </a>
+            <a href="index.html#resources">Resources</a>
         </li>
 
         <li>
-            <a href="index.html#connect">
-                Connect
-            </a>
+            <a href="index.html#connect">Connect</a>
         </li>
 
     </ul>
 
 </nav>
 
-
-<a href="index.html"
-   class="back-btn">
-
+<a href="index.html" class="back-btn">
     <i class="fa-solid fa-arrow-left"></i>
     Back
-
 </a>
-```
+
 
 </header>
 
@@ -497,7 +415,7 @@
 
 <section class="blog-hero">
 
-```
+
 <div class="hero-content">
 
     <div class="hero-icon">
@@ -505,60 +423,17 @@
     </div>
 
     <h1>
-        One-to-One Interactions:
-        <br>
-        Sometimes You Just Need
-        <span class="highlight">
-            To Talk to Someone.
-        </span>
+        One-to-One
+        <span class="highlight">Interactions</span>
     </h1>
 
     <p class="hero-subtitle">
-        Personal guidance. Honest conversations.
-        More clarity about your admission journey.
+        Sometimes, you don't need another search result.
+        You just need someone to talk to.
     </p>
 
 </div>
-```
 
-</section>
-
-<!-- ================= ACTION BUTTONS ================= -->
-
-<section class="action-section">
-
-```
-<div class="action-box">
-
-    <!-- Replace YOUR_GOOGLE_FORM_LINK with your actual Google Form link -->
-
-    <a href="YOUR_GOOGLE_FORM_LINK"
-       target="_blank"
-       rel="noopener noreferrer"
-       class="action-btn form-btn">
-
-        <i class="fa-solid fa-file-lines"></i>
-
-        Request a Guidance Session
-
-    </a>
-
-
-    <!-- Replace YOUR_GOOGLE_MEET_LINK with your actual Meet link -->
-
-    <a href="YOUR_GOOGLE_MEET_LINK"
-       target="_blank"
-       rel="noopener noreferrer"
-       class="action-btn meet-btn">
-
-        <i class="fa-solid fa-video"></i>
-
-        Join Google Meet
-
-    </a>
-
-</div>
-```
 
 </section>
 
@@ -566,586 +441,251 @@
 
 <main class="blog-container">
 
-```
+
 <article class="blog-content">
 
-
     <p>
-        Let's be honest — the college admission process can
-        get really confusing.
+        Choosing a college, a branch or even a career path
+        can feel confusing.
     </p>
 
     <p>
-        You have your rank. Then there are cutoffs, colleges,
-        branches, counselling rounds, fees, placements,
-        hostels and a hundred other things to think about.
-    </p>
-
-    <p>
-        And then comes the biggest question:
+        You might have questions that don't have a simple
+        Google answer. You might want to hear from someone
+        who understands your situation and can actually
+        listen to what you're trying to figure out.
     </p>
 
     <div class="quote">
-        “What should I actually do?”
+        “Sometimes, you just need to talk to someone who gets it.”
     </div>
 
-    <p>
-        You can search Google, watch YouTube videos and ask
-        your friends, but sometimes you still don't get
-        a clear answer.
-    </p>
-
-    <p>
-        That's where
-        <strong>
-            One-to-One Interactions at RAPTORA
-        </strong>
-        come in.
-    </p>
-
-
-    <!-- SECTION -->
 
     <h2>
-        Have a Doubt? Just Ask.
+        What Are One-to-One Interactions?
     </h2>
 
     <p>
-        Not every student has the same situation.
+        At RAPTORA, our One-to-One Interactions feature is
+        designed to give students a more personal way to
+        get guidance.
     </p>
 
     <p>
-        Maybe you have a good rank but aren't sure which
-        college to choose.
+        Instead of trying to figure everything out alone,
+        you can share your questions and get guidance
+        based on your individual situation.
     </p>
 
-    <p>
-        Maybe you're confused between two branches.
-    </p>
-
-    <p>
-        Maybe you don't understand how counselling works.
-    </p>
-
-    <p>
-        Or maybe you've simply reached the point where
-        you're thinking:
-    </p>
-
-    <div class="quote">
-        “I have no idea what I'm supposed to do next.”
-    </div>
-
-    <p>
-        That's completely okay.
-    </p>
-
-    <p>
-        You can talk to someone, explain your situation
-        and get guidance based on
-        <strong>your actual needs.</strong>
-    </p>
-
-    <p>
-        You can discuss things like:
-    </p>
-
-
-    <ul>
-
-        <li>
-            Which college should I consider?
-        </li>
-
-        <li>
-            Which branch would be better for me?
-        </li>
-
-        <li>
-            What colleges can I get with my rank?
-        </li>
-
-        <li>
-            How does counselling work?
-        </li>
-
-        <li>
-            How should I arrange my choices?
-        </li>
-
-        <li>
-            What should I do after seat allotment?
-        </li>
-
-        <li>
-            Which college has better placements?
-        </li>
-
-        <li>
-            Should I choose college A or college B?
-        </li>
-
-        <li>
-            What should I keep in mind before taking admission?
-        </li>
-
-    </ul>
-
-    <p>
-        Sometimes, having someone patiently explain things
-        makes everything feel much simpler.
-    </p>
-
-
-    <!-- SECTION -->
 
     <h2>
-        Start With a Simple Google Form
+        What Can You Get Help With?
     </h2>
 
     <p>
-        Want to talk to a mentor?
-    </p>
-
-    <p>
-        You can start by filling out a
-        <strong>
-            RAPTORA Google Form.
-        </strong>
-    </p>
-
-    <p>
-        You'll be able to share some basic information
-        about yourself and what you're looking for help with.
-    </p>
-
-    <p>
-        For example:
+        Your questions can be about almost anything related
+        to your admission journey.
     </p>
 
     <ul>
 
-        <li>Your name</li>
+        <li>Choosing the right college</li>
 
-        <li>Entrance exam</li>
+        <li>Choosing between different branches</li>
 
-        <li>Rank or score</li>
+        <li>Understanding your rank and options</li>
 
-        <li>Course you're interested in</li>
+        <li>College counselling guidance</li>
 
-        <li>Colleges you're considering</li>
+        <li>Understanding college cutoffs</li>
 
-        <li>Your main doubts</li>
+        <li>Fees and affordability</li>
 
-        <li>Preferred time for a session</li>
+        <li>Hostel and campus life</li>
+
+        <li>Placements and internships</li>
+
+        <li>Career and higher-study decisions</li>
+
+        <li>General college-related doubts</li>
 
     </ul>
 
-    <p>
-        This helps us understand what you actually need
-        before the conversation begins.
-    </p>
-
-    <p>
-        No complicated process.
-    </p>
-
-    <p>
-        Just tell us what's confusing you.
-    </p>
-
-
-    <!-- SECTION -->
 
     <h2>
-        Talk Face-to-Face Through Google Meet
+        Google Meet Guidance
     </h2>
 
     <p>
-        Sometimes texting isn't enough.
+        Some questions are easier to explain when you're
+        actually talking to someone.
     </p>
 
     <p>
-        You might have five questions, then think of
-        three more while you're talking.
+        That's why RAPTORA can provide one-to-one guidance
+        sessions through <strong>Google Meet</strong>.
     </p>
 
     <p>
-        That's why one-to-one sessions can happen through
-        <strong>Google Meet.</strong>
+        You can have a proper conversation, explain your
+        situation and ask questions directly instead of
+        sending messages back and forth.
     </p>
 
-    <p>
-        You can join from your phone or laptop and have
-        an actual conversation with a mentor.
-    </p>
-
-    <p>
-        You can show them your options, explain what
-        you're confused about and ask questions as they
-        come to you.
-    </p>
-
-    <p>
-        You don't have to prepare some perfect speech.
-    </p>
-
-    <p>
-        <strong>
-            Just come with your doubts.
-        </strong>
-    </p>
-
-    <p>
-        We'll take it from there.
-    </p>
-
-
-    <!-- SECTION -->
-
-    <h2>
-        Not Just One Question — Complete Guidance
-    </h2>
-
-    <p>
-        One-to-one guidance isn't only about answering:
-    </p>
-
-    <div class="quote">
-        “Which college should I choose?”
-    </div>
-
-    <p>
-        There's a lot more to the admission journey.
-    </p>
-
-    <p>
-        We can help you understand the process step by step.
-    </p>
-
-
-    <p>
-        <strong>Your Rank</strong>
-    </p>
-
-    <p>
-        Got your result but don't know what your rank
-        actually means for your college options?
-        Let's talk about it.
-    </p>
-
-
-    <p>
-        <strong>Choosing a College</strong>
-    </p>
-
-    <p>
-        Have a list of colleges but can't decide which
-        ones should be your priority?
-        We can help you compare your options and understand
-        what matters.
-    </p>
-
-
-    <p>
-        <strong>Choosing a Branch</strong>
-    </p>
-
-    <p>
-        CSE? AIML? ECE? Mechanical? Something completely
-        different?
-    </p>
-
-    <p>
-        Choosing a branch can be a huge decision, and it's
-        okay to have questions before committing to one.
-    </p>
-
-
-    <p>
-        <strong>Counselling</strong>
-    </p>
-
-    <p>
-        Counselling can feel like a completely different
-        language when you're seeing it for the first time.
-    </p>
-
-    <p>
-        Rounds, choice filling, allotment, upgrades,
-        documents...
-    </p>
-
-    <p>
-        We'll help you understand what each step means.
-    </p>
-
-
-    <p>
-        <strong>Choice Filling</strong>
-    </p>
-
-    <p>
-        This is one of those parts where students often
-        think:
-    </p>
-
-    <div class="quote">
-        “What if I arrange my choices wrong?”
-    </div>
-
-    <p>
-        You can discuss your preferences and understand
-        how to approach your choice list more carefully.
-    </p>
-
-
-    <p>
-        <strong>After Seat Allotment</strong>
-    </p>
-
-    <p>
-        Got a seat?
-    </p>
-
-    <p>
-        Great — but what now?
-    </p>
-
-    <p>
-        You may still have questions about reporting,
-        documents, fees, upgrades or what happens next.
-    </p>
-
-    <p>
-        That's where guidance can help again.
-    </p>
-
-
-    <!-- SECTION -->
-
-    <h2>
-        Live Q&A — Ask What Everyone Is Thinking
-    </h2>
-
-    <p>
-        Sometimes you don't need a private session.
-    </p>
-
-    <p>
-        Maybe you're sitting there thinking:
-    </p>
-
-    <div class="quote">
-        “I have this one question, but surely someone else
-        has already asked it.”
-    </div>
-
-    <p>
-        Probably.
-    </p>
-
-    <p>
-        That's why RAPTORA can also have
-        <strong>live Q&A sessions</strong>
-        where students can ask questions and hear answers
-        in real time.
-    </p>
-
-    <p>
-        You can ask about:
-    </p>
-
-    <ul>
-
-        <li>College admissions</li>
-
-        <li>Counselling</li>
-
-        <li>Branches</li>
-
-        <li>Cutoffs</li>
-
-        <li>Placements</li>
-
-        <li>Internships</li>
-
-        <li>Campus life</li>
-
-        <li>Career choices</li>
-
-    </ul>
-
-    <p>
-        And who knows?
-    </p>
-
-    <p>
-        Someone else's question might answer something
-        you've been wondering about too.
-    </p>
-
-
-    <!-- SECTION -->
-
-    <h2>
-        No Question Is Too Small
-    </h2>
-
-    <p>
-        Sometimes students don't ask questions because
-        they think they'll sound silly.
-    </p>
-
-    <p>
-        Please don't worry about that.
-    </p>
-
-    <p>
-        If you're wondering:
-    </p>
-
-    <div class="quote">
-        “What happens after this?”
-    </div>
-
-    <p>
-        Ask.
-    </p>
-
-    <p>
-        If you're thinking:
-    </p>
-
-    <div class="quote">
-        “I don't understand how this works.”
-    </div>
-
-    <p>
-        Ask.
-    </p>
-
-    <p>
-        If you're stuck between two choices:
-    </p>
-
-    <p>
-        <strong>Talk about it.</strong>
-    </p>
-
-    <p>
-        You're going through this process for the first time.
-        You're not supposed to know everything already.
-    </p>
-
-
-    <!-- RAPTORA -->
-
-    <h2>
-        What RAPTORA Wants to Do
-    </h2>
-
-    <p>
-        At RAPTORA, we don't want guidance to feel like
-        you're just reading another generic article on
-        the internet.
-    </p>
-
-    <p>
-        We want you to be able to
-        <strong>talk to someone.</strong>
-    </p>
-
-    <p>
-        Through Google Forms, Google Meet sessions, live
-        Q&As and personal conversations, our goal is to
-        make the admission journey feel a little less
-        overwhelming.
-    </p>
-
-    <p>
-        Because sometimes you don't need another 20
-        search results.
-    </p>
-
-    <div class="quote">
-        You just need someone to sit down with you and say:
-        <br><br>
-        “Okay. Tell me what's confusing you.”
-    </div>
-
-
-    <!-- GUIDANCE BOX -->
 
     <div class="guidance-box">
 
         <h3>
-            Ready to Talk?
+            <i class="fa-solid fa-video"></i>
+            Personal Guidance Session
         </h3>
 
         <p>
-            Have questions about your college admission?
-            Don't keep guessing.
+            Discuss your questions directly with a mentor
+            or experienced person through a Google Meet
+            session.
         </p>
 
         <p>
-            Fill out the form and tell us what you need
-            help with.
+            Share your concerns, ask questions and get
+            guidance that is relevant to your situation.
         </p>
-
-        <br>
-
-        <a href="YOUR_GOOGLE_FORM_LINK"
-           target="_blank"
-           rel="noopener noreferrer"
-           class="action-btn form-btn">
-
-            <i class="fa-solid fa-paper-plane"></i>
-
-            Request One-to-One Guidance
-
-        </a>
 
     </div>
 
 
-    <!-- FINAL -->
+    <h2>
+        Google Forms for Your Questions
+    </h2>
+
+    <p>
+        Don't know what to ask or don't have time for a
+        live session immediately?
+    </p>
+
+    <p>
+        You can submit your questions through a
+        <strong>Google Form</strong>.
+    </p>
+
+    <p>
+        Tell us about your exam, rank, preferred branch,
+        preferred colleges and what you're confused about.
+        This helps us understand your situation before
+        providing guidance.
+    </p>
+
+
+    <h2>
+        It's More Than Just One Answer
+    </h2>
+
+    <p>
+        One-to-one guidance isn't about simply telling you
+        which college to choose.
+    </p>
+
+    <p>
+        It's about understanding your priorities and helping
+        you look at the bigger picture.
+    </p>
+
+    <p>
+        Your rank may be good for one college, but another
+        college might offer a better branch for your goals.
+        Your budget might make one option more practical
+        than another.
+    </p>
+
+    <p>
+        These are the kinds of things that are easier to
+        discuss when someone actually listens to you.
+    </p>
+
+
+    <h2>
+        Live Q&A and Doubt Clearing
+    </h2>
+
+    <p>
+        Sometimes you don't need a full guidance session.
+        You simply have one question that's bothering you.
+    </p>
+
+    <p>
+        Through live Q&A sessions, students can ask
+        questions, hear different perspectives and clear
+        doubts related to admissions and college life.
+    </p>
+
+
+    <h2>
+        Guidance That Feels Personal
+    </h2>
+
+    <p>
+        Every student has a different story.
+    </p>
+
+    <p>
+        Different ranks. Different budgets. Different
+        interests. Different goals.
+    </p>
+
+    <p>
+        So your guidance shouldn't feel like a generic
+        answer copied from a website.
+    </p>
+
+    <div class="quote">
+        Your question is personal. Your guidance should be too.
+    </div>
+
+
+    <h2>
+        That's What RAPTORA Is Trying to Build
+    </h2>
+
+    <p>
+        At <strong>RAPTORA</strong>, we want students to
+        have a place where they can ask questions without
+        feeling lost or overwhelmed.
+    </p>
+
+    <p>
+        Whether it's through a Google Meet session, a Google
+        Form, a live Q&A or a simple conversation, the goal
+        is the same:
+    </p>
+
+    <p>
+        <strong>
+            Help students make clearer and more confident
+            decisions.
+        </strong>
+    </p>
+
 
     <div class="final-message">
 
         <h3>
-            Your Doubts. Your Questions. Your Journey.
+            Your Questions. Real Guidance. Your Journey.
         </h3>
 
         <p>
-            You don't have to have everything figured out
-            right now.
+            Find. Predict. Compare. Connect. Succeed.
         </p>
 
         <p>
-            Ask questions. Talk to people. Understand your
-            options. Take your time.
-        </p>
-
-        <br>
-
-        <p>
-            <strong>
-                Find. Predict. Compare. Connect. Succeed.
-            </strong>
-        </p>
-
-        <p>
-            RAPTORA — Your admission journey, reimagined.
+            Your admission journey, reimagined by RAPTORA.
         </p>
 
     </div>
 
-
 </article>
 
 
-<!-- BACK BUTTON -->
+<!-- ================= BACK BUTTON ================= -->
 
 <div class="bottom-navigation">
 
@@ -1159,7 +699,23 @@
     </a>
 
 </div>
-```
+
+
+<!-- ================= CONNECT BUTTON ================= -->
+
+<div class="bottom-navigation">
+
+    <a href="index.html#connect"
+       class="connect-btn">
+
+        <i class="fa-solid fa-user-group"></i>
+
+        Connect with us
+
+    </a>
+
+</div>
+
 
 </main>
 
@@ -1167,32 +723,31 @@
 
 <footer>
 
-```
+
 <div class="footer-top">
 
-    <span class="footer-motto">
+    <span>
         SMARTER CHOICES.
     </span>
 
     &nbsp; | &nbsp;
 
-    <span class="footer-motto">
+    <span>
         BETTER COLLEGES.
     </span>
 
     &nbsp; | &nbsp;
 
-    <span class="footer-motto">
+    <span>
         BRIGHTER FUTURES.
     </span>
 
 </div>
 
 <p class="footer-bottom">
-    RAPTORA &mdash;
-    YOUR ADMISSION PARTNER FOR LIFE. ❤️
+    RAPTORA &mdash; YOUR ADMISSION PARTNER FOR LIFE. ❤️
 </p>
-```
+
 
 </footer>
 
