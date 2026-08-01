@@ -1,0 +1,1281 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Branch Enquiries & Comparison | RAPTORA</title>
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: #080808;
+            color: #ffffff;
+            line-height: 1.8;
+        }
+
+        /* ================= NAVBAR ================= */
+
+        .navbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px 7%;
+            background: #050505;
+            border-bottom: 1px solid #252525;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo {
+            width: 55px;
+            height: 55px;
+            object-fit: contain;
+        }
+
+        .logo-text {
+            color: #ffffff;
+            font-size: 22px;
+            font-weight: bold;
+            margin-left: 10px;
+            letter-spacing: 2px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: #dddddd;
+            text-decoration: none;
+            transition: 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #ff1e1e;
+        }
+
+        .back-btn {
+            color: #ffffff;
+            text-decoration: none;
+            border: 1px solid #ff1e1e;
+            padding: 8px 18px;
+            border-radius: 6px;
+            transition: 0.3s;
+        }
+
+        .back-btn:hover {
+            background: #ff1e1e;
+            color: #ffffff;
+        }
+
+        /* ================= HERO ================= */
+
+        .blog-hero {
+            min-height: 430px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 70px 20px;
+
+            background:
+                radial-gradient(
+                    circle at center,
+                    #3b0000 0%,
+                    #150000 35%,
+                    #080808 75%
+                );
+        }
+
+        .hero-content {
+            max-width: 900px;
+        }
+
+        .hero-icon {
+            font-size: 55px;
+            color: #ff1e1e;
+            margin-bottom: 20px;
+        }
+
+        .blog-hero h1 {
+            font-size: clamp(38px, 6vw, 65px);
+            line-height: 1.2;
+            margin-bottom: 20px;
+        }
+
+        .highlight {
+            color: #ff1e1e;
+        }
+
+        .hero-subtitle {
+            color: #bbbbbb;
+            font-size: 18px;
+            max-width: 700px;
+            margin: auto;
+        }
+
+        /* ================= BLOG ================= */
+
+        .blog-container {
+            max-width: 900px;
+            margin: 70px auto;
+            padding: 0 20px;
+        }
+
+        .blog-content {
+            background: #111111;
+            border: 1px solid #252525;
+            border-radius: 15px;
+            padding: 55px;
+            box-shadow: 0 0 40px rgba(255, 0, 0, 0.08);
+        }
+
+        .blog-content h2 {
+            font-size: 30px;
+            margin-top: 45px;
+            margin-bottom: 15px;
+            line-height: 1.3;
+        }
+
+        .blog-content h2:first-child {
+            margin-top: 0;
+        }
+
+        .blog-content h3 {
+            color: #ff1e1e;
+            margin-top: 25px;
+            margin-bottom: 10px;
+        }
+
+        .blog-content p {
+            color: #cccccc;
+            font-size: 17px;
+            margin-bottom: 18px;
+        }
+
+        .blog-content strong {
+            color: #ffffff;
+        }
+
+        .blog-content ul {
+            margin: 20px 0 30px 25px;
+        }
+
+        .blog-content li {
+            color: #cccccc;
+            margin: 8px 0;
+        }
+
+        .blog-content li::marker {
+            color: #ff1e1e;
+        }
+
+        /* ================= QUOTE ================= */
+
+        .quote {
+            margin: 25px 0;
+            padding: 20px 25px;
+            background: #181818;
+            border-left: 4px solid #ff1e1e;
+            border-radius: 0 8px 8px 0;
+            color: #ffffff;
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        /* ================= INFO BOX ================= */
+
+        .info-box {
+            margin: 30px 0;
+            padding: 28px;
+            background: #180000;
+            border: 1px solid #4a0000;
+            border-radius: 12px;
+        }
+
+        .info-box h3 {
+            color: #ff1e1e;
+            margin-bottom: 10px;
+        }
+
+        /* ================= COMPARISON TABLE ================= */
+
+        .table-container {
+            width: 100%;
+            overflow-x: auto;
+            margin: 30px 0;
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 600px;
+        }
+
+        .comparison-table th,
+        .comparison-table td {
+            border: 1px solid #333333;
+            padding: 14px;
+            text-align: left;
+        }
+
+        .comparison-table th {
+            background: #250000;
+            color: #ff3333;
+        }
+
+        .comparison-table td {
+            background: #151515;
+            color: #cccccc;
+        }
+
+        .comparison-table tr:hover td {
+            background: #1d1d1d;
+        }
+
+        /* ================= CONNECT BUTTON ================= */
+
+        .connect-button-container {
+            text-align: center;
+            margin: 60px 20px;
+        }
+
+        .connect-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+
+            padding: 15px 32px;
+
+            background: #ff1e1e;
+            color: #ffffff !important;
+
+            text-decoration: none;
+
+            border-radius: 8px;
+
+            font-size: 17px;
+            font-weight: bold;
+
+            transition: 0.3s ease;
+        }
+
+        .connect-btn:hover {
+            background: #d40000;
+            color: #ffffff !important;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(255, 0, 0, 0.25);
+        }
+
+        /* ================= BACK BUTTON ================= */
+
+        .bottom-buttons {
+            text-align: center;
+            margin: 40px 0 60px;
+        }
+
+        .home-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+
+            padding: 13px 25px;
+
+            background: #ff1e1e;
+            color: #ffffff;
+
+            text-decoration: none;
+
+            border-radius: 7px;
+            font-weight: bold;
+
+            transition: 0.3s;
+        }
+
+        .home-btn:hover {
+            background: #d40000;
+            transform: translateY(-2px);
+            color: #ffffff;
+        }
+
+        /* ================= FOOTER ================= */
+
+        footer {
+            background: #050505;
+            border-top: 1px solid #222222;
+            text-align: center;
+            padding: 35px 20px;
+        }
+
+        .footer-top {
+            color: #aaaaaa;
+            font-size: 13px;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+        }
+
+        .footer-motto {
+            color: #ffffff;
+        }
+
+        .footer-bottom {
+            color: #666666;
+            font-size: 13px;
+        }
+
+        /* ================= MOBILE ================= */
+
+        @media (max-width: 768px) {
+
+            .navbar {
+                padding: 12px 5%;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .blog-hero {
+                min-height: 350px;
+            }
+
+            .blog-hero h1 {
+                font-size: 40px;
+            }
+
+            .blog-content {
+                padding: 30px 22px;
+            }
+
+            .blog-content h2 {
+                font-size: 25px;
+            }
+
+            .blog-content p,
+            .blog-content li {
+                font-size: 16px;
+            }
+
+            .connect-btn {
+                width: 90%;
+                max-width: 350px;
+            }
+        }
+
+    </style>
+</head>
+
+
+<body>
+
+<!-- ================= NAVBAR ================= -->
+
+<header class="navbar">
+
+    <div class="logo-container">
+
+        <img src="frontend/register.png"
+             alt="RAPTORA Logo"
+             class="logo">
+
+        <span class="logo-text">
+            RAPTORA
+        </span>
+
+    </div>
+
+    <nav>
+
+        <ul class="nav-links">
+
+            <li>
+                <a href="index.html#home">Home</a>
+            </li>
+
+            <li>
+                <a href="index.html#features">Features</a>
+            </li>
+
+            <li>
+                <a href="index.html#resources">Resources</a>
+            </li>
+
+            <li>
+                <a href="index.html#connect">Connect</a>
+            </li>
+
+        </ul>
+
+    </nav>
+
+    <a href="index.html" class="back-btn">
+
+        <i class="fa-solid fa-arrow-left"></i>
+        Back
+
+    </a>
+
+</header>
+
+
+<!-- ================= HERO ================= -->
+
+<section class="blog-hero">
+
+    <div class="hero-content">
+
+        <div class="hero-icon">
+
+            <i class="fa-solid fa-scale-balanced"></i>
+
+        </div>
+
+        <h1>
+
+            Branch Enquiries
+            <span class="highlight">& Comparison</span>
+
+        </h1>
+
+        <p class="hero-subtitle">
+
+            Because choosing a college isn't enough.
+            You need to choose the right branch too.
+
+        </p>
+
+    </div>
+
+</section>
+
+
+<!-- ================= BLOG ================= -->
+
+<main class="blog-container">
+
+    <article class="blog-content">
+
+
+        <p>
+            Choosing a college can feel like a huge decision.
+        </p>
+
+        <p>
+            You check the college name, look at the ranking,
+            maybe check the placement packages, and think:
+        </p>
+
+        <div class="quote">
+            “Okay, this one looks good.”
+        </div>
+
+        <p>
+            But then comes the next question:
+        </p>
+
+        <div class="quote">
+            “Which branch should I actually choose?”
+        </div>
+
+        <p>
+            And that's where things can get confusing.
+        </p>
+
+        <p>
+            CSE, AI & ML, ECE, EEE, Mechanical, Civil,
+            Data Science… suddenly there are so many options,
+            and every branch seems to have something different
+            to offer.
+        </p>
+
+        <p>
+            That's why simply choosing a college isn't enough.
+        </p>
+
+        <p>
+            You need to understand
+            <strong>what you're actually getting from the
+            branch you're choosing.</strong>
+        </p>
+
+
+        <!-- SECTION -->
+
+        <h2>
+            One College Can Have Very Different Branches
+        </h2>
+
+        <p>
+            Here's something students sometimes overlook.
+        </p>
+
+        <p>
+            Two branches in the same college can have
+            completely different experiences.
+        </p>
+
+        <p>
+            Their subjects can be different.
+        </p>
+
+        <p>
+            Their placement opportunities can be different.
+        </p>
+
+        <p>
+            Their fees may be different.
+        </p>
+
+        <p>
+            Their workload can be different.
+        </p>
+
+        <p>
+            And even the kind of career opportunities available
+            after graduation can vary.
+        </p>
+
+        <p>
+            So instead of asking only:
+        </p>
+
+        <div class="quote">
+            “Is this college good?”
+        </div>
+
+        <p>
+            Try asking:
+        </p>
+
+        <div class="quote">
+            “Is this college good for the branch I want?”
+        </div>
+
+        <p>
+            That small change can make your comparison much
+            more useful.
+        </p>
+
+
+        <!-- SECTION -->
+
+        <h2>
+            What Should You Compare?
+        </h2>
+
+        <p>
+            You don't need to compare every tiny detail.
+        </p>
+
+        <p>
+            Start with the things that actually matter to you.
+        </p>
+
+
+        <h3>
+            Infrastructure
+        </h3>
+
+        <p>
+            What's the department like?
+        </p>
+
+        <p>
+            Are the labs properly equipped?
+        </p>
+
+        <p>
+            Are there classrooms, libraries, project spaces
+            or other facilities that students actually use?
+        </p>
+
+        <p>
+            A college website might show beautiful buildings,
+            but it's also worth understanding what the experience
+            is like for students in your particular branch.
+        </p>
+
+
+        <h3>
+            Fees
+        </h3>
+
+        <p>
+            This is a big one.
+        </p>
+
+        <p>
+            A college might have impressive placements, but you
+            still need to think about whether the overall cost
+            makes sense for you.
+        </p>
+
+        <p>
+            Look beyond just tuition fees.
+        </p>
+
+        <ul>
+
+            <li>Hostel fees</li>
+
+            <li>Transportation</li>
+
+            <li>Exam fees</li>
+
+            <li>Other college charges</li>
+
+            <li>Living expenses</li>
+
+        </ul>
+
+        <p>
+            Understanding the total cost can help you avoid
+            surprises later.
+        </p>
+
+
+        <h3>
+            Placement Figures
+        </h3>
+
+        <p>
+            Placement numbers are useful, but don't look at
+            only the highest package.
+        </p>
+
+        <p>
+            Ask yourself:
+        </p>
+
+        <ul>
+
+            <li>What's the average package?</li>
+
+            <li>Which companies recruit from this branch?</li>
+
+            <li>How many students actually get placed?</li>
+
+            <li>Are opportunities similar across different branches?</li>
+
+        </ul>
+
+        <p>
+            A college may advertise a very high package, but that
+            doesn't necessarily mean every student or every branch
+            gets the same opportunity.
+        </p>
+
+
+        <!-- SECTION -->
+
+        <h2>
+            Branch Prospects Matter Too
+        </h2>
+
+        <p>
+            This is probably one of the most important things
+            to think about.
+        </p>
+
+        <p>
+            Your branch can influence what you study for the next
+            four years and the kind of opportunities you may explore
+            afterward.
+        </p>
+
+        <p>
+            For example, someone interested in software development
+            may have very different priorities from someone interested
+            in electronics, core engineering or another field.
+        </p>
+
+        <p>
+            That doesn't mean one branch is automatically better
+            than another.
+        </p>
+
+        <p>
+            It means
+            <strong>the right branch depends on you.</strong>
+        </p>
+
+        <p>
+            Your interests matter.
+        </p>
+
+        <p>
+            Your strengths matter.
+        </p>
+
+        <p>
+            Your career goals matter.
+        </p>
+
+        <p>
+            And sometimes, what is considered a “popular” branch
+            may not actually be the best fit for you.
+        </p>
+
+
+        <!-- SECTION -->
+
+        <h2>
+            Don't Choose a Branch Just Because Everyone Else Is
+        </h2>
+
+        <p>
+            We've all heard things like:
+        </p>
+
+        <div class="quote">
+            “Take CSE. That's the best branch.”
+        </div>
+
+        <p>
+            Or:
+        </p>
+
+        <div class="quote">
+            “This branch has no scope.”
+        </div>
+
+        <p>
+            But real life isn't always that simple.
+        </p>
+
+        <p>
+            A branch that works brilliantly for one student might
+            not be right for another.
+        </p>
+
+        <p>
+            If you genuinely enjoy electronics, choosing a completely
+            different branch just because someone told you it's more
+            popular may leave you unhappy later.
+        </p>
+
+        <p>
+            Instead, ask yourself:
+        </p>
+
+        <ul>
+
+            <li>What subjects do I actually enjoy?</li>
+
+            <li>What kind of work interests me?</li>
+
+            <li>What career options do I want to explore?</li>
+
+            <li>What kind of companies hire from this branch?</li>
+
+            <li>What skills will I need to build alongside my degree?</li>
+
+        </ul>
+
+        <p>
+            That's a much better starting point.
+        </p>
+
+
+        <!-- SECTION -->
+
+        <h2>
+            Don't Compare Colleges Using Just One Number
+        </h2>
+
+        <p>
+            One of the easiest mistakes is comparing colleges
+            using only one factor.
+        </p>
+
+        <p>
+            For example:
+        </p>
+
+        <div class="quote">
+            College A — ₹12 LPA average<br>
+            College B — ₹9 LPA average
+        </div>
+
+        <p>
+            So you immediately think College A is better.
+        </p>
+
+        <p>
+            But what about the fees?
+        </p>
+
+        <p>
+            What about the location?
+        </p>
+
+        <p>
+            What about the branch?
+        </p>
+
+        <p>
+            What about infrastructure?
+        </p>
+
+        <p>
+            What about the number of students placed?
+        </p>
+
+        <p>
+            What about the opportunities available to your
+            particular branch?
+        </p>
+
+        <p>
+            A college decision is rarely as simple as one number.
+        </p>
+
+
+        <!-- SECTION -->
+
+        <h2>
+            Compare Side-by-Side
+        </h2>
+
+        <p>
+            This is where comparison becomes genuinely useful.
+        </p>
+
+        <p>
+            Instead of jumping between ten websites and trying
+            to remember everything, put your options next to each other.
+        </p>
+
+
+        <div class="table-container">
+
+            <table class="comparison-table">
+
+                <thead>
+
+                    <tr>
+
+                        <th>Factor</th>
+                        <th>College A</th>
+                        <th>College B</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    <tr>
+                        <td>Branch</td>
+                        <td>CSE</td>
+                        <td>CSE</td>
+                    </tr>
+
+                    <tr>
+                        <td>Fees</td>
+                        <td>₹X</td>
+                        <td>₹Y</td>
+                    </tr>
+
+                    <tr>
+                        <td>Average Placement</td>
+                        <td>X LPA</td>
+                        <td>Y LPA</td>
+                    </tr>
+
+                    <tr>
+                        <td>Highest Package</td>
+                        <td>X LPA</td>
+                        <td>Y LPA</td>
+                    </tr>
+
+                    <tr>
+                        <td>Infrastructure</td>
+                        <td>Good</td>
+                        <td>Very Good</td>
+                    </tr>
+
+                    <tr>
+                        <td>Location</td>
+                        <td>City</td>
+                        <td>Suburban</td>
+                    </tr>
+
+                    <tr>
+                        <td>Hostel</td>
+                        <td>Available</td>
+                        <td>Available</td>
+                    </tr>
+
+                    <tr>
+                        <td>Branch Opportunities</td>
+                        <td>Strong</td>
+                        <td>Strong</td>
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+        <p>
+            Suddenly, the decision feels much easier to understand.
+        </p>
+
+        <p>
+            You can actually see where each college is stronger.
+        </p>
+
+
+        <!-- SECTION -->
+
+        <h2>
+            What RAPTORA Wants to Make Easier
+        </h2>
+
+        <p>
+            At <strong>RAPTORA</strong>, we know that students
+            already have enough to worry about.
+        </p>
+
+        <p>
+            Ranks.
+        </p>
+
+        <p>
+            Cutoffs.
+        </p>
+
+        <p>
+            Counselling rounds.
+        </p>
+
+        <p>
+            Fees.
+        </p>
+
+        <p>
+            Branches.
+        </p>
+
+        <p>
+            Placements.
+        </p>
+
+        <p>
+            And then someone says:
+        </p>
+
+        <div class="quote">
+            “Just compare all the colleges and choose the best one.”
+        </div>
+
+        <p>
+            Okay… but <strong>how?</strong>
+        </p>
+
+        <p>
+            That's exactly what our
+            <strong>Branch Enquiries & Comparison</strong>
+            feature is meant to help with.
+        </p>
+
+        <p>
+            Instead of simply showing you a college name,
+            the goal is to help you look at the bigger picture.
+        </p>
+
+        <ul>
+
+            <li>Compare colleges.</li>
+
+            <li>Compare branches.</li>
+
+            <li>Look at fees.</li>
+
+            <li>Understand placement figures.</li>
+
+            <li>Explore infrastructure.</li>
+
+            <li>Think about branch prospects.</li>
+
+            <li>Understand which option makes sense for you.</li>
+
+        </ul>
+
+
+        <!-- SECTION -->
+
+        <h2>
+            Ask Questions Before You Choose
+        </h2>
+
+        <p>
+            Don't be afraid to ask questions.
+        </p>
+
+        <p>
+            Ask seniors.
+        </p>
+
+        <p>
+            Ask mentors.
+        </p>
+
+        <p>
+            Ask students from the branch.
+        </p>
+
+        <p>
+            Ask about things that aren't always mentioned
+            on college websites.
+        </p>
+
+        <p>
+            You can ask:
+        </p>
+
+        <ul>
+
+            <li>“How are the classes?”</li>
+
+            <li>“Are the labs actually useful?”</li>
+
+            <li>“How are placements for this branch?”</li>
+
+            <li>“What are the professors like?”</li>
+
+            <li>“What do students usually do after graduation?”</li>
+
+        </ul>
+
+        <p>
+            Sometimes one honest conversation can tell you
+            something that hours of searching couldn't.
+        </p>
+
+
+        <!-- SECTION -->
+
+        <h2>
+            The “Best College” Is Different for Everyone
+        </h2>
+
+        <p>
+            There isn't one college that is perfect for every student.
+        </p>
+
+        <p>
+            For one person, placements might be the biggest priority.
+        </p>
+
+        <p>
+            For another, fees might matter more.
+        </p>
+
+        <p>
+            Someone else may care about location, campus life
+            or a particular branch.
+        </p>
+
+        <p>
+            That's okay.
+        </p>
+
+        <p>
+            Your priorities don't have to be the same as
+            everyone else's.
+        </p>
+
+        <p>
+            The goal isn't to find
+            <strong>the best college in the country.</strong>
+        </p>
+
+        <p>
+            The goal is to find
+            <strong>the right option for you.</strong>
+        </p>
+
+
+        <!-- SECTION -->
+
+        <h2>
+            Compare Smart. Choose Confidently.
+        </h2>
+
+        <p>
+            Before making your final decision, take a step back.
+        </p>
+
+        <p>
+            Don't just look at the college name.
+        </p>
+
+        <p>
+            Look at the branch.
+        </p>
+
+        <p>
+            Look at the fees.
+        </p>
+
+        <p>
+            Look at placements.
+        </p>
+
+        <p>
+            Look at infrastructure.
+        </p>
+
+        <p>
+            Look at opportunities.
+        </p>
+
+        <p>
+            Look at your own interests and goals.
+        </p>
+
+        <p>
+            Then compare your options honestly.
+        </p>
+
+        <p>
+            Because four years is a long time.
+        </p>
+
+        <p>
+            And your college decision deserves more than:
+        </p>
+
+        <div class="quote">
+            “Everyone else is taking it.”
+        </div>
+
+        <p>
+            At RAPTORA, we're trying to make that decision
+            a little easier.
+        </p>
+
+        <p>
+            <strong>Less confusion.</strong>
+        </p>
+
+        <p>
+            <strong>More information.</strong>
+        </p>
+
+        <p>
+            <strong>Better comparisons.</strong>
+        </p>
+
+        <p>
+            And hopefully, a choice you'll feel confident about.
+        </p>
+
+        <div class="quote">
+            Compare. Understand. Choose.
+        </div>
+
+        <p>
+            <strong>
+                Your admission journey, reimagined by RAPTORA.
+            </strong>
+        </p>
+
+    </article>
+
+</main>
+
+
+<!-- ================= CONNECT WITH US ================= -->
+
+<div class="connect-button-container">
+
+    <a href="index.html#connect" class="connect-btn">
+
+        <i class="fa-solid fa-users"></i>
+
+        CONNECT WITH US
+
+    </a>
+
+</div>
+
+
+<!-- ================= BACK TO FEATURES ================= -->
+
+<div class="bottom-buttons">
+
+    <a href="index.html#features" class="home-btn">
+
+        <i class="fa-solid fa-arrow-left"></i>
+
+        Back to RAPTORA Features
+
+    </a>
+
+</div>
+
+
+<!-- ================= FOOTER ================= -->
+
+<footer>
+
+    <div class="footer-top">
+
+        <span class="footer-motto">
+            SMARTER CHOICES.
+        </span>
+
+        |
+
+        <span class="footer-motto">
+            BETTER COLLEGES.
+        </span>
+
+        |
+
+        <span class="footer-motto">
+            BRIGHTER FUTURES.
+        </span>
+
+    </div>
+
+    <p class="footer-bottom">
+        RAPTORA &mdash; YOUR ADMISSION PARTNER FOR LIFE. ❤️
+    </p>
+
+</footer>
+
+</body>
+</html>
+```
