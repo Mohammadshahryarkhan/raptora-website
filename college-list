@@ -61,11 +61,11 @@
 
                 <div
                     class="raptora-poster"
-                    onclick="raptoraOpenPoster('images/bmsce.jpeg')"
+                    onclick="raptoraOpenPoster('bmsce.jpeg')"
                 >
 
                     <img
-                        src="images/bmsce.jpeg"
+                        src="bmsce.jpeg"
                         alt="BMS College of Engineering"
                         loading="lazy"
                     >
@@ -109,7 +109,7 @@
                     <div class="raptora-buttons">
 
                         <button
-                            onclick="raptoraOpenPoster('images/bmsce.jpeg')"
+                            onclick="raptoraOpenPoster('bmsce.jpeg')"
                         >
                             View Details
                         </button>
@@ -140,11 +140,11 @@
 
                 <div
                     class="raptora-poster"
-                    onclick="raptoraOpenPoster('images/rvce.jpeg')"
+                    onclick="raptoraOpenPoster('rvce.jpeg')"
                 >
 
                     <img
-                        src="images/rvce.jpeg"
+                        src="rvce.jpeg"
                         alt="RV College of Engineering"
                         loading="lazy"
                     >
@@ -188,7 +188,7 @@
                     <div class="raptora-buttons">
 
                         <button
-                            onclick="raptoraOpenPoster('images/rvce.jpeg')"
+                            onclick="raptoraOpenPoster('rvce.jpeg')"
                         >
                             View Details
                         </button>
@@ -219,11 +219,11 @@
 
                 <div
                     class="raptora-poster"
-                    onclick="raptoraOpenPoster('images/christ-university.jpeg')"
+                    onclick="raptoraOpenPoster('christ-university.jpeg')"
                 >
 
                     <img
-                        src="images/christ-university.jpeg"
+                        src="christ-university.jpeg"
                         alt="Christ University"
                         loading="lazy"
                     >
@@ -267,7 +267,7 @@
                     <div class="raptora-buttons">
 
                         <button
-                            onclick="raptoraOpenPoster('images/christ-university.jpeg')"
+                            onclick="raptoraOpenPoster('christ-university.jpeg')"
                         >
                             View Details
                         </button>
@@ -298,11 +298,11 @@
 
                 <div
                     class="raptora-poster"
-                    onclick="raptoraOpenPoster('images/msrit.jpeg')"
+                    onclick="raptoraOpenPoster('msrit.jpeg')"
                 >
 
                     <img
-                        src="images/msrit.jpeg"
+                        src="msrit.jpeg"
                         alt="MS Ramaiah Institute of Technology"
                         loading="lazy"
                     >
@@ -346,7 +346,7 @@
                     <div class="raptora-buttons">
 
                         <button
-                            onclick="raptoraOpenPoster('images/msrit.jpeg')"
+                            onclick="raptoraOpenPoster('msrit.jpeg')"
                         >
                             View Details
                         </button>
@@ -377,11 +377,11 @@
 
                 <div
                     class="raptora-poster"
-                    onclick="raptoraOpenPoster('images/pes-university.jpeg')"
+                    onclick="raptoraOpenPoster('pes-university.jpeg')"
                 >
 
                     <img
-                        src="images/pes-university.jpeg"
+                        src="pes-university.jpeg"
                         alt="PES University"
                         loading="lazy"
                     >
@@ -425,7 +425,7 @@
                     <div class="raptora-buttons">
 
                         <button
-                            onclick="raptoraOpenPoster('images/pes-university.jpeg')"
+                            onclick="raptoraOpenPoster('pes-university.jpeg')"
                         >
                             View Details
                         </button>
