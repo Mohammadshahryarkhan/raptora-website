@@ -1,0 +1,1150 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+<title>Based on Rank | RAPTORA</title>
+
+<!-- Font Awesome -->
+<link rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<meta name="description"
+      content="Understand your college and branch options based on your entrance exam rank with RAPTORA.">
+
+<style>
+
+    /* ================= GENERAL ================= */
+
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    html {
+        scroll-behavior: smooth;
+    }
+
+    body {
+        font-family: Arial, Helvetica, sans-serif;
+        background: #080808;
+        color: #f5f5f5;
+        line-height: 1.8;
+    }
+
+
+    /* ================= NAVBAR ================= */
+
+    .navbar {
+        width: 100%;
+        padding: 18px 7%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        background: #050505;
+        border-bottom: 1px solid #222;
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+    }
+
+    .logo-container {
+        display: flex;
+        align-items: center;
+    }
+
+    .logo {
+        width: 55px;
+        height: 55px;
+        object-fit: contain;
+    }
+
+    .logo-text {
+        margin-left: 10px;
+        font-size: 22px;
+        font-weight: 800;
+        letter-spacing: 2px;
+        color: #fff;
+    }
+
+    .nav-links {
+        display: flex;
+        list-style: none;
+        gap: 30px;
+    }
+
+    .nav-links a {
+        color: #ddd;
+        text-decoration: none;
+        font-size: 15px;
+        transition: 0.3s;
+    }
+
+    .nav-links a:hover {
+        color: #ff1e1e;
+    }
+
+    .back-btn {
+        text-decoration: none;
+        color: #fff;
+        border: 1px solid #ff1e1e;
+        padding: 9px 18px;
+        border-radius: 6px;
+        transition: 0.3s;
+    }
+
+    .back-btn:hover {
+        background: #ff1e1e;
+        color: #fff;
+    }
+
+
+    /* ================= HERO ================= */
+
+    .blog-hero {
+        min-height: 430px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding: 80px 20px;
+
+        background:
+            radial-gradient(
+                circle at center,
+                #3a0000 0%,
+                #100000 35%,
+                #080808 75%
+            );
+    }
+
+    .hero-content {
+        max-width: 950px;
+    }
+
+    .hero-icon {
+        font-size: 55px;
+        color: #ff1e1e;
+        margin-bottom: 20px;
+    }
+
+    .blog-hero h1 {
+        font-size: clamp(38px, 5vw, 65px);
+        line-height: 1.15;
+        margin-bottom: 20px;
+        font-weight: 800;
+    }
+
+    .highlight {
+        color: #ff1e1e;
+    }
+
+    .hero-subtitle {
+        max-width: 750px;
+        margin: auto;
+        color: #bbb;
+        font-size: 18px;
+    }
+
+
+    /* ================= BLOG ================= */
+
+    .blog-container {
+        max-width: 900px;
+        margin: 70px auto;
+        padding: 0 25px;
+    }
+
+    .blog-content {
+        background: #111;
+        border: 1px solid #242424;
+        border-radius: 15px;
+        padding: 55px;
+        box-shadow: 0 0 40px rgba(255, 0, 0, 0.08);
+    }
+
+    .blog-content h2 {
+        font-size: 30px;
+        margin-top: 45px;
+        margin-bottom: 15px;
+        color: #fff;
+        line-height: 1.3;
+    }
+
+    .blog-content h2:first-child {
+        margin-top: 0;
+    }
+
+    .blog-content h2::before {
+        content: "";
+        display: inline-block;
+        width: 5px;
+        height: 28px;
+        background: #ff1e1e;
+        margin-right: 12px;
+        vertical-align: middle;
+        border-radius: 5px;
+    }
+
+    .blog-content p {
+        color: #cfcfcf;
+        font-size: 17px;
+        margin-bottom: 18px;
+    }
+
+    .blog-content strong {
+        color: #fff;
+    }
+
+    .blog-content ul {
+        margin: 20px 0 30px 25px;
+    }
+
+    .blog-content li {
+        color: #ccc;
+        margin: 8px 0;
+        padding-left: 5px;
+    }
+
+    .blog-content li::marker {
+        color: #ff1e1e;
+    }
+
+
+    /* ================= QUOTE ================= */
+
+    .quote {
+        margin: 30px 0;
+        padding: 22px 25px;
+        border-left: 4px solid #ff1e1e;
+        background: #181818;
+        color: #fff;
+        font-size: 19px;
+        font-weight: 600;
+        border-radius: 0 8px 8px 0;
+    }
+
+
+    /* ================= RANK BOX ================= */
+
+    .rank-box {
+        margin: 35px 0;
+        padding: 30px;
+        background: #160000;
+        border: 1px solid #450000;
+        border-radius: 12px;
+    }
+
+    .rank-box h3 {
+        color: #ff1e1e;
+        margin-bottom: 15px;
+        font-size: 22px;
+    }
+
+    .rank-box p {
+        margin-bottom: 10px;
+    }
+
+
+    /* ================= DREAM / TARGET / SAFE ================= */
+
+    .option-box {
+        margin: 25px 0;
+        padding: 25px;
+        background: #151515;
+        border: 1px solid #292929;
+        border-radius: 10px;
+    }
+
+    .option-box h3 {
+        color: #ff1e1e;
+        margin-bottom: 8px;
+    }
+
+
+    /* ================= FINAL MESSAGE ================= */
+
+    .final-message {
+        margin-top: 45px;
+        padding: 35px;
+        background: linear-gradient(
+            135deg,
+            #1b0000,
+            #100000
+        );
+        border: 1px solid #5c0000;
+        border-radius: 12px;
+        text-align: center;
+    }
+
+    .final-message h3 {
+        color: #ff1e1e;
+        font-size: 25px;
+        margin-bottom: 10px;
+    }
+
+    .final-message p {
+        margin-bottom: 5px;
+    }
+
+
+    /* ================= BUTTONS ================= */
+
+    .bottom-navigation {
+        text-align: center;
+        margin: 30px 0;
+    }
+
+    .home-btn,
+    .connect-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+
+        text-decoration: none;
+        color: #fff !important;
+
+        padding: 13px 28px;
+        border-radius: 7px;
+
+        font-weight: bold;
+        transition: 0.3s;
+    }
+
+    .home-btn {
+        background: #ff1e1e;
+    }
+
+    .home-btn:hover {
+        background: #d40000;
+        color: #fff !important;
+        transform: translateY(-2px);
+    }
+
+    .connect-btn {
+        background: #ff1e1e;
+    }
+
+    .connect-btn:hover {
+        background: #d40000;
+        color: #fff !important;
+        transform: translateY(-2px);
+    }
+
+
+    /* ================= FOOTER ================= */
+
+    footer {
+        text-align: center;
+        padding: 35px 20px;
+        border-top: 1px solid #222;
+        background: #050505;
+    }
+
+    .footer-top {
+        color: #aaa;
+        font-size: 13px;
+        letter-spacing: 1px;
+        margin-bottom: 12px;
+    }
+
+    .footer-motto {
+        color: #fff;
+    }
+
+    .footer-bottom {
+        color: #666;
+        font-size: 13px;
+    }
+
+
+    /* ================= MOBILE ================= */
+
+    @media (max-width: 768px) {
+
+        .navbar {
+            padding: 15px 5%;
+        }
+
+        .nav-links {
+            display: none;
+        }
+
+        .blog-hero {
+            min-height: 380px;
+            padding: 60px 20px;
+        }
+
+        .blog-hero h1 {
+            font-size: 38px;
+        }
+
+        .hero-subtitle {
+            font-size: 16px;
+        }
+
+        .blog-container {
+            margin: 40px auto;
+            padding: 0 15px;
+        }
+
+        .blog-content {
+            padding: 30px 22px;
+        }
+
+        .blog-content h2 {
+            font-size: 25px;
+        }
+
+        .blog-content p,
+        .blog-content li {
+            font-size: 16px;
+        }
+
+        .home-btn,
+        .connect-btn {
+            width: 100%;
+            max-width: 300px;
+        }
+    }
+
+</style>
+
+
+</head>
+
+<body>
+
+<!-- ================= NAVBAR ================= -->
+
+<header class="navbar">
+
+
+<div class="logo-container">
+
+    <img src="frontend/register.png"
+         alt="RAPTORA Logo"
+         class="logo">
+
+    <span class="logo-text">
+        RAPTORA
+    </span>
+
+</div>
+
+
+<nav>
+
+    <ul class="nav-links">
+
+        <li>
+            <a href="index.html#home">
+                Home
+            </a>
+        </li>
+
+        <li>
+            <a href="index.html#features">
+                Features
+            </a>
+        </li>
+
+        <li>
+            <a href="index.html#resources">
+                Resources
+            </a>
+        </li>
+
+        <li>
+            <a href="index.html#connect">
+                Connect
+            </a>
+        </li>
+
+    </ul>
+
+</nav>
+
+
+<a href="index.html"
+   class="back-btn">
+
+    <i class="fa-solid fa-arrow-left"></i>
+
+    Back
+
+</a>
+
+
+</header>
+
+<!-- ================= HERO ================= -->
+
+<section class="blog-hero">
+
+
+<div class="hero-content">
+
+    <div class="hero-icon">
+        <i class="fa-solid fa-trophy"></i>
+    </div>
+
+    <h1>
+
+        Based on
+
+        <span class="highlight">
+            Rank
+        </span>
+
+    </h1>
+
+    <p class="hero-subtitle">
+
+        Your rank is more than just a number.
+        It's the starting point for understanding
+        your college options.
+
+    </p>
+
+</div>
+
+
+</section>
+
+<!-- ================= BLOG ================= -->
+
+<main class="blog-container">
+
+
+<article class="blog-content">
+
+
+    <p>
+        Getting your entrance exam result can be a strange
+        feeling.
+    </p>
+
+    <p>
+        You spend months studying, preparing, solving
+        questions and worrying about the exam. Then finally,
+        your result comes out.
+    </p>
+
+    <p>
+        And there it is:
+    </p>
+
+    <div class="quote">
+        Your rank.
+    </div>
+
+    <p>
+        For a moment, you might feel relieved. Then comes
+        the next question:
+    </p>
+
+    <div class="quote">
+        “Okay… what college can I actually get with this rank?”
+    </div>
+
+    <p>
+        And that's where things can get confusing.
+    </p>
+
+    <p>
+        You start searching through cutoff lists, college
+        websites, counselling videos and random websites.
+        One website says you might get a particular college.
+        Another says you probably won't.
+    </p>
+
+    <p>
+        So what do you actually choose?
+    </p>
+
+    <p>
+        That's where <strong>rank-based college guidance</strong>
+        can make things easier.
+    </p>
+
+
+    <!-- ================= SECTION ================= -->
+
+    <h2>
+        Your Rank Helps Define Your Options
+    </h2>
+
+    <p>
+        Your rank isn't just a number sitting on your result
+        sheet.
+    </p>
+
+    <p>
+        It can help you understand the colleges and branches
+        that may be available to you through a particular
+        counselling process.
+    </p>
+
+    <p>
+        Depending on your exam, category, counselling process
+        and preferences, your rank can help you explore:
+    </p>
+
+    <ul>
+
+        <li>
+            Colleges you may have a chance of getting
+        </li>
+
+        <li>
+            Branches available to you
+        </li>
+
+        <li>
+            Previous-year cutoff trends
+        </li>
+
+        <li>
+            Different colleges within your rank range
+        </li>
+
+        <li>
+            Possible backup options
+        </li>
+
+        <li>
+            Better and safer choices for your preference list
+        </li>
+
+    </ul>
+
+    <p>
+        Instead of asking:
+    </p>
+
+    <div class="quote">
+        “Which college is the best?”
+    </div>
+
+    <p>
+        You can start asking a much more useful question:
+    </p>
+
+    <div class="quote">
+        “Which colleges are the best options for me based on my rank?”
+    </div>
+
+
+    <!-- ================= SECTION ================= -->
+
+    <h2>
+        One Rank Doesn't Tell the Whole Story
+    </h2>
+
+    <p>
+        Your rank matters, but it isn't the only thing that
+        matters.
+    </p>
+
+    <p>
+        Two students with similar ranks might make completely
+        different choices.
+    </p>
+
+    <p>
+        Why?
+    </p>
+
+    <p>
+        Because everyone has different priorities.
+    </p>
+
+    <p>
+        One student might care most about placements.
+    </p>
+
+    <p>
+        Another might prefer a particular branch.
+    </p>
+
+    <p>
+        Someone else might want a college closer to home.
+    </p>
+
+    <p>
+        For another student, fees or hostel facilities might
+        be the biggest concern.
+    </p>
+
+    <p>
+        That's why rank-based guidance should not simply give
+        you a list of colleges and tell you to pick one.
+    </p>
+
+    <p>
+        It should help you understand <strong>why</strong>
+        each option might make sense for you.
+    </p>
+
+
+    <!-- ================= SECTION ================= -->
+
+    <h2>
+        What About Previous-Year Cutoffs?
+    </h2>
+
+    <p>
+        Cutoffs can be useful when you're trying to understand
+        your chances.
+    </p>
+
+    <p>
+        Looking at previous counselling rounds can give you
+        an idea of how a college or branch has performed in
+        earlier years.
+    </p>
+
+    <div class="rank-box">
+
+        <h3>
+            <i class="fa-solid fa-chart-line"></i>
+            Remember
+        </h3>
+
+        <p>
+            <strong>
+                Previous-year cutoff ≠ guaranteed future admission.
+            </strong>
+        </p>
+
+        <p>
+            Cutoffs can change because of student preferences,
+            seat availability, counselling rounds and competition.
+        </p>
+
+    </div>
+
+    <p>
+        So instead of treating an old cutoff like a fixed
+        rule, it's better to use it as a reference point.
+    </p>
+
+    <p>
+        Think of it as:
+    </p>
+
+    <div class="quote">
+        “This is what happened before.”
+    </div>
+
+    <p>
+        Not:
+    </p>
+
+    <div class="quote">
+        “This is exactly what will happen this year.”
+    </div>
+
+
+    <!-- ================= SECTION ================= -->
+
+    <h2>
+        Dream, Target and Safe Options
+    </h2>
+
+    <p>
+        When you're making your college preference list,
+        it can help to think in categories.
+    </p>
+
+
+    <div class="option-box">
+
+        <h3>
+            Dream Options
+        </h3>
+
+        <p>
+            These are colleges or branches that you really
+            want. Your rank might make them challenging,
+            but they're still worth considering if the
+            counselling rules and previous trends make them
+            realistic possibilities.
+        </p>
+
+    </div>
+
+
+    <div class="option-box">
+
+        <h3>
+            Target Options
+        </h3>
+
+        <p>
+            These are options that appear reasonably
+            achievable based on your rank and previous
+            trends. They can become the core of your
+            preference list.
+        </p>
+
+    </div>
+
+
+    <div class="option-box">
+
+        <h3>
+            Safe Options
+        </h3>
+
+        <p>
+            These are options where your chances may be
+            comparatively stronger.
+        </p>
+
+        <p>
+            Having these choices doesn't mean you're
+            settling. It means you're planning ahead.
+        </p>
+
+    </div>
+
+
+    <p>
+        Because counselling isn't just about hoping for your
+        first choice.
+    </p>
+
+    <p>
+        <strong>
+            It's about making sure you have a good choice
+            even if things don't go exactly as planned.
+        </strong>
+    </p>
+
+
+    <!-- ================= SECTION ================= -->
+
+    <h2>
+        Category and Counselling Matter Too
+    </h2>
+
+    <p>
+        A rank by itself doesn't always tell the complete
+        story.
+    </p>
+
+    <p>
+        Your category, counselling authority, quota, exam
+        and other eligibility factors can influence the
+        options available to you.
+    </p>
+
+    <p>
+        For example, the same rank can lead to different
+        possibilities depending on the counselling process
+        and category.
+    </p>
+
+    <p>
+        That's why simply searching:
+    </p>
+
+    <div class="quote">
+        “College for rank 25,000”
+    </div>
+
+    <p>
+        may not give you the complete picture.
+    </p>
+
+    <p>
+        The better question is:
+    </p>
+
+    <div class="quote">
+        “What are my realistic college and branch options
+        based on my complete profile?”
+    </div>
+
+
+    <!-- ================= SECTION ================= -->
+
+    <h2>
+        Don't Choose a College Just Because You Can Get It
+    </h2>
+
+    <p>
+        This is one of the biggest things students sometimes
+        forget.
+    </p>
+
+    <p>
+        Just because your rank makes you eligible for a
+        college doesn't automatically mean it's the right
+        college for you.
+    </p>
+
+    <p>
+        Before making a final decision, look at things like:
+    </p>
+
+    <ul>
+
+        <li>
+            Branch and curriculum
+        </li>
+
+        <li>
+            Placement opportunities
+        </li>
+
+        <li>
+            Fees
+        </li>
+
+        <li>
+            Return on investment
+        </li>
+
+        <li>
+            Location
+        </li>
+
+        <li>
+            Hostel facilities
+        </li>
+
+        <li>
+            Campus environment
+        </li>
+
+        <li>
+            Faculty
+        </li>
+
+        <li>
+            Internship opportunities
+        </li>
+
+        <li>
+            Student reviews
+        </li>
+
+        <li>
+            Your long-term career plans
+        </li>
+
+    </ul>
+
+    <p>
+        Your rank can help you <strong>find your options</strong>.
+    </p>
+
+    <p>
+        Your priorities help you <strong>choose between them</strong>.
+    </p>
+
+
+    <!-- ================= SECTION ================= -->
+
+    <h2>
+        That's What RAPTORA Is Trying to Make Easier
+    </h2>
+
+    <p>
+        At <strong>RAPTORA</strong>, we believe students
+        shouldn't have to spend hours jumping between
+        different websites just to understand what their
+        rank means.
+    </p>
+
+    <p>
+        The idea behind our <strong>Based on Rank</strong>
+        feature is simple:
+    </p>
+
+    <div class="rank-box">
+
+        <h3>
+            <i class="fa-solid fa-magnifying-glass"></i>
+            Understand Your Options
+        </h3>
+
+        <p>
+            Enter your details.
+        </p>
+
+        <p>
+            Understand your options.
+        </p>
+
+        <p>
+            Compare them.
+        </p>
+
+        <p>
+            Make a smarter choice.
+        </p>
+
+    </div>
+
+    <p>
+        Instead of giving you one random college recommendation,
+        the goal is to help you explore possibilities based on
+        your rank and preferences.
+    </p>
+
+    <p>
+        Because your admission journey isn't just about getting
+        <em>a</em> college.
+    </p>
+
+    <p>
+        It's about finding an option that makes sense for
+        <strong>you</strong>.
+    </p>
+
+
+    <!-- ================= FINAL SECTION ================= -->
+
+    <h2>
+        Your Rank. Your Options. Your Choice.
+    </h2>
+
+    <p>
+        Your rank can open certain doors.
+    </p>
+
+    <p>
+        But you decide which door you want to walk through.
+    </p>
+
+    <p>
+        Look at the numbers.
+    </p>
+
+    <p>
+        Understand the trends.
+    </p>
+
+    <p>
+        Compare your options.
+    </p>
+
+    <p>
+        Think about your goals.
+    </p>
+
+    <p>
+        And don't be afraid to keep a few backup choices.
+    </p>
+
+    <p>
+        Because college admissions can be unpredictable.
+    </p>
+
+    <p>
+        The more informed you are, the more confident you'll
+        feel when it's time to make that choice.
+    </p>
+
+    <div class="quote">
+        Your rank is the starting point — not the final decision.
+    </div>
+
+
+    <!-- ================= FINAL MESSAGE ================= -->
+
+    <div class="final-message">
+
+        <h3>
+            Find. Predict. Compare. Connect. Succeed.
+        </h3>
+
+        <p>
+            Your admission journey,
+            reimagined by RAPTORA.
+        </p>
+
+    </div>
+
+</article>
+
+
+<!-- ================= BACK BUTTON ================= -->
+
+<div class="bottom-navigation">
+
+    <a href="index.html#features"
+       class="home-btn">
+
+        <i class="fa-solid fa-arrow-left"></i>
+
+        Back to RAPTORA Features
+
+    </a>
+
+</div>
+
+
+<!-- ================= CONNECT BUTTON ================= -->
+
+<div class="bottom-navigation">
+
+    <a href="index.html#connect"
+       class="connect-btn">
+
+        <i class="fa-solid fa-user-group"></i>
+
+        Connect with us
+
+    </a>
+
+</div>
+
+
+</main>
+
+<!-- ================= FOOTER ================= -->
+
+<footer>
+
+
+<div class="footer-top">
+
+    <span class="footer-motto">
+        SMARTER CHOICES.
+    </span>
+
+    &nbsp; | &nbsp;
+
+    <span class="footer-motto">
+        BETTER COLLEGES.
+    </span>
+
+    &nbsp; | &nbsp;
+
+    <span class="footer-motto">
+        BRIGHTER FUTURES.
+    </span>
+
+</div>
+
+<p class="footer-bottom">
+    RAPTORA &mdash;
+    YOUR ADMISSION PARTNER FOR LIFE. ❤️
+</p>
+
+
+</footer>
+
+</body>
+</html>
