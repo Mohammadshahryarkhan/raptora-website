@@ -461,6 +461,14 @@ footer {
 }
 .feature-link {
     text-decoration: none;
-    color: inherit;
+    color: var(--text-white);
     display: block;
+}
+
+.feature-link h3 {
+    color: var(--text-white);
+}
+
+.feature-link p {
+    color: var(--text-gray);
 }
