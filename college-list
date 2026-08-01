@@ -1,0 +1,1005 @@
+<!-- =========================================
+     COLLEGE LIST SECTION
+========================================= -->
+
+<section class="raptora-colleges" id="college-list">
+
+    <div class="raptora-colleges-container">
+
+        <!-- Heading -->
+        <div class="raptora-colleges-heading">
+
+            <span>RAPTORA • COLLEGE DISCOVERY</span>
+
+            <h2>
+                List of <b>Colleges</b>
+            </h2>
+
+            <p>
+                Explore a wide range of colleges across India with
+                detailed insights, cutoff history, and placement stats.
+            </p>
+
+        </div>
+
+
+        <!-- Search & Filter -->
+        <div class="raptora-college-search">
+
+            <input
+                type="text"
+                id="collegeSearch"
+                placeholder="Search college name..."
+            >
+
+            <select id="collegeLocation">
+
+                <option value="all">
+                    All Locations
+                </option>
+
+                <option value="bengaluru">
+                    Bengaluru
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <!-- College Cards -->
+        <div class="raptora-college-grid" id="collegeGrid">
+
+
+            <!-- ================= BMSCE ================= -->
+
+            <article
+                class="raptora-college-card"
+                data-name="BMS College of Engineering"
+                data-location="bengaluru"
+            >
+
+                <div
+                    class="raptora-poster"
+                    onclick="raptoraOpenPoster('images/bmsce.jpeg')"
+                >
+
+                    <img
+                        src="images/bmsce.jpeg"
+                        alt="BMS College of Engineering"
+                        loading="lazy"
+                    >
+
+                    <span>View Poster ⤢</span>
+
+                </div>
+
+
+                <div class="raptora-college-info">
+
+                    <h3>
+                        BMS College of Engineering
+                    </h3>
+
+                    <p class="raptora-location">
+                        📍 Bengaluru, Karnataka
+                    </p>
+
+
+                    <div class="raptora-stats">
+
+                        <div>
+                            <strong>151–200</strong>
+                            <small>NIRF 2024</small>
+                        </div>
+
+                        <div>
+                            <strong>15+ Acres</strong>
+                            <small>Campus</small>
+                        </div>
+
+                        <div>
+                            <strong>1946</strong>
+                            <small>Established</small>
+                        </div>
+
+                    </div>
+
+
+                    <div class="raptora-buttons">
+
+                        <button
+                            onclick="raptoraOpenPoster('images/bmsce.jpeg')"
+                        >
+                            View Details
+                        </button>
+
+                        <a
+                            href="https://www.bmsce.ac.in/"
+                            target="_blank"
+                            rel="noopener"
+                        >
+                            Website
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </article>
+
+
+
+            <!-- ================= RVCE ================= -->
+
+            <article
+                class="raptora-college-card"
+                data-name="RV College of Engineering"
+                data-location="bengaluru"
+            >
+
+                <div
+                    class="raptora-poster"
+                    onclick="raptoraOpenPoster('images/rvce.jpeg')"
+                >
+
+                    <img
+                        src="images/rvce.jpeg"
+                        alt="RV College of Engineering"
+                        loading="lazy"
+                    >
+
+                    <span>View Poster ⤢</span>
+
+                </div>
+
+
+                <div class="raptora-college-info">
+
+                    <h3>
+                        RV College of Engineering
+                    </h3>
+
+                    <p class="raptora-location">
+                        📍 Bengaluru, Karnataka
+                    </p>
+
+
+                    <div class="raptora-stats">
+
+                        <div>
+                            <strong>51</strong>
+                            <small>NIRF 2024</small>
+                        </div>
+
+                        <div>
+                            <strong>16+ Acres</strong>
+                            <small>Campus</small>
+                        </div>
+
+                        <div>
+                            <strong>1963</strong>
+                            <small>Established</small>
+                        </div>
+
+                    </div>
+
+
+                    <div class="raptora-buttons">
+
+                        <button
+                            onclick="raptoraOpenPoster('images/rvce.jpeg')"
+                        >
+                            View Details
+                        </button>
+
+                        <a
+                            href="https://rvce.edu.in/"
+                            target="_blank"
+                            rel="noopener"
+                        >
+                            Website
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </article>
+
+
+
+            <!-- ================= CHRIST UNIVERSITY ================= -->
+
+            <article
+                class="raptora-college-card"
+                data-name="Christ University"
+                data-location="bengaluru"
+            >
+
+                <div
+                    class="raptora-poster"
+                    onclick="raptoraOpenPoster('images/christ-university.jpeg')"
+                >
+
+                    <img
+                        src="images/christ-university.jpeg"
+                        alt="Christ University"
+                        loading="lazy"
+                    >
+
+                    <span>View Poster ⤢</span>
+
+                </div>
+
+
+                <div class="raptora-college-info">
+
+                    <h3>
+                        Christ University
+                    </h3>
+
+                    <p class="raptora-location">
+                        📍 Bengaluru, Karnataka
+                    </p>
+
+
+                    <div class="raptora-stats">
+
+                        <div>
+                            <strong>63</strong>
+                            <small>NIRF 2025</small>
+                        </div>
+
+                        <div>
+                            <strong>80+ Acres</strong>
+                            <small>Campus</small>
+                        </div>
+
+                        <div>
+                            <strong>1969</strong>
+                            <small>Established</small>
+                        </div>
+
+                    </div>
+
+
+                    <div class="raptora-buttons">
+
+                        <button
+                            onclick="raptoraOpenPoster('images/christ-university.jpeg')"
+                        >
+                            View Details
+                        </button>
+
+                        <a
+                            href="https://christuniversity.in/"
+                            target="_blank"
+                            rel="noopener"
+                        >
+                            Website
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </article>
+
+
+
+            <!-- ================= MSRIT ================= -->
+
+            <article
+                class="raptora-college-card"
+                data-name="MS Ramaiah Institute of Technology"
+                data-location="bengaluru"
+            >
+
+                <div
+                    class="raptora-poster"
+                    onclick="raptoraOpenPoster('images/msrit.jpeg')"
+                >
+
+                    <img
+                        src="images/msrit.jpeg"
+                        alt="MS Ramaiah Institute of Technology"
+                        loading="lazy"
+                    >
+
+                    <span>View Poster ⤢</span>
+
+                </div>
+
+
+                <div class="raptora-college-info">
+
+                    <h3>
+                        MS Ramaiah Institute of Technology
+                    </h3>
+
+                    <p class="raptora-location">
+                        📍 Bengaluru, Karnataka
+                    </p>
+
+
+                    <div class="raptora-stats">
+
+                        <div>
+                            <strong>75</strong>
+                            <small>NIRF 2026</small>
+                        </div>
+
+                        <div>
+                            <strong>85 Acres</strong>
+                            <small>Campus</small>
+                        </div>
+
+                        <div>
+                            <strong>1962</strong>
+                            <small>Established</small>
+                        </div>
+
+                    </div>
+
+
+                    <div class="raptora-buttons">
+
+                        <button
+                            onclick="raptoraOpenPoster('images/msrit.jpeg')"
+                        >
+                            View Details
+                        </button>
+
+                        <a
+                            href="https://www.msrit.edu/"
+                            target="_blank"
+                            rel="noopener"
+                        >
+                            Website
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </article>
+
+
+
+            <!-- ================= PES UNIVERSITY ================= -->
+
+            <article
+                class="raptora-college-card"
+                data-name="PES University"
+                data-location="bengaluru"
+            >
+
+                <div
+                    class="raptora-poster"
+                    onclick="raptoraOpenPoster('images/pes-university.jpeg')"
+                >
+
+                    <img
+                        src="images/pes-university.jpeg"
+                        alt="PES University"
+                        loading="lazy"
+                    >
+
+                    <span>View Poster ⤢</span>
+
+                </div>
+
+
+                <div class="raptora-college-info">
+
+                    <h3>
+                        PES University
+                    </h3>
+
+                    <p class="raptora-location">
+                        📍 Bengaluru, Karnataka
+                    </p>
+
+
+                    <div class="raptora-stats">
+
+                        <div>
+                            <strong>101–150</strong>
+                            <small>NIRF 2025</small>
+                        </div>
+
+                        <div>
+                            <strong>~25 Acres</strong>
+                            <small>Campus</small>
+                        </div>
+
+                        <div>
+                            <strong>1972</strong>
+                            <small>Established</small>
+                        </div>
+
+                    </div>
+
+
+                    <div class="raptora-buttons">
+
+                        <button
+                            onclick="raptoraOpenPoster('images/pes-university.jpeg')"
+                        >
+                            View Details
+                        </button>
+
+                        <a
+                            href="https://pes.edu/"
+                            target="_blank"
+                            rel="noopener"
+                        >
+                            Website
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </article>
+
+
+            <!-- No Results -->
+            <div
+                class="raptora-no-results"
+                id="collegeNoResults"
+            >
+                No colleges found.
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================
+     POSTER POPUP
+========================================= -->
+
+<div
+    class="raptora-poster-modal"
+    id="raptoraPosterModal"
+>
+
+    <button
+        class="raptora-modal-close"
+        onclick="raptoraClosePoster()"
+    >
+        ×
+    </button>
+
+    <img
+        id="raptoraModalImage"
+        src=""
+        alt="College Poster"
+    >
+
+</div>
+
+
+<!-- =========================================
+     CSS
+========================================= -->
+
+<style>
+
+.raptora-colleges {
+    width: 100%;
+    padding: 80px 20px;
+    background: #050505;
+    color: #fff;
+}
+
+.raptora-colleges-container {
+    width: min(1200px, 100%);
+    margin: auto;
+}
+
+
+/* Heading */
+
+.raptora-colleges-heading {
+    text-align: center;
+    margin-bottom: 35px;
+}
+
+.raptora-colleges-heading > span {
+    display: block;
+    color: #e50914;
+    font-size: 13px;
+    font-weight: 800;
+    letter-spacing: 3px;
+    margin-bottom: 12px;
+}
+
+.raptora-colleges-heading h2 {
+    margin: 0;
+    font-size: clamp(38px, 5vw, 65px);
+    line-height: 1;
+    font-weight: 900;
+    text-transform: uppercase;
+}
+
+.raptora-colleges-heading h2 b {
+    color: #e50914;
+}
+
+.raptora-colleges-heading p {
+    max-width: 720px;
+    margin: 18px auto 0;
+    color: #aaa;
+    line-height: 1.7;
+}
+
+
+/* Search */
+
+.raptora-college-search {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 40px;
+}
+
+.raptora-college-search input,
+.raptora-college-search select {
+    height: 50px;
+    background: #111;
+    border: 1px solid #3b3b3b;
+    border-radius: 10px;
+    color: #fff;
+    padding: 0 16px;
+    outline: none;
+}
+
+.raptora-college-search input {
+    width: min(500px, 100%);
+}
+
+.raptora-college-search input:focus,
+.raptora-college-search select:focus {
+    border-color: #e50914;
+}
+
+
+/* Grid */
+
+.raptora-college-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 28px;
+}
+
+
+/* Card */
+
+.raptora-college-card {
+    background: linear-gradient(
+        145deg,
+        #151515,
+        #090909
+    );
+
+    border: 1px solid #3b1010;
+    border-radius: 18px;
+    overflow: hidden;
+
+    transition: .3s ease;
+
+    box-shadow:
+        0 15px 45px rgba(0,0,0,.4);
+}
+
+.raptora-college-card:hover {
+    transform: translateY(-5px);
+    border-color: #8d171d;
+}
+
+
+/* Poster */
+
+.raptora-poster {
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    background: #000;
+}
+
+.raptora-poster img {
+    display: block;
+    width: 100%;
+    aspect-ratio: 2 / 3;
+    object-fit: cover;
+    transition: transform .35s ease;
+}
+
+.raptora-poster:hover img {
+    transform: scale(1.025);
+}
+
+.raptora-poster span {
+    position: absolute;
+    right: 14px;
+    bottom: 14px;
+
+    background: rgba(0,0,0,.82);
+    border: 1px solid #555;
+
+    padding: 8px 12px;
+    border-radius: 30px;
+
+    font-size: 12px;
+}
+
+
+/* Content */
+
+.raptora-college-info {
+    padding: 20px;
+}
+
+.raptora-college-info h3 {
+    margin: 0;
+    font-size: 22px;
+    line-height: 1.15;
+    font-weight: 900;
+    text-transform: uppercase;
+}
+
+.raptora-location {
+    margin: 7px 0 17px;
+    color: #ff444d;
+    font-size: 14px;
+}
+
+
+/* Stats */
+
+.raptora-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    margin-bottom: 18px;
+}
+
+.raptora-stats div {
+    background: #080808;
+    border: 1px solid #292929;
+    border-radius: 9px;
+    padding: 12px 5px;
+    text-align: center;
+}
+
+.raptora-stats strong {
+    display: block;
+    font-size: 15px;
+}
+
+.raptora-stats small {
+    display: block;
+    margin-top: 5px;
+    color: #888;
+    font-size: 9px;
+    text-transform: uppercase;
+}
+
+
+/* Buttons */
+
+.raptora-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.raptora-buttons button,
+.raptora-buttons a {
+    flex: 1;
+
+    min-height: 44px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 9px;
+    border: none;
+
+    padding: 10px;
+
+    font-size: 13px;
+    font-weight: 800;
+
+    text-decoration: none;
+    cursor: pointer;
+
+    color: #fff;
+    background: #e50914;
+
+    transition: .2s;
+}
+
+.raptora-buttons button:hover,
+.raptora-buttons a:hover {
+    filter: brightness(1.2);
+}
+
+.raptora-buttons a {
+    background: #191919;
+    border: 1px solid #444;
+}
+
+
+/* No Results */
+
+.raptora-no-results {
+    display: none;
+    grid-column: 1 / -1;
+    padding: 60px;
+    text-align: center;
+    color: #888;
+}
+
+
+/* Poster Modal */
+
+.raptora-poster-modal {
+    position: fixed;
+    inset: 0;
+
+    z-index: 999999;
+
+    display: none;
+    align-items: center;
+    justify-content: center;
+
+    padding: 25px;
+
+    background: rgba(0,0,0,.95);
+}
+
+.raptora-poster-modal.active {
+    display: flex;
+}
+
+.raptora-poster-modal img {
+    max-width: 95vw;
+    max-height: 92vh;
+    object-fit: contain;
+    border-radius: 8px;
+}
+
+.raptora-modal-close {
+    position: fixed;
+
+    top: 18px;
+    right: 22px;
+
+    width: 45px;
+    height: 45px;
+
+    border-radius: 50%;
+
+    background: #111;
+    color: #fff;
+
+    border: 1px solid #555;
+
+    font-size: 28px;
+
+    cursor: pointer;
+}
+
+
+/* Responsive */
+
+@media (max-width: 800px) {
+
+    .raptora-college-grid {
+        grid-template-columns: 1fr;
+    }
+
+}
+
+@media (max-width: 550px) {
+
+    .raptora-colleges {
+        padding: 55px 15px;
+    }
+
+    .raptora-college-info h3 {
+        font-size: 19px;
+    }
+
+    .raptora-stats strong {
+        font-size: 12px;
+    }
+
+    .raptora-stats small {
+        font-size: 8px;
+    }
+
+    .raptora-buttons {
+        flex-direction: column;
+    }
+
+}
+
+</style>
+
+
+<!-- =========================================
+     JAVASCRIPT
+========================================= -->
+
+<script>
+
+(function () {
+
+    const search =
+        document.getElementById("collegeSearch");
+
+    const location =
+        document.getElementById("collegeLocation");
+
+    const cards =
+        document.querySelectorAll(
+            ".raptora-college-card"
+        );
+
+    const noResults =
+        document.getElementById(
+            "collegeNoResults"
+        );
+
+
+    function filterColleges() {
+
+        const query =
+            search.value
+                .toLowerCase()
+                .trim();
+
+        const selectedLocation =
+            location.value;
+
+        let count = 0;
+
+
+        cards.forEach(function (card) {
+
+            const name =
+                card.dataset.name
+                    .toLowerCase();
+
+            const cardLocation =
+                card.dataset.location;
+
+
+            const searchMatch =
+                name.includes(query);
+
+            const locationMatch =
+                selectedLocation === "all" ||
+                cardLocation === selectedLocation;
+
+
+            if (
+                searchMatch &&
+                locationMatch
+            ) {
+
+                card.style.display = "";
+                count++;
+
+            } else {
+
+                card.style.display = "none";
+
+            }
+
+        });
+
+
+        noResults.style.display =
+            count === 0
+                ? "block"
+                : "none";
+
+    }
+
+
+    search.addEventListener(
+        "input",
+        filterColleges
+    );
+
+    location.addEventListener(
+        "change",
+        filterColleges
+    );
+
+})();
+
+
+
+/* Open Poster */
+
+function raptoraOpenPoster(image) {
+
+    const modal =
+        document.getElementById(
+            "raptoraPosterModal"
+        );
+
+    const modalImage =
+        document.getElementById(
+            "raptoraModalImage"
+        );
+
+
+    modalImage.src = image;
+
+    modal.classList.add("active");
+
+    document.body.style.overflow =
+        "hidden";
+}
+
+
+
+/* Close Poster */
+
+function raptoraClosePoster() {
+
+    document
+        .getElementById(
+            "raptoraPosterModal"
+        )
+        .classList.remove("active");
+
+    document.body.style.overflow = "";
+
+}
+
+
+
+/* Click Outside */
+
+document
+    .getElementById("raptoraPosterModal")
+    .addEventListener(
+        "click",
+        function (event) {
+
+            if (event.target === this) {
+                raptoraClosePoster();
+            }
+
+        }
+    );
+
+
+
+/* ESC */
+
+document.addEventListener(
+    "keydown",
+    function (event) {
+
+        if (event.key === "Escape") {
+            raptoraClosePoster();
+        }
+
+    }
+);
+
+</script>
