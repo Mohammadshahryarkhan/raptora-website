@@ -165,6 +165,12 @@
             margin-top: 0;
         }
 
+        .blog-content h3 {
+            color: #ff1e1e;
+            margin-top: 25px;
+            margin-bottom: 10px;
+        }
+
         .blog-content p {
             color: #ccc;
             font-size: 17px;
@@ -216,141 +222,70 @@
             margin-bottom: 10px;
         }
 
-        /* ================= CONNECT BOX ================= */
+        /* ================= CONNECT BUTTON ================= */
 
-        .connect-section {
-            margin-top: 70px;
-            padding: 60px 30px;
-            background:
-                radial-gradient(
-                    circle at center,
-                    #350000 0%,
-                    #120000 45%,
-                    #080808 100%
-                );
-        }
-
-        .connect-box {
-            max-width: 950px;
-            margin: auto;
-            padding: 50px;
-            border: 1px solid #4b0000;
-            border-radius: 18px;
-            background: rgba(10, 10, 10, 0.92);
+        .connect-button-container {
             text-align: center;
-            box-shadow: 0 0 40px rgba(255, 0, 0, 0.12);
+            margin: 60px 20px;
         }
 
-        .connect-box h2 {
-            font-size: 34px;
-            margin-bottom: 10px;
-        }
-
-        .connect-box h2 span {
-            color: #ff1e1e;
-        }
-
-        .connect-subtext {
-            color: #aaa;
-            margin-bottom: 35px;
-            font-size: 17px;
-        }
-
-        .social-connect {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 70px;
-            flex-wrap: wrap;
-        }
-
-        .qr-container {
-            text-align: center;
-        }
-
-        .qr-code {
-            width: 200px;
-            height: 200px;
-            object-fit: cover;
-            border-radius: 10px;
-            border: 3px solid #fff;
-        }
-
-        .qr-container span {
-            display: block;
-            margin-top: 12px;
-            color: #aaa;
-            font-size: 13px;
-            letter-spacing: 2px;
-        }
-
-        .social-details {
-            text-align: left;
-        }
-
-        .social-details p {
-            margin-bottom: 18px;
-            color: #ddd;
-            font-size: 17px;
-        }
-
-        .social-details i {
-            color: #ff1e1e;
-            width: 25px;
-        }
-
-        .social-link {
-            color: #fff !important;
-            text-decoration: none;
-            transition: 0.3s;
-        }
-
-        .social-link:hover {
-            color: #ff1e1e !important;
-        }
-
-        .instagram-btn {
+        .connect-btn {
             display: inline-flex;
             align-items: center;
+            justify-content: center;
             gap: 10px;
+
+            padding: 15px 32px;
+
             background: #ff1e1e;
-            color: #fff !important;
+            color: #ffffff !important;
+
             text-decoration: none;
-            padding: 13px 22px;
-            border-radius: 7px;
+
+            border-radius: 8px;
+
+            font-size: 17px;
             font-weight: bold;
-            transition: 0.3s;
+
+            transition: 0.3s ease;
         }
 
-        .instagram-btn:hover {
+        .connect-btn:hover {
             background: #d40000;
-            transform: translateY(-2px);
-            color: #fff !important;
+            color: #ffffff !important;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(255, 0, 0, 0.25);
         }
 
-        /* ================= BOTTOM BUTTON ================= */
+        /* ================= BACK BUTTON ================= */
 
         .bottom-buttons {
             text-align: center;
-            margin: 40px 0;
+            margin: 40px 0 60px;
         }
 
         .home-btn {
             display: inline-flex;
             align-items: center;
             gap: 10px;
+
             padding: 13px 25px;
+
             background: #ff1e1e;
             color: #fff;
+
             text-decoration: none;
+
             border-radius: 7px;
             font-weight: bold;
+
             transition: 0.3s;
         }
 
         .home-btn:hover {
             background: #d40000;
             transform: translateY(-2px);
+            color: #fff;
         }
 
         /* ================= FOOTER ================= */
@@ -411,25 +346,9 @@
                 font-size: 16px;
             }
 
-            .connect-box {
-                padding: 35px 20px;
-            }
-
-            .social-connect {
-                gap: 35px;
-            }
-
-            .social-details {
-                text-align: center;
-            }
-
-            .social-details p {
-                font-size: 15px;
-            }
-
-            .instagram-btn {
-                width: 100%;
-                justify-content: center;
+            .connect-btn {
+                width: 90%;
+                max-width: 350px;
             }
         }
 
@@ -742,7 +661,7 @@
             You can simply look for patterns.
         </p>
 
-        <h3 style="color:#ff1e1e; margin-top:25px;">
+        <h3>
             Some Options Fill Quickly
         </h3>
 
@@ -756,7 +675,7 @@
             keeping that in mind while arranging your choices.
         </p>
 
-        <h3 style="color:#ff1e1e; margin-top:25px;">
+        <h3>
             Some Options Stay Open Longer
         </h3>
 
@@ -770,7 +689,7 @@
             when you're building backup choices.
         </p>
 
-        <h3 style="color:#ff1e1e; margin-top:25px;">
+        <h3>
             Cutoffs Can Move
         </h3>
 
@@ -1137,100 +1056,26 @@
 </main>
 
 
-<!-- ================= CONNECT BOX ================= -->
+<!-- ================= CONNECT WITH US BUTTON ================= -->
 
-<section class="connect-section" id="connect">
+<div class="connect-button-container">
 
-    <div class="connect-box">
+    <a href="index.html#connect" class="connect-btn">
 
-        <h2>
-            CONNECT <span>WITH US.</span>
-        </h2>
+        <i class="fa-solid fa-users"></i>
 
-        <p class="connect-subtext">
-            Have questions? Want guidance? Let's connect.
-        </p>
+        CONNECT WITH US
 
-        <div class="social-connect">
+    </a>
 
-            <!-- QR CODE -->
-
-            <div class="qr-container">
-
-                <img
-                    src="WhatsApp Image 2026-07-25 at 4.22.08 PM.jpeg"
-                    alt="RAPTORA Instagram QR Code"
-                    class="qr-code">
-
-                <span>
-                    SCAN TO CONNECT
-                </span>
-
-            </div>
-
-
-            <!-- SOCIAL DETAILS -->
-
-            <div class="social-details">
-
-                <p>
-                    <i class="fa-brands fa-instagram"></i>
-
-                    <a
-                        href="https://www.instagram.com/raptora247?igsh=MWp1c2RvMzloMTc1aQ=="
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        class="social-link">
-
-                        @RAPTORA247
-
-                    </a>
-                </p>
-
-
-                <p>
-
-                    <i class="fa-solid fa-envelope"></i>
-
-                    <a
-                        href="mailto:raptora247@gmail.com"
-                        class="social-link">
-
-                        raptora247@gmail.com
-
-                    </a>
-
-                </p>
-
-
-                <a
-                    href="https://www.instagram.com/raptora247?igsh=MWp1c2RvMzloMTc1aQ=="
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="instagram-btn">
-
-                    Follow on Instagram
-
-                    <i class="fa-solid fa-arrow-up-right-from-square"></i>
-
-                </a>
-
-            </div>
-
-        </div>
-
-    </div>
-
-</section>
+</div>
 
 
 <!-- ================= BACK BUTTON ================= -->
 
 <div class="bottom-buttons">
 
-    <a
-        href="index.html#features"
-        class="home-btn">
+    <a href="index.html#features" class="home-btn">
 
         <i class="fa-solid fa-arrow-left"></i>
 
