@@ -14,7 +14,7 @@
         <div class="card">
 
             <h1>KCET College Predictor</h1>
-            <p>Based on KEA Counselling Cutoff</p>
+            <p>Based on KEA Counselling Cutoffs</p>
 
             <label for="marks">KCET Marks (out of 180)</label>
             <input type="number" id="marks" min="0" max="180" placeholder="Enter KCET Marks">
@@ -34,10 +34,28 @@
                 <option value="ST">ST</option>
             </select>
 
-            <label for="region">Region</label>
+            <label for="region">Region / Quota</label>
             <select id="region">
                 <option value="Non-HK">Non-HK (General Region)</option>
                 <option value="HK">HK (371J Hyderabad-Karnataka)</option>
+            </select>
+
+            <!-- NEW FILTER: Preferred City -->
+            <label for="city">Preferred City</label>
+            <select id="city">
+                <option value="ALL">All Cities</option>
+                <option value="Bangalore">Bangalore</option>
+                <option value="Mysuru">Mysuru</option>
+                <option value="Tumkur">Tumkur</option>
+            </select>
+
+            <!-- NEW FILTER: Preferred Branch -->
+            <label for="branch">Preferred Branch Group</label>
+            <select id="branch">
+                <option value="ALL">All Branches</option>
+                <option value="CSE">Computer Science / IT / AI & ML</option>
+                <option value="ECE">Electronics & Electrical (ECE/EEE)</option>
+                <option value="MECH">Mechanical / Civil / Chemical</option>
             </select>
 
             <button onclick="predictKCET()">
@@ -51,178 +69,214 @@
 
     <script>
         /**
-         * Top Karnataka Engineering Colleges Database mapped with KEA Cutoff trends
+         * Category & Region Cutoff Multipliers
          */
-        const TOP_COLLEGES = [
-            { name: "R.V. College of Engineering (RVCE), Bangalore", cse: 800, ece: 2500, mech: 15000 },
-            { name: "B.M.S. College of Engineering (BMSCE), Bangalore", cse: 2000, ece: 6000, mech: 25000 },
-            { name: "M.S. Ramaiah Institute of Technology (MSRIT), Bangalore", cse: 2500, ece: 7000, mech: 30000 },
-            { name: "PES University (Ring Road Campus), Bangalore", cse: 3000, ece: 8500, mech: 32000 },
-            { name: "University Visvesvaraya College of Engineering (UVCE), Bangalore", cse: 3500, ece: 9000, mech: 28000 },
-            { name: "Bangalore Institute of Technology (BIT), Bangalore", cse: 8000, ece: 16000, mech: 45000 },
-            { name: "Dayananda Sagar College of Engineering (DSCE), Bangalore", cse: 9000, ece: 18000, mech: 50000 },
-            { name: "Sir M. Visvesvaraya Institute of Technology (Sir MVIT), Bangalore", cse: 12000, ece: 24000, mech: 60000 },
-            { name: "Siddaganga Institute of Technology (SIT), Tumkur", cse: 13000, ece: 25000, mech: 65000 },
-            { name: "BMS Institute of Technology & Management (BMSIT), Bangalore", cse: 15000, ece: 28000, mech: 70000 },
-            { name: "Nitte Meenakshi Institute of Technology (NMIT), Bangalore", cse: 16000, ece: 30000, mech: 75000 },
-            { name: "JSS Science and Technology University (SJCE), Mysuru", cse: 5000, ece: 12000, mech: 35000 },
-            { name: "New Horizon College of Engineering (NHCE), Bangalore", cse: 20000, ece: 35000, mech: 80000 },
-            { name: "CMR Institute of Technology (CMRIT), Bangalore", cse: 22000, ece: 38000, mech: 85000 },
-            { name: "REVA University, Bangalore", cse: 25000, ece: 42000, mech: 90000 }
-        ];
-
-        /**
-         * Category & HK Reservation Cutoff Multipliers
-         * Reserved categories and HK quota allow candidates to get higher-tier seats at relaxed general rank values.
-         */
-        const CATEGORY_RELAXATION = {
+        const CATEGORY_CUTOFF_FACTOR = {
             "GM": 1.0,
-            "CAT-1": 1.35,
-            "2A": 1.20,
+            "3B": 1.1,
+            "3A": 1.15,
             "2B": 1.25,
-            "3A": 1.12,
-            "3B": 1.08,
-            "SC": 2.50,
-            "ST": 2.80
+            "2A": 1.3,
+            "CAT-1": 1.4,
+            "SC": 2.5,
+            "ST": 2.8
         };
 
-        function calculateRank(kcetMarks, pucPercentage) {
-            // 50:50 composite score formula (50% KCET + 50% PUC PCM %)
+        const REGION_CUTOFF_FACTOR = {
+            "Non-HK": 1.0,
+            "HK": 1.35
+        };
+
+        /**
+         * College Database with City tagging & Branch-level GM Closing Cutoffs
+         */
+        const COLLEGE_DATABASE = [
+            { name: "R.V. College of Engineering (RVCE)", city: "Bangalore", cse: 500, ece: 1800, mech: 8000 },
+            { name: "B.M.S. College of Engineering (BMSCE)", city: "Bangalore", cse: 1200, ece: 3500, mech: 15000 },
+            { name: "M.S. Ramaiah Institute of Technology (MSRIT)", city: "Bangalore", cse: 1800, ece: 4500, mech: 18000 },
+            { name: "PES University (Ring Road Campus)", city: "Bangalore", cse: 1500, ece: 4000, mech: 16000 },
+            { name: "University Visvesvaraya College of Engineering (UVCE)", city: "Bangalore", cse: 2500, ece: 6500, mech: 20000 },
+            { name: "JSS Science & Technology University (SJCE)", city: "Mysuru", cse: 3200, ece: 8000, mech: 25000 },
+            { name: "National Institute of Engineering (NIE)", city: "Mysuru", cse: 4500, ece: 10000, mech: 30000 },
+            { name: "Bangalore Institute of Technology (BIT)", city: "Bangalore", cse: 5500, ece: 12000, mech: 35000 },
+            { name: "Dayananda Sagar College of Engineering (DSCE)", city: "Bangalore", cse: 6500, ece: 14000, mech: 40000 },
+            { name: "Sir M. Visvesvaraya Institute of Technology (Sir MVIT)", city: "Bangalore", cse: 9000, ece: 18000, mech: 50000 },
+            { name: "Siddaganga Institute of Technology (SIT)", city: "Tumkur", cse: 8500, ece: 17000, mech: 48000 },
+            { name: "Sri Siddhartha Institute of Technology (SSIT)", city: "Tumkur", cse: 20000, ece: 35000, mech: 75000 },
+            { name: "BMS Institute of Technology (BMSIT)", city: "Bangalore", cse: 10000, ece: 22000, mech: 55000 },
+            { name: "Nitte Meenakshi Institute of Technology (NMIT)", city: "Bangalore", cse: 12000, ece: 25000, mech: 60000 },
+            { name: "New Horizon College of Engineering (NHCE)", city: "Bangalore", cse: 15000, ece: 28000, mech: 70000 },
+            { name: "CMR Institute of Technology (CMRIT)", city: "Bangalore", cse: 18000, ece: 32000, mech: 75000 },
+            { name: "REVA University", city: "Bangalore", cse: 22000, ece: 38000, mech: 85000 }
+        ];
+
+        function calculateGeneralRank(kcetMarks, pucPercentage) {
             const kcetWeight = (kcetMarks / 180) * 50;
             const pucWeight = (pucPercentage / 100) * 50;
             const compositeScore = kcetWeight + pucWeight;
 
             let rank;
             if (compositeScore >= 95) rank = 100;
-            else if (compositeScore >= 90) rank = 600;
-            else if (compositeScore >= 85) rank = 2000;
-            else if (compositeScore >= 80) rank = 5000;
-            else if (compositeScore >= 75) rank = 10000;
-            else if (compositeScore >= 70) rank = 18000;
-            else if (compositeScore >= 65) rank = 32000;
-            else if (compositeScore >= 60) rank = 50000;
-            else if (compositeScore >= 50) rank = 85000;
-            else rank = 120000;
+            else if (compositeScore >= 90) rank = 500;
+            else if (compositeScore >= 85) rank = 1800;
+            else if (compositeScore >= 80) rank = 4500;
+            else if (compositeScore >= 75) rank = 9000;
+            else if (compositeScore >= 70) rank = 16000;
+            else if (compositeScore >= 65) rank = 28000;
+            else if (compositeScore >= 60) rank = 45000;
+            else if (compositeScore >= 50) rank = 75000;
+            else rank = 110000;
 
             return { rank, compositeScore };
         }
 
-        function getLocalCollegeSuggestions(effectiveRank) {
-            let suggestions = [];
+        function getEligibleColleges(generalRank, category, region, selectedCity, selectedBranch) {
+            const catFactor = CATEGORY_CUTOFF_FACTOR[category] || 1.0;
+            const regFactor = REGION_CUTOFF_FACTOR[region] || 1.0;
+            const combinedFactor = catFactor * regFactor;
 
-            TOP_COLLEGES.forEach(col => {
-                let branches = [];
-                if (effectiveRank <= col.cse) branches.push("CSE / AI & ML / ISE");
-                else if (effectiveRank <= col.ece) branches.push("ECE / EEE / Data Science");
-                else if (effectiveRank <= col.mech) branches.push("Mechanical / Civil / Biotech");
+            let eligible = [];
 
-                if (branches.length > 0) {
-                    suggestions.push({
+            COLLEGE_DATABASE.forEach(col => {
+                // Filter by City
+                if (selectedCity !== "ALL" && col.city.toLowerCase() !== selectedCity.toLowerCase()) {
+                    return;
+                }
+
+                const cseCutoff = Math.round(col.cse * combinedFactor);
+                const eceCutoff = Math.round(col.ece * combinedFactor);
+                const mechCutoff = Math.round(col.mech * combinedFactor);
+
+                let matchedBranches = [];
+
+                // Filter by Branch
+                if ((selectedBranch === "ALL" || selectedBranch === "CSE") && generalRank <= cseCutoff) {
+                    matchedBranches.push({ branch: "Computer Science (CSE / AI & ML / ISE)", closingRank: cseCutoff });
+                }
+                if ((selectedBranch === "ALL" || selectedBranch === "ECE") && generalRank <= eceCutoff) {
+                    matchedBranches.push({ branch: "Electronics & Electrical (ECE / EEE)", closingRank: eceCutoff });
+                }
+                if ((selectedBranch === "ALL" || selectedBranch === "MECH") && generalRank <= mechCutoff) {
+                    matchedBranches.push({ branch: "Mechanical / Civil / Chemical", closingRank: mechCutoff });
+                }
+
+                if (matchedBranches.length > 0) {
+                    eligible.push({
                         college: col.name,
-                        branch: branches.join(", "),
-                        closingRank: col.cse
+                        city: col.city,
+                        branches: matchedBranches
                     });
                 }
             });
 
-            return suggestions;
+            return eligible;
         }
 
         async function predictKCET() {
-            let marksVal = document.getElementById("marks").value;
-            let pucVal = document.getElementById("puc").value;
-            let category = document.getElementById("category").value;
-            let region = document.getElementById("region").value;
+            const marksVal = document.getElementById("marks").value;
+            const pucVal = document.getElementById("puc").value;
+            const category = document.getElementById("category").value;
+            const region = document.getElementById("region").value;
+            const selectedCity = document.getElementById("city").value;
+            const selectedBranch = document.getElementById("branch").value;
 
             if (marksVal === "" || pucVal === "") {
                 alert("Please enter both KCET Marks and PUC Percentage.");
                 return;
             }
 
-            let marks = Number(marksVal);
-            let puc = Number(pucVal);
+            const marks = Number(marksVal);
+            const puc = Number(pucVal);
 
             if (marks < 0 || marks > 180 || puc < 0 || puc > 100) {
-                alert("Invalid bounds! KCET Marks must be (0-180) & PUC Percentage (0-100%).");
+                alert("Invalid bounds! KCET Marks (0-180) & PUC Percentage (0-100%).");
                 return;
             }
 
-            // 1. Calculate base general rank based on composite score
-            const rankData = calculateRank(marks, puc);
-            const generalRank = rankData.rank;
+            const { rank: generalRank, compositeScore } = calculateGeneralRank(marks, puc);
 
-            // 2. Account for Category Reservation & HK (371J) Quota relaxation
-            const categoryMultiplier = CATEGORY_RELAXATION[category] || 1.0;
-            const hkMultiplier = (region === "HK") ? 1.35 : 1.0;
-            const totalQuotaMultiplier = categoryMultiplier * hkMultiplier;
-
-            // Effective rank threshold for allotment potential
-            const effectiveRank = Math.round(generalRank * totalQuotaMultiplier);
-
-            document.getElementById("result").innerHTML = "<p>⏳ Calculating composite rank and fetching eligible colleges...</p>";
+            document.getElementById("result").innerHTML = "<p>⏳ Calculating composite rank and applying filters...</p>";
 
             try {
-                // Send request to backend
-                const response = await fetch(
-                    "https://raptora-website-1.onrender.com/api/kcet/predict",
-                    {
-                        method: "POST",
-                        headers: { "Content-Type": "application/json" },
-                        body: JSON.stringify({
-                            rank: generalRank,
-                            effectiveRank: effectiveRank,
-                            category: category,
-                            region: region,
-                            compositeScore: rankData.compositeScore.toFixed(2)
-                        })
-                    }
-                );
+                // Call Backend API
+                const response = await fetch("https://raptora-website-1.onrender.com/api/kcet/predict", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        rank: generalRank,
+                        category: category,
+                        region: region,
+                        city: selectedCity,
+                        branch: selectedBranch,
+                        compositeScore: compositeScore.toFixed(2)
+                    })
+                });
 
                 const data = await response.json();
 
-                if (!response.ok) {
-                    throw new Error(data.message || "API Server Error");
+                if (response.ok && data.data && data.data.length > 0) {
+                    renderBackendResults(data.data, generalRank, category, region, selectedCity, selectedBranch, compositeScore);
+                } else {
+                    const localColleges = getEligibleColleges(generalRank, category, region, selectedCity, selectedBranch);
+                    renderLocalResults(localColleges, generalRank, category, region, selectedCity, selectedBranch, compositeScore);
                 }
 
-                let output = renderResultsHTML(data.data, generalRank, effectiveRank, category, region, rankData.compositeScore);
-                document.getElementById("result").innerHTML = output;
-
             } catch (error) {
-                console.warn("Backend API offline/error. Falling back to client database:", error);
-
-                // Fallback to local college suggestions if backend API fails
-                const localSuggestions = getLocalCollegeSuggestions(effectiveRank);
-                let output = renderResultsHTML(localSuggestions, generalRank, effectiveRank, category, region, rankData.compositeScore);
-                document.getElementById("result").innerHTML = output;
+                console.warn("Backend API offline. Using dynamic local predictor:", error);
+                const localColleges = getEligibleColleges(generalRank, category, region, selectedCity, selectedBranch);
+                renderLocalResults(localColleges, generalRank, category, region, selectedCity, selectedBranch, compositeScore);
             }
         }
 
-        function renderResultsHTML(collegeList, generalRank, effectiveRank, category, region, compositeScore) {
+        function renderLocalResults(colleges, rank, category, region, city, branch, score) {
             let html = `
                 <h2>Prediction Result</h2>
-                <p><strong>Composite Score:</strong> ${compositeScore.toFixed(2)} / 100</p>
-                <p><strong>General Merit Rank:</strong> ~${generalRank.toLocaleString()}</p>
-                <p><strong>Category Allotment Potential Rank (${category} ${region === "HK" ? "+ 371J HK Quota" : ""}):</strong> ~${effectiveRank.toLocaleString()}</p>
+                <p><strong>Composite Score:</strong> ${score.toFixed(2)} / 100</p>
+                <p><strong>Estimated KCET General Rank:</strong> ~${rank.toLocaleString()}</p>
+                <p><strong>Filters Applied:</strong> ${category} | ${region === "HK" ? "HK 371J" : "Non-HK"} | City: ${city} | Branch: ${branch}</p>
                 <hr>
-                <h3>Eligible Colleges & Branches</h3>
+                <h3>Eligible Colleges (${colleges.length} Found)</h3>
             `;
 
-            if (!collegeList || collegeList.length === 0) {
-                html += `<p>No colleges found matching this rank and category combination.</p>`;
+            if (colleges.length === 0) {
+                html += `<p>No colleges found matching these criteria for your rank. Try changing the city or branch filter.</p>`;
             } else {
-                collegeList.forEach(college => {
+                colleges.forEach(item => {
                     html += `
-                    <div class="college" style="border:1px solid #ccc; padding:10px; margin-bottom:10px; border-radius:6px;">
-                        <h3>🏛 ${college.college || college.name}</h3>
-                        <p>📚 <strong>Branch:</strong> ${college.branch}</p>
-                        <p>🏷 <strong>Category Applied:</strong> ${category}</p>
-                        <p>📍 <strong>Region:</strong> ${region}</p>
-                    </div>
+                        <div class="college" style="border: 1px solid #ddd; padding: 12px; margin-bottom: 10px; border-radius: 6px; text-align: left;">
+                            <h3>🏛 ${item.college} (${item.city})</h3>
+                            <ul style="margin: 5px 0; padding-left: 20px;">
+                                ${item.branches.map(b => `<li><strong>${b.branch}</strong> (Expected Cutoff: ~${b.closingRank.toLocaleString()})</li>`).join('')}
+                            </ul>
+                        </div>
                     `;
                 });
             }
 
-            return html;
+            document.getElementById("result").innerHTML = html;
+        }
+
+        function renderBackendResults(colleges, rank, category, region, city, branch, score) {
+            let html = `
+                <h2>Prediction Result</h2>
+                <p><strong>Composite Score:</strong> ${score.toFixed(2)} / 100</p>
+                <p><strong>Estimated KCET General Rank:</strong> ~${rank.toLocaleString()}</p>
+                <p><strong>Filters Applied:</strong> ${category} | ${region} | City: ${city} | Branch: ${branch}</p>
+                <hr>
+                <h3>Eligible Colleges</h3>
+            `;
+
+            colleges.forEach(c => {
+                html += `
+                    <div class="college" style="border: 1px solid #ddd; padding: 12px; margin-bottom: 10px; border-radius: 6px; text-align: left;">
+                        <h3>🏛 ${c.college} ${c.city ? `(${c.city})` : ''}</h3>
+                        <p>📚 <strong>Branch:</strong> ${c.branch}</p>
+                        <p>Closing Rank (${category}): ${c.closingRank}</p>
+                    </div>
+                `;
+            });
+
+            document.getElementById("result").innerHTML = html;
         }
     </script>
 
