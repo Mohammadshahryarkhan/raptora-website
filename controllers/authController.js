@@ -1,8 +1,9 @@
 const User = require("../models/User");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const crypto = require("crypto");
+const nodemailer = require("nodemailer");
 
-// ================= REGISTER =================
 // ================= REGISTER =================
 exports.register = async (req, res) => {
 
@@ -10,37 +11,31 @@ exports.register = async (req, res) => {
 
         const { name, email, phone, password } = req.body;
 
-
         const existingUser = await User.findOne({ email });
-console.log("Checking email:", email);
-console.log("Existing user:", existingUser);
+
+        console.log("Checking email:", email);
+        console.log("Existing user:", existingUser);
+
         if (existingUser) {
             return res.status(400).json({
                 message: "User already exists"
             });
         }
 
-
         const hashedPassword = await bcrypt.hash(password, 10);
 
-
         const user = new User({
-
             name,
             email,
             phone,
             password: hashedPassword
-
         });
 
-
         await user.save();
-
 
         res.status(201).json({
             message: "Registration successful"
         });
-
 
     } catch (err) {
 
@@ -53,6 +48,8 @@ console.log("Existing user:", existingUser);
     }
 
 };
+
+
 // ================= LOGIN =================
 exports.login = async (req, res) => {
 
@@ -98,17 +95,18 @@ exports.login = async (req, res) => {
 
         res.json({
 
-    message: "Login Successful",
+            message: "Login Successful",
 
-    token,
+            token,
 
-    name: user.name,
+            name: user.name,
 
-    email: user.email,
+            email: user.email,
 
-    phone: user.phone
+            phone: user.phone
 
-});
+        });
+
     } catch (err) {
 
         console.log(err);
