@@ -3,330 +3,400 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>NEET UG 2026 College Predictor & Counselling Eligibility Engine</title>
+  <title>NEET UG 2026 College Predictor (MCC Compliant)</title>
   <style>
-    :root {
-      --primary: #1e3a8a;
-      --primary-accent: #2563eb;
-      --bg: #f8fafc;
-      --card-bg: #ffffff;
-      --text: #0f172a;
-      --text-muted: #64748b;
-      --border: #e2e8f0;
-      --success: #16a34a;
-      --warning: #d97706;
-      --danger: #dc2626;
-      --radius: 10px;
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
     }
 
-    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, sans-serif; }
-    body { background-color: var(--bg); color: var(--text); line-height: 1.5; padding: 20px; }
-    .container { max-width: 1200px; margin: 0 auto; }
+    body {
+      min-height: 100vh;
+      background: #000;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: white;
+      padding: 30px 15px;
+    }
 
-    header { text-align: center; margin-bottom: 24px; padding-bottom: 16px; border-bottom: 2px solid var(--border); }
-    header h1 { color: var(--primary); font-size: 1.8rem; margin-bottom: 6px; }
-    header p { color: var(--text-muted); font-size: 0.95rem; }
+    .container {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
 
-    .grid-layout { display: grid; grid-template-columns: 360px 1fr; gap: 24px; }
-    @media (max-width: 860px) { .grid-layout { grid-template-columns: 1fr; } }
+    .card {
+      width: 460px;
+      padding: 35px;
+      background: #111;
+      border-radius: 20px;
+      box-shadow: 0 0 25px rgba(255, 0, 0, 0.5);
+      border: 1px solid #ff0000;
+    }
 
-    .card { background: var(--card-bg); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); }
-    .form-group { margin-bottom: 16px; }
-    .form-group label { display: block; font-weight: 600; font-size: 0.88rem; margin-bottom: 6px; color: var(--text); }
-    .form-control, select { width: 100%; padding: 10px 12px; border: 1px solid var(--border); border-radius: 6px; font-size: 0.95rem; background: #fff; color: var(--text); }
-    .form-control:focus, select:focus { outline: none; border-color: var(--primary-accent); box-shadow: 0 0 0 3px rgba(37,99,235,0.15); }
-    
-    .checkbox-group { display: flex; align-items: center; gap: 8px; font-size: 0.9rem; font-weight: 500; cursor: pointer; }
-    .checkbox-group input { width: 18px; height: 18px; cursor: pointer; }
+    .card h1 {
+      text-align: center;
+      color: #ff1a1a;
+      margin-bottom: 8px;
+    }
 
-    .btn-submit { width: 100%; background: var(--primary-accent); color: #fff; padding: 12px; font-size: 1rem; font-weight: 600; border: none; border-radius: 6px; cursor: pointer; transition: background 0.2s; }
-    .btn-submit:hover { background: var(--primary); }
+    .card p.subtitle {
+      text-align: center;
+      color: #ccc;
+      margin-bottom: 25px;
+      font-size: 14px;
+    }
 
-    .info-box { background: #eff6ff; border-left: 4px solid var(--primary-accent); padding: 12px 14px; font-size: 0.85rem; border-radius: 0 6px 6px 0; margin-top: 12px; }
+    label {
+      display: block;
+      margin-top: 15px;
+      margin-bottom: 8px;
+      color: #ff4d4d;
+      font-weight: 600;
+      font-size: 14px;
+    }
 
-    .summary-bar { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 20px; }
-    .stat-badge { background: #e0e7ff; color: #3730a3; padding: 8px 14px; border-radius: 20px; font-size: 0.85rem; font-weight: 600; }
+    input,
+    select {
+      width: 100%;
+      padding: 12px;
+      background: #000;
+      color: white;
+      border: 1px solid #ff0000;
+      border-radius: 8px;
+      outline: none;
+      font-size: 14px;
+    }
 
-    .college-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: var(--radius); padding: 18px; margin-bottom: 14px; position: relative; transition: transform 0.15s ease; }
-    .college-card:hover { border-color: var(--primary-accent); }
-    .college-header { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; }
-    .college-title { font-weight: 700; font-size: 1.1rem; color: var(--primary); }
-    .college-type { font-size: 0.75rem; text-transform: uppercase; font-weight: 700; padding: 3px 8px; border-radius: 4px; }
-    .type-aiq { background: #dbeafe; color: #1e40af; }
-    .type-sq { background: #dcfce7; color: #166534; }
-    .type-aiims { background: #fef3c7; color: #92400e; }
-    .type-deemed { background: #f3e8ff; color: #6b21a8; }
+    input:focus,
+    select:focus {
+      box-shadow: 0 0 10px red;
+    }
 
-    .college-meta { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 10px; margin-top: 12px; font-size: 0.85rem; color: var(--text-muted); }
-    .meta-item strong { color: var(--text); }
+    button {
+      width: 100%;
+      margin-top: 25px;
+      padding: 14px;
+      background: #ff0000;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.3s;
+    }
 
-    .chance-badge { font-weight: 700; font-size: 0.85rem; padding: 4px 10px; border-radius: 12px; display: inline-block; margin-top: 10px; }
-    .chance-high { background: #dcfce7; color: #15803d; }
-    .chance-medium { background: #fef3c7; color: #b45309; }
-    .chance-low { background: #fee2e2; color: #b91c1c; }
+    button:hover {
+      background: #b30000;
+      transform: scale(1.03);
+    }
 
-    .rule-tag { display: inline-block; background: #f1f5f9; border: 1px solid #cbd5e1; font-size: 0.75rem; padding: 2px 6px; border-radius: 4px; margin-right: 4px; margin-top: 6px; }
+    #result {
+      margin-top: 25px;
+    }
 
-    .rules-card { background: #fff; border: 1px solid var(--border); border-radius: var(--radius); padding: 16px; margin-top: 20px; }
-    .rules-card h3 { font-size: 1rem; color: var(--primary); margin-bottom: 8px; }
-    .rules-card ul { padding-left: 20px; font-size: 0.85rem; color: var(--text-muted); }
-    .rules-card li { margin-bottom: 6px; }
+    #result h2 {
+      color: #ff1a1a;
+      font-size: 20px;
+      margin-bottom: 15px;
+    }
+
+    .college {
+      background: #1a1a1a;
+      border-left: 5px solid #ff0000;
+      padding: 15px;
+      margin-top: 15px;
+      border-radius: 10px;
+    }
+
+    .college h3 {
+      color: #ff3333;
+      margin-bottom: 8px;
+      font-size: 16px;
+    }
+
+    .college p {
+      text-align: left;
+      margin: 5px 0;
+      color: white;
+      font-size: 13px;
+      line-height: 1.4;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 3px 8px;
+      background: #330000;
+      color: #ff6666;
+      border: 1px solid #ff0000;
+      border-radius: 4px;
+      font-size: 11px;
+      font-weight: bold;
+      margin-top: 5px;
+    }
+
+    .notice {
+      font-size: 11px;
+      color: #888;
+      margin-top: 15px;
+      text-align: center;
+    }
   </style>
 </head>
 <body>
 
 <div class="container">
-  <header>
-    <h1>NEET UG 2026 College Predictor & Counselling Engine</h1>
-    <p>Compliant with Medical Counselling Committee (MCC) AIQ Rules & 85% State Domicile Quota Guidelines</p>
-  </header>
+  <div class="card">
+    <h1>NEET UG Predictor</h1>
+    <p class="subtitle">MCC & State Counselling Rules Aligned</p>
 
-  <div class="grid-layout">
-    <!-- INPUT FORM SIDEBAR -->
-    <aside class="card">
-      <form id="predictorForm">
-        <div class="form-group">
-          <label for="neetScore">NEET Score (Out of 720)</label>
-          <input type="number" id="neetScore" class="form-control" min="100" max="720" placeholder="e.g. 645" required />
-        </div>
+    <form id="neetForm">
+      <label for="score">NEET Score (Out of 720)</label>
+      <input type="number" id="score" placeholder="e.g. 620" required min="0" max="720" />
 
-        <div class="form-group">
-          <label for="airRank">All India Rank (AIR)</label>
-          <input type="number" id="airRank" class="form-control" min="1" placeholder="e.g. 12500" required />
-        </div>
+      <label for="rank">All India Rank (AIR)</label>
+      <input type="number" id="rank" placeholder="e.g. 15000" required min="1" max="2500000" />
 
-        <div class="form-group">
-          <label for="homeState">Home State / Domicile</label>
-          <select id="homeState" class="form-control" required>
-            <option value="">Select State</option>
-            <option value="Bihar">Bihar</option>
-            <option value="Delhi">Delhi (NCR)</option>
-            <option value="Karnataka">Karnataka</option>
-            <option value="Maharashtra">Maharashtra</option>
-            <option value="Rajasthan">Rajasthan</option>
-            <option value="Uttar Pradesh">Uttar Pradesh</option>
-            <option value="West Bengal">West Bengal</option>
-            <option value="Other">Other States / UTs</option>
-          </select>
-        </div>
+      <label for="category">Category (Central / MCC)</label>
+      <select id="category" required>
+        <option value="UR">General / Unreserved (50th %tile)</option>
+        <option value="EWS">EWS (50th %tile)</option>
+        <option value="OBC">OBC-NCL (40th %tile)</option>
+        <option value="SC">Scheduled Caste (40th %tile)</option>
+        <option value="ST">Scheduled Tribe (40th %tile)</option>
+      </select>
 
-        <div class="form-group">
-          <label for="casteCategory">Category Claim</label>
-          <select id="casteCategory" class="form-control" required>
-            <option value="UR">General / Unreserved (UR)</option>
-            <option value="OBC-NCL">OBC-NCL (Central List)</option>
-            <option value="EWS">GEN-EWS (Central Format)</option>
-            <option value="SC">Scheduled Caste (SC)</option>
-            <option value="ST">Scheduled Tribe (ST)</option>
-          </select>
-        </div>
+      <label for="quota">Counselling Quota</label>
+      <select id="quota" required>
+        <option value="AIQ">MCC 15% All India Quota (Govt Colleges)</option>
+        <option value="CENTRAL">MCC 100% Central / AIIMS / JIPMER</option>
+        <option value="STATE">85% State Domicile Quota</option>
+        <option value="DEEMED">MCC 100% Deemed Universities (Management)</option>
+      </select>
 
-        <div class="form-group">
-          <label class="checkbox-group">
-            <input type="checkbox" id="pwdStatus" />
-            Persons with Disability (PwD - 5% Horizontal)
-          </label>
-        </div>
+      <label for="course">Preferred Course</label>
+      <select id="course" required>
+        <option value="ALL">All Medical Courses</option>
+        <option value="MBBS">MBBS (Medical)</option>
+        <option value="BDS">BDS (Dental)</option>
+        <option value="AYUSH">AYUSH (BAMS/BHMS)</option>
+      </select>
 
-        <div class="form-group">
-          <label for="preferredQuota">Counselling Quota Scope</label>
-          <select id="preferredQuota" class="form-control">
-            <option value="ALL">All Quotas (AIQ + State Quota + Central)</option>
-            <option value="AIQ">15% All India Quota (MCC)</option>
-            <option value="SQ">85% State Domicile Quota</option>
-            <option value="CENTRAL">Central Universities / AIIMS / JIPMER</option>
-            <option value="DEEMED">Deemed Universities (100% Management)</option>
-          </select>
-        </div>
+      <button type="submit">Predict Medical Colleges</button>
+    </form>
 
-        <button type="submit" class="btn-submit">Predict Eligible Colleges</button>
-      </form>
-
-      <div class="info-box">
-        <strong>MCC Counselling Rule Note:</strong><br />
-        • OBC candidates require <strong>Central OBC-NCL certificate</strong> for 15% AIQ.<br />
-        • State Quota (85%) uses state-specific category lists & strictly requires valid state domicile.
-      </div>
-    </aside>
-
-    <!-- RESULTS DISPLAY AREA -->
-    <main>
-      <div id="summaryBar" class="summary-bar"></div>
-      <div id="resultsContainer">
-        <div class="card" style="text-align: center; color: var(--text-muted); padding: 40px;">
-          Enter your NEET score, AIR rank, state domicile, and category to view accurate counselling predictions.
-        </div>
-      </div>
-
-      <div class="rules-card">
-        <h3>NEET UG 2026 Counselling Terms & Criteria Applied</h3>
-        <ul>
-          <li><strong>15% AIQ Reservation:</strong> SC (15%), ST (7.5%), OBC-NCL Central (27%), EWS (10%), PwD (5% horizontal) managed via MCC.</li>
-          <li><strong>85% State Quota:</strong> Governed by state reservation statutes; restricted strictly to domicile holders of the home state.</li>
-          <li><strong>AIIMS & Central Institutes:</strong> 100% seats filled via MCC AIQ reservation rules regardless of state residency.</li>
-          <li><strong>Deemed Universities:</strong> 100% seats are open merit (Unreserved) with standard management fee structures; category reservations do not apply.</li>
-        </ul>
-      </div>
-    </main>
+    <div id="result"></div>
+    <p class="notice">*Qualifying thresholds & cutoffs adhere to official NTA percentile norms & MCC guidelines.</p>
   </div>
 </div>
 
 <script>
-// Mock Database reflecting 2025/2026 NEET Cutoffs, Categories, and Quotas
-const collegeData = [
-  // AIIMS & Central Universities
-  { id: 1, name: "AIIMS, New Delhi", location: "Delhi", type: "CENTRAL", fee: "₹1,628/yr", airCutoffUR: 55, airCutoffOBC: 250, airCutoffEWS: 280, airCutoffSC: 1000, airCutoffST: 2500, state: "Delhi" },
-  { id: 2, name: "AIIMS Patna", location: "Bihar", type: "CENTRAL", fee: "₹5,856/yr", airCutoffUR: 1500, airCutoffOBC: 2200, airCutoffEWS: 2400, airCutoffSC: 15000, airCutoffST: 35000, state: "Bihar" },
-  { id: 3, name: "JIPMER, Puducherry", location: "Puducherry", type: "CENTRAL", fee: "₹12,000/yr", airCutoffUR: 300, airCutoffOBC: 800, airCutoffEWS: 1100, airCutoffSC: 5000, airCutoffST: 12000, state: "Puducherry" },
-  { id: 4, name: "Maulana Azad Medical College (MAMC)", location: "Delhi", type: "AIQ", fee: "₹4,445/yr", airCutoffUR: 90, airCutoffOBC: 400, airCutoffEWS: 350, airCutoffSC: 1800, airCutoffST: 4500, state: "Delhi" },
-  
-  // State Government Medical Colleges (AIQ Cutoffs higher, State Quota Cutoffs lower)
-  { id: 5, name: "PMC Patna (Patna Medical College)", location: "Bihar", type: "GOVT", fee: "₹15,000/yr", airCutoffUR: 4500, airCutoffOBC: 5800, airCutoffEWS: 5200, airCutoffSC: 42000, airCutoffST: 65000, state: "Bihar", sqAirCutoffUR: 12500, sqAirCutoffOBC: 15000, sqAirCutoffEWS: 14000, sqAirCutoffSC: 85000, sqAirCutoffST: 110000 },
-  { id: 6, name: "KGMU Lucknow", location: "Uttar Pradesh", type: "GOVT", fee: "₹54,000/yr", airCutoffUR: 1100, airCutoffOBC: 1800, airCutoffEWS: 1600, airCutoffSC: 14000, airCutoffST: 32000, state: "Uttar Pradesh", sqAirCutoffUR: 3500, sqAirCutoffOBC: 5000, sqAirCutoffEWS: 4500, sqAirCutoffSC: 45000, sqAirCutoffST: 90000 },
-  { id: 7, name: "SMS Medical College, Jaipur", location: "Rajasthan", type: "GOVT", fee: "₹43,500/yr", airCutoffUR: 1200, airCutoffOBC: 1900, airCutoffEWS: 1700, airCutoffSC: 15000, airCutoffST: 28000, state: "Rajasthan", sqAirCutoffUR: 4200, sqAirCutoffOBC: 5500, sqAirCutoffEWS: 5100, sqAirCutoffSC: 48000, sqAirCutoffST: 52000 },
-  { id: 8, name: "Bangalore Medical College (BMCRI)", location: "Karnataka", type: "GOVT", fee: "₹70,000/yr", airCutoffUR: 1400, airCutoffOBC: 2100, airCutoffEWS: 2000, airCutoffSC: 18000, airCutoffST: 30000, state: "Karnataka", sqAirCutoffUR: 11000, sqAirCutoffOBC: 14000, sqAirCutoffEWS: 13500, sqAirCutoffSC: 65000, sqAirCutoffST: 72000 },
-  { id: 9, name: "Grant Medical College, Mumbai", location: "Maharashtra", type: "GOVT", fee: "₹1,15,000/yr", airCutoffUR: 2200, airCutoffOBC: 3500, airCutoffEWS: 3200, airCutoffSC: 22000, airCutoffST: 48000, state: "Maharashtra", sqAirCutoffUR: 8500, sqAirCutoffOBC: 12000, sqAirCutoffEWS: 11000, sqAirCutoffSC: 55000, sqAirCutoffST: 105000 },
-  { id: 10, name: "Medical College Kolkata", location: "West Bengal", type: "GOVT", fee: "₹12,000/yr", airCutoffUR: 2100, airCutoffOBC: 3200, airCutoffEWS: 3000, airCutoffSC: 20000, airCutoffST: 52000, state: "West Bengal", sqAirCutoffUR: 10500, sqAirCutoffOBC: 14500, sqAirCutoffEWS: 14000, sqAirCutoffSC: 52000, sqAirCutoffST: 130000 },
-  
-  // Deemed Medical Universities (Open Merit, High Cutoff Rank numericals, Fee High)
-  { id: 11, name: "KMC Manipal (Kasturba Medical College)", location: "Karnataka", type: "DEEMED", fee: "₹18,50,000/yr", airCutoffUR: 55000, airCutoffOBC: 55000, airCutoffEWS: 55000, airCutoffSC: 55000, airCutoffST: 55000, state: "Karnataka" },
-  { id: 12, name: "Hamdard Institute of Medical Sciences (HIMSR)", location: "Delhi", type: "DEEMED", fee: "₹16,00,000/yr", airCutoffUR: 62000, airCutoffOBC: 62000, airCutoffEWS: 62000, airCutoffSC: 62000, airCutoffST: 62000, state: "Delhi" }
+// Official MCC Percentile-based Qualifying Thresholds (Score out of 720)
+const PERCENTILE_THRESHOLDS = {
+  UR: 162,   // 50th Percentile (UR/General)
+  EWS: 162,  // 50th Percentile (EWS)
+  OBC: 127,  // 40th Percentile (OBC-NCL)
+  SC: 127,   // 40th Percentile (SC)
+  ST: 127    // 40th Percentile (ST)
+};
+
+// Database with explicit AIQ, Central, State, and Deemed cutoff closing ranks (AIR)
+const neetColleges = [
+  {
+    name: "AIIMS New Delhi",
+    location: "New Delhi",
+    course: "MBBS",
+    type: "Central",
+    quotaCategory: "CENTRAL",
+    cutoff: { UR: 57, EWS: 220, OBC: 250, SC: 980, ST: 2000 }
+  },
+  {
+    name: "MAMC - Maulana Azad Medical College",
+    location: "New Delhi",
+    course: "MBBS",
+    type: "Govt",
+    quotaCategory: "AIQ",
+    cutoff: { UR: 105, EWS: 350, OBC: 410, SC: 1850, ST: 4100 }
+  },
+  {
+    name: "JIPMER Puducherry",
+    location: "Puducherry",
+    course: "MBBS",
+    type: "Central",
+    quotaCategory: "CENTRAL",
+    cutoff: { UR: 277, EWS: 820, OBC: 890, SC: 3600, ST: 8200 }
+  },
+  {
+    name: "Top AIIMS Group (Bhubaneswar/Jodhpur/Rishikesh)",
+    location: "Various Campuses",
+    course: "MBBS",
+    type: "Central",
+    quotaCategory: "CENTRAL",
+    cutoff: { UR: 850, EWS: 1650, OBC: 1800, SC: 8100, ST: 15200 }
+  },
+  {
+    name: "KGMU - King George's Medical University",
+    location: "Lucknow, UP",
+    course: "MBBS",
+    type: "Govt",
+    quotaCategory: "AIQ",
+    cutoff: { UR: 1850, EWS: 2900, OBC: 3100, SC: 17500, ST: 34000 }
+  },
+  {
+    name: "BMCRI - Bangalore Medical College",
+    location: "Bengaluru, KA",
+    course: "MBBS",
+    type: "Govt",
+    quotaCategory: "AIQ",
+    cutoff: { UR: 1450, EWS: 2700, OBC: 2950, SC: 15800, ST: 29500 }
+  },
+  {
+    name: "PMCH - Patna Medical College",
+    location: "Patna, Bihar",
+    course: "MBBS",
+    type: "Govt",
+    quotaCategory: "STATE",
+    cutoff: { UR: 7200, EWS: 7800, OBC: 8100, SC: 52000, ST: 78000 }
+  },
+  {
+    name: "Pan India Top Govt Medical Colleges (15% AIQ)",
+    location: "Multiple States",
+    course: "MBBS",
+    type: "Govt AIQ",
+    quotaCategory: "AIQ",
+    cutoff: { UR: 22800, EWS: 23600, OBC: 23800, SC: 112000, ST: 142000 }
+  },
+  {
+    name: "Maulana Azad Dental College (BDS)",
+    location: "New Delhi",
+    course: "BDS",
+    type: "Govt Dental",
+    quotaCategory: "AIQ",
+    cutoff: { UR: 28500, EWS: 31200, OBC: 32500, SC: 128000, ST: 168000 }
+  },
+  {
+    name: "Kasturba Medical College (KMC Manipal) - Deemed",
+    location: "Manipal, KA",
+    course: "MBBS",
+    type: "Deemed Private",
+    quotaCategory: "DEEMED",
+    cutoff: { UR: 51000, EWS: 51000, OBC: 51000, SC: 51000, ST: 51000 }
+  },
+  {
+    name: "Hamdard Institute of Medical Sciences (HIMSR) - Deemed",
+    location: "New Delhi",
+    course: "MBBS",
+    type: "Deemed Private",
+    quotaCategory: "DEEMED",
+    cutoff: { UR: 58000, EWS: 58000, OBC: 58000, SC: 58000, ST: 58000 }
+  },
+  {
+    name: "Top Deemed Universities (Management Quota)",
+    location: "Pan India",
+    course: "MBBS",
+    type: "Deemed Private",
+    quotaCategory: "DEEMED",
+    cutoff: { UR: 600000, EWS: 600000, OBC: 600000, SC: 600000, ST: 600000 }
+  },
+  {
+    name: "National Institute of Ayurveda (BAMS)",
+    location: "Jaipur, RJ",
+    course: "AYUSH",
+    type: "AYUSH Govt",
+    quotaCategory: "AIQ",
+    cutoff: { UR: 64000, EWS: 69000, OBC: 71000, SC: 205000, ST: 275000 }
+  }
 ];
 
-document.getElementById('predictorForm').addEventListener('submit', function(e) {
+document.getElementById('neetForm').addEventListener('submit', function(e) {
   e.preventDefault();
-  
-  const score = parseInt(document.getElementById('neetScore').value);
-  const rank = parseInt(document.getElementById('airRank').value);
-  const homeState = document.getElementById('homeState').value;
-  const category = document.getElementById('casteCategory').value;
-  const isPwd = document.getElementById('pwdStatus').checked;
-  const quotaFilter = document.getElementById('preferredQuota').value;
 
-  evaluateEligibleColleges(score, rank, homeState, category, isPwd, quotaFilter);
-});
+  const score = parseInt(document.getElementById('score').value);
+  const rank = parseInt(document.getElementById('rank').value);
+  const category = document.getElementById('category').value;
+  const quota = document.getElementById('quota').value;
+  const coursePref = document.getElementById('course').value;
+  const resultDiv = document.getElementById('result');
 
-function evaluateEligibleColleges(score, rank, homeState, category, isPwd, quotaFilter) {
-  let matchedColleges = [];
+  // 1. MCC Eligibility Check (NTA Percentile Rule)
+  const minRequiredScore = PERCENTILE_THRESHOLDS[category];
 
-  // PwD Horizontal Relaxation Multiplier (Approx ~3x to 4x rank relaxation under 5% horizontal quota)
-  const pwdMultiplier = isPwd ? 3.5 : 1.0;
-
-  collegeData.forEach(college => {
-    let effectiveRankLimitAIQ = getCategoryCutoff(college, category) * pwdMultiplier;
-
-    // 1. Check AIQ / Central Seats Eligibility
-    if (quotaFilter === 'ALL' || quotaFilter === 'AIQ' || (quotaFilter === 'CENTRAL' && college.type === 'CENTRAL')) {
-      if (rank <= effectiveRankLimitAIQ * 1.25) {
-        let chance = calculateChance(rank, effectiveRankLimitAIQ);
-        matchedColleges.push({
-          ...college,
-          appliedQuota: college.type === 'CENTRAL' ? "Central Quota (MCC)" : "15% AIQ (MCC)",
-          quotaType: college.type === 'CENTRAL' ? "type-aiims" : "type-aiq",
-          cutoffRank: Math.round(effectiveRankLimitAIQ),
-          chance: chance
-        });
-      }
-    }
-
-    // 2. Check 85% State Quota Eligibility (Strictly requires Home State = College State)
-    if ((quotaFilter === 'ALL' || quotaFilter === 'SQ') && college.sqAirCutoffUR) {
-      if (college.state === homeState) {
-        let sqCutoff = getCategoryCutoff(college, category, true) * pwdMultiplier;
-        if (rank <= sqCutoff * 1.25) {
-          let chance = calculateChance(rank, sqCutoff);
-          matchedColleges.push({
-            ...college,
-            appliedQuota: `85% State Quota (${homeState} Domicile)`,
-            quotaType: "type-sq",
-            cutoffRank: Math.round(sqCutoff),
-            chance: chance
-          });
-        }
-      }
-    }
-
-    // 3. Check Deemed University Eligibility (Category reservation rules do NOT apply)
-    if ((quotaFilter === 'ALL' || quotaFilter === 'DEEMED') && college.type === 'DEEMED') {
-      if (rank <= college.airCutoffUR * 1.3) {
-        let chance = calculateChance(rank, college.airCutoffUR);
-        matchedColleges.push({
-          ...college,
-          appliedQuota: "Deemed Open Management Quota",
-          quotaType: "type-deemed",
-          cutoffRank: college.airCutoffUR,
-          chance: chance,
-          note: "No Category Reservation applied (Deemed University Rules)"
-        });
-      }
-    }
-  });
-
-  renderResults(matchedColleges, score, rank, category, homeState, isPwd);
-}
-
-function getCategoryCutoff(college, category, isStateQuota = false) {
-  const prefix = isStateQuota ? 'sqAirCutoff' : 'airCutoff';
-  switch(category) {
-    case 'OBC-NCL': return college[prefix + 'OBC'] || college[prefix + 'UR'] * 1.2;
-    case 'EWS': return college[prefix + 'EWS'] || college[prefix + 'UR'] * 1.15;
-    case 'SC': return college[prefix + 'SC'] || college[prefix + 'UR'] * 5.0;
-    case 'ST': return college[prefix + 'ST'] || college[prefix + 'UR'] * 8.0;
-    default: return college[prefix + 'UR'];
-  }
-}
-
-function calculateChance(userRank, cutoffRank) {
-  if (userRank <= cutoffRank * 0.85) return { text: "High Probability", class: "chance-high" };
-  if (userRank <= cutoffRank) return { text: "Moderate Chance (Round 2 / Mop-Up)", class: "chance-medium" };
-  return { text: "Low / Borderline (Stray Vacancy)", class: "chance-low" };
-}
-
-function renderResults(colleges, score, rank, category, homeState, isPwd) {
-  const container = document.getElementById('resultsContainer');
-  const summaryBar = document.getElementById('summaryBar');
-
-  summaryBar.innerHTML = `
-    <div class="stat-badge">AIR: ${rank}</div>
-    <div class="stat-badge">Score: ${score}/720</div>
-    <div class="stat-badge">Category: ${category} ${isPwd ? '(PwD)' : ''}</div>
-    <div class="stat-badge">Domicile: ${homeState}</div>
-    <div class="stat-badge" style="background:#dcfce7; color:#166534;">Found: ${colleges.length} Option(s)</div>
-  `;
-
-  if (colleges.length === 0) {
-    container.innerHTML = `
-      <div class="card" style="text-align:center; padding:30px;">
-        <h3 style="color: var(--danger);">No Government/Quota Seats Matched</h3>
-        <p style="color: var(--text-muted); font-size:0.9rem; margin-top:8px;">
-          Your AIR ${rank} exceeds expected cutoffs for 15% AIQ and ${homeState} State Quota under category ${category}.<br />
-          Consider exploring Private Management seats, Deemed Universities, or BAMS/BHMS AYUSH courses.
-        </p>
+  if (score < minRequiredScore) {
+    resultDiv.innerHTML = `
+      <h2>Counseling Eligibility Status</h2>
+      <div class="college">
+        <h3>Not Qualified for MCC/State Counselling</h3>
+        <p>Your Score: <strong>${score}/720</strong></p>
+        <p>Minimum qualifying score for <strong>${category}</strong> category is <strong>${minRequiredScore}</strong> (per NTA cutoff percentiles).</p>
+        <p>You must meet the percentile cutoff to participate in MCC AIQ or State quota seat allotments.</p>
       </div>
     `;
     return;
   }
 
-  container.innerHTML = colleges.map(item => `
-    <div class="college-card">
-      <div class="college-header">
-        <div>
-          <div class="college-title">${item.name}</div>
-          <span class="rule-tag">${item.location}</span>
-          ${item.note ? `<span class="rule-tag" style="background:#fef3c7; color:#92400e;">${item.note}</span>` : ''}
-        </div>
-        <span class="college-type ${item.quotaType}">${item.appliedQuota}</span>
-      </div>
+  // 2. Filter Colleges by Quota, Course, and Category Closing Ranks
+  let matched = [];
 
-      <div class="college-meta">
-        <div class="meta-item">Est. Annual Fee: <strong>${item.fee}</strong></div>
-        <div class="meta-item">Category Cutoff Rank: <strong>~${item.cutoffRank}</strong></div>
-      </div>
+  neetColleges.forEach(col => {
+    // Filter course preference
+    if (coursePref !== 'ALL' && col.course !== coursePref) return;
 
-      <div class="chance-badge ${item.chance.class}">${item.chance.text}</div>
-    </div>
-  `).join('');
-}
+    // Filter quota type mapping
+    if (quota === 'AIQ' && col.quotaCategory !== 'AIQ') return;
+    if (quota === 'CENTRAL' && col.quotaCategory !== 'CENTRAL') return;
+    if (quota === 'STATE' && col.quotaCategory !== 'STATE' && col.quotaCategory !== 'AIQ') return;
+    if (quota === 'DEEMED' && col.quotaCategory !== 'DEEMED') return;
+
+    // Fetch cutoff rank for candidate's category
+    const categoryCutoffRank = col.cutoff[category] || col.cutoff['UR'];
+
+    // Grant 10% buffer window for Round 2 / Mop-up / Stray Vacancy round shifts
+    const effectiveCutoff = Math.round(categoryCutoffRank * 1.10);
+
+    if (rank <= effectiveCutoff) {
+      matched.push({
+        name: col.name,
+        location: col.location,
+        course: col.course,
+        type: col.type,
+        cutoffRank: categoryCutoffRank
+      });
+    }
+  });
+
+  // 3. Render Output Results
+  if (matched.length === 0) {
+    resultDiv.innerHTML = `
+      <h2>Prediction Results</h2>
+      <div class="college">
+        <h3>No Seat Allotment Match</h3>
+        <p>No options matched for AIR <strong>${rank}</strong> under selected filters.</p>
+        <p><strong>Suggestion:</strong> Try selecting <em>'MCC 100% Deemed Universities'</em> or changing course preferences (BDS/AYUSH).</p>
+      </div>
+    `;
+    return;
+  }
+
+  let html = `<h2>Predicted Options (${matched.length})</h2>`;
+  matched.forEach(col => {
+    html += `
+      <div class="college">
+        <h3>${col.name}</h3>
+        <p><strong>Course:</strong> ${col.course}</p>
+        <p><strong>Location:</strong> ${col.location}</p>
+        <p><strong>Estimated Closing AIR:</strong> ~${col.cutoffRank}</p>
+        <span class="badge">${col.type}</span>
+      </div>
+    `;
+  });
+
+  resultDiv.innerHTML = html;
+});
 </script>
 
 </body>
