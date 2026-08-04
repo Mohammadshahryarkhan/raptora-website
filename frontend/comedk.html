@@ -4,7 +4,122 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>COMEDK 2026 College Predictor</title>
-  <link rel="stylesheet" href="comedk.css" />
+  <style>
+    *{
+        margin:0;
+        padding:0;
+        box-sizing:border-box;
+        font-family:'Poppins',sans-serif;
+    }
+
+    body{
+        min-height:100vh;
+        background:#000;
+        display:flex;
+        justify-content:center;
+        align-items:center;
+        color:white;
+        padding:20px 0;
+    }
+
+    .container{
+        width:100%;
+        display:flex;
+        justify-content:center;
+        align-items:center;
+    }
+
+    .card{
+        width:420px;
+        padding:35px;
+        background:#111;
+        border-radius:20px;
+        box-shadow:0 0 25px rgba(255,0,0,0.5);
+        border:1px solid #ff0000;
+    }
+
+    .card h1{
+        text-align:center;
+        color:#ff1a1a;
+        margin-bottom:10px;
+    }
+
+    .card p{
+        text-align:center;
+        color:#ccc;
+        margin-bottom:25px;
+    }
+
+    label{
+        display:block;
+        margin-top:15px;
+        margin-bottom:8px;
+        color:#ff4d4d;
+        font-weight:600;
+    }
+
+    input,
+    select{
+        width:100%;
+        padding:12px;
+        background:#000;
+        color:white;
+        border:1px solid #ff0000;
+        border-radius:8px;
+        outline:none;
+    }
+
+    input:focus,
+    select:focus{
+        box-shadow:0 0 10px red;
+    }
+
+    button{
+        width:100%;
+        margin-top:25px;
+        padding:14px;
+        background:#ff0000;
+        color:white;
+        border:none;
+        border-radius:10px;
+        font-size:16px;
+        font-weight:bold;
+        cursor:pointer;
+        transition:0.3s;
+    }
+
+    button:hover{
+        background:#b30000;
+        transform:scale(1.03);
+    }
+
+    #result{
+        margin-top:25px;
+    }
+
+    #result h2{
+        color:#ff1a1a;
+    }
+
+    .college{
+        background:#1a1a1a;
+        border-left:5px solid #ff0000;
+        padding:15px;
+        margin-top:15px;
+        border-radius:10px;
+    }
+
+    .college h3{
+        color:#ff3333;
+        margin-bottom:8px;
+    }
+
+    .college p{
+        text-align:left;
+        margin:5px 0;
+        color:white;
+    }
+  </style>
 </head>
 <body>
 
@@ -56,6 +171,7 @@
 </div>
 
 <script>
+// Mock Dataset matching COMEDK Colleges and Cutoffs
 const collegesData = [
   { name: "RV College of Engineering (RVCE)", location: "Bengaluru", branch: "CSE", code: "CSE", fee: "₹2,61,477/yr", cutoffGM: 400, cutoffKKR: 1800 },
   { name: "RV College of Engineering (RVCE)", location: "Bengaluru", branch: "Electronics & Communication", code: "ECE", fee: "₹2,61,477/yr", cutoffGM: 1200, cutoffKKR: 4200 },
@@ -83,6 +199,7 @@ document.getElementById('comedkForm').addEventListener('submit', function(e) {
   const branchPref = document.getElementById('branch').value;
   const resultDiv = document.getElementById('result');
 
+  // 1. Check COMEDK 12th PCM Eligibility Criteria
   const requiredPCM = (domicile === 'Karnataka' && (category === 'SC' || category === 'ST' || category === 'OBC')) ? 40.0 : 45.0;
 
   if (pcm < requiredPCM) {
@@ -97,11 +214,13 @@ document.getElementById('comedkForm').addEventListener('submit', function(e) {
     return;
   }
 
+  // 2. Filter Colleges according to COMEDK Rules
   let results = [];
 
   collegesData.forEach(col => {
     if (branchPref !== 'ALL' && col.code !== branchPref) return;
 
+    // Check GM Cutoff (Open to all candidates)
     if (rank <= col.cutoffGM * 1.25) {
       results.push({
         name: col.name,
@@ -113,6 +232,7 @@ document.getElementById('comedkForm').addEventListener('submit', function(e) {
       });
     }
 
+    // Check KKR Quota (Strictly for Karnataka + 371J Certificate)
     if (isKKR && domicile === 'Karnataka' && rank <= col.cutoffKKR * 1.25) {
       results.push({
         name: col.name,
@@ -125,6 +245,7 @@ document.getElementById('comedkForm').addEventListener('submit', function(e) {
     }
   });
 
+  // 3. Render Results
   if (results.length === 0) {
     resultDiv.innerHTML = `
       <h2>Results</h2>
