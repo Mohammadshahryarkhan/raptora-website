@@ -1,248 +1,321 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Raptora | COMEDK College Predictor</title>
-    <link rel="stylesheet" href="css/comedk.css">
-</head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>COMEDK UGET 2026 College Predictor & Eligibility Engine</title>
+  <style>
+    :root {
+      --primary: #0f172a;
+      --accent: #0284c7;
+      --bg: #f8fafc;
+      --card-bg: #ffffff;
+      --text: #1e293b;
+      --text-muted: #64748b;
+      --border: #cbd5e1;
+      --success: #15803d;
+      --warning: #b45309;
+      --danger: #b91c1c;
+      --radius: 10px;
+    }
 
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+    body { background-color: var(--bg); color: var(--text); padding: 24px 16px; line-height: 1.5; }
+    .container { max-width: 1150px; margin: 0 auto; }
+
+    header { text-align: center; margin-bottom: 28px; border-bottom: 2px solid var(--border); padding-bottom: 16px; }
+    header h1 { color: var(--primary); font-size: 1.8rem; margin-bottom: 6px; }
+    header p { color: var(--text-muted); font-size: 0.95rem; }
+
+    .grid-layout { display: grid; grid-template-columns: 360px 1fr; gap: 24px; }
+    @media (max-width: 860px) { .grid-layout { grid-template-columns: 1fr; } }
+
+    .card { background: var(--card-bg); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); }
+    .form-group { margin-bottom: 16px; }
+    .form-group label { display: block; font-weight: 600; font-size: 0.88rem; margin-bottom: 6px; }
+    .form-control, select { width: 100%; padding: 10px 12px; border: 1px solid var(--border); border-radius: 6px; font-size: 0.95rem; background: #fff; color: var(--text); }
+    .form-control:focus, select:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px rgba(2,132,199,0.15); }
+
+    .checkbox-group { display: flex; align-items: center; gap: 10px; font-size: 0.9rem; font-weight: 500; cursor: pointer; margin-top: 6px; }
+    .checkbox-group input { width: 18px; height: 18px; cursor: pointer; }
+
+    .btn-submit { width: 100%; background: var(--accent); color: #fff; padding: 12px; font-size: 1rem; font-weight: 600; border: none; border-radius: 6px; cursor: pointer; transition: background 0.2s; }
+    .btn-submit:hover { background: #0369a1; }
+
+    .info-box { background: #f0f9ff; border-left: 4px solid var(--accent); padding: 12px 14px; font-size: 0.85rem; border-radius: 0 6px 6px 0; margin-top: 14px; color: #0369a1; }
+
+    .summary-bar { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 20px; }
+    .stat-badge { background: #e0f2fe; color: #0369a1; padding: 6px 12px; border-radius: 20px; font-size: 0.85rem; font-weight: 600; }
+
+    .college-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: var(--radius); padding: 18px; margin-bottom: 14px; transition: border-color 0.2s; }
+    .college-card:hover { border-color: var(--accent); }
+    .college-header { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; flex-wrap: wrap; }
+    .college-title { font-weight: 700; font-size: 1.1rem; color: var(--primary); }
+    .branch-tag { display: inline-block; background: #f1f5f9; border: 1px solid #cbd5e1; font-size: 0.78rem; font-weight: 600; padding: 2px 8px; border-radius: 4px; margin-top: 4px; }
+    
+    .quota-badge { font-size: 0.75rem; font-weight: 700; padding: 4px 10px; border-radius: 4px; text-transform: uppercase; }
+    .type-gm { background: #e0e7ff; color: #3730a3; }
+    .type-kkr { background: #fef3c7; color: #92400e; }
+
+    .college-meta { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; margin-top: 12px; font-size: 0.88rem; color: var(--text-muted); }
+    .meta-item strong { color: var(--text); }
+
+    .chance-badge { font-weight: 700; font-size: 0.82rem; padding: 4px 10px; border-radius: 12px; display: inline-block; margin-top: 10px; }
+    .chance-high { background: #dcfce7; color: var(--success); }
+    .chance-medium { background: #fef3c7; color: var(--warning); }
+    .chance-low { background: #fee2e2; color: var(--danger); }
+
+    .rules-card { background: #fff; border: 1px solid var(--border); border-radius: var(--radius); padding: 18px; margin-top: 24px; }
+    .rules-card h3 { font-size: 1rem; color: var(--primary); margin-bottom: 8px; }
+    .rules-card ul { padding-left: 20px; font-size: 0.85rem; color: var(--text-muted); }
+    .rules-card li { margin-bottom: 6px; }
+  </style>
+</head>
 <body>
 
-    <div class="container">
-        <div class="card">
+<div class="container">
+  <header>
+    <h1>COMEDK UGET 2026 College Predictor & Eligibility Engine</h1>
+    <p>Compliant with KUPECA Private Engineering Colleges Allotment Rules (General Merit & KKR/371J Quota)</p>
+  </header>
 
-            <h1>COMEDK College Predictor</h1>
-            <p>Based on Official COMEDK UGET Counselling Cutoffs</p>
-
-            <label for="marks">COMEDK Score (out of 180)</label>
-            <input type="number" id="marks" min="0" max="180" placeholder="Enter COMEDK Marks (0-180)">
-
-            <label for="category">Category / Reservation</label>
-            <select id="category">
-                <option value="GM">GM (General Merit - All India)</option>
-                <option value="HK">HKR (Hyderabad-Karnataka Region)</option>
-                <option value="TULU">Tulu Minority</option>
-                <option value="TELUGU">Telugu Minority</option>
-            </select>
-
-            <label for="city">Preferred Region / City</label>
-            <select id="city">
-                <option value="ALL">All Cities</option>
-                <option value="Bangalore">Bangalore</option>
-                <option value="Mysuru">Mysuru</option>
-                <option value="Tumkur">Tumkur / Other Region</option>
-            </select>
-
-            <label for="branch">Preferred Branch Group</label>
-            <select id="branch">
-                <option value="ALL">All Branches</option>
-                <option value="CSE">Computer Science / IT / AI & ML / Data Science</option>
-                <option value="ECE">Electronics & Electrical (ECE/EEE/EIE)</option>
-                <option value="MECH">Mechanical / Civil / Chemical / Biotech</option>
-            </select>
-
-            <button onclick="predictComedk()">
-                Predict Eligible Colleges
-            </button>
-
-            <div id="result"></div>
-
+  <div class="grid-layout">
+    <!-- INPUT FORM -->
+    <aside class="card">
+      <form id="comedkForm">
+        <div class="form-group">
+          <label for="comedkRank">COMEDK UGET Rank</label>
+          <input type="number" id="comedkRank" class="form-control" min="1" max="120000" placeholder="e.g. 8500" required />
         </div>
+
+        <div class="form-group">
+          <label for="pcmMarks">12th / PUC PCM Aggregate Percentage (%)</label>
+          <input type="number" id="pcmMarks" class="form-control" min="35" max="100" step="0.1" placeholder="e.g. 78.5" required />
+        </div>
+
+        <div class="form-group">
+          <label for="domicile">State Domicile</label>
+          <select id="domicile" class="form-control" required>
+            <option value="Non-Karnataka">Non-Karnataka (All India Candidate)</option>
+            <option value="Karnataka">Karnataka State Domicile</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="category">Caste / Category (For Eligibility Criteria Check)</label>
+          <select id="category" class="form-control" required>
+            <option value="GM">General Merit (GM)</option>
+            <option value="OBC">OBC (Karnataka Domicile Only)</option>
+            <option value="SC">SC (Karnataka Domicile Only)</option>
+            <option value="ST">ST (Karnataka Domicile Only)</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="checkbox-group">
+            <input type="checkbox" id="kkrStatus" />
+            Kalyana Karnataka Region (371J Certificate)
+          </label>
+        </div>
+
+        <div class="form-group">
+          <label for="branchPref">Preferred Branch Filter</label>
+          <select id="branchPref" class="form-control">
+            <option value="ALL">All Engineering Branches</option>
+            <option value="CSE">Computer Science & Engineering (CSE / AI / ML / DS)</option>
+            <option value="ECE">Electronics & Communication (ECE / EEE)</option>
+            <option value="MECH">Mechanical / Civil / Aerospace</option>
+          </select>
+        </div>
+
+        <button type="submit" class="btn-submit">Predict COMEDK Colleges</button>
+      </form>
+
+      <div class="info-box">
+        <strong>COMEDK Rule Reminder:</strong><br />
+        • There is <strong>NO SC/ST/OBC seat reservation</strong> in COMEDK seat allotment.<br />
+        • SC/ST/OBC (Karnataka domicile only) grants <strong>40% aggregate PCM eligibility</strong> (vs 45% for GM).<br />
+        • The only seat quota in COMEDK central counselling is <strong>KKR (Article 371J)</strong>.
+      </div>
+    </aside>
+
+    <!-- RESULTS AREA -->
+    <main>
+      <div id="summaryBar" class="summary-bar"></div>
+      <div id="resultsContainer">
+        <div class="card" style="text-align: center; color: var(--text-muted); padding: 40px;">
+          Enter your COMEDK rank, Class 12 PCM percentage, domicile, and quota status to view college predictions.
+        </div>
+      </div>
+
+      <div class="rules-card">
+        <h3>COMEDK 2026 Counselling Terms & Reservation Rules</h3>
+        <ul>
+          <li><strong>General Merit Seats (100% Open All India Pool):</strong> Available to both Karnataka and Non-Karnataka candidates strictly based on COMEDK Rank.</li>
+          <li><strong>Kalyana Karnataka Region (KKR / 371J):</strong> Reserved seats (70% in KKR region colleges, 8% in non-KKR region colleges) strictly for candidates with a valid 371J document.</li>
+          <li><strong>Academic Minimum Eligibility:</strong> 45% aggregate in PCM for General Merit/Non-Karnataka candidates. Lowered to 40% PCM for SC/ST/OBC candidates who possess Karnataka domicile.</li>
+        </ul>
+      </div>
+    </main>
+  </div>
+</div>
+
+<script>
+// Mock Dataset for Top Karnataka Private Colleges under COMEDK (Round 1/2 Cutoff Ranks)
+const comedkColleges = [
+  // RVCE Bengaluru
+  { id: 1, name: "RV College of Engineering (RVCE)", location: "Bengaluru", branch: "CSE", code: "CSE", fee: "₹2,57,000/yr", cutoffGM: 450, cutoffKKR: 1800 },
+  { id: 2, name: "RV College of Engineering (RVCE)", location: "Bengaluru", branch: "Information Science & Engg", code: "CSE", fee: "₹2,57,000/yr", cutoffGM: 720, cutoffKKR: 2600 },
+  { id: 3, name: "RV College of Engineering (RVCE)", location: "Bengaluru", branch: "Electronics & Communication", code: "ECE", fee: "₹2,57,000/yr", cutoffGM: 1200, cutoffKKR: 4200 },
+  
+  // BMSCE Bengaluru
+  { id: 4, name: "BMS College of Engineering (BMSCE)", location: "Bengaluru", branch: "Computer Science & Engineering", code: "CSE", fee: "₹2,57,000/yr", cutoffGM: 1100, cutoffKKR: 3800 },
+  { id: 5, name: "BMS College of Engineering (BMSCE)", location: "Bengaluru", branch: "AI & Machine Learning", code: "CSE", fee: "₹2,57,000/yr", cutoffGM: 1600, cutoffKKR: 4900 },
+  { id: 6, name: "BMS College of Engineering (BMSCE)", location: "Bengaluru", branch: "Electronics & Communication", code: "ECE", fee: "₹2,57,000/yr", cutoffGM: 2800, cutoffKKR: 8500 },
+
+  // MSRIT Bengaluru
+  { id: 7, name: "Ramaiah Institute of Technology (MSRIT)", location: "Bengaluru", branch: "Computer Science & Engineering", code: "CSE", fee: "₹2,57,000/yr", cutoffGM: 1350, cutoffKKR: 4100 },
+  { id: 8, name: "Ramaiah Institute of Technology (MSRIT)", location: "Bengaluru", branch: "Electronics & Communication", code: "ECE", fee: "₹2,57,000/yr", cutoffGM: 3200, cutoffKKR: 9200 },
+
+  // Dayananda Sagar (DSCE)
+  { id: 9, name: "Dayananda Sagar College of Engineering (DSCE)", location: "Bengaluru", branch: "Computer Science & Engineering", code: "CSE", fee: "₹2,57,000/yr", cutoffGM: 4200, cutoffKKR: 12000 },
+  { id: 10, name: "Dayananda Sagar College of Engineering (DSCE)", location: "Bengaluru", branch: "Information Science", code: "CSE", fee: "₹2,57,000/yr", cutoffGM: 5800, cutoffKKR: 15500 },
+
+  // Bangalore Institute of Technology (BIT)
+  { id: 11, name: "Bangalore Institute of Technology (BIT)", location: "Bengaluru", branch: "Computer Science & Engineering", code: "CSE", fee: "₹2,57,000/yr", cutoffGM: 6500, cutoffKKR: 18000 },
+  { id: 12, name: "Bangalore Institute of Technology (BIT)", location: "Bengaluru", branch: "Electronics & Communication", code: "ECE", fee: "₹2,57,000/yr", cutoffGM: 12500, cutoffKKR: 28000 },
+
+  // NIE Mysore
+  { id: 13, name: "The National Institute of Engineering (NIE)", location: "Mysuru", branch: "Computer Science & Engineering", code: "CSE", fee: "₹2,57,000/yr", cutoffGM: 7800, cutoffKKR: 21000 },
+
+  // SIT Tumkur
+  { id: 14, name: "Siddaganga Institute of Technology (SIT)", location: "Tumakuru", branch: "Computer Science & Engineering", code: "CSE", fee: "₹2,57,000/yr", cutoffGM: 9500, cutoffKKR: 24000 },
+  { id: 15, name: "Siddaganga Institute of Technology (SIT)", location: "Tumakuru", branch: "Mechanical Engineering", code: "MECH", fee: "₹2,57,000/yr", cutoffGM: 45000, cutoffKKR: 65000 },
+
+  // Sir M. Visvesvaraya (SMVIT)
+  { id: 16, name: "Sir M. Visvesvaraya Institute of Technology", location: "Bengaluru", branch: "Computer Science & Engineering", code: "CSE", fee: "₹2,57,000/yr", cutoffGM: 11500, cutoffKKR: 29000 }
+];
+
+document.getElementById('comedkForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+
+  const rank = parseInt(document.getElementById('comedkRank').value);
+  const pcm = parseFloat(document.getElementById('pcmMarks').value);
+  const domicile = document.getElementById('domicile').value;
+  const category = document.getElementById('category').value;
+  const isKKR = document.getElementById('kkrStatus').checked;
+  const branchPref = document.getElementById('branchPref').value;
+
+  evaluateCOMEDKEligibility(rank, pcm, domicile, category, isKKR, branchPref);
+});
+
+function evaluateCOMEDKEligibility(rank, pcm, domicile, category, isKKR, branchPref) {
+  const container = document.getElementById('resultsContainer');
+  const summaryBar = document.getElementById('summaryBar');
+
+  // 1. Verify 12th PCM Minimum Percentage Eligibility Rule
+  const requiredPCM = (domicile === 'Karnataka' && (category === 'SC' || category === 'ST' || category === 'OBC')) ? 40.0 : 45.0;
+
+  if (pcm < requiredPCM) {
+    summaryBar.innerHTML = `<div class="stat-badge" style="background:#fee2e2; color:#b91c1c;">Status: Ineligible for Counselling</div>`;
+    container.innerHTML = `
+      <div class="card" style="text-align:center; padding:30px;">
+        <h3 style="color: var(--danger);">Ineligible based on 12th PCM Aggregate Criteria</h3>
+        <p style="color: var(--text-muted); font-size:0.9rem; margin-top:8px;">
+          Your 12th PCM score is <strong>${pcm}%</strong>. Minimum required criteria for <strong>${category} (${domicile})</strong> is <strong>${requiredPCM}%</strong> in PCM.<br />
+          Candidates failing this requirement cannot participate in COMEDK online counselling.
+        </p>
+      </div>
+    `;
+    return;
+  }
+
+  // 2. Evaluate Seat Options based on COMEDK Rules
+  let matchedColleges = [];
+
+  comedkColleges.forEach(college => {
+    // Branch Filter
+    if (branchPref !== 'ALL' && college.code !== branchPref) return;
+
+    // Check General Merit (GM Pool) - Applicable to ALL candidates
+    if (rank <= college.cutoffGM * 1.25) {
+      matchedColleges.push({
+        ...college,
+        appliedQuota: "General Merit (GM)",
+        quotaClass: "type-gm",
+        cutoffRank: college.cutoffGM,
+        chance: calculateChance(rank, college.cutoffGM)
+      });
+    }
+
+    // Check KKR / 371J Quota - Strictly for Karnataka Domicile with 371J status
+    if (isKKR && domicile === 'Karnataka') {
+      if (rank <= college.cutoffKKR * 1.25) {
+        matchedColleges.push({
+          ...college,
+          appliedQuota: "Kalyana Karnataka (371J)",
+          quotaClass: "type-kkr",
+          cutoffRank: college.cutoffKKR,
+          chance: calculateChance(rank, college.cutoffKKR)
+        });
+      }
+    }
+  });
+
+  renderResults(matchedColleges, rank, pcm, domicile, category, isKKR);
+}
+
+function calculateChance(rank, cutoff) {
+  if (rank <= cutoff * 0.85) return { text: "High Probability (Round 1)", class: "chance-high" };
+  if (rank <= cutoff) return { text: "Moderate Chance (Round 2)", class: "chance-medium" };
+  return { text: "Borderline / Round 3 Mop-Up", class: "chance-low" };
+}
+
+function renderResults(colleges, rank, pcm, domicile, category, isKKR) {
+  const container = document.getElementById('resultsContainer');
+  const summaryBar = document.getElementById('summaryBar');
+
+  summaryBar.innerHTML = `
+    <div class="stat-badge">Rank: ${rank}</div>
+    <div class="stat-badge">PCM: ${pcm}%</div>
+    <div class="stat-badge">Domicile: ${domicile}</div>
+    <div class="stat-badge">Eligible Quotas: GM ${isKKR && domicile === 'Karnataka' ? '+ KKR (371J)' : ''}</div>
+    <div class="stat-badge" style="background:#dcfce7; color:#15803d;">Found: ${colleges.length} Seat Option(s)</div>
+  `;
+
+  if (colleges.length === 0) {
+    container.innerHTML = `
+      <div class="card" style="text-align:center; padding:30px;">
+        <h3 style="color: var(--danger);">No Matching Colleges Found for Rank ${rank}</h3>
+        <p style="color: var(--text-muted); font-size:0.9rem; margin-top:8px;">
+          Your rank exceeds expected cutoffs for top branches in this subset. Try changing your branch preferences or exploring other Karnataka private institutions.
+        </p>
+      </div>
+    `;
+    return;
+  }
+
+  container.innerHTML = colleges.map(item => `
+    <div class="college-card">
+      <div class="college-header">
+        <div>
+          <div class="college-title">${item.name}</div>
+          <div class="branch-tag">${item.branch}</div>
+        </div>
+        <span class="quota-badge ${item.quotaClass}">${item.appliedQuota}</span>
+      </div>
+
+      <div class="college-meta">
+        <div class="meta-item">Location: <strong>${item.location}</strong></div>
+        <div class="meta-item">Est. Tuition Fee: <strong>${item.fee}</strong></div>
+        <div class="meta-item">Expected Cutoff Rank: <strong>~${item.cutoffRank}</strong></div>
+      </div>
+
+      <div class="chance-badge ${item.chance.class}">${item.chance.text}</div>
     </div>
-
-    <script>
-        /**
-         * COMEDK Category Multipliers
-         */
-        const CATEGORY_FACTOR = {
-            "GM": 1.0,
-            "HK": 1.25,
-            "TULU": 1.35,
-            "TELUGU": 1.35
-        };
-
-        /**
-         * Real-World COMEDK Score vs Rank Mapping (Out of 180 Marks)
-         */
-        function calculateComedkRank(marks) {
-            if (marks >= 165) return 100;
-            if (marks >= 155) return 300;
-            if (marks >= 145) return 700;
-            if (marks >= 135) return 1400;
-            if (marks >= 125) return 2500;
-            if (marks >= 115) return 4500;
-            if (marks >= 105) return 7500;
-            if (marks >= 95)  return 12000;
-            if (marks >= 85)  return 18000;
-            if (marks >= 75)  return 26000;
-            if (marks >= 65)  return 36000;
-            if (marks >= 55)  return 50000;
-            return 70000;
-        }
-
-        /**
-         * Database of Major COMEDK Participating Engineering Institutes
-         */
-        const COMEDK_DATABASE = [
-            { name: "R.V. College of Engineering (RVCE)", city: "Bangalore", cse: 450, ece: 1200, mech: 6500 },
-            { name: "B.M.S. College of Engineering (BMSCE)", city: "Bangalore", cse: 1100, ece: 2800, mech: 12000 },
-            { name: "M.S. Ramaiah Institute of Technology (MSRIT)", city: "Bangalore", cse: 1400, ece: 3400, mech: 14000 },
-            { name: "Bangalore Institute of Technology (BIT)", city: "Bangalore", cse: 3800, ece: 9500, mech: 28000 },
-            { name: "Dayananda Sagar College of Engineering (DSCE)", city: "Bangalore", cse: 4500, ece: 11000, mech: 32000 },
-            { name: "Sir M. Visvesvaraya Institute of Technology (Sir MVIT)", city: "Bangalore", cse: 7500, ece: 15000, mech: 42000 },
-            { name: "JSS Science & Technology University (SJCE)", city: "Mysuru", cse: 3200, ece: 7000, mech: 22000 },
-            { name: "National Institute of Engineering (NIE)", city: "Mysuru", cse: 5500, ece: 12000, mech: 26000 },
-            { name: "Siddaganga Institute of Technology (SIT)", city: "Tumkur", cse: 6800, ece: 14000, mech: 38000 },
-            { name: "BMS Institute of Technology and Management (BMSIT)", city: "Bangalore", cse: 7000, ece: 16000, mech: 45000 },
-            { name: "Nitte Meenakshi Institute of Technology (NMIT)", city: "Bangalore", cse: 8500, ece: 18000, mech: 48000 },
-            { name: "New Horizon College of Engineering (NHCE)", city: "Bangalore", cse: 11000, ece: 22000, mech: 52000 },
-            { name: "CMR Institute of Technology (CMRIT)", city: "Bangalore", cse: 13000, ece: 25000, mech: 56000 },
-            { name: "RNS Institute of Technology (RNSIT)", city: "Bangalore", cse: 9500, ece: 20000, mech: 50000 },
-            { name: "REVA University", city: "Bangalore", cse: 16000, ece: 30000, mech: 60000 }
-        ];
-
-        function getEligibleColleges(rank, category, selectedCity, selectedBranch) {
-            const factor = CATEGORY_FACTOR[category] || 1.0;
-            let results = [];
-
-            COMEDK_DATABASE.forEach(item => {
-                // Filter by City
-                if (selectedCity !== "ALL" && item.city.toLowerCase() !== selectedCity.toLowerCase()) {
-                    return;
-                }
-
-                const cseCutoff = Math.round(item.cse * factor);
-                const eceCutoff = Math.round(item.ece * factor);
-                const mechCutoff = Math.round(item.mech * factor);
-
-                let matchedBranches = [];
-
-                if ((selectedBranch === "ALL" || selectedBranch === "CSE") && rank <= cseCutoff) {
-                    matchedBranches.push({ branch: "Computer Science (CSE / AI & ML / ISE)", closingRank: cseCutoff });
-                }
-                if ((selectedBranch === "ALL" || selectedBranch === "ECE") && rank <= eceCutoff) {
-                    matchedBranches.push({ branch: "Electronics & Communication (ECE / EEE)", closingRank: eceCutoff });
-                }
-                if ((selectedBranch === "ALL" || selectedBranch === "MECH") && rank <= mechCutoff) {
-                    matchedBranches.push({ branch: "Mechanical / Civil / Chemical", closingRank: mechCutoff });
-                }
-
-                if (matchedBranches.length > 0) {
-                    results.push({
-                        college: item.name,
-                        city: item.city,
-                        branches: matchedBranches
-                    });
-                }
-            });
-
-            return results;
-        }
-
-        async function predictComedk() {
-            const marksVal = document.getElementById("marks").value;
-            const category = document.getElementById("category").value;
-            const selectedCity = document.getElementById("city").value;
-            const selectedBranch = document.getElementById("branch").value;
-
-            if (marksVal === "") {
-                alert("Please enter your COMEDK marks.");
-                return;
-            }
-
-            const marks = Number(marksVal);
-
-            if (marks < 0 || marks > 180) {
-                alert("COMEDK marks must be between 0 and 180.");
-                return;
-            }
-
-            const estimatedRank = calculateComedkRank(marks);
-
-            document.getElementById("result").innerHTML = "<p>⏳ Calculating estimated COMEDK rank and filtering colleges...</p>";
-
-            try {
-                // Send request to Render Backend API
-                const response = await fetch("https://raptora-website-1.onrender.com/api/comedk/predict", {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({
-                        rank: estimatedRank,
-                        category: category,
-                        city: selectedCity,
-                        branch: selectedBranch
-                    })
-                });
-
-                const data = await response.json();
-
-                if (response.ok && data.data && data.data.length > 0) {
-                    renderBackendResults(data.data, estimatedRank, category, selectedCity, selectedBranch);
-                } else {
-                    const localData = getEligibleColleges(estimatedRank, category, selectedCity, selectedBranch);
-                    renderLocalResults(localData, estimatedRank, category, selectedCity, selectedBranch);
-                }
-
-            } catch (error) {
-                console.warn("Backend API offline. Using local COMEDK database engine:", error);
-                const localData = getEligibleColleges(estimatedRank, category, selectedCity, selectedBranch);
-                renderLocalResults(localData, estimatedRank, category, selectedCity, selectedBranch);
-            }
-        }
-
-        function renderLocalResults(colleges, rank, category, city, branch) {
-            let html = `
-                <h2>Prediction Result</h2>
-                <p><strong>Estimated COMEDK Rank:</strong> ~${rank.toLocaleString()}</p>
-                <p><strong>Filters Applied:</strong> Category: ${category} | City: ${city} | Branch: ${branch}</p>
-                <hr>
-                <h3>Eligible Colleges (${colleges.length} Found)</h3>
-            `;
-
-            if (colleges.length === 0) {
-                html += `<p>No colleges found matching these criteria for your rank. Try changing the city or branch filter.</p>`;
-            } else {
-                colleges.forEach(item => {
-                    html += `
-                        <div class="college" style="border: 1px solid #ddd; padding: 12px; margin-bottom: 12px; border-radius: 6px; text-align: left;">
-                            <h3 style="margin-top:0;">🏛 ${item.college} (${item.city})</h3>
-                            <ul style="margin: 5px 0; padding-left: 20px;">
-                                ${item.branches.map(b => `<li><strong>${b.branch}</strong> (Expected Cutoff Rank: ~${b.closingRank.toLocaleString()})</li>`).join('')}
-                            </ul>
-                        </div>
-                    `;
-                });
-            }
-
-            document.getElementById("result").innerHTML = html;
-        }
-
-        function renderBackendResults(colleges, rank, category, city, branch) {
-            let html = `
-                <h2>Prediction Result</h2>
-                <p><strong>Estimated COMEDK Rank:</strong> ~${rank.toLocaleString()}</p>
-                <p><strong>Filters Applied:</strong> ${category} | City: ${city} | Branch: ${branch}</p>
-                <hr>
-                <h3>Eligible Colleges</h3>
-            `;
-
-            colleges.forEach(c => {
-                html += `
-                    <div class="college" style="border: 1px solid #ddd; padding: 12px; margin-bottom: 10px; border-radius: 6px; text-align: left;">
-                        <h3>🏛 ${c.college} ${c.city ? `(${c.city})` : ''}</h3>
-                        <p>📚 <strong>Branch:</strong> ${c.branch}</p>
-                        <p>Category: ${c.category || category}</p>
-                        <p>Closing Rank: ${c.closingRank}</p>
-                    </div>
-                `;
-            });
-
-            document.getElementById("result").innerHTML = html;
-        }
-    </script>
+  `).join('');
+}
+</script>
 
 </body>
-
 </html>
