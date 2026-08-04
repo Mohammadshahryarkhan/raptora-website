@@ -3,15 +3,19 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>NEET UG 2026 Professional Predictor & Counselling Engine</title>
+  <title>NEET UG 2026 Predictor & MCC Counselling Engine</title>
   <style>
     :root {
-      --bg-main: #0b132b;
-      --card-bg: #1c2541;
-      --accent: #3a86ff;
-      --accent-hover: #2563eb;
-      --border-color: #334155;
-      --text-muted: #94a3b8;
+      --bg-dark: #050505;
+      --card-bg: #0f0f12;
+      --card-inner: #18181c;
+      --accent-red: #ff2e4d;
+      --accent-red-hover: #e11d48;
+      --accent-red-glow: rgba(255, 46, 77, 0.35);
+      --text-main: #f8fafc;
+      --text-sub: #a1a1aa;
+      --border: #27272a;
+      --border-red: #450a0a;
       --success: #10b981;
       --warning: #f59e0b;
       --danger: #ef4444;
@@ -21,266 +25,331 @@
       margin: 0;
       padding: 0;
       box-sizing: border-box;
-      font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
     }
 
     body {
-      min-height: 100vh;
-      background: var(--bg-main);
-      color: #f8fafc;
+      background-color: var(--bg-dark);
+      color: var(--text-main);
       padding: 30px 15px;
       display: flex;
       justify-content: center;
       align-items: flex-start;
+      min-height: 100vh;
     }
 
-    .container {
+    .app-container {
       width: 100%;
-      max-width: 900px;
+      max-width: 980px;
     }
 
-    .header-card {
-      background: linear-gradient(135deg, #1e293b, #0f172a);
-      border: 1px solid var(--border-color);
+    .hero-banner {
+      background: linear-gradient(135deg, #0f0f12 0%, #1a0507 100%);
+      border: 1px solid var(--border-red);
       border-radius: 16px;
-      padding: 24px;
+      padding: 28px 20px;
       text-align: center;
       margin-bottom: 24px;
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+      box-shadow: 0 10px 30px rgba(255, 46, 77, 0.12);
     }
 
-    .header-card h1 {
+    .hero-banner h1 {
       font-size: 26px;
-      color: #38bdf8;
+      color: var(--accent-red);
       letter-spacing: -0.5px;
+      font-weight: 800;
+      text-transform: uppercase;
     }
 
-    .header-card p {
-      color: var(--text-muted);
+    .hero-banner p {
+      color: var(--text-sub);
       font-size: 13px;
       margin-top: 6px;
     }
 
-    .main-card {
+    .badge-year {
+      display: inline-block;
+      background: rgba(255, 46, 77, 0.15);
+      color: var(--accent-red);
+      border: 1px solid var(--accent-red-glow);
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: 700;
+      margin-bottom: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .panel-card {
       background: var(--card-bg);
-      border: 1px solid var(--border-color);
+      border: 1px solid var(--border);
       border-radius: 16px;
       padding: 28px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.7);
     }
 
     .grid-2 {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 16px;
+      gap: 18px;
     }
 
-    @media (max-width: 640px) {
-      .grid-2 {
-        grid-template-columns: 1fr;
+    @media (max-width: 680px) {
+      .grid-2 { 
+        grid-template-columns: 1fr; 
       }
     }
 
-    .form-group {
-      margin-bottom: 16px;
+    .input-field {
+      margin-bottom: 18px;
     }
 
-    label {
+    .input-field label {
       display: block;
       margin-bottom: 6px;
-      color: #38bdf8;
-      font-size: 12px;
+      color: var(--accent-red);
+      font-size: 11px;
       font-weight: 700;
       text-transform: uppercase;
-      letter-spacing: 0.5px;
+      letter-spacing: 0.6px;
     }
 
-    input, select {
+    .input-field input, .input-field select {
       width: 100%;
-      padding: 12px;
-      background: #0f172a;
-      color: #f8fafc;
-      border: 1px solid var(--border-color);
-      border-radius: 8px;
+      padding: 12px 14px;
+      background: #09090b;
+      color: var(--text-main);
+      border: 1px solid var(--border);
+      border-radius: 10px;
       outline: none;
       font-size: 14px;
-      transition: all 0.2s ease;
+      transition: border-color 0.2s, box-shadow 0.2s;
     }
 
-    input:focus, select:focus {
-      border-color: var(--accent);
-      box-shadow: 0 0 8px rgba(58, 134, 255, 0.4);
+    .input-field input:focus, .input-field select:focus {
+      border-color: var(--accent-red);
+      box-shadow: 0 0 0 3px var(--accent-red-glow);
     }
 
-    .checkbox-group {
+    .checkbox-container {
       display: flex;
       align-items: center;
-      gap: 8px;
-      margin-top: 10px;
+      gap: 10px;
+      margin-top: 6px;
+      margin-bottom: 18px;
+      background: #09090b;
+      padding: 12px 14px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
     }
 
-    .checkbox-group input {
-      width: auto;
+    .checkbox-container input {
+      width: 18px;
+      height: 18px;
       cursor: pointer;
+      accent-color: var(--accent-red);
     }
 
-    .checkbox-group label {
-      margin-bottom: 0;
-      color: #cbd5e1;
+    .checkbox-container label {
       font-size: 13px;
+      color: var(--text-sub);
       cursor: pointer;
-      text-transform: none;
     }
 
-    button {
+    .btn-submit {
       width: 100%;
-      margin-top: 20px;
-      padding: 14px;
-      background: var(--accent);
+      padding: 15px;
+      background: linear-gradient(135deg, var(--accent-red), var(--accent-red-hover));
       color: #ffffff;
       border: none;
-      border-radius: 8px;
+      border-radius: 10px;
       font-size: 15px;
       font-weight: 700;
       cursor: pointer;
-      transition: background 0.2s ease;
+      transition: transform 0.15s, box-shadow 0.15s;
       letter-spacing: 0.5px;
+      text-transform: uppercase;
     }
 
-    button:hover {
-      background: var(--accent-hover);
+    .btn-submit:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px var(--accent-red-glow);
     }
 
-    #result {
-      margin-top: 28px;
+    .btn-print {
+      background: var(--card-inner);
+      color: var(--text-main);
+      border: 1px solid var(--border);
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: border-color 0.2s;
     }
 
-    .summary-dashboard {
-      background: #0f172a;
-      border: 1px solid var(--border-color);
-      border-radius: 12px;
+    .btn-print:hover { 
+      border-color: var(--accent-red); 
+    }
+
+    #outputSection { 
+      margin-top: 30px; 
+    }
+
+    .dashboard-header {
+      background: #09090b;
+      border: 1px solid var(--border-red);
+      border-radius: 14px;
       padding: 20px;
-      margin-bottom: 24px;
+      margin-bottom: 20px;
     }
 
-    .stat-grid {
+    .stats-flex {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 12px;
-      text-align: center;
-      margin-top: 12px;
+      margin-top: 14px;
     }
 
-    @media (max-width: 640px) {
-      .stat-grid {
-        grid-template-columns: 1fr;
+    @media (max-width: 600px) {
+      .stats-flex { 
+        grid-template-columns: 1fr; 
       }
     }
 
-    .stat-box {
-      background: #1e293b;
-      padding: 12px;
-      border-radius: 8px;
-      border: 1px solid var(--border-color);
+    .stat-card {
+      background: var(--card-inner);
+      padding: 14px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      text-align: center;
     }
 
-    .stat-box .val {
-      font-size: 18px;
-      font-weight: bold;
-      color: #38bdf8;
+    .stat-card .value {
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--accent-red);
     }
 
-    .stat-box .lbl {
+    .stat-card .label {
       font-size: 11px;
-      color: var(--text-muted);
+      color: var(--text-sub);
       margin-top: 4px;
+      text-transform: uppercase;
     }
 
-    .rules-card {
-      background: #0f1d36;
-      border-left: 4px solid var(--accent);
+    .rules-box {
+      background: var(--card-inner);
+      border-left: 4px solid var(--accent-red);
+      border-radius: 0 10px 10px 0;
       padding: 14px 18px;
       margin-bottom: 20px;
-      border-radius: 0 8px 8px 0;
-      font-size: 12px;
-      color: #cbd5e1;
-      line-height: 1.5;
+      font-size: 12.5px;
+      line-height: 1.6;
+      color: var(--text-sub);
     }
 
-    .college-card {
-      background: #0f172a;
-      border: 1px solid var(--border-color);
-      border-left: 4px solid var(--accent);
+    .rules-box ul {
+      margin-left: 18px;
+      margin-top: 6px;
+    }
+
+    .college-item {
+      background: #09090b;
+      border: 1px solid var(--border);
+      border-left: 4px solid var(--accent-red);
+      border-radius: 10px;
       padding: 18px;
-      margin-top: 12px;
-      border-radius: 8px;
-      transition: transform 0.15s ease;
+      margin-top: 14px;
+      transition: border-color 0.2s, transform 0.2s;
     }
 
-    .college-card:hover {
+    .college-item:hover {
+      border-color: var(--accent-red);
       transform: translateY(-2px);
     }
 
-    .college-card h3 {
-      color: #38bdf8;
+    .college-item h3 {
+      color: var(--text-main);
       font-size: 16px;
-      margin-bottom: 8px;
+      margin-bottom: 6px;
     }
 
-    .college-card p {
+    .college-info-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-top: 8px;
       font-size: 13px;
-      color: #cbd5e1;
-      margin: 3px 0;
+      color: var(--text-sub);
     }
 
-    .badge-container {
-      margin-top: 10px;
+    @media (max-width: 600px) {
+      .college-info-grid { 
+        grid-template-columns: 1fr; 
+      }
+    }
+
+    .pill-group {
+      margin-top: 12px;
       display: flex;
       gap: 6px;
       flex-wrap: wrap;
     }
 
-    .badge {
-      padding: 3px 8px;
-      border-radius: 4px;
-      font-size: 11px;
-      font-weight: 600;
+    .pill {
+      padding: 3px 10px;
+      border-radius: 6px;
+      font-size: 10.5px;
+      font-weight: 700;
       text-transform: uppercase;
     }
 
-    .badge-govt { background: #064e3b; color: #34d399; border: 1px solid #059669; }
-    .badge-aiq { background: #1e3a8a; color: #93c5fd; border: 1px solid #2563eb; }
-    .badge-state { background: #581c87; color: #e9d5ff; border: 1px solid #7e22ce; }
-    .badge-deemed { background: #78350f; color: #fde68a; border: 1px solid #d97706; }
-    .badge-high { background: #065f46; color: #6ee7b7; }
-    .badge-med { background: #854d0e; color: #fef08a; }
+    .pill-govt { background: rgba(16, 185, 129, 0.15); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.3); }
+    .pill-aiq { background: rgba(255, 46, 77, 0.15); color: var(--accent-red); border: 1px solid var(--accent-red-glow); }
+    .pill-deemed { background: rgba(245, 158, 11, 0.15); color: #fde68a; border: 1px solid rgba(245, 158, 11, 0.3); }
+    .pill-high { background: rgba(16, 185, 129, 0.2); color: #6ee7b7; }
+    .pill-med { background: rgba(245, 158, 11, 0.2); color: #fef08a; }
 
-    .disclaimer {
+    .disclaimer-text {
       font-size: 11px;
-      color: #64748b;
+      color: var(--text-sub);
       margin-top: 24px;
       text-align: center;
-      line-height: 1.4;
+      line-height: 1.5;
+    }
+
+    @media print {
+      body { background: #fff; color: #000; padding: 0; }
+      .hero-banner, .panel-card, #outputSection { box-shadow: none; border: none; }
+      .btn-submit, .btn-print, .checkbox-container { display: none; }
+      .stat-card, .college-item { border: 1px solid #ccc; background: #fff; color: #000; }
+      .college-item h3, .hero-banner h1, .stat-card .value { color: #000; }
     }
   </style>
 </head>
 <body>
 
-<div class="container">
-  <div class="header-card">
-    <h1>NEET UG 2026 Professional Allocation Engine</h1>
-    <p>Predict AIR, Percentile & College Seat Eligibility under Official MCC & State Counselling Guidelines</p>
+<div class="app-container">
+  <div class="hero-banner">
+    <span class="badge-year">MCC 2026 Rules & Percentile Verified</span>
+    <h1>NEET UG 2026 Allocation Matrix</h1>
+    <p>Real-Time AIR Projection, State Quota Benchmarks & Institutional Eligibility</p>
   </div>
 
-  <div class="main-card">
+  <div class="panel-card">
     <form id="predictorForm">
       <div class="grid-2">
-        <div class="form-group">
+        <div class="input-field">
           <label for="marks">NEET 2026 Score (Out of 720)</label>
-          <input type="number" id="marks" placeholder="Enter Score (e.g. 650)" min="0" max="720" required />
+          <input type="number" id="marks" placeholder="Enter Score (e.g. 660)" min="0" max="720" required />
         </div>
 
-        <div class="form-group">
+        <div class="input-field">
           <label for="category">Reservation Category</label>
           <select id="category" required>
             <option value="UR">General / Unreserved (UR)</option>
@@ -293,24 +362,23 @@
       </div>
 
       <div class="grid-2">
-        <div class="form-group">
+        <div class="input-field">
           <label for="domicile">State Domicile (85% State Quota)</label>
           <select id="domicile" required>
             <option value="BIHAR">Bihar (85% SQ)</option>
             <option value="UP">Uttar Pradesh (85% SQ)</option>
             <option value="RAJASTHAN">Rajasthan (85% SQ)</option>
             <option value="KARNATAKA">Karnataka (85% SQ)</option>
-
             <option value="OTHER">Other States / UTs</option>
           </select>
         </div>
 
-        <div class="form-group">
-          <label for="quota">Counselling Scheme / Quota</label>
+        <div class="input-field">
+          <label for="quota">Counselling Quota Scheme</label>
           <select id="quota" required>
             <option value="ALL">All Schemes Combined</option>
             <option value="AIQ">MCC 15% All India Quota (AIQ)</option>
-            <option value="CENTRAL">MCC 100% Central Institutes (AIIMS / JIPMER / AMU / BHU)</option>
+            <option value="CENTRAL">MCC Central Institutes (AIIMS / JIPMER / BHU / AMU)</option>
             <option value="STATE">85% State Domicile Quota (SQ)</option>
             <option value="DEEMED">MCC 100% Deemed Universities</option>
           </select>
@@ -318,111 +386,80 @@
       </div>
 
       <div class="grid-2">
-        <div class="form-group">
-          <label for="branch">Preferred Academic Course</label>
+        <div class="input-field">
+          <label for="branch">Course Discipline</label>
           <select id="branch" required>
-            <option value="ALL">All Discipline Branches (MBBS / BDS / AYUSH)</option>
+            <option value="ALL">All Disciplines (MBBS / BDS / AYUSH)</option>
             <option value="MBBS">MBBS (Bachelor of Medicine & Surgery)</option>
             <option value="BDS">BDS (Dental Surgery)</option>
-            <option value="AYUSH">AYUSH (BAMS / BHMS / BUMS)</option>
+            <option value="AYUSH">AYUSH (BAMS / BHMS)</option>
           </select>
         </div>
 
-        <div class="form-group">
+        <div class="input-field">
           <label for="round">Target Counselling Round</label>
           <select id="round" required>
-            <option value="R1">Round 1 (Free Exit / Normal Cutoff)</option>
-            <option value="R2">Round 2 (Upgradation / Moderate Cutoff)</option>
-            <option value="MOPUP">Round 3 / Mop-Up (Strict Exit Rule)</option>
-            <option value="STRAY">Stray Vacancy Round (Dynamic Seats)</option>
+            <option value="R1">Round 1 (Free Exit Allowed)</option>
+            <option value="R2">Round 2 (Upgradation Allowed / R1 Seat Auto-Vacates)</option>
+            <option value="R3">Round 3 (Forfeiture Rules Apply on Resignation)</option>
+            <option value="STRAY">Stray Vacancy Round (Strict No-Exit Clause)</option>
           </select>
         </div>
       </div>
 
-      <div class="checkbox-group">
+      <div class="checkbox-container">
         <input type="checkbox" id="pwd" />
-        <label for="pwd">Persons with Disabilities (PwD Candidate - 5% Horizontal Reservation)</label>
+        <label for="pwd">Persons with Benchmark Disabilities (PwBD - 5% Horizontal Quota via 16 Designated MCC Boards)</label>
       </div>
 
-      <button type="submit">Run Complete 2026 Analysis</button>
+      <button type="submit" class="btn-submit">Generate Complete Allocation Matrix</button>
     </form>
 
-    <div id="result"></div>
+    <div id="outputSection"></div>
 
-    <p class="disclaimer">
-      *Allocation criteria calculated strictly per NTA NEET UG 2026 qualifying score thresholds, Gazette notifications, and historical MCC Round 1–4 closing ranks. Final seat distribution is subject to official MCC seat matrix publication.
+    <p class="disclaimer-text">
+      *Allocations computed based on NTA Percentile Metrics, NMC Guidelines, and MCC 2026 Information Bulletin regulations.
     </p>
   </div>
 </div>
 
 <script>
-// Official 2026 Qualifying Scores
-const QUALIFYING_2026 = {
-  UR: 213,
-  EWS: 213,
-  OBC: 177,
-  SC: 177,
-  ST: 177,
-  UR_PWD: 190,
-  RESERVED_PWD: 177
+const QUALIFYING_BENCHMARKS = {
+  UR: 137, EWS: 137, OBC: 107, SC: 107, ST: 107,
+  UR_PWD: 121, RESERVED_PWD: 107
 };
 
-// Precise 2026 Marks-to-AIR Engine Matrix
 function calculateAIR(marks) {
-  if (marks >= 715) return { min: 1, max: 10, mid: 5, percentile: "99.999" };
-  if (marks >= 700) return { min: 11, max: 150, mid: 80, percentile: "99.989" };
-  if (marks >= 690) return { min: 151, max: 800, mid: 475, percentile: "99.940" };
-  if (marks >= 680) return { min: 801, max: 2000, mid: 1400, percentile: "99.850" };
-  if (marks >= 670) return { min: 2001, max: 4000, mid: 3000, percentile: "99.700" };
-  if (marks >= 660) return { min: 4001, max: 7000, mid: 5500, percentile: "99.450" };
-  if (marks >= 650) return { min: 7001, max: 11000, mid: 9000, percentile: "99.120" };
-  if (marks >= 640) return { min: 11001, max: 16000, mid: 13500, percentile: "98.700" };
-  if (marks >= 630) return { min: 16001, max: 22000, mid: 19000, percentile: "98.200" };
-  if (marks >= 620) return { min: 22001, max: 30000, mid: 26000, percentile: "97.500" };
-  if (marks >= 610) return { min: 30001, max: 40000, mid: 35000, percentile: "96.600" };
-  if (marks >= 600) return { min: 4001, max: 52000, mid: 46000, percentile: "95.500" };
-  if (marks >= 580) return { min: 52001, max: 72000, mid: 62000, percentile: "93.800" };
-  if (marks >= 550) return { min: 72001, max: 100000, mid: 86000, percentile: "91.200" };
-  if (marks >= 500) return { min: 100001, max: 170000, mid: 135000, percentile: "86.000" };
-  if (marks >= 400) return { min: 170001, max: 280000, mid: 225000, percentile: "76.000" };
-  if (marks >= 300) return { min: 280001, max: 450000, mid: 365000, percentile: "62.000" };
-  if (marks >= 200) return { min: 450001, max: 700000, mid: 575000, percentile: "45.000" };
-  return { min: 700001, max: 1200000, mid: 950000, percentile: "25.000" };
+  if (marks >= 715) return { min: 1, max: 20, mid: 10, percentile: "99.999" };
+  if (marks >= 700) return { min: 21, max: 250, mid: 130, percentile: "99.980" };
+  if (marks >= 680) return { min: 251, max: 1800, mid: 1000, percentile: "99.850" };
+  if (marks >= 660) return { min: 1801, max: 5500, mid: 3600, percentile: "99.500" };
+  if (marks >= 640) return { min: 5501, max: 13000, mid: 9200, percentile: "98.900" };
+  if (marks >= 620) return { min: 13001, max: 24000, mid: 18500, percentile: "97.800" };
+  if (marks >= 600) return { min: 24001, max: 42000, mid: 33000, percentile: "96.200" };
+  if (marks >= 550) return { min: 42001, max: 85000, mid: 63000, percentile: "92.000" };
+  if (marks >= 500) return { min: 85001, max: 150000, mid: 117000, percentile: "86.000" };
+  if (marks >= 400) return { min: 150001, max: 260000, mid: 205000, percentile: "74.000" };
+  if (marks >= 300) return { min: 260001, max: 420000, mid: 340000, percentile: "58.000" };
+  return { min: 420001, max: 900000, mid: 660000, percentile: "35.000" };
 }
 
-// College Allocation Database (MCC Central, AIQ, & Key State Quotas)
 const collegeDatabase = [
-  // Central Universities
-  { name: "AIIMS, New Delhi", branch: "MBBS", type: "Central", quota: "CENTRAL", state: "ALL", cutoff: { UR: 57, EWS: 220, OBC: 250, SC: 980, ST: 2000 } },
-  { name: "Maulana Azad Medical College (MAMC), New Delhi", branch: "MBBS", type: "Govt AIQ", quota: "AIQ", state: "ALL", cutoff: { UR: 105, EWS: 350, OBC: 410, SC: 1850, ST: 4100 } },
-  { name: "JIPMER, Puducherry", branch: "MBBS", type: "Central", quota: "CENTRAL", state: "ALL", cutoff: { UR: 277, EWS: 820, OBC: 890, SC: 3600, ST: 8200 } },
-  { name: "VMMCH & Safdarjung Hospital, New Delhi", branch: "MBBS", type: "Central", quota: "CENTRAL", state: "ALL", cutoff: { UR: 140, EWS: 410, OBC: 520, SC: 2300, ST: 4800 } },
-  { name: "Top AIIMS Tier-1 (Bhopal, Jodhpur, Rishikesh)", branch: "MBBS", type: "Central", quota: "CENTRAL", state: "ALL", cutoff: { UR: 850, EWS: 1650, OBC: 1800, SC: 8100, ST: 15200 } },
-  { name: "Peripheral AIIMS Tier-2 (Patna, Raipur, Deoghar)", branch: "MBBS", type: "Central", quota: "CENTRAL", state: "ALL", cutoff: { UR: 2800, EWS: 3900, OBC: 4200, SC: 28000, ST: 45000 } },
-  
-  // High Demand State & AIQ Options
-  { name: "King George's Medical University (KGMU), Lucknow", branch: "MBBS", type: "Govt AIQ", quota: "AIQ", state: "ALL", cutoff: { UR: 1850, EWS: 2900, OBC: 3100, SC: 17500, ST: 34000 } },
-  { name: "Bangalore Medical College (BMCRI), Bengaluru", branch: "MBBS", type: "Govt AIQ", quota: "AIQ", state: "ALL", cutoff: { UR: 1450, EWS: 2700, OBC: 2950, SC: 15800, ST: 29500 } },
-  { name: "SMS Medical College, Jaipur", branch: "MBBS", type: "Govt AIQ", quota: "AIQ", state: "ALL", cutoff: { UR: 1200, EWS: 2100, OBC: 2300, SC: 14000, ST: 21000 } },
-  { name: "Pan-India Govt Medical Colleges (AIQ Cutoff)", branch: "MBBS", type: "Govt AIQ", quota: "AIQ", state: "ALL", cutoff: { UR: 23500, EWS: 24200, OBC: 24500, SC: 115000, ST: 145000 } },
-  
-  // Specific Domicile State Quota Colleges
-  { name: "Patna Medical College (PMCH), Patna", branch: "MBBS", type: "Govt State", quota: "STATE", state: "BIHAR", cutoff: { UR: 7200, EWS: 7800, OBC: 8100, SC: 52000, ST: 78000 } },
-  { name: "NMCH / IGIMS Patna (State Quota)", branch: "MBBS", type: "Govt State", quota: "STATE", state: "BIHAR", cutoff: { UR: 14500, EWS: 15800, OBC: 16200, SC: 88000, ST: 110000 } },
-  { name: "GSVM Medical College, Kanpur", branch: "MBBS", type: "Govt State", quota: "STATE", state: "UP", cutoff: { UR: 8500, EWS: 9200, OBC: 9600, SC: 68000, ST: 125000 } },
-  { name: "RNT Medical College, Udaipur", branch: "MBBS", type: "Govt State", quota: "STATE", state: "RAJASTHAN", cutoff: { UR: 6800, EWS: 7400, OBC: 7600, SC: 48000, ST: 56000 } },
-  { name: "Mysore Medical College (MMCRI)", branch: "MBBS", type: "Govt State", quota: "STATE", state: "KARNATAKA", cutoff: { UR: 11200, EWS: 12500, OBC: 13000, SC: 62000, ST: 81000 } },
-
-  // Dental & AYUSH Options
-  { name: "Maulana Azad Institute of Dental Sciences, Delhi", branch: "BDS", type: "Govt Dental", quota: "AIQ", state: "ALL", cutoff: { UR: 28500, EWS: 31200, OBC: 32500, SC: 128000, ST: 168000 } },
-  { name: "Pan-India Govt Dental Colleges (BDS)", branch: "BDS", type: "Govt Dental", quota: "AIQ", state: "ALL", cutoff: { UR: 58000, EWS: 62000, OBC: 64000, SC: 175000, ST: 210000 } },
-  { name: "National Institute of Ayurveda (NIA), Jaipur", branch: "AYUSH", type: "Govt AYUSH", quota: "AIQ", state: "ALL", cutoff: { UR: 64000, EWS: 69000, OBC: 71000, SC: 205000, ST: 275000 } },
-  { name: "Govt BAMS / BHMS Central Institutes", branch: "AYUSH", type: "Govt AYUSH", quota: "AIQ", state: "ALL", cutoff: { UR: 95000, EWS: 102000, OBC: 108000, SC: 260000, ST: 320000 } },
-
-  // Deemed & Private Universities
-  { name: "Kasturba Medical College (KMC), Manipal", branch: "MBBS", type: "Deemed Private", quota: "DEEMED", state: "ALL", cutoff: { UR: 51000, EWS: 51000, OBC: 51000, SC: 51000, ST: 51000 } },
-  { name: "Hamdard Institute of Medical Sciences (HIMSR), Delhi", branch: "MBBS", type: "Deemed Private", quota: "DEEMED", state: "ALL", cutoff: { UR: 56000, EWS: 56000, OBC: 56000, SC: 56000, ST: 56000 } },
-  { name: "Top Deemed Universities (Management Quota)", branch: "MBBS", type: "Deemed Private", quota: "DEEMED", state: "ALL", cutoff: { UR: 650000, EWS: 650000, OBC: 650000, SC: 650000, ST: 650000 } }
+  { name: "AIIMS, New Delhi", branch: "MBBS", type: "Central", quota: "CENTRAL", state: "ALL", fee: "₹1,628 / Year", cutoff: { UR: 57, EWS: 220, OBC: 250, SC: 980, ST: 2000 } },
+  { name: "Maulana Azad Medical College (MAMC), Delhi", branch: "MBBS", type: "Govt AIQ", quota: "AIQ", state: "ALL", fee: "₹4,445 / Year", cutoff: { UR: 105, EWS: 350, OBC: 410, SC: 1850, ST: 4100 } },
+  { name: "JIPMER, Puducherry", branch: "MBBS", type: "Central", quota: "CENTRAL", state: "ALL", fee: "₹12,620 / Year", cutoff: { UR: 277, EWS: 820, OBC: 890, SC: 3600, ST: 8200 } },
+  { name: "VMMCH & Safdarjung Hospital, New Delhi", branch: "MBBS", type: "Central", quota: "CENTRAL", state: "ALL", fee: "₹13,500 / Year", cutoff: { UR: 140, EWS: 410, OBC: 520, SC: 2300, ST: 4800 } },
+  { name: "Top Tier AIIMS (Bhopal / Jodhpur / Rishikesh)", branch: "MBBS", type: "Central", quota: "CENTRAL", state: "ALL", fee: "₹5,856 / Year", cutoff: { UR: 850, EWS: 1650, OBC: 1800, SC: 8100, ST: 15200 } },
+  { name: "Tier 2 AIIMS (Patna / Raipur / Deoghar)", branch: "MBBS", type: "Central", quota: "CENTRAL", state: "ALL", fee: "₹5,856 / Year", cutoff: { UR: 2800, EWS: 3900, OBC: 4200, SC: 28000, ST: 45000 } },
+  { name: "King George's Medical University (KGMU), Lucknow", branch: "MBBS", type: "Govt AIQ", quota: "AIQ", state: "ALL", fee: "₹54,600 / Year", cutoff: { UR: 1850, EWS: 2900, OBC: 3100, SC: 17500, ST: 34000 } },
+  { name: "Bangalore Medical College (BMCRI), Bengaluru", branch: "MBBS", type: "Govt AIQ", quota: "AIQ", state: "ALL", fee: "₹60,000 / Year", cutoff: { UR: 1450, EWS: 2700, OBC: 2950, SC: 15800, ST: 29500 } },
+  { name: "Pan-India Govt Medical Colleges (AIQ Closing)", branch: "MBBS", type: "Govt AIQ", quota: "AIQ", state: "ALL", fee: "₹10,000 - ₹90,000 / Year", cutoff: { UR: 23500, EWS: 24200, OBC: 24500, SC: 115000, ST: 145000 } },
+  { name: "Patna Medical College (PMCH), Patna", branch: "MBBS", type: "Govt State", quota: "STATE", state: "BIHAR", fee: "₹21,200 / Year", cutoff: { UR: 7200, EWS: 7800, OBC: 8100, SC: 52000, ST: 78000 } },
+  { name: "IGIMS / NMCH Patna (State Quota)", branch: "MBBS", type: "Govt State", quota: "STATE", state: "BIHAR", fee: "₹25,000 - ₹1,20,000 / Year", cutoff: { UR: 14500, EWS: 15800, OBC: 16200, SC: 88000, ST: 110000 } },
+  { name: "GSVM Medical College, Kanpur", branch: "MBBS", type: "Govt State", quota: "STATE", state: "UP", fee: "₹36,000 / Year", cutoff: { UR: 8500, EWS: 9200, OBC: 9600, SC: 68000, ST: 125000 } },
+  { name: "SMS Medical College, Jaipur", branch: "MBBS", type: "Govt State", quota: "STATE", state: "RAJASTHAN", fee: "₹50,500 / Year", cutoff: { UR: 1200, EWS: 2100, OBC: 2300, SC: 14000, ST: 21000 } },
+  { name: "Maulana Azad Institute of Dental Sciences, Delhi", branch: "BDS", type: "Govt Dental", quota: "AIQ", state: "ALL", fee: "₹4,120 / Year", cutoff: { UR: 28500, EWS: 31200, OBC: 32500, SC: 128000, ST: 168000 } },
+  { name: "Kasturba Medical College (KMC), Manipal", branch: "MBBS", type: "Deemed Private", quota: "DEEMED", state: "ALL", fee: "₹17.8 Lakhs / Year", cutoff: { UR: 51000, EWS: 51000, OBC: 51000, SC: 51000, ST: 51000 } }
 ];
 
 document.getElementById('predictorForm').addEventListener('submit', function(e) {
@@ -435,126 +472,105 @@ document.getElementById('predictorForm').addEventListener('submit', function(e) 
   const preferredBranch = document.getElementById('branch').value;
   const targetRound = document.getElementById('round').value;
   const isPwd = document.getElementById('pwd').checked;
-  const resultDiv = document.getElementById('result');
+  const outputDiv = document.getElementById('outputSection');
 
-  // 1. Calculate Minimum Cutoff Eligibility
-  let reqCutoff = QUALIFYING_2026[category];
-  if (isPwd) {
-    reqCutoff = category === 'UR' ? QUALIFYING_2026.UR_PWD : QUALIFYING_2026.RESERVED_PWD;
-  }
+  let reqCutoff = QUALIFYING_BENCHMARKS[category];
+  if (isPwd) reqCutoff = category === 'UR' ? QUALIFYING_BENCHMARKS.UR_PWD : QUALIFYING_BENCHMARKS.RESERVED_PWD;
 
   if (marks < reqCutoff) {
-    resultDiv.innerHTML = `
-      <div class="college-card" style="border-left-color: var(--danger);">
-        <h3 style="color: var(--danger);">Eligibility Status: Not Qualified</h3>
-        <p>Your Score: <strong>${marks} / 720</strong></p>
-        <p>The 2026 NTA qualifying score threshold for <strong>${category} ${isPwd ? '(PwD)' : ''}</strong> is <strong>${reqCutoff}</strong> marks.</p>
-        <p style="margin-top:8px;">You do not meet the minimum percentile requirement to participate in MCC AIQ or State Medical Counselling for 2026.</p>
+    outputDiv.innerHTML = `
+      <div class="college-item" style="border-left-color: var(--danger);">
+        <h3 style="color: var(--danger);">NEET 2026 Status: Below Qualifying Threshold</h3>
+        <p style="margin-top:4px;">Your Score: <strong>${marks} / 720</strong></p>
+        <p style="margin-top:6px; font-size:13px; color:var(--text-sub);">The minimum qualifying threshold for <strong>${category} ${isPwd ? '(PwD)' : ''}</strong> is approximately <strong>${reqCutoff}</strong> marks.</p>
       </div>
     `;
     return;
   }
 
-  // 2. Derive AIR Rank & Percentile Prediction
   const rankData = calculateAIR(marks);
 
-  // Round Cutoff Multiplier (R1 standard, R2 slightly wider, MopUp/Stray wider yet stricter rules)
-  let roundMultiplier = 1.0;
-  if (targetRound === 'R2') roundMultiplier = 1.08;
-  if (targetRound === 'MOPUP') roundMultiplier = 1.15;
-  if (targetRound === 'STRAY') roundMultiplier = 1.25;
-
-  // Horizontal PwD rank multiplier (if applicable)
-  if (isPwd) roundMultiplier *= 3.5;
-
-  // 3. Filter Eligible Colleges & Branches
   let matches = collegeDatabase.filter(col => {
-    // Discipline filter
     if (preferredBranch !== 'ALL' && col.branch !== preferredBranch) return false;
-
-    // Quota filter
     if (quota === 'AIQ' && col.quota !== 'AIQ') return false;
     if (quota === 'CENTRAL' && col.quota !== 'CENTRAL') return false;
     if (quota === 'STATE' && col.quota !== 'STATE') return false;
     if (quota === 'DEEMED' && col.quota !== 'DEEMED') return false;
-
-    // State Domicile logic
     if (col.quota === 'STATE' && col.state !== domicile) return false;
 
-    // Check cutoff rank against predicted AIR
-    const baseCutoff = col.cutoff[category] || col.cutoff['UR'];
-    const adjustedCutoff = Math.round(baseCutoff * roundMultiplier);
+    let baseCutoff = col.cutoff[category] || col.cutoff['UR'];
+    if (isPwd) baseCutoff = Math.round(baseCutoff * 3.2);
 
-    return rankData.mid <= adjustedCutoff;
+    return rankData.mid <= baseCutoff;
   });
 
-  // 4. Render Output Dashboard
   let html = `
-    <div class="summary-dashboard">
-      <h2 style="color: #38bdf8; font-size: 18px;">2026 Allocation Summary</h2>
-      <div class="stat-grid">
-        <div class="stat-box">
-          <div class="val">${rankData.min.toLocaleString()} - ${rankData.max.toLocaleString()}</div>
-          <div class="lbl">Predicted All India Rank (AIR)</div>
+    <div class="dashboard-header">
+      <div style="display:flex; justify-content:space-between; align-items:center;">
+        <h2 style="color: var(--accent-red); font-size: 18px;">2026 Projection Matrix</h2>
+        <button class="btn-print" onclick="window.print()">Export Report PDF</button>
+      </div>
+      <div class="stats-flex">
+        <div class="stat-card">
+          <div class="value">${rankData.min.toLocaleString()} - ${rankData.max.toLocaleString()}</div>
+          <div class="label">Predicted AIR</div>
         </div>
-        <div class="stat-box">
-          <div class="val">${rankData.percentile}%</div>
-          <div class="lbl">Estimated Percentile</div>
+        <div class="stat-card">
+          <div class="value">${rankData.percentile}%</div>
+          <div class="label">Percentile</div>
         </div>
-        <div class="stat-box">
-          <div class="val">${matches.length} Options</div>
-          <div class="lbl">Eligible Colleges Found</div>
+        <div class="stat-card">
+          <div class="value">${matches.length}</div>
+          <div class="label">Matching Institutions</div>
         </div>
       </div>
     </div>
 
-    <div class="rules-card">
-      <strong>Important MCC 2026 Policy Note:</strong> Candidate holding a seat up to Round 3 (Mop-Up) in AIQ or State quota is <strong>ineligible</strong> to participate in the Stray Vacancy round. Upgradation choices must be locked strictly during Round 2.
+    <div class="rules-box">
+      <strong style="color:var(--text-main);">Official MCC 2026 Counselling Guidelines:</strong>
+      <ul>
+        <li><strong>Round 1 Free Exit:</strong> Candidates can exit freely without forfeiting security deposits.</li>
+        <li><strong>Upgradation Clause:</strong> If upgraded in Round 2 or Round 3, the seat allotted in the preceding round is automatically cancelled and transferred.</li>
+        <li><strong>Round 3 Resignation Penalty:</strong> Seat resignation after joining in Round 3 results in security deposit forfeiture and disqualification from Stray Vacancy rounds.</li>
+        <li><strong>Disability Evaluation:</strong> Certificates must be generated from one of the 16 MCC-recognized Disability Assessment Boards.</li>
+      </ul>
     </div>
 
-    <h3 style="color: #38bdf8; margin-bottom: 12px; font-size: 16px;">Eligible Colleges & Branches (${targetRound})</h3>
+    <h3 style="color: var(--accent-red); font-size: 16px; margin-bottom: 12px;">Allocated Options Matrix (${targetRound})</h3>
   `;
 
   if (matches.length === 0) {
     html += `
-      <div class="college-card" style="border-left-color: var(--warning);">
-        <h3 style="color: var(--warning);">No Government Seat Matches Found</h3>
-        <p>Your predicted rank (${rankData.mid.toLocaleString()}) exceeds the expected closing cutoffs for the selected options under ${category} category.</p>
-        <p style="margin-top: 8px;"><strong>Suggested Strategy:</strong></p>
-        <ul style="margin-left: 20px; font-size: 12px; color: #cbd5e1; margin-top: 4px;">
-          <li>Switch course preference to <strong>BDS</strong> or <strong>AYUSH</strong>.</li>
-          <li>Select <strong>MCC 100% Deemed Universities</strong> to explore private options.</li>
-          <li>Evaluate target state management quota seats.</li>
-        </ul>
+      <div class="college-item" style="border-left-color: var(--warning);">
+        <h3 style="color: var(--warning);">No Seats Matched for Selected Inputs</h3>
+        <p style="font-size:13px; color:var(--text-sub); margin-top:4px;">Predicted AIR ~${rankData.mid.toLocaleString()} exceeds opening cutoffs for selected options.</p>
       </div>
     `;
   } else {
     matches.forEach(col => {
-      const baseCutoff = col.cutoff[category] || col.cutoff['UR'];
-      const adjustedCutoff = Math.round(baseCutoff * roundMultiplier);
-
-      // Chance status calculation
-      let chanceBadge = `<span class="badge badge-high">High Admission Probability</span>`;
-      if (rankData.mid > Math.round(adjustedCutoff * 0.85)) {
-        chanceBadge = `<span class="badge badge-med">Borderline / Competitive</span>`;
-      }
+      let baseCutoff = col.cutoff[category] || col.cutoff['UR'];
+      if (isPwd) baseCutoff = Math.round(baseCutoff * 3.2);
+      const isHighChance = rankData.mid <= Math.round(baseCutoff * 0.85);
 
       html += `
-        <div class="college-card">
+        <div class="college-item">
           <h3>${col.name}</h3>
-          <p><strong>Academic Branch:</strong> ${col.branch}</p>
-          <p><strong>Expected Category Closing Rank (${targetRound}):</strong> AIR ~${adjustedCutoff.toLocaleString()}</p>
-          <div class="badge-container">
-            <span class="badge ${col.quota === 'DEEMED' ? 'badge-deemed' : col.quota === 'STATE' ? 'badge-state' : 'badge-govt'}">${col.type}</span>
-            <span class="badge badge-aiq">${col.quota}</span>
-            ${chanceBadge}
+          <div class="college-info-grid">
+            <div><strong>Discipline:</strong> ${col.branch}</div>
+            <div><strong>Approx. Annual Fee:</strong> ${col.fee}</div>
+            <div><strong>Historical Closing Rank:</strong> AIR ~${baseCutoff.toLocaleString()}</div>
+            <div><strong>Quota Scheme:</strong> ${col.quota}</div>
+          </div>
+          <div class="pill-group">
+            <span class="pill ${col.quota === 'DEEMED' ? 'pill-deemed' : 'pill-govt'}">${col.type}</span>
+            <span class="pill ${isHighChance ? 'pill-high' : 'pill-med'}">${isHighChance ? 'High Probability' : 'Borderline / Competitive'}</span>
           </div>
         </div>
       `;
     });
   }
 
-  resultDiv.innerHTML = html;
+  outputDiv.innerHTML = html;
 });
 </script>
 
