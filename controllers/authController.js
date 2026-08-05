@@ -4,6 +4,7 @@ const jwt = require("jsonwebtoken");
 const crypto = require("crypto");
 const nodemailer = require("nodemailer");
 
+
 // ================= REGISTER =================
 exports.register = async (req, res) => {
 
@@ -60,22 +61,19 @@ exports.login = async (req, res) => {
         const user = await User.findOne({ email });
 
         if (!user) {
-
             return res.status(400).json({
                 message: "Invalid Email"
             });
-
         }
 
         const match = await bcrypt.compare(password, user.password);
 
         if (!match) {
-
             return res.status(400).json({
                 message: "Invalid Password"
             });
-
         }
+
 
         const token = jwt.sign(
 
@@ -93,6 +91,7 @@ exports.login = async (req, res) => {
 
         );
 
+
         res.json({
 
             message: "Login Successful",
@@ -106,6 +105,7 @@ exports.login = async (req, res) => {
             phone: user.phone
 
         });
+
 
     } catch (err) {
 
@@ -127,53 +127,67 @@ exports.forgotPassword = async (req, res) => {
 
         const { email } = req.body;
 
+
         const user = await User.findOne({ email });
 
-        // Don't reveal whether an account exists
+
         if (!user) {
+
             return res.json({
                 message: "If an account exists, a reset link has been sent."
             });
 
         }
 
-        // Generate random reset token
+
+        // Generate reset token
         const resetToken = crypto.randomBytes(32).toString("hex");
 
-        // Hash token before storing in MongoDB
+
+        // Hash token before storing
         const hashedToken = crypto
             .createHash("sha256")
             .update(resetToken)
             .digest("hex");
 
+
         user.resetPasswordToken = hashedToken;
 
+
         // Token expires in 15 minutes
-        // Token expires in 15 minutes
-user.resetPasswordExpires = Date.now() + 15 * 60 * 1000;
-
-await user.save({ validateBeforeSave: false });
+        user.resetPasswordExpires = Date.now() + 15 * 60 * 1000;
 
 
-        // Create reset link
+        await user.save({
+            validateBeforeSave: false
+        });
+
+
+
+        // Reset URL
         const resetUrl =
-           '$ {process.env.FRONTEND_URL}/reset-password.html?token=${resetToken}';
+            `${process.env.FRONTEND_URL}/reset-password.html?token=${resetToken}`;
 
 
-        // Create Gmail transporter
+
+        // Gmail transporter
         const transporter = nodemailer.createTransport({
 
             service: "gmail",
 
             auth: {
+
                 user: process.env.EMAIL_USER,
+
                 pass: process.env.EMAIL_PASSWORD
+
             }
 
         });
 
 
-        // Send reset email
+
+        // Send email
         await transporter.sendMail({
 
             from: process.env.EMAIL_USER,
@@ -182,59 +196,69 @@ await user.save({ validateBeforeSave: false });
 
             subject: "Raptora Password Reset",
 
-            html: 
-                '
-                <div style="
-                    font-family: Arial, sans-serif;
-                    max-width: 600px;
-                    margin: auto;
-                    padding: 20px;
-                ">
 
-                    <h2>Reset Your Raptora Password</h2>
+            html: `
 
-                    <p>Hello ${user.name},</p>
+            <div style="
+                font-family: Arial, sans-serif;
+                max-width: 600px;
+                margin: auto;
+                padding: 20px;
+            ">
 
-                    <p>
-                        We received a request to reset your Raptora password.
-                    </p>
+                <h2>Reset Your Raptora Password</h2>
 
-                    <p>
-                        Click the button below to create a new password:
-                    </p>
 
-                    <p>
+                <p>Hello ${user.name},</p>
 
-                        <a href="${resetUrl}"
-                           style="
-                               display: inline-block;
-                               padding: 12px 20px;
-                               background: #007bff;
-                               color: white;
-                               text-decoration: none;
-                               border-radius: 6px;
-                           ">
 
-                            Reset Password
+                <p>
+                    We received a request to reset your Raptora password.
+                </p>
 
-                        </a>
 
-                    </p>
+                <p>
+                    Click the button below to create a new password:
+                </p>
 
-                    <p>
-                        This link will expire in 15 minutes.
-                    </p>
 
-                    <p>
-                        If you did not request this password reset,
-                        you can safely ignore this email.
-                    </p>
+                <p>
 
-                </div>
+                    <a href="${resetUrl}"
 
-            
+                    style="
+                        display:inline-block;
+                        padding:12px 20px;
+                        background:#007bff;
+                        color:white;
+                        text-decoration:none;
+                        border-radius:6px;
+                    ">
+
+                        Reset Password
+
+                    </a>
+
+                </p>
+
+
+                <p>
+                    This link will expire in 15 minutes.
+                </p>
+
+
+                <p>
+                    If you did not request this password reset,
+                    you can safely ignore this email.
+                </p>
+
+
+            </div>
+
+            `
 
         });
+
 
 
         res.json({
@@ -244,9 +268,12 @@ await user.save({ validateBeforeSave: false });
         });
 
 
+
     } catch (err) {
 
+
         console.log("Forgot Password Error:", err);
+
 
         res.status(500).json({
 
@@ -254,52 +281,72 @@ await user.save({ validateBeforeSave: false });
 
         });
 
+
     }
 
 };
 
 
+
 // ================= RESET PASSWORD =================
 exports.resetPassword = async (req, res) => {
 
+
     try {
 
+
         const { token } = req.params;
+
 
         const { password } = req.body;
 
 
+
         if (!password) {
+
 
             return res.status(400).json({
 
                 message: "Password is required"
 
-            });'
+            });
+
 
         }
 
 
-        // Hash token from reset URL
+
         const hashedToken = crypto
+
             .createHash("sha256")
+
             .update(token)
+
             .digest("hex");
 
 
-        // Find user with valid token
+
+
         const user = await User.findOne({
+
 
             resetPasswordToken: hashedToken,
 
+
             resetPasswordExpires: {
+
                 $gt: Date.now()
+
             }
+
 
         });
 
 
+
+
         if (!user) {
+
 
             return res.status(400).json({
 
@@ -307,22 +354,30 @@ exports.resetPassword = async (req, res) => {
 
             });
 
+
         }
 
 
-        // Hash new password
+
+
         const hashedPassword = await bcrypt.hash(password, 10);
+
+
 
         user.password = hashedPassword;
 
 
-        // Delete reset token after successful password change
+
         user.resetPasswordToken = null;
+
 
         user.resetPasswordExpires = null;
 
 
+
         await user.save();
+
+
 
 
         res.json({
@@ -332,9 +387,14 @@ exports.resetPassword = async (req, res) => {
         });
 
 
+
+
     } catch (err) {
 
+
         console.log("Reset Password Error:", err);
+
+
 
         res.status(500).json({
 
@@ -342,6 +402,8 @@ exports.resetPassword = async (req, res) => {
 
         });
 
+
     }
+
 
 };
