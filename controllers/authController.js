@@ -183,7 +183,7 @@ await user.save({ validateBeforeSave: false });
             subject: "Raptora Password Reset",
 
             html: 
-
+                '
                 <div style="
                     font-family: Arial, sans-serif;
                     max-width: 600px;
@@ -275,7 +275,7 @@ exports.resetPassword = async (req, res) => {
 
                 message: "Password is required"
 
-            });
+            });'
 
         }
 
