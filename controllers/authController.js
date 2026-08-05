@@ -131,7 +131,6 @@ exports.forgotPassword = async (req, res) => {
 
         // Don't reveal whether an account exists
         if (!user) {
-
             return res.json({
                 message: "If an account exists, a reset link has been sent."
             });
@@ -150,14 +149,15 @@ exports.forgotPassword = async (req, res) => {
         user.resetPasswordToken = hashedToken;
 
         // Token expires in 15 minutes
-        user.resetPasswordExpires = Date.now() + 15 * 60 * 1000;
+        // Token expires in 15 minutes
+user.resetPasswordExpires = Date.now() + 15 * 60 * 1000;
 
-        await user.save();
+await user.save({ validateBeforeSave: false });
 
 
         // Create reset link
         const resetUrl =
-            `${process.env.FRONTEND_URL}/reset-password.html?token=${resetToken}`;
+            {process.env.FRONTEND_URL}/reset-password.html?token=${resetToken};
 
 
         // Create Gmail transporter
