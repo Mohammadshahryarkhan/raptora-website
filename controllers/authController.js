@@ -157,7 +157,7 @@ await user.save({ validateBeforeSave: false });
 
         // Create reset link
         const resetUrl =
-            {process.env.FRONTEND_URL}/reset-password.html?token=${resetToken};
+           '$ {process.env.FRONTEND_URL}/reset-password.html?token=${resetToken}';
 
 
         // Create Gmail transporter
@@ -182,7 +182,7 @@ await user.save({ validateBeforeSave: false });
 
             subject: "Raptora Password Reset",
 
-            html: `
+            html: 
 
                 <div style="
                     font-family: Arial, sans-serif;
@@ -232,7 +232,7 @@ await user.save({ validateBeforeSave: false });
 
                 </div>
 
-            `
+            
 
         });
 
