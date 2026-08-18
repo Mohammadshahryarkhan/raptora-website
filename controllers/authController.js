@@ -128,7 +128,8 @@ exports.forgotPassword = async (req, res) => {
         if (!user) {
 
             return res.json({
-                message: "If an account exists, a reset link has been sent."
+                message:
+                    "If an account exists, a reset link has been sent."
             });
 
         }
@@ -182,7 +183,7 @@ exports.forgotPassword = async (req, res) => {
             await resend.emails.send({
 
                 from:
-                    "Raptora <onboarding@resend.dev>",
+                    "Raptora <noreply@raptora.in>",
 
                 to:
                     user.email,
@@ -203,23 +204,19 @@ exports.forgotPassword = async (req, res) => {
                             Reset Your Raptora Password
                         </h2>
 
-
                         <p>
                             Hello ${user.name},
                         </p>
-
 
                         <p>
                             We received a request to reset
                             your Raptora password.
                         </p>
 
-
                         <p>
                             Click the button below to create
                             a new password:
                         </p>
-
 
                         <p>
 
@@ -242,18 +239,15 @@ exports.forgotPassword = async (req, res) => {
 
                         </p>
 
-
                         <p>
                             This link will expire in 15 minutes.
                         </p>
-
 
                         <p>
                             If you did not request this
                             password reset, you can safely
                             ignore this email.
                         </p>
-
 
                     </div>
 
@@ -287,7 +281,6 @@ exports.forgotPassword = async (req, res) => {
             err
         );
 
-
         res.status(500).json({
 
             message:
@@ -307,7 +300,6 @@ exports.resetPassword = async (req, res) => {
 
         const { token } =
             req.params;
-
 
         const { password } =
             req.body;
@@ -386,7 +378,6 @@ exports.resetPassword = async (req, res) => {
         user.resetPasswordToken =
             null;
 
-
         user.resetPasswordExpires =
             null;
 
@@ -410,7 +401,6 @@ exports.resetPassword = async (req, res) => {
             "Reset Password Error:",
             err
         );
-
 
         res.status(500).json({
 
