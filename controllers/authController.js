@@ -134,21 +134,27 @@ exports.forgotPassword = async (req, res) => {
         }
 
 
-        // Generate reset token
-        const resetToken = crypto.randomBytes(32).toString("hex");
+        // ================= GENERATE RESET TOKEN =================
+
+        const resetToken =
+            crypto.randomBytes(32).toString("hex");
 
 
-        // Hash token before storing
-        const hashedToken = crypto
-            .createHash("sha256")
-            .update(resetToken)
-            .digest("hex");
+        // ================= HASH TOKEN =================
+
+        const hashedToken =
+            crypto
+                .createHash("sha256")
+                .update(resetToken)
+                .digest("hex");
 
 
-        user.resetPasswordToken = hashedToken;
+        user.resetPasswordToken =
+            hashedToken;
 
 
-        // Token expires in 15 minutes
+        // ================= TOKEN EXPIRY =================
+
         user.resetPasswordExpires =
             Date.now() + 15 * 60 * 1000;
 
@@ -158,7 +164,8 @@ exports.forgotPassword = async (req, res) => {
         });
 
 
-        // Reset URL
+        // ================= RESET URL =================
+
         const resetUrl =
             `${process.env.FRONTEND_URL}/reset-password.html?token=${resetToken}`;
 
@@ -171,85 +178,99 @@ exports.forgotPassword = async (req, res) => {
 
         // ================= SEND EMAIL =================
 
-        await resend.emails.send({
+        const emailResult =
+            await resend.emails.send({
 
-            from: "Raptora <onboarding@resend.dev>",
+                from:
+                    "Raptora <onboarding@resend.dev>",
 
-            to: user.email,
+                to:
+                    user.email,
 
-            subject: "Raptora Password Reset",
+                subject:
+                    "Raptora Password Reset",
 
-            html: `
+                html: `
 
-                <div style="
-                    font-family: Arial, sans-serif;
-                    max-width: 600px;
-                    margin: auto;
-                    padding: 20px;
-                ">
+                    <div style="
+                        font-family: Arial, sans-serif;
+                        max-width: 600px;
+                        margin: auto;
+                        padding: 20px;
+                    ">
 
-                    <h2>
-                        Reset Your Raptora Password
-                    </h2>
-
-
-                    <p>
-                        Hello ${user.name},
-                    </p>
-
-
-                    <p>
-                        We received a request to reset
-                        your Raptora password.
-                    </p>
+                        <h2>
+                            Reset Your Raptora Password
+                        </h2>
 
 
-                    <p>
-                        Click the button below to create
-                        a new password:
-                    </p>
+                        <p>
+                            Hello ${user.name},
+                        </p>
 
 
-                    <p>
-
-                        <a
-                            href="${resetUrl}"
-
-                            style="
-                                display:inline-block;
-                                padding:12px 20px;
-                                background:#007bff;
-                                color:white;
-                                text-decoration:none;
-                                border-radius:6px;
-                            "
-                        >
-
-                            Reset Password
-
-                        </a>
-
-                    </p>
+                        <p>
+                            We received a request to reset
+                            your Raptora password.
+                        </p>
 
 
-                    <p>
-                        This link will expire in 15 minutes.
-                    </p>
+                        <p>
+                            Click the button below to create
+                            a new password:
+                        </p>
 
 
-                    <p>
-                        If you did not request this
-                        password reset, you can safely
-                        ignore this email.
-                    </p>
+                        <p>
+
+                            <a
+                                href="${resetUrl}"
+
+                                style="
+                                    display:inline-block;
+                                    padding:12px 20px;
+                                    background:#007bff;
+                                    color:white;
+                                    text-decoration:none;
+                                    border-radius:6px;
+                                "
+                            >
+
+                                Reset Password
+
+                            </a>
+
+                        </p>
 
 
-                </div>
+                        <p>
+                            This link will expire in 15 minutes.
+                        </p>
 
-            `
 
-        });
+                        <p>
+                            If you did not request this
+                            password reset, you can safely
+                            ignore this email.
+                        </p>
 
+
+                    </div>
+
+                `
+
+            });
+
+
+        // ================= RESEND RESULT =================
+
+        console.log(
+            "RESEND RESULT:",
+            emailResult
+        );
+
+
+        // ================= SUCCESS RESPONSE =================
 
         res.json({
 
@@ -269,7 +290,8 @@ exports.forgotPassword = async (req, res) => {
 
         res.status(500).json({
 
-            message: "Server Error"
+            message:
+                "Server Error"
 
         });
 
@@ -283,43 +305,56 @@ exports.resetPassword = async (req, res) => {
 
     try {
 
-        const { token } = req.params;
+        const { token } =
+            req.params;
 
-        const { password } = req.body;
 
+        const { password } =
+            req.body;
+
+
+        // ================= CHECK PASSWORD =================
 
         if (!password) {
 
             return res.status(400).json({
 
-                message: "Password is required"
+                message:
+                    "Password is required"
 
             });
 
         }
 
 
-        const hashedToken = crypto
+        // ================= HASH RESET TOKEN =================
 
-            .createHash("sha256")
+        const hashedToken =
+            crypto
+                .createHash("sha256")
+                .update(token)
+                .digest("hex");
 
-            .update(token)
 
-            .digest("hex");
+        // ================= FIND USER =================
+
+        const user =
+            await User.findOne({
+
+                resetPasswordToken:
+                    hashedToken,
+
+                resetPasswordExpires: {
+
+                    $gt:
+                        Date.now()
+
+                }
+
+            });
 
 
-        const user = await User.findOne({
-
-            resetPasswordToken: hashedToken,
-
-            resetPasswordExpires: {
-
-                $gt: Date.now()
-
-            }
-
-        });
-
+        // ================= INVALID TOKEN =================
 
         if (!user) {
 
@@ -333,20 +368,33 @@ exports.resetPassword = async (req, res) => {
         }
 
 
+        // ================= HASH NEW PASSWORD =================
+
         const hashedPassword =
-            await bcrypt.hash(password, 10);
+            await bcrypt.hash(
+                password,
+                10
+            );
 
 
-        user.password = hashedPassword;
+        user.password =
+            hashedPassword;
 
 
-        user.resetPasswordToken = null;
+        // ================= CLEAR RESET TOKEN =================
 
-        user.resetPasswordExpires = null;
+        user.resetPasswordToken =
+            null;
+
+
+        user.resetPasswordExpires =
+            null;
 
 
         await user.save();
 
+
+        // ================= SUCCESS =================
 
         res.json({
 
@@ -366,7 +414,8 @@ exports.resetPassword = async (req, res) => {
 
         res.status(500).json({
 
-            message: "Server Error"
+            message:
+                "Server Error"
 
         });
 
