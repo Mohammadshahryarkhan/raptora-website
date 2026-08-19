@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <!-- Primary Title & Meta Description (Search Engines) -->
+    <!-- Primary Title & Meta Description -->
     <title>RAPTORA - AI College Predictor, KCET, COMEDK, JEE & NEET Counselling</title>
     <meta name="title" content="RAPTORA - AI College Predictor, KCET, COMEDK, JEE & NEET Counselling">
     <meta name="description" content="Predict college seat allotments using AI for KCET, COMEDK, JEE Main, NEET UG, and WBJEE. Track seat filling analytics, compare colleges, and download PYQs free.">
@@ -47,12 +47,70 @@
     <!-- Font Awesome Icons & Custom Stylesheet -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="frontend/style.css">
+
+    <!-- PDF Dropdown Styling -->
+    <style>
+        .pdf-dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .pdf-menu {
+            display: none;
+            position: absolute;
+            left: 0;
+            top: calc(100% + 8px);
+            min-width: 220px;
+            background: #111;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 10px;
+            padding: 12px;
+            z-index: 1000;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+        }
+
+        .pdf-menu.show {
+            display: block;
+        }
+
+        .pdf-date {
+            padding: 10px 8px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .pdf-date:last-child {
+            border-bottom: none;
+        }
+
+        .pdf-date-title {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .pdf-shift {
+            display: inline-block;
+            padding: 6px 10px;
+            margin-right: 6px;
+            margin-bottom: 4px;
+            border-radius: 6px;
+            text-decoration: none;
+            background: rgba(255, 255, 255, 0.08);
+            color: inherit;
+            transition: 0.2s ease;
+        }
+
+        .pdf-shift:hover {
+            background: rgba(255, 255, 255, 0.18);
+        }
+    </style>
 </head>
 
 <body>
 
     <!-- Header / Navigation -->
     <header class="navbar">
+
         <div class="logo-container">
             <img src="frontend/register.png" alt="RAPTORA logo" class="logo">
             <span class="logo-text"></span>
@@ -71,14 +129,17 @@
             <a href="frontend/login.html" class="btn btn-secondary">Login</a>
             <a href="frontend/register.html" class="btn btn-primary">Apply Now</a>
         </div>
+
     </header>
 
 
     <!-- Hero Section -->
     <section id="home" class="hero">
+
         <div class="hero-overlay"></div>
 
         <div class="hero-content">
+
             <p class="tagline">
                 FIND. PREDICT. COMPARE. CONNECT. SUCCEED.
             </p>
@@ -94,6 +155,7 @@
             </p>
 
             <div class="hero-cta">
+
                 <a href="#features" class="btn btn-primary btn-large">
                     Explore Ecosystem
                     <i class="fa-solid fa-arrow-right"></i>
@@ -102,8 +164,11 @@
                 <a href="#resources" class="btn btn-outline btn-large">
                     Resources
                 </a>
+
             </div>
+
         </div>
+
     </section>
 
 
@@ -116,6 +181,7 @@
         </div>
 
         <div class="grid-container">
+
 
             <!-- Feature Card 1 -->
             <div class="feature-card"
@@ -132,6 +198,7 @@
                     Explore a wide range of colleges across India with
                     detailed insights, cutoff history, and placement stats.
                 </p>
+
             </div>
 
 
@@ -151,6 +218,7 @@
                     who can share real experiences, honest advice,
                     and guidance throughout your admission journey.
                 </p>
+
             </div>
 
 
@@ -170,6 +238,7 @@
                     1-on-1 guidance sessions, Google Meet consultations,
                     and live Q&As.
                 </p>
+
             </div>
 
 
@@ -188,6 +257,7 @@
                     Find the best college and branch options specifically
                     calculated for your exam rank and preferences.
                 </p>
+
             </div>
 
 
@@ -206,6 +276,7 @@
                     Track seat availability and counselling trends
                     to make more informed admission choices.
                 </p>
+
             </div>
 
 
@@ -224,6 +295,7 @@
                     Compare infrastructure, fees, placement figures,
                     and branch prospects side-by-side.
                 </p>
+
             </div>
 
 
@@ -242,6 +314,7 @@
                     Make smarter investments by comparing the return on
                     investment of tuition fees against placement packages.
                 </p>
+
             </div>
 
 
@@ -260,6 +333,7 @@
                     Unfiltered student reviews, genuine campus pros/cons,
                     and verified experiences.
                 </p>
+
             </div>
 
 
@@ -278,6 +352,7 @@
                     Get high-accuracy seat predictions using advanced machine
                     learning models built on past counselling trends.
                 </p>
+
             </div>
 
 
@@ -297,6 +372,7 @@
                     and counselling to seat allotment, document verification,
                     and college joining.
                 </p>
+
             </div>
 
 
@@ -315,6 +391,7 @@
                     In-depth blogs, admission roadmaps, career guidance
                     modules, and state-wise quota breakdowns.
                 </p>
+
             </div>
 
 
@@ -333,9 +410,11 @@
                     Manage all your target colleges, application statuses,
                     saved mentors, and notes in one central hub.
                 </p>
+
             </div>
 
         </div>
+
     </section>
 
 
@@ -349,6 +428,8 @@
 
         <div class="resource-container">
 
+
+            <!-- Resource Tabs -->
             <div class="resource-tabs">
 
                 <button class="tab-btn active"
@@ -374,6 +455,7 @@
 
                 <div class="resource-grid">
 
+
                     <!-- JEE Main -->
                     <div class="resource-card">
 
@@ -385,27 +467,108 @@
                             JEE Main 2026 — Session-wise papers
                         </p>
 
-                        <p>
-                            <strong>2 April 2026</strong>
-                        </p>
 
-                        <div class="pyq-list">
+                        <!-- Download PDF Dropdown -->
+                        <div class="pdf-dropdown">
 
-                            <a href="2-april-shift-1.pdf"
-                               target="_blank"
-                               rel="noopener noreferrer"
-                               class="btn btn-outline btn-sm">
-                                <i class="fa-solid fa-file-pdf"></i>
-                                Shift 1
-                            </a>
+                            <button type="button"
+                                    class="btn btn-outline btn-sm"
+                                    onclick="togglePDFMenu()">
 
-                            <a href="2-april-shift-2.pdf"
-                               target="_blank"
-                               rel="noopener noreferrer"
-                               class="btn btn-outline btn-sm">
-                                <i class="fa-solid fa-file-pdf"></i>
-                                Shift 2
-                            </a>
+                                <i class="fa-solid fa-download"></i>
+                                Download PDF
+
+                            </button>
+
+
+                            <div id="pdfMenu" class="pdf-menu">
+
+
+                                <!-- 2nd April -->
+                                <div class="pdf-date">
+
+                                    <span class="pdf-date-title">
+                                        2nd April 2026
+                                    </span>
+
+                                    <a href="2 april shift 1.pdf"
+                                       target="_blank"
+                                       rel="noopener noreferrer"
+                                       class="pdf-shift">
+
+                                        Shift 1
+
+                                    </a>
+
+                                    <a href="2nd april shift 2.pdf"
+                                       target="_blank"
+                                       rel="noopener noreferrer"
+                                       class="pdf-shift">
+
+                                        Shift 2
+
+                                    </a>
+
+                                </div>
+
+
+                                <!-- 4th April -->
+                                <div class="pdf-date">
+
+                                    <span class="pdf-date-title">
+                                        4th April 2026
+                                    </span>
+
+                                    <a href="4 april shift 1.pdf"
+                                       target="_blank"
+                                       rel="noopener noreferrer"
+                                       class="pdf-shift">
+
+                                        Shift 1
+
+                                    </a>
+
+                                    <a href="4 april shift 2.pdf"
+                                       target="_blank"
+                                       rel="noopener noreferrer"
+                                       class="pdf-shift">
+
+                                        Shift 2
+
+                                    </a>
+
+                                </div>
+
+
+                                <!-- 6th April - Add PDFs later -->
+                                <div class="pdf-date">
+
+                                    <span class="pdf-date-title">
+                                        6th April 2026
+                                    </span>
+
+                                    <a href="6 april shift 1.pdf"
+                                       target="_blank"
+                                       rel="noopener noreferrer"
+                                       class="pdf-shift">
+
+                                        Shift 1
+
+                                    </a>
+
+                                    <a href="6 april shift 2.pdf"
+                                       target="_blank"
+                                       rel="noopener noreferrer"
+                                       class="pdf-shift">
+
+                                        Shift 2
+
+                                    </a>
+
+                                </div>
+
+
+                            </div>
 
                         </div>
 
@@ -426,7 +589,9 @@
 
                         <a href="#"
                            class="btn btn-outline btn-sm">
+
                             Download PDF
+
                         </a>
 
                     </div>
@@ -446,7 +611,9 @@
 
                         <a href="#"
                            class="btn btn-outline btn-sm">
+
                             Download PDF
+
                         </a>
 
                     </div>
@@ -466,7 +633,9 @@
 
                         <a href="#"
                            class="btn btn-outline btn-sm">
+
                             Download PDF
+
                         </a>
 
                     </div>
@@ -486,7 +655,9 @@
 
                         <a href="#"
                            class="btn btn-outline btn-sm">
+
                             Download PDF
+
                         </a>
 
                     </div>
@@ -506,12 +677,15 @@
 
                         <a href="#"
                            class="btn btn-outline btn-sm">
+
                             Download PDF
+
                         </a>
 
                     </div>
 
                 </div>
+
             </div>
 
 
@@ -533,7 +707,9 @@
 
                         <a href="#"
                            class="btn btn-outline btn-sm">
+
                             Download PDF
+
                         </a>
 
                     </div>
@@ -551,12 +727,15 @@
 
                         <a href="#"
                            class="btn btn-outline btn-sm">
+
                             Download PDF
+
                         </a>
 
                     </div>
 
                 </div>
+
             </div>
 
 
@@ -578,15 +757,19 @@
 
                         <a href="#"
                            class="btn btn-primary btn-sm">
+
                             Take Test
+
                         </a>
 
                     </div>
 
                 </div>
+
             </div>
 
         </div>
+
     </section>
 
 
@@ -607,6 +790,7 @@
 
             <div class="social-connect">
 
+
                 <div class="qr-container">
 
                     <img src="frontend/WhatsApp Image 2026-07-25 at 4.22.08 PM.jpeg"
@@ -624,36 +808,48 @@
                 <div class="social-details">
 
                     <p>
+
                         <i class="fa-brands fa-instagram"></i>
 
                         <a href="https://www.instagram.com/raptora247?igsh=MWp1c2RvMzloMTc1aQ=="
                            target="_blank"
                            rel="noopener noreferrer"
                            class="social-link">
+
                             @RAPTORA247
+
                         </a>
+
                     </p>
 
 
                     <p>
+
                         <i class="fa-brands fa-facebook"></i>
 
                         <a href="https://www.facebook.com/share/1JNWsdP12U/"
                            target="_blank"
                            rel="noopener noreferrer"
                            class="social-link">
+
                             @RAPTORA
+
                         </a>
+
                     </p>
 
 
                     <p>
+
                         <i class="fa-solid fa-envelope"></i>
 
                         <a href="mailto:raptora247@gmail.com"
                            class="social-link">
+
                             raptora247@gmail.com
+
                         </a>
+
                     </p>
 
 
@@ -663,6 +859,7 @@
                        class="btn btn-primary">
 
                         Follow on Instagram
+
                         <i class="fa-solid fa-arrow-up-right-from-square"></i>
 
                     </a>
@@ -704,6 +901,35 @@
         </p>
 
     </footer>
+
+
+    <!-- PDF Dropdown JavaScript -->
+    <script>
+
+        function togglePDFMenu() {
+
+            const menu = document.getElementById("pdfMenu");
+
+            menu.classList.toggle("show");
+
+        }
+
+
+        // Close PDF menu when clicking outside
+        document.addEventListener("click", function(event) {
+
+            const dropdown = document.querySelector(".pdf-dropdown");
+            const menu = document.getElementById("pdfMenu");
+
+            if (!dropdown.contains(event.target)) {
+
+                menu.classList.remove("show");
+
+            }
+
+        });
+
+    </script>
 
 
     <!-- Custom JS -->
