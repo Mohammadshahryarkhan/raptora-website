@@ -16,16 +16,15 @@
     <!-- CSS -->
     <link rel="stylesheet" href="css/login.css">
 
-    <!-- GSAP for Smooth Splash Reveal Animation -->
+    <!-- GSAP Animation Library -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
 </head>
 
 <body>
 
-<!-- Liquid Splash Animation Overlay -->
-<div class="splash-wrapper" id="splashWrapper">
-    <canvas id="splashCanvas"></canvas>
-    <div class="water-drop-wave" id="waveMask"></div>
+<!-- Liquid Bucket Splash Overlay -->
+<div class="splash-overlay" id="splashOverlay">
+    <div class="water-bucket-wave" id="liquidWave"></div>
 </div>
 
 <div class="container" id="mainContainer">
@@ -131,79 +130,33 @@
         }
     });
 
-    // Liquid Splash Reveal Animation Execution
+    // Bucket Splash Wipe Script
     window.addEventListener("load", () => {
-        const canvas = document.getElementById('splashCanvas');
-        const ctx = canvas.getContext('2d');
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
+        const tl = gsap.timeline();
 
-        let particles = [];
-        const colors = ['#e50914', '#ff1f3d', '#ff2b45', '#111111'];
-
-        for (let i = 0; i < 120; i++) {
-            particles.push({
-                x: canvas.width / 2 + (Math.random() - 0.5) * 200,
-                y: -50,
-                radius: Math.random() * 25 + 10,
-                color: colors[Math.floor(Math.random() * colors.length)],
-                vx: (Math.random() - 0.5) * 18,
-                vy: Math.random() * 12 + 10,
-                gravity: 0.6
-            });
-        }
-
-        function animateSplash() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            let active = false;
-
-            particles.forEach(p => {
-                p.x += p.vx;
-                p.y += p.vy;
-                p.vy += p.gravity;
-
-                ctx.beginPath();
-                ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-                ctx.fillStyle = p.color;
-                ctx.fill();
-
-                if (p.y < canvas.height + 100) active = true;
-            });
-
-            if (active) {
-                requestAnimationFrame(animateSplash);
-            }
-        }
-
-        animateSplash();
-
-        // Reveal the main login card container via liquid wipe
-        gsap.to("#waveMask", {
-            duration: 1.2,
-            clipPath: "circle(150% at 50% 50%)",
+        // Screen sweep like water thrown from bucket
+        tl.to("#liquidWave", {
+            duration: 1.1,
+            clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 100%)",
             ease: "power4.inOut"
-        });
-
-        gsap.to("#splashWrapper", {
-            duration: 0.5,
+        })
+        .to("#splashOverlay", {
+            duration: 0.4,
             opacity: 0,
-            delay: 1.1,
             onComplete: () => {
-                document.getElementById("splashWrapper").style.display = "none";
+                document.getElementById("splashOverlay").style.display = "none";
             }
-        });
-
-        gsap.from("#mainContainer", {
-            duration: 1.2,
-            scale: 0.85,
+        })
+        .from("#mainContainer", {
+            duration: 0.8,
+            scale: 0.9,
             opacity: 0,
-            delay: 0.3,
-            ease: "back.out(1.4)"
-        });
+            ease: "power3.out"
+        }, "-=0.3");
     });
 </script>
 
-<!-- Login JavaScript -->
+<!-- Login JavaScript (Backend API intact) -->
 <script src="js/login.js"></script>
 
 </body>
