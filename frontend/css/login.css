@@ -14,6 +14,41 @@ body{
     height:100vh;
     background:#0b0b0b;
     overflow:hidden;
+    position: relative;
+}
+
+/* ===========================
+   LIQUID SPLASH TRANSITION
+=========================== */
+
+.splash-wrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 9999;
+    pointer-events: none;
+}
+
+#splashCanvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+}
+
+.water-drop-wave {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle, #e50914 0%, #111111 80%);
+    clip-path: circle(0% at 50% 50%);
+    z-index: 1;
 }
 
 /* ===========================
@@ -24,6 +59,8 @@ body{
     display:flex;
     width:100%;
     height:100vh;
+    position: relative;
+    z-index: 10;
 }
 
 /* ===========================
@@ -50,6 +87,7 @@ body{
     color:#ff1f3d;
     letter-spacing:3px;
     margin-bottom:20px;
+    text-shadow: 0 0 20px rgba(255, 31, 61, 0.4);
 }
 
 .overlay p{
@@ -61,6 +99,7 @@ body{
 .overlay img{
     width:80%;
     max-width:450px;
+    filter: drop-shadow(0 10px 20px rgba(255, 31, 61, 0.2));
 }
 
 /* ===========================
@@ -76,35 +115,23 @@ body{
 }
 
 .login-box{
-
     width:420px;
-
     background:#181818;
-
     padding:45px;
-
     border-radius:18px;
-
     box-shadow:0 0 30px rgba(255,0,0,.25);
-
+    border: 1px solid rgba(255, 31, 61, 0.15);
 }
 
 .login-box h2{
-
     color:white;
-
     font-size:32px;
-
     margin-bottom:10px;
-
 }
 
 .login-box p{
-
     color:#bdbdbd;
-
     margin-bottom:30px;
-
 }
 
 /* ===========================
@@ -112,71 +139,48 @@ body{
 =========================== */
 
 .input-group{
-
     margin-bottom:22px;
-
 }
 
 .input-group label{
-
     color:white;
-
     display:block;
-
     margin-bottom:8px;
-
     font-size:14px;
-
 }
 
 .input-field{
-
     display:flex;
-
     align-items:center;
-
     background:#252525;
-
     border-radius:10px;
-
     padding:0 15px;
-
     border:1px solid #333;
+    transition: border-color 0.3s ease;
+}
 
+.input-field:focus-within {
+    border-color: #ff1f3d;
 }
 
 .input-field i{
-
     color:#ff1f3d;
-
     margin-right:12px;
-
 }
 
 .input-field input{
-
     width:100%;
-
     padding:15px 0;
-
     border:none;
-
     outline:none;
-
     background:transparent;
-
     color:white;
-
     font-size:15px;
-
 }
 
 .eye{
-
     cursor:pointer;
-
     margin-left:10px;
-
 }
 
 /* ===========================
@@ -184,43 +188,31 @@ body{
 =========================== */
 
 .options{
-
     display:flex;
-
     justify-content:space-between;
-
     align-items:center;
-
     margin-bottom:25px;
-
     color:white;
-
     font-size:14px;
-
 }
 
 .options label{
-
     display:flex;
-
     align-items:center;
-
     gap:8px;
+}
 
+.options input[type="checkbox"] {
+    accent-color: #e50914;
 }
 
 .options a{
-
     color:#ff1f3d;
-
     text-decoration:none;
-
 }
 
 .options a:hover{
-
     text-decoration:underline;
-
 }
 
 /* ===========================
@@ -228,37 +220,22 @@ body{
 =========================== */
 
 button{
-
     width:100%;
-
     padding:15px;
-
     border:none;
-
     border-radius:10px;
-
     background:#e50914;
-
     color:white;
-
     font-size:17px;
-
     font-weight:600;
-
     cursor:pointer;
-
     transition:.3s;
-
 }
 
 button:hover{
-
     background:#ff2b45;
-
     transform:translateY(-2px);
-
     box-shadow:0 0 20px rgba(255,0,0,.5);
-
 }
 
 /* ===========================
@@ -266,53 +243,16 @@ button:hover{
 =========================== */
 
 .divider{
-
     display:flex;
-
     align-items:center;
-
     justify-content:center;
-
     margin:30px 0;
-
     color:#aaa;
-
 }
 
 .divider span{
-
     background:#181818;
-
     padding:0 15px;
-
-}
-
-/* ===========================
-   SOCIAL LOGIN
-=========================== */
-
-.social-login{
-
-    display:flex;
-
-    gap:15px;
-
-}
-
-.social-login button{
-
-    background:#252525;
-
-    border:1px solid #333;
-
-    font-size:15px;
-
-}
-
-.social-login button:hover{
-
-    background:#2d2d2d;
-
 }
 
 /* ===========================
@@ -320,29 +260,19 @@ button:hover{
 =========================== */
 
 .register{
-
     text-align:center;
-
     color:#bbb;
-
     margin-top:25px;
-
 }
 
 .register a{
-
     color:#ff1f3d;
-
     text-decoration:none;
-
     font-weight:600;
-
 }
 
 .register a:hover{
-
     text-decoration:underline;
-
 }
 
 /* ===========================
@@ -350,25 +280,16 @@ button:hover{
 =========================== */
 
 @media(max-width:900px){
+    .left-panel{
+        display:none;
+    }
 
-.left-panel{
+    .right-panel{
+        width:100%;
+    }
 
-display:none;
-
-}
-
-.right-panel{
-
-width:100%;
-
-}
-
-.login-box{
-
-width:90%;
-
-padding:35px;
-
-}
-
+    .login-box{
+        width:90%;
+        padding:35px;
+    }
 }
