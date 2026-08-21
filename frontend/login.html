@@ -8,220 +8,200 @@
     <title>Raptora | Login</title>
 
     <!-- Google Font -->
-    <link
-        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
     <!-- Font Awesome -->
-    <link
-        rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
     <!-- CSS -->
     <link rel="stylesheet" href="css/login.css">
+
+    <!-- GSAP for Smooth Splash Reveal Animation -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
 </head>
 
 <body>
 
-<div class="container">
+<!-- Liquid Splash Animation Overlay -->
+<div class="splash-wrapper" id="splashWrapper">
+    <canvas id="splashCanvas"></canvas>
+    <div class="water-drop-wave" id="waveMask"></div>
+</div>
+
+<div class="container" id="mainContainer">
 
     <!-- Left Panel -->
     <div class="left-panel">
-
         <div class="overlay">
-
             <h1>RAPTORA</h1>
-
             <p>Empowering Innovation Through Technology</p>
-
             <img src="register.png" alt="Login Illustration">
-
         </div>
-
     </div>
-
 
     <!-- Right Panel -->
     <div class="right-panel">
-
         <div class="login-box">
-
             <h2>Welcome Back 👋</h2>
-
             <p>Login to continue to your dashboard.</p>
-
 
             <!-- Login Form -->
             <form id="loginForm">
-
                 <!-- Email -->
                 <div class="input-group">
-
                     <label for="email">Email Address</label>
-
                     <div class="input-field">
-
                         <i class="fa-solid fa-envelope"></i>
-
-                        <input
-                            type="email"
-                            id="email"
-                            name="email"
-                            placeholder="Enter your email"
-                            autocomplete="email"
-                            required>
-
+                        <input type="email" id="email" name="email" placeholder="Enter your email" autocomplete="email" required>
                     </div>
-
                 </div>
-
 
                 <!-- Password -->
                 <div class="input-group">
-
                     <label for="password">Password</label>
-
                     <div class="input-field">
-
                         <i class="fa-solid fa-lock"></i>
-
-                        <input
-                            type="password"
-                            id="password"
-                            name="password"
-                            placeholder="Enter password"
-                            autocomplete="current-password"
-                            required>
-
-                        <i
-                            class="fa-solid fa-eye eye"
-                            id="togglePassword"
-                            onclick="togglePassword()">
-                        </i>
-
+                        <input type="password" id="password" name="password" placeholder="Enter password" autocomplete="current-password" required>
+                        <i class="fa-solid fa-eye eye" id="togglePassword" onclick="togglePassword()"></i>
                     </div>
-
                 </div>
-
 
                 <!-- Remember Me + Forgot Password -->
                 <div class="options">
-
                     <label>
-                        <input
-                            type="checkbox"
-                            id="rememberMe"
-                            name="rememberMe">
-
+                        <input type="checkbox" id="rememberMe" name="rememberMe">
                         Remember Me
                     </label>
-
-
-                    <a href="forgot-password.html">
-                        Forgot Password?
-                    </a>
-
+                    <a href="forgot-password.html">Forgot Password?</a>
                 </div>
 
-
                 <!-- Login Button -->
-                <button type="submit">
-                    Login
-                </button>
-
+                <button type="submit">Login</button>
             </form>
-
 
             <!-- Divider -->
             <div class="divider">
                 <span>OR</span>
             </div>
 
-
             <!-- Register -->
             <div class="register">
-
                 Don't have an account?
-
-                <a href="register.html">
-                    Register Now
-                </a>
-
+                <a href="register.html">Register Now</a>
             </div>
-
         </div>
-
     </div>
 
 </div>
 
-
 <script>
-
     // Show / Hide Password
     function togglePassword() {
-
         const password = document.getElementById("password");
         const icon = document.getElementById("togglePassword");
 
         if (password.type === "password") {
-
             password.type = "text";
-
             icon.classList.remove("fa-eye");
             icon.classList.add("fa-eye-slash");
-
         } else {
-
             password.type = "password";
-
             icon.classList.remove("fa-eye-slash");
             icon.classList.add("fa-eye");
-
         }
-
     }
 
-
-    // Remember Me
+    // Remember Me Logic
     const emailInput = document.getElementById("email");
     const rememberMe = document.getElementById("rememberMe");
 
-    // Load saved email
     window.addEventListener("DOMContentLoaded", function () {
-
         const savedEmail = localStorage.getItem("raptoraRememberedEmail");
-
         if (savedEmail) {
-
             emailInput.value = savedEmail;
             rememberMe.checked = true;
-
         }
-
     });
 
-
-    // Save / Remove remembered email
     document.getElementById("loginForm").addEventListener("submit", function () {
-
         if (rememberMe.checked) {
-
-            localStorage.setItem(
-                "raptoraRememberedEmail",
-                emailInput.value
-            );
-
+            localStorage.setItem("raptoraRememberedEmail", emailInput.value);
         } else {
-
             localStorage.removeItem("raptoraRememberedEmail");
-
         }
-
     });
 
-</script>
+    // Liquid Splash Reveal Animation Execution
+    window.addEventListener("load", () => {
+        const canvas = document.getElementById('splashCanvas');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
 
+        let particles = [];
+        const colors = ['#e50914', '#ff1f3d', '#ff2b45', '#111111'];
+
+        for (let i = 0; i < 120; i++) {
+            particles.push({
+                x: canvas.width / 2 + (Math.random() - 0.5) * 200,
+                y: -50,
+                radius: Math.random() * 25 + 10,
+                color: colors[Math.floor(Math.random() * colors.length)],
+                vx: (Math.random() - 0.5) * 18,
+                vy: Math.random() * 12 + 10,
+                gravity: 0.6
+            });
+        }
+
+        function animateSplash() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            let active = false;
+
+            particles.forEach(p => {
+                p.x += p.vx;
+                p.y += p.vy;
+                p.vy += p.gravity;
+
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+                ctx.fillStyle = p.color;
+                ctx.fill();
+
+                if (p.y < canvas.height + 100) active = true;
+            });
+
+            if (active) {
+                requestAnimationFrame(animateSplash);
+            }
+        }
+
+        animateSplash();
+
+        // Reveal the main login card container via liquid wipe
+        gsap.to("#waveMask", {
+            duration: 1.2,
+            clipPath: "circle(150% at 50% 50%)",
+            ease: "power4.inOut"
+        });
+
+        gsap.to("#splashWrapper", {
+            duration: 0.5,
+            opacity: 0,
+            delay: 1.1,
+            onComplete: () => {
+                document.getElementById("splashWrapper").style.display = "none";
+            }
+        });
+
+        gsap.from("#mainContainer", {
+            duration: 1.2,
+            scale: 0.85,
+            opacity: 0,
+            delay: 0.3,
+            ease: "back.out(1.4)"
+        });
+    });
+</script>
 
 <!-- Login JavaScript -->
 <script src="js/login.js"></script>
