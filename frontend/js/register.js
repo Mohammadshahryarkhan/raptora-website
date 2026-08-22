@@ -1,68 +1,143 @@
-document.getElementById("registerForm").addEventListener("submit", async function(e) {
+/* ==========================================
+   RAPTORA REGISTER
+========================================== */
 
-    e.preventDefault();
+document
+    .getElementById("registerForm")
+    .addEventListener("submit", async function (e) {
 
-    const name = document.getElementById("name").value;
-    const email = document.getElementById("email").value;
-    const phone = document.getElementById("phone").value;
-    const password = document.getElementById("password").value;
-    const confirmPassword = document.getElementById("confirmPassword").value;
-    const terms = document.getElementById("terms");
+        e.preventDefault();
 
-    if (password !== confirmPassword) {
 
-        alert("Passwords do not match");
-        return;
+        /* ===========================
+           GET FORM VALUES
+        ============================ */
 
-    }
+        const name =
+            document.getElementById("name").value.trim();
 
-    if (!terms.checked) {
+        const username =
+            document.getElementById("username").value.trim();
 
-        alert("Please agree to the Terms & Conditions");
-        return;
+        const email =
+            document.getElementById("email").value.trim();
 
-    }
+        const phone =
+            document.getElementById("phone").value.trim();
 
-    try {
+        const password =
+            document.getElementById("password").value;
 
-        const response = await fetch(
-            "https://raptora-website-1.onrender.com/api/auth/register",
-            {
+        const confirmPassword =
+            document.getElementById("confirmPassword").value;
 
-                method: "POST",
+        const terms =
+            document.getElementById("terms");
 
-                headers: {
-                    "Content-Type": "application/json"
-                },
 
-                body: JSON.stringify({
+        /* ===========================
+           CHECK PASSWORD
+        ============================ */
 
-                    name,
-                    email,
-                    phone,
-                    password
+        if (password !== confirmPassword) {
 
-                })
+            alert("Passwords do not match.");
 
-            }
-        );
-
-        const data = await response.json();
-
-        alert(data.message);
-
-        if (response.ok) {
-
-            window.location.href = "login.html";
+            return;
 
         }
 
-    } catch (error) {
 
-        console.log(error);
+        /* ===========================
+           CHECK TERMS
+        ============================ */
 
-        alert("Server Error");
+        if (!terms.checked) {
 
-    }
+            alert(
+                "Please agree to the Terms & Conditions before creating your account."
+            );
 
-});
+            return;
+
+        }
+
+
+        /* ===========================
+           SEND REGISTRATION
+        ============================ */
+
+        try {
+
+            const response = await fetch(
+                "https://raptora-website-1.onrender.com/api/auth/register",
+                {
+
+                    method: "POST",
+
+                    headers: {
+
+                        "Content-Type":
+                            "application/json"
+
+                    },
+
+                    body: JSON.stringify({
+
+                        name: name,
+
+                        username: username,
+
+                        email: email,
+
+                        phone: phone,
+
+                        password: password
+
+                    })
+
+                }
+            );
+
+
+            const data =
+                await response.json();
+
+
+            /* ===========================
+               SERVER RESPONSE
+            ============================ */
+
+            alert(
+                data.message ||
+                "Registration completed."
+            );
+
+
+            /* ===========================
+               SUCCESS
+            ============================ */
+
+            if (response.ok) {
+
+                window.location.href =
+                    "login.html";
+
+            }
+
+        }
+
+        catch (error) {
+
+            console.error(
+                "Registration error:",
+                error
+            );
+
+            alert(
+                "Unable to connect to the server. Please try again."
+            );
+
+        }
+
+    });
