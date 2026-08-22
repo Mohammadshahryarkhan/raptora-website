@@ -7,32 +7,45 @@ document.getElementById("registerForm").addEventListener("submit", async functio
     const phone = document.getElementById("phone").value;
     const password = document.getElementById("password").value;
     const confirmPassword = document.getElementById("confirmPassword").value;
+    const terms = document.getElementById("terms");
 
     if (password !== confirmPassword) {
+
         alert("Passwords do not match");
         return;
+
+    }
+
+    if (!terms.checked) {
+
+        alert("Please agree to the Terms & Conditions");
+        return;
+
     }
 
     try {
 
-        const response = await fetch("https://raptora-website-1.onrender.com/api/auth/register", {
+        const response = await fetch(
+            "https://raptora-website-1.onrender.com/api/auth/register",
+            {
 
-            method: "POST",
+                method: "POST",
 
-            headers: {
-                "Content-Type": "application/json"
-            },
+                headers: {
+                    "Content-Type": "application/json"
+                },
 
-            body: JSON.stringify({
+                body: JSON.stringify({
 
-                name,
-                email,
-                phone,
-                password
+                    name,
+                    email,
+                    phone,
+                    password
 
-            })
+                })
 
-        });
+            }
+        );
 
         const data = await response.json();
 
@@ -47,6 +60,7 @@ document.getElementById("registerForm").addEventListener("submit", async functio
     } catch (error) {
 
         console.log(error);
+
         alert("Server Error");
 
     }
