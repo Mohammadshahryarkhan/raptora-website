@@ -1,6 +1,6 @@
-/* =========================
+/* ================================
    RAPTORA TERMS & CONDITIONS
-   ========================= */
+   ================================ */
 
 * {
     margin: 0;
@@ -15,14 +15,13 @@ html {
 body {
     font-family: "Poppins", sans-serif;
     background: #050505;
-    color: #ffffff;
+    color: #f5f5f5;
     line-height: 1.7;
 }
 
-
-/* =========================
+/* ================================
    NAVBAR
-   ========================= */
+   ================================ */
 
 .navbar {
     width: 100%;
@@ -32,25 +31,23 @@ body {
     align-items: center;
     justify-content: space-between;
 
-    padding: 15px 6%;
+    padding: 18px 7%;
 
     background: #050505;
-    border-bottom: 1px solid #222;
+
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 
     position: sticky;
     top: 0;
     z-index: 1000;
 }
 
-
-/* LOGO */
+/* Brand */
 
 .brand {
     display: flex;
     align-items: center;
-    gap: 12px;
-
-    min-width: 200px;
+    gap: 14px;
 }
 
 .brand img {
@@ -63,25 +60,24 @@ body {
 }
 
 .brand span {
-    color: #ffffff;
+    color: white;
 
-    font-size: 25px;
+    font-size: 24px;
     font-weight: 700;
 
     letter-spacing: 2px;
 }
 
-
-/* NAVIGATION */
+/* Navigation */
 
 .navbar nav {
     display: flex;
     align-items: center;
-    gap: 35px;
+    gap: 32px;
 }
 
 .navbar nav a {
-    color: #ffffff;
+    color: #ddd;
 
     text-decoration: none;
 
@@ -95,8 +91,7 @@ body {
     color: #ff1e25;
 }
 
-
-/* BACK BUTTON */
+/* Back button */
 
 .back-btn {
     display: inline-flex;
@@ -105,36 +100,36 @@ body {
 
     padding: 12px 20px;
 
-    color: #ffffff;
-
-    border: 1px solid #ff1e25;
-    border-radius: 6px;
+    color: white;
 
     text-decoration: none;
 
-    font-weight: 500;
+    border: 1px solid #ff1e25;
+
+    border-radius: 8px;
 
     transition: 0.3s;
 }
 
 .back-btn:hover {
     background: #ff1e25;
-    color: #ffffff;
+    color: white;
+
+    transform: translateY(-2px);
 }
 
-
-/* =========================
+/* ================================
    HERO
-   ========================= */
+   ================================ */
 
 .hero {
-    min-height: 420px;
+    min-height: 430px;
 
     display: flex;
     flex-direction: column;
 
-    align-items: center;
     justify-content: center;
+    align-items: center;
 
     text-align: center;
 
@@ -149,7 +144,6 @@ body {
         #050505;
 }
 
-
 .hero-icon {
     width: 70px;
     height: 70px;
@@ -162,18 +156,17 @@ body {
 
     color: #ff1e25;
 
-    font-size: 40px;
+    font-size: 42px;
 }
 
-
 .hero h1 {
-    font-size: clamp(45px, 7vw, 85px);
-
-    line-height: 1.1;
+    font-size: clamp(42px, 6vw, 78px);
 
     font-weight: 700;
 
-    margin-bottom: 25px;
+    line-height: 1.1;
+
+    color: white;
 }
 
 .hero h1 span {
@@ -181,46 +174,51 @@ body {
 }
 
 .hero p {
-    max-width: 800px;
+    max-width: 750px;
 
-    color: #bdbdbd;
+    margin-top: 25px;
+
+    color: #aaa;
 
     font-size: 17px;
 }
 
-
-/* =========================
+/* ================================
    TERMS CONTAINER
-   ========================= */
+   ================================ */
 
 .terms-container {
-    width: 90%;
-    max-width: 1100px;
+    width: min(1100px, 90%);
 
     margin: 70px auto;
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 25px;
 }
 
-
-/* =========================
+/* ================================
    INTRO CARD
-   ========================= */
+   ================================ */
 
 .intro-card {
     padding: 35px;
 
-    margin-bottom: 30px;
+    background: #101010;
 
-    background: #0d0d0d;
-
-    border: 1px solid #222;
+    border: 1px solid rgba(255, 255, 255, 0.08);
 
     border-left: 4px solid #ff1e25;
 
-    border-radius: 10px;
+    border-radius: 12px;
+
+    box-shadow:
+        0 10px 40px rgba(0, 0, 0, 0.35);
 }
 
 .intro-card h2 {
-    color: #ffffff;
+    color: white;
 
     font-size: 28px;
 
@@ -228,13 +226,12 @@ body {
 }
 
 .intro-card p {
-    color: #bdbdbd;
+    color: #bbb;
 }
 
-
-/* =========================
+/* ================================
    TERM CARDS
-   ========================= */
+   ================================ */
 
 .term-card {
     display: grid;
@@ -245,114 +242,117 @@ body {
 
     padding: 35px;
 
-    margin-bottom: 25px;
+    background: #0d0d0d;
 
-    background: #0b0b0b;
+    border: 1px solid rgba(255, 255, 255, 0.08);
 
-    border: 1px solid #202020;
-
-    border-radius: 10px;
+    border-radius: 12px;
 
     transition: 0.3s;
 }
 
 .term-card:hover {
-    border-color: rgba(255, 30, 37, 0.6);
+    border-color: rgba(255, 30, 37, 0.5);
 
-    transform: translateY(-2px);
+    transform: translateY(-3px);
+
+    box-shadow:
+        0 15px 45px rgba(0, 0, 0, 0.4);
 }
 
-
-/* NUMBER */
+/* Number */
 
 .number {
+    width: 60px;
+    height: 60px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: rgba(255, 30, 37, 0.1);
+
+    border: 1px solid #ff1e25;
+
     color: #ff1e25;
 
-    font-size: 22px;
+    font-size: 18px;
 
-    font-weight: 700;
-
-    padding-top: 5px;
+    font-weight: 600;
 }
 
-
-/* CONTENT */
+/* Content */
 
 .term-content h2 {
-    color: #ffffff;
+    margin-bottom: 15px;
+
+    color: white;
 
     font-size: 25px;
-
-    margin-bottom: 18px;
 }
 
 .term-content p {
-    color: #bdbdbd;
+    margin-bottom: 14px;
+
+    color: #aaa;
 
     font-size: 15px;
-
-    margin-bottom: 15px;
 }
 
 .term-content ul {
     margin: 15px 0 20px 20px;
 
-    color: #bdbdbd;
+    color: #aaa;
 }
 
 .term-content li {
     margin-bottom: 8px;
-
-    padding-left: 5px;
 }
 
-.term-content li::marker {
-    color: #ff1e25;
-}
-
-
-/* =========================
+/* ================================
    CONTACT CARD
-   ========================= */
+   ================================ */
 
 .contact-card {
     text-align: center;
 
-    padding: 60px 30px;
+    padding: 50px 30px;
 
-    margin-top: 50px;
+    margin-top: 20px;
 
     background:
         radial-gradient(
             circle at center,
-            rgba(255, 0, 0, 0.16),
-            transparent 65%
+            rgba(255, 0, 0, 0.15),
+            transparent 60%
         ),
-        #0b0b0b;
+        #0d0d0d;
 
-    border: 1px solid #242424;
+    border: 1px solid rgba(255, 255, 255, 0.08);
 
-    border-radius: 12px;
+    border-radius: 15px;
 }
 
 .contact-icon {
     color: #ff1e25;
 
-    font-size: 45px;
+    font-size: 40px;
 
-    margin-bottom: 20px;
+    margin-bottom: 15px;
 }
 
 .contact-card h2 {
-    font-size: 32px;
+    font-size: 30px;
 
-    margin-bottom: 5px;
+    color: white;
 }
 
-.contact-card > p {
+.contact-card p {
     color: #aaa;
 
-    margin-bottom: 25px;
+    margin-top: 5px;
 }
 
 .contact-details {
@@ -360,49 +360,49 @@ body {
 
     justify-content: center;
 
-    flex-wrap: wrap;
-
     gap: 30px;
+
+    margin-top: 25px;
+
+    flex-wrap: wrap;
 }
 
 .contact-details span {
-    color: #ddd;
+    color: #ccc;
 
-    display: flex;
-
-    align-items: center;
-
-    gap: 8px;
+    font-size: 14px;
 }
 
 .contact-details i {
     color: #ff1e25;
+
+    margin-right: 7px;
 }
 
-
-/* =========================
+/* ================================
    FOOTER
-   ========================= */
+   ================================ */
 
 footer {
-    padding: 50px 20px;
+    margin-top: 80px;
+
+    padding: 45px 20px;
 
     text-align: center;
 
-    background: #030303;
+    background: #020202;
 
-    border-top: 1px solid #222;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .footer-brand {
     display: flex;
 
-    justify-content: center;
     align-items: center;
 
-    gap: 10px;
+    justify-content: center;
 
-    margin-bottom: 15px;
+    gap: 12px;
 }
 
 .footer-brand img {
@@ -415,42 +415,41 @@ footer {
 }
 
 .footer-brand span {
-    font-size: 22px;
+    color: white;
+
+    font-size: 20px;
 
     font-weight: 700;
 
     letter-spacing: 2px;
 }
 
-footer > p {
-    color: #999;
+footer p {
+    margin-top: 12px;
 
-    margin-bottom: 10px;
+    color: #888;
 }
 
-.copyright {
+footer .copyright {
+    margin-top: 20px;
+
+    color: #555;
+
     font-size: 13px;
-
-    color: #666 !important;
 }
 
+/* ================================
+   MOBILE
+   ================================ */
 
-/* =========================
-   RESPONSIVE
-   ========================= */
-
-@media (max-width: 900px) {
+@media (max-width: 850px) {
 
     .navbar {
+        padding: 15px 5%;
+
         flex-wrap: wrap;
 
-        gap: 20px;
-
-        justify-content: center;
-    }
-
-    .brand {
-        justify-content: center;
+        gap: 15px;
     }
 
     .navbar nav {
@@ -460,48 +459,27 @@ footer > p {
 
         justify-content: center;
 
-        gap: 20px;
+        gap: 18px;
+    }
+
+    .brand span {
+        font-size: 20px;
+    }
+
+    .brand img {
+        width: 48px;
+        height: 48px;
+    }
+
+    .back-btn {
+        padding: 9px 14px;
+
+        font-size: 13px;
     }
 
     .hero {
         min-height: 350px;
-    }
 
-    .term-card {
-        grid-template-columns: 1fr;
-
-        gap: 5px;
-    }
-
-    .number {
-        margin-bottom: 5px;
-    }
-
-}
-
-
-@media (max-width: 600px) {
-
-    .navbar {
-        padding: 15px 20px;
-    }
-
-    .navbar nav {
-        gap: 12px;
-        flex-wrap: wrap;
-    }
-
-    .navbar nav a {
-        font-size: 13px;
-    }
-
-    .back-btn {
-        font-size: 13px;
-
-        padding: 9px 14px;
-    }
-
-    .hero {
         padding: 60px 20px;
     }
 
@@ -513,27 +491,42 @@ footer > p {
         font-size: 14px;
     }
 
-    .terms-container {
-        width: 94%;
+    .term-card {
+        grid-template-columns: 1fr;
 
-        margin: 40px auto;
+        padding: 25px;
     }
 
-    .intro-card,
-    .term-card {
-        padding: 25px 20px;
+    .number {
+        width: 50px;
+        height: 50px;
     }
 
     .term-content h2 {
         font-size: 21px;
     }
+}
 
-    .contact-details {
-        flex-direction: column;
+@media (max-width: 500px) {
 
-        align-items: center;
-
-        gap: 15px;
+    .navbar nav {
+        gap: 12px;
     }
 
+    .navbar nav a {
+        font-size: 12px;
+    }
+
+    .hero h1 {
+        font-size: 38px;
+    }
+
+    .terms-container {
+        width: 92%;
+    }
+
+    .intro-card,
+    .term-card {
+        padding: 22px;
+    }
 }
