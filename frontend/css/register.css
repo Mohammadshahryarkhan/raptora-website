@@ -35,7 +35,7 @@ body {
     background:
         radial-gradient(
             circle at center,
-            rgba(255, 0, 30, 0.15),
+            rgba(255, 0, 0, 0.18),
             transparent 55%
         ),
         linear-gradient(
@@ -103,10 +103,10 @@ body {
 
     border-radius: 18px;
 
-    border: 1px solid rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.08);
 
     box-shadow:
-        0 0 25px rgba(255, 0, 0, 0.25);
+        0 0 25px rgba(255, 0, 0, .25);
 }
 
 .register-box h2 {
@@ -137,7 +137,7 @@ body {
 
     font-size: 14px;
 
-    color: #eee;
+    color: #ddd;
 }
 
 .input-field {
@@ -153,14 +153,14 @@ body {
 
     padding: 0 15px;
 
-    transition: 0.3s;
+    transition: .3s;
 }
 
 .input-field:focus-within {
     border-color: #ff1f3d;
 
     box-shadow:
-        0 0 10px rgba(255, 31, 61, 0.15);
+        0 0 12px rgba(255, 31, 61, .15);
 }
 
 .input-field i {
@@ -192,9 +192,9 @@ body {
 .eye {
     cursor: pointer;
 
-    margin-left: 10px;
-
     margin-right: 0 !important;
+
+    margin-left: 10px;
 }
 
 
@@ -209,63 +209,26 @@ body {
 
     gap: 10px;
 
-    margin: 22px 0;
+    margin: 20px 0;
 
-    color: #bbb;
+    color: #ccc;
 
-    font-size: 13px;
+    font-size: 14px;
 
     line-height: 1.6;
 }
 
 .terms input {
-    appearance: none;
-
-    -webkit-appearance: none;
-
     width: 18px;
     height: 18px;
 
     min-width: 18px;
 
-    margin-top: 2px;
+    margin-top: 3px;
 
-    background: #252525;
-
-    border: 1px solid #555;
-
-    border-radius: 4px;
+    accent-color: #ff1f3d;
 
     cursor: pointer;
-
-    position: relative;
-
-    transition: 0.2s;
-}
-
-.terms input:hover {
-    border-color: #ff1f3d;
-}
-
-.terms input:checked {
-    background: #ff1f3d;
-
-    border-color: #ff1f3d;
-}
-
-.terms input:checked::after {
-    content: "✓";
-
-    position: absolute;
-
-    top: -3px;
-    left: 3px;
-
-    color: white;
-
-    font-size: 14px;
-
-    font-weight: 700;
 }
 
 .terms label {
@@ -286,10 +249,10 @@ body {
 
 
 /* ===========================
-   CREATE ACCOUNT BUTTON
+   BUTTON
 =========================== */
 
-button[type="submit"] {
+button {
     width: 100%;
 
     padding: 15px;
@@ -308,20 +271,16 @@ button[type="submit"] {
 
     cursor: pointer;
 
-    transition: 0.3s;
+    transition: .3s;
 }
 
-button[type="submit"]:hover {
+button:hover {
     background: #ff2b45;
 
     transform: translateY(-2px);
 
     box-shadow:
-        0 0 20px rgba(255, 0, 0, 0.5);
-}
-
-button[type="submit"]:active {
-    transform: translateY(0);
+        0 0 20px rgba(255, 0, 0, .5);
 }
 
 
@@ -335,8 +294,6 @@ button[type="submit"]:active {
     margin-top: 25px;
 
     color: #bbb;
-
-    font-size: 14px;
 }
 
 .login-link a {
@@ -382,10 +339,6 @@ button[type="submit"]:active {
 }
 
 
-/* ===========================
-   SMALL MOBILE
-=========================== */
-
 @media (max-width: 500px) {
 
     .right-panel {
@@ -399,10 +352,11 @@ button[type="submit"]:active {
     }
 
     .register-box h2 {
-        font-size: 26px;
+        font-size: 27px;
     }
 
     .terms {
-        font-size: 12px;
+        font-size: 13px;
     }
+
 }
