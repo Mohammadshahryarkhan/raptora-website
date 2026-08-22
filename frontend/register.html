@@ -3,20 +3,20 @@
 
 <head>
 
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Raptora | Register</title>
+    <title>Raptora | Register</title>
 
-<link
-    href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
-    rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
 
-<link
-    rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
-<link rel="stylesheet" href="css/register.css">
+    <link rel="stylesheet" href="css/register.css">
 
 </head>
 
@@ -35,7 +35,7 @@
             <h1>RAPTORA</h1>
 
             <p>
-                Your Admission Journey, Reimagined by Raptora
+                Your Admission journey, Reimagined by Raptora
             </p>
 
             <img
@@ -270,6 +270,7 @@
 
             </div>
 
+
         </div>
 
     </div>
@@ -301,58 +302,21 @@ function togglePassword(id) {
 
 
 /* ==========================================
-   CHECK IF TERMS WERE ACCEPTED
+   CHECK IF USER AGREED ON TERMS PAGE
 ========================================== */
 
 document.addEventListener("DOMContentLoaded", function () {
 
-    const termsCheckbox =
-        document.getElementById("terms");
+    const termsCheckbox = document.getElementById("terms");
 
     const termsAccepted =
-        localStorage.getItem("raptoraTermsAccepted");
+        sessionStorage.getItem("raptoraTermsAccepted");
 
     if (termsAccepted === "true") {
 
         termsCheckbox.checked = true;
 
-    }
-
-});
-
-
-/* ==========================================
-   TERMS LINK
-========================================== */
-
-document.getElementById("termsLink").addEventListener("click", function () {
-
-    /*
-       Remember that the user came from
-       the registration page.
-    */
-
-    localStorage.setItem(
-        "raptoraTermsReturn",
-        "true"
-    );
-
-});
-
-
-/* ==========================================
-   REGISTER FORM
-========================================== */
-
-document.getElementById("registerForm").addEventListener("submit", function (event) {
-
-    if (!document.getElementById("terms").checked) {
-
-        event.preventDefault();
-
-        alert("Please agree to the Terms & Conditions before creating your account.");
-
-        return;
+        sessionStorage.removeItem("raptoraTermsAccepted");
 
     }
 
