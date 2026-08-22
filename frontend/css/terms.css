@@ -1,5 +1,5 @@
 /* ================================
-   RAPTORA TERMS & CONDITIONS
+   RAPTORA TERMS & PRIVACY POLICY
    ================================ */
 
 * {
@@ -42,8 +42,6 @@ body {
     z-index: 1000;
 }
 
-/* Brand */
-
 .brand {
     display: flex;
     align-items: center;
@@ -53,22 +51,16 @@ body {
 .brand img {
     width: 58px;
     height: 58px;
-
     object-fit: contain;
-
     border-radius: 8px;
 }
 
 .brand span {
     color: white;
-
     font-size: 24px;
     font-weight: 700;
-
     letter-spacing: 2px;
 }
-
-/* Navigation */
 
 .navbar nav {
     display: flex;
@@ -78,20 +70,15 @@ body {
 
 .navbar nav a {
     color: #ddd;
-
     text-decoration: none;
-
     font-size: 15px;
     font-weight: 500;
-
     transition: 0.3s;
 }
 
 .navbar nav a:hover {
     color: #ff1e25;
 }
-
-/* Back button */
 
 .back-btn {
     display: inline-flex;
@@ -101,11 +88,9 @@ body {
     padding: 12px 20px;
 
     color: white;
-
     text-decoration: none;
 
     border: 1px solid #ff1e25;
-
     border-radius: 8px;
 
     transition: 0.3s;
@@ -114,12 +99,12 @@ body {
 .back-btn:hover {
     background: #ff1e25;
     color: white;
-
     transform: translateY(-2px);
 }
 
+
 /* ================================
-   HERO
+   TERMS HERO
    ================================ */
 
 .hero {
@@ -127,7 +112,6 @@ body {
 
     display: flex;
     flex-direction: column;
-
     justify-content: center;
     align-items: center;
 
@@ -155,17 +139,13 @@ body {
     margin-bottom: 25px;
 
     color: #ff1e25;
-
     font-size: 42px;
 }
 
 .hero h1 {
     font-size: clamp(42px, 6vw, 78px);
-
     font-weight: 700;
-
     line-height: 1.1;
-
     color: white;
 }
 
@@ -175,13 +155,12 @@ body {
 
 .hero p {
     max-width: 750px;
-
     margin-top: 25px;
 
     color: #aaa;
-
     font-size: 17px;
 }
+
 
 /* ================================
    TERMS CONTAINER
@@ -197,6 +176,7 @@ body {
 
     gap: 25px;
 }
+
 
 /* ================================
    INTRO CARD
@@ -219,15 +199,14 @@ body {
 
 .intro-card h2 {
     color: white;
-
     font-size: 28px;
-
     margin-bottom: 15px;
 }
 
 .intro-card p {
     color: #bbb;
 }
+
 
 /* ================================
    TERM CARDS
@@ -260,8 +239,6 @@ body {
         0 15px 45px rgba(0, 0, 0, 0.4);
 }
 
-/* Number */
-
 .number {
     width: 60px;
     height: 60px;
@@ -279,17 +256,13 @@ body {
     color: #ff1e25;
 
     font-size: 18px;
-
     font-weight: 600;
 }
-
-/* Content */
 
 .term-content h2 {
     margin-bottom: 15px;
 
     color: white;
-
     font-size: 25px;
 }
 
@@ -297,19 +270,18 @@ body {
     margin-bottom: 14px;
 
     color: #aaa;
-
     font-size: 15px;
 }
 
 .term-content ul {
     margin: 15px 0 20px 20px;
-
     color: #aaa;
 }
 
 .term-content li {
     margin-bottom: 8px;
 }
+
 
 /* ================================
    CONTACT CARD
@@ -337,31 +309,25 @@ body {
 
 .contact-icon {
     color: #ff1e25;
-
     font-size: 40px;
-
     margin-bottom: 15px;
 }
 
 .contact-card h2 {
     font-size: 30px;
-
     color: white;
 }
 
 .contact-card p {
     color: #aaa;
-
     margin-top: 5px;
 }
 
 .contact-details {
     display: flex;
-
     justify-content: center;
 
     gap: 30px;
-
     margin-top: 25px;
 
     flex-wrap: wrap;
@@ -369,15 +335,156 @@ body {
 
 .contact-details span {
     color: #ccc;
-
     font-size: 14px;
 }
 
 .contact-details i {
     color: #ff1e25;
-
     margin-right: 7px;
 }
+
+
+/* ================================
+   PRIVACY POLICY
+   ================================ */
+
+.privacy-container {
+    width: min(1100px, 90%);
+
+    margin: 100px auto;
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 25px;
+}
+
+
+/* Privacy Header */
+
+.privacy-header {
+    text-align: center;
+
+    padding: 60px 20px;
+
+    margin-bottom: 20px;
+
+    background:
+        radial-gradient(
+            circle at center,
+            rgba(255, 0, 0, 0.16),
+            transparent 60%
+        ),
+        #050505;
+
+    border-radius: 15px;
+}
+
+.privacy-icon {
+    color: #ff1e25;
+
+    font-size: 45px;
+
+    margin-bottom: 20px;
+}
+
+.privacy-header h1 {
+    color: white;
+
+    font-size: clamp(40px, 6vw, 65px);
+
+    line-height: 1.1;
+}
+
+.privacy-header h1 span {
+    color: #ff1e25;
+}
+
+.privacy-header p {
+    margin-top: 20px;
+
+    color: #aaa;
+
+    font-size: 16px;
+}
+
+
+/* Privacy Cards */
+
+.privacy-card {
+    display: grid;
+
+    grid-template-columns: 80px 1fr;
+
+    gap: 25px;
+
+    padding: 35px;
+
+    background: #0d0d0d;
+
+    border: 1px solid rgba(255, 255, 255, 0.08);
+
+    border-radius: 12px;
+
+    transition: 0.3s;
+}
+
+.privacy-card:hover {
+    border-color: rgba(255, 30, 37, 0.5);
+
+    transform: translateY(-3px);
+
+    box-shadow:
+        0 15px 45px rgba(0, 0, 0, 0.4);
+}
+
+
+/* Privacy Numbers */
+
+.privacy-number {
+    width: 60px;
+    height: 60px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: rgba(255, 30, 37, 0.1);
+
+    border: 1px solid #ff1e25;
+
+    color: #ff1e25;
+
+    font-size: 18px;
+
+    font-weight: 600;
+}
+
+
+/* Privacy Content */
+
+.privacy-content h2 {
+    margin-bottom: 15px;
+
+    color: white;
+
+    font-size: 25px;
+}
+
+.privacy-content p {
+    color: #aaa;
+
+    font-size: 15px;
+
+    line-height: 1.8;
+}
+
+.privacy-content strong {
+    color: #ff1e25;
+}
+
 
 /* ================================
    FOOTER
@@ -426,17 +533,15 @@ footer {
 
 footer p {
     margin-top: 12px;
-
     color: #888;
 }
 
 footer .copyright {
     margin-top: 20px;
-
     color: #555;
-
     font-size: 13px;
 }
+
 
 /* ================================
    MOBILE
@@ -473,13 +578,11 @@ footer .copyright {
 
     .back-btn {
         padding: 9px 14px;
-
         font-size: 13px;
     }
 
     .hero {
         min-height: 350px;
-
         padding: 60px 20px;
     }
 
@@ -493,7 +596,6 @@ footer .copyright {
 
     .term-card {
         grid-template-columns: 1fr;
-
         padding: 25px;
     }
 
@@ -505,7 +607,42 @@ footer .copyright {
     .term-content h2 {
         font-size: 21px;
     }
+
+
+    /* Privacy Mobile */
+
+    .privacy-container {
+        width: 90%;
+        margin: 70px auto;
+    }
+
+    .privacy-header {
+        padding: 45px 20px;
+    }
+
+    .privacy-header h1 {
+        font-size: 45px;
+    }
+
+    .privacy-card {
+        grid-template-columns: 1fr;
+        padding: 25px;
+    }
+
+    .privacy-number {
+        width: 50px;
+        height: 50px;
+    }
+
+    .privacy-content h2 {
+        font-size: 21px;
+    }
 }
+
+
+/* ================================
+   SMALL MOBILE
+   ================================ */
 
 @media (max-width: 500px) {
 
@@ -527,6 +664,21 @@ footer .copyright {
 
     .intro-card,
     .term-card {
+        padding: 22px;
+    }
+
+
+    /* Privacy Small Mobile */
+
+    .privacy-container {
+        width: 92%;
+    }
+
+    .privacy-header h1 {
+        font-size: 38px;
+    }
+
+    .privacy-card {
         padding: 22px;
     }
 }
