@@ -14,11 +14,8 @@ html {
 
 body {
     font-family: "Poppins", sans-serif;
-
     background: #050505;
-
     color: #f5f5f5;
-
     line-height: 1.7;
 }
 
@@ -29,47 +26,34 @@ body {
 
 .navbar {
     width: 100%;
-
     min-height: 90px;
 
     display: flex;
-
     align-items: center;
-
     justify-content: space-between;
 
     padding: 18px 7%;
 
     background: #050505;
 
-    border-bottom:
-        1px solid rgba(255, 255, 255, 0.1);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 
     position: sticky;
-
     top: 0;
-
     z-index: 1000;
 }
 
-
-/* BRAND */
-
 .brand {
     display: flex;
-
     align-items: center;
-
     gap: 14px;
 }
 
 .brand img {
     width: 58px;
-
     height: 58px;
 
     object-fit: contain;
-
     border-radius: 8px;
 }
 
@@ -77,20 +61,14 @@ body {
     color: white;
 
     font-size: 24px;
-
     font-weight: 700;
 
     letter-spacing: 2px;
 }
 
-
-/* NAVIGATION */
-
 .navbar nav {
     display: flex;
-
     align-items: center;
-
     gap: 32px;
 }
 
@@ -100,7 +78,6 @@ body {
     text-decoration: none;
 
     font-size: 15px;
-
     font-weight: 500;
 
     transition: 0.3s;
@@ -110,24 +87,17 @@ body {
     color: #ff1e25;
 }
 
-
-/* BACK BUTTON */
-
 .back-btn {
     display: inline-flex;
-
     align-items: center;
-
     gap: 8px;
 
     padding: 12px 20px;
 
     color: white;
-
     text-decoration: none;
 
     border: 1px solid #ff1e25;
-
     border-radius: 8px;
 
     transition: 0.3s;
@@ -135,7 +105,6 @@ body {
 
 .back-btn:hover {
     background: #ff1e25;
-
     color: white;
 
     transform: translateY(-2px);
@@ -150,11 +119,9 @@ body {
     min-height: 430px;
 
     display: flex;
-
     flex-direction: column;
 
     justify-content: center;
-
     align-items: center;
 
     text-align: center;
@@ -172,13 +139,10 @@ body {
 
 .hero-icon {
     width: 70px;
-
     height: 70px;
 
     display: flex;
-
     align-items: center;
-
     justify-content: center;
 
     margin-bottom: 25px;
@@ -223,7 +187,6 @@ body {
     margin: 70px auto;
 
     display: flex;
-
     flex-direction: column;
 
     gap: 25px;
@@ -231,7 +194,7 @@ body {
 
 
 /* ================================
-   INTRO CARD
+   INTRO
 ================================ */
 
 .intro-card {
@@ -239,8 +202,7 @@ body {
 
     background: #101010;
 
-    border:
-        1px solid rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.08);
 
     border-left: 4px solid #ff1e25;
 
@@ -278,8 +240,7 @@ body {
 
     background: #0d0d0d;
 
-    border:
-        1px solid rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.08);
 
     border-radius: 12px;
 
@@ -287,8 +248,7 @@ body {
 }
 
 .term-card:hover {
-    border-color:
-        rgba(255, 30, 37, 0.5);
+    border-color: rgba(255, 30, 37, 0.5);
 
     transform: translateY(-3px);
 
@@ -296,27 +256,19 @@ body {
         0 15px 45px rgba(0, 0, 0, 0.4);
 }
 
-
-/* NUMBER */
-
 .number {
     width: 60px;
-
     height: 60px;
 
     display: flex;
-
     align-items: center;
-
     justify-content: center;
 
     border-radius: 50%;
 
-    background:
-        rgba(255, 30, 37, 0.1);
+    background: rgba(255, 30, 37, 0.1);
 
-    border:
-        1px solid #ff1e25;
+    border: 1px solid #ff1e25;
 
     color: #ff1e25;
 
@@ -324,9 +276,6 @@ body {
 
     font-weight: 600;
 }
-
-
-/* TERM CONTENT */
 
 .term-content h2 {
     margin-bottom: 15px;
@@ -345,8 +294,7 @@ body {
 }
 
 .term-content ul {
-    margin:
-        15px 0 20px 20px;
+    margin: 15px 0 20px 20px;
 
     color: #aaa;
 }
@@ -362,7 +310,6 @@ body {
 
 .agreement-card {
     display: flex;
-
     align-items: flex-start;
 
     gap: 25px;
@@ -379,8 +326,7 @@ body {
         ),
         #0d0d0d;
 
-    border:
-        1px solid rgba(255, 30, 37, 0.35);
+    border: 1px solid rgba(255, 30, 37, 0.35);
 
     border-left: 4px solid #ff1e25;
 
@@ -403,24 +349,19 @@ body {
 
 .agreement-icon {
     width: 60px;
-
     height: 60px;
 
     min-width: 60px;
 
     display: flex;
-
     align-items: center;
-
     justify-content: center;
 
     border-radius: 50%;
 
-    background:
-        rgba(255, 30, 37, 0.1);
+    background: rgba(255, 30, 37, 0.1);
 
-    border:
-        1px solid #ff1e25;
+    border: 1px solid #ff1e25;
 
     color: #ff1e25;
 
@@ -443,7 +384,9 @@ body {
 }
 
 
-/* AGREEMENT CHECKBOX */
+/* ================================
+   AGREEMENT CHECKBOX
+================================ */
 
 .agreement-checkbox {
     display: flex;
@@ -462,39 +405,35 @@ body {
 }
 
 
-/* Hide native checkbox */
+/* HIDE NATIVE CHECKBOX */
 
 .agreement-checkbox input {
     position: absolute;
 
     opacity: 0;
 
-    width: 1px;
-
-    height: 1px;
+    pointer-events: none;
 }
 
 
 /* CUSTOM CHECKBOX */
 
 .custom-checkbox {
-    width: 23px;
+    width: 25px;
+    height: 25px;
 
-    height: 23px;
-
-    min-width: 23px;
+    min-width: 25px;
 
     display: flex;
 
     align-items: center;
-
     justify-content: center;
 
     background: #151515;
 
     border: 2px solid #666;
 
-    border-radius: 5px;
+    border-radius: 6px;
 
     transition: 0.25s;
 }
@@ -502,22 +441,20 @@ body {
 
 /* HOVER */
 
-.agreement-checkbox:hover
-.custom-checkbox {
+.agreement-checkbox:hover .custom-checkbox {
     border-color: #ff1e25;
 }
 
 
 /* CHECKED */
 
-.agreement-checkbox input:checked
-+ .custom-checkbox {
+.agreement-checkbox input:checked + .custom-checkbox {
     background: #ff1e25;
 
     border-color: #ff1e25;
 
     box-shadow:
-        0 0 15px rgba(255, 30, 37, 0.4);
+        0 0 15px rgba(255, 30, 37, 0.5);
 }
 
 
@@ -530,13 +467,17 @@ body {
 
     color: white;
 
-    font-size: 15px;
+    font-size: 16px;
 
     font-weight: 700;
 }
 
 
 /* AGREEMENT TEXT */
+
+.agreement-text {
+    color: #ddd;
+}
 
 .agreement-text strong {
     color: #ff1e25;
@@ -557,7 +498,7 @@ body {
 
 
 /* ================================
-   CONTACT CARD
+   CONTACT
 ================================ */
 
 .contact-card {
@@ -575,8 +516,7 @@ body {
         ),
         #0d0d0d;
 
-    border:
-        1px solid rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.08);
 
     border-radius: 15px;
 }
@@ -642,9 +582,6 @@ body {
     gap: 25px;
 }
 
-
-/* PRIVACY HEADER */
-
 .privacy-header {
     text-align: center;
 
@@ -691,9 +628,6 @@ body {
     font-size: 16px;
 }
 
-
-/* PRIVACY CARDS */
-
 .privacy-card {
     display: grid;
 
@@ -705,8 +639,7 @@ body {
 
     background: #0d0d0d;
 
-    border:
-        1px solid rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.08);
 
     border-radius: 12px;
 
@@ -714,8 +647,7 @@ body {
 }
 
 .privacy-card:hover {
-    border-color:
-        rgba(255, 30, 37, 0.5);
+    border-color: rgba(255, 30, 37, 0.5);
 
     transform: translateY(-3px);
 
@@ -723,27 +655,20 @@ body {
         0 15px 45px rgba(0, 0, 0, 0.4);
 }
 
-
-/* PRIVACY NUMBERS */
-
 .privacy-number {
     width: 60px;
-
     height: 60px;
 
     display: flex;
 
     align-items: center;
-
     justify-content: center;
 
     border-radius: 50%;
 
-    background:
-        rgba(255, 30, 37, 0.1);
+    background: rgba(255, 30, 37, 0.1);
 
-    border:
-        1px solid #ff1e25;
+    border: 1px solid #ff1e25;
 
     color: #ff1e25;
 
@@ -751,9 +676,6 @@ body {
 
     font-weight: 600;
 }
-
-
-/* PRIVACY CONTENT */
 
 .privacy-content h2 {
     margin-bottom: 15px;
@@ -789,15 +711,13 @@ footer {
 
     background: #020202;
 
-    border-top:
-        1px solid rgba(255, 255, 255, 0.08);
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .footer-brand {
     display: flex;
 
     align-items: center;
-
     justify-content: center;
 
     gap: 12px;
@@ -805,7 +725,6 @@ footer {
 
 .footer-brand img {
     width: 45px;
-
     height: 45px;
 
     object-fit: contain;
@@ -868,7 +787,6 @@ footer .copyright {
 
     .brand img {
         width: 48px;
-
         height: 48px;
     }
 
@@ -877,7 +795,6 @@ footer .copyright {
 
         font-size: 13px;
     }
-
 
     .hero {
         min-height: 350px;
@@ -893,7 +810,6 @@ footer .copyright {
         font-size: 14px;
     }
 
-
     .term-card {
         grid-template-columns: 1fr;
 
@@ -902,16 +818,12 @@ footer .copyright {
 
     .number {
         width: 50px;
-
         height: 50px;
     }
 
     .term-content h2 {
         font-size: 21px;
     }
-
-
-    /* AGREEMENT */
 
     .agreement-card {
         flex-direction: column;
@@ -930,9 +842,6 @@ footer .copyright {
 
         font-size: 14px;
     }
-
-
-    /* PRIVACY */
 
     .privacy-container {
         width: 90%;
@@ -956,7 +865,6 @@ footer .copyright {
 
     .privacy-number {
         width: 50px;
-
         height: 50px;
     }
 
@@ -994,9 +902,6 @@ footer .copyright {
         padding: 22px;
     }
 
-
-    /* AGREEMENT */
-
     .agreement-card {
         padding: 22px;
     }
@@ -1004,9 +909,6 @@ footer .copyright {
     .agreement-checkbox {
         font-size: 13px;
     }
-
-
-    /* PRIVACY */
 
     .privacy-container {
         width: 92%;
