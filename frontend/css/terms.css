@@ -1,6 +1,6 @@
-/* =========================================================
+/* ================================
    RAPTORA TERMS & PRIVACY POLICY
-========================================================= */
+================================ */
 
 * {
     margin: 0;
@@ -14,43 +14,58 @@ html {
 
 body {
     font-family: "Poppins", sans-serif;
+
     background: #050505;
+
     color: #f5f5f5;
+
     line-height: 1.7;
 }
 
 
-/* =========================================================
+/* ================================
    NAVBAR
-========================================================= */
+================================ */
 
 .navbar {
     width: 100%;
+
     min-height: 90px;
 
     display: flex;
+
     align-items: center;
+
     justify-content: space-between;
 
     padding: 18px 7%;
 
     background: #050505;
 
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    border-bottom:
+        1px solid rgba(255, 255, 255, 0.1);
 
     position: sticky;
+
     top: 0;
+
     z-index: 1000;
 }
 
+
+/* BRAND */
+
 .brand {
     display: flex;
+
     align-items: center;
+
     gap: 14px;
 }
 
 .brand img {
     width: 58px;
+
     height: 58px;
 
     object-fit: contain;
@@ -59,7 +74,7 @@ body {
 }
 
 .brand span {
-    color: #fff;
+    color: white;
 
     font-size: 24px;
 
@@ -69,7 +84,7 @@ body {
 }
 
 
-/* Navigation */
+/* NAVIGATION */
 
 .navbar nav {
     display: flex;
@@ -96,7 +111,7 @@ body {
 }
 
 
-/* Back Button */
+/* BACK BUTTON */
 
 .back-btn {
     display: inline-flex;
@@ -107,7 +122,7 @@ body {
 
     padding: 12px 20px;
 
-    color: #fff;
+    color: white;
 
     text-decoration: none;
 
@@ -121,15 +136,15 @@ body {
 .back-btn:hover {
     background: #ff1e25;
 
-    color: #fff;
+    color: white;
 
     transform: translateY(-2px);
 }
 
 
-/* =========================================================
-   TERMS HERO
-========================================================= */
+/* ================================
+   HERO
+================================ */
 
 .hero {
     min-height: 430px;
@@ -157,6 +172,7 @@ body {
 
 .hero-icon {
     width: 70px;
+
     height: 70px;
 
     display: flex;
@@ -179,7 +195,7 @@ body {
 
     line-height: 1.1;
 
-    color: #fff;
+    color: white;
 }
 
 .hero h1 span {
@@ -197,9 +213,9 @@ body {
 }
 
 
-/* =========================================================
+/* ================================
    TERMS CONTAINER
-========================================================= */
+================================ */
 
 .terms-container {
     width: min(1100px, 90%);
@@ -214,16 +230,17 @@ body {
 }
 
 
-/* =========================================================
+/* ================================
    INTRO CARD
-========================================================= */
+================================ */
 
 .intro-card {
     padding: 35px;
 
     background: #101010;
 
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    border:
+        1px solid rgba(255, 255, 255, 0.08);
 
     border-left: 4px solid #ff1e25;
 
@@ -234,7 +251,7 @@ body {
 }
 
 .intro-card h2 {
-    color: #fff;
+    color: white;
 
     font-size: 28px;
 
@@ -246,9 +263,9 @@ body {
 }
 
 
-/* =========================================================
-   TERMS CARDS
-========================================================= */
+/* ================================
+   TERM CARDS
+================================ */
 
 .term-card {
     display: grid;
@@ -261,15 +278,17 @@ body {
 
     background: #0d0d0d;
 
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    border:
+        1px solid rgba(255, 255, 255, 0.08);
 
     border-radius: 12px;
 
-    transition: all 0.3s ease;
+    transition: 0.3s;
 }
 
 .term-card:hover {
-    border-color: rgba(255, 30, 37, 0.6);
+    border-color:
+        rgba(255, 30, 37, 0.5);
 
     transform: translateY(-3px);
 
@@ -278,7 +297,7 @@ body {
 }
 
 
-/* Terms Number */
+/* NUMBER */
 
 .number {
     width: 60px;
@@ -293,9 +312,11 @@ body {
 
     border-radius: 50%;
 
-    background: rgba(255, 30, 37, 0.1);
+    background:
+        rgba(255, 30, 37, 0.1);
 
-    border: 1px solid #ff1e25;
+    border:
+        1px solid #ff1e25;
 
     color: #ff1e25;
 
@@ -305,12 +326,12 @@ body {
 }
 
 
-/* Terms Content */
+/* TERM CONTENT */
 
 .term-content h2 {
     margin-bottom: 15px;
 
-    color: #fff;
+    color: white;
 
     font-size: 25px;
 }
@@ -324,7 +345,8 @@ body {
 }
 
 .term-content ul {
-    margin: 15px 0 20px 20px;
+    margin:
+        15px 0 20px 20px;
 
     color: #aaa;
 }
@@ -334,120 +356,41 @@ body {
 }
 
 
-/* =========================================================
-   PRIVACY POLICY HERO
-========================================================= */
+/* ================================
+   AGREEMENT CARD
+================================ */
 
-.privacy-hero {
-    min-height: 380px;
-
+.agreement-card {
     display: flex;
 
-    flex-direction: column;
+    align-items: flex-start;
 
-    justify-content: center;
+    gap: 25px;
 
-    align-items: center;
+    width: 100%;
 
-    text-align: center;
-
-    padding: 70px 20px;
-
-    margin-top: 40px;
+    padding: 35px;
 
     background:
         radial-gradient(
             circle at center,
-            rgba(255, 0, 0, 0.18),
-            transparent 60%
+            rgba(255, 30, 37, 0.12),
+            transparent 65%
         ),
-        #050505;
-}
+        #0d0d0d;
 
-.privacy-icon {
-    width: 70px;
+    border:
+        1px solid rgba(255, 30, 37, 0.35);
 
-    height: 70px;
-
-    display: flex;
-
-    align-items: center;
-
-    justify-content: center;
-
-    margin-bottom: 25px;
-
-    color: #ff1e25;
-
-    font-size: 45px;
-}
-
-.privacy-hero h1 {
-    color: #fff;
-
-    font-size: clamp(42px, 6vw, 70px);
-
-    font-weight: 700;
-
-    line-height: 1.1;
-}
-
-.privacy-hero h1 span {
-    color: #ff1e25;
-}
-
-.privacy-hero p {
-    max-width: 700px;
-
-    margin-top: 22px;
-
-    color: #aaa;
-
-    font-size: 16px;
-}
-
-
-/* =========================================================
-   PRIVACY CONTAINER
-========================================================= */
-
-.privacy-container {
-    width: min(1100px, 90%);
-
-    margin: 70px auto;
-
-    display: flex;
-
-    flex-direction: column;
-
-    gap: 25px;
-}
-
-
-/* =========================================================
-   PRIVACY CARDS
-========================================================= */
-
-.privacy-card {
-    display: grid;
-
-    grid-template-columns: 80px 1fr;
-
-    gap: 25px;
-
-    padding: 35px;
-
-    background: #0d0d0d;
-
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-left: 4px solid #ff1e25;
 
     border-radius: 12px;
 
-    transition: all 0.3s ease;
+    transition: 0.3s;
 }
 
-.privacy-card:hover {
-    border-color: rgba(255, 30, 37, 0.6);
+.agreement-card:hover {
+    border-color: #ff1e25;
 
     transform: translateY(-3px);
 
@@ -456,14 +399,14 @@ body {
 }
 
 
-/* =========================================================
-   PRIVACY NUMBER CIRCLE
-========================================================= */
+/* AGREEMENT ICON */
 
-.privacy-number {
+.agreement-icon {
     width: 60px;
 
     height: 60px;
+
+    min-width: 60px;
 
     display: flex;
 
@@ -473,63 +416,156 @@ body {
 
     border-radius: 50%;
 
-    background: rgba(255, 30, 37, 0.1);
+    background:
+        rgba(255, 30, 37, 0.1);
 
-    border: 1px solid #ff1e25;
+    border:
+        1px solid #ff1e25;
 
     color: #ff1e25;
 
-    font-size: 18px;
-
-    font-weight: 600;
-
-    flex-shrink: 0;
+    font-size: 25px;
 }
 
 
-/* =========================================================
-   PRIVACY CONTENT
-========================================================= */
+/* AGREEMENT CONTENT */
 
-.privacy-content h2 {
-    margin-bottom: 15px;
+.agreement-content {
+    width: 100%;
+}
 
-    color: #fff;
+.agreement-content h2 {
+    color: white;
 
     font-size: 25px;
 
-    font-weight: 600;
+    margin-bottom: 15px;
 }
 
-.privacy-content p {
-    color: #aaa;
+
+/* AGREEMENT CHECKBOX */
+
+.agreement-checkbox {
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    cursor: pointer;
+
+    color: #ddd;
 
     font-size: 15px;
 
-    line-height: 1.8;
-
-    margin: 0;
+    user-select: none;
 }
 
-.privacy-content strong {
+
+/* Hide native checkbox */
+
+.agreement-checkbox input {
+    position: absolute;
+
+    opacity: 0;
+
+    width: 1px;
+
+    height: 1px;
+}
+
+
+/* CUSTOM CHECKBOX */
+
+.custom-checkbox {
+    width: 23px;
+
+    height: 23px;
+
+    min-width: 23px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    background: #151515;
+
+    border: 2px solid #666;
+
+    border-radius: 5px;
+
+    transition: 0.25s;
+}
+
+
+/* HOVER */
+
+.agreement-checkbox:hover
+.custom-checkbox {
+    border-color: #ff1e25;
+}
+
+
+/* CHECKED */
+
+.agreement-checkbox input:checked
++ .custom-checkbox {
+    background: #ff1e25;
+
+    border-color: #ff1e25;
+
+    box-shadow:
+        0 0 15px rgba(255, 30, 37, 0.4);
+}
+
+
+/* CHECK MARK */
+
+.agreement-checkbox input:checked
++ .custom-checkbox::after {
+
+    content: "✓";
+
+    color: white;
+
+    font-size: 15px;
+
+    font-weight: 700;
+}
+
+
+/* AGREEMENT TEXT */
+
+.agreement-text strong {
     color: #ff1e25;
-
-    font-weight: 600;
 }
 
 
-/* =========================================================
+/* NOTE */
+
+.agreement-note {
+    margin-top: 12px;
+
+    color: #888;
+
+    font-size: 13px;
+
+    line-height: 1.6;
+}
+
+
+/* ================================
    CONTACT CARD
-========================================================= */
+================================ */
 
 .contact-card {
-    width: min(1100px, 90%);
-
-    margin: 70px auto 0;
-
     text-align: center;
 
     padding: 50px 30px;
+
+    margin-top: 20px;
 
     background:
         radial-gradient(
@@ -539,7 +575,8 @@ body {
         ),
         #0d0d0d;
 
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    border:
+        1px solid rgba(255, 255, 255, 0.08);
 
     border-radius: 15px;
 }
@@ -555,7 +592,7 @@ body {
 .contact-card h2 {
     font-size: 30px;
 
-    color: #fff;
+    color: white;
 }
 
 .contact-card p {
@@ -589,9 +626,159 @@ body {
 }
 
 
-/* =========================================================
+/* ================================
+   PRIVACY POLICY
+================================ */
+
+.privacy-container {
+    width: min(1100px, 90%);
+
+    margin: 100px auto;
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 25px;
+}
+
+
+/* PRIVACY HEADER */
+
+.privacy-header {
+    text-align: center;
+
+    padding: 60px 20px;
+
+    margin-bottom: 20px;
+
+    background:
+        radial-gradient(
+            circle at center,
+            rgba(255, 0, 0, 0.16),
+            transparent 60%
+        ),
+        #050505;
+
+    border-radius: 15px;
+}
+
+.privacy-icon {
+    color: #ff1e25;
+
+    font-size: 45px;
+
+    margin-bottom: 20px;
+}
+
+.privacy-header h1 {
+    color: white;
+
+    font-size: clamp(40px, 6vw, 65px);
+
+    line-height: 1.1;
+}
+
+.privacy-header h1 span {
+    color: #ff1e25;
+}
+
+.privacy-header p {
+    margin-top: 20px;
+
+    color: #aaa;
+
+    font-size: 16px;
+}
+
+
+/* PRIVACY CARDS */
+
+.privacy-card {
+    display: grid;
+
+    grid-template-columns: 80px 1fr;
+
+    gap: 25px;
+
+    padding: 35px;
+
+    background: #0d0d0d;
+
+    border:
+        1px solid rgba(255, 255, 255, 0.08);
+
+    border-radius: 12px;
+
+    transition: 0.3s;
+}
+
+.privacy-card:hover {
+    border-color:
+        rgba(255, 30, 37, 0.5);
+
+    transform: translateY(-3px);
+
+    box-shadow:
+        0 15px 45px rgba(0, 0, 0, 0.4);
+}
+
+
+/* PRIVACY NUMBERS */
+
+.privacy-number {
+    width: 60px;
+
+    height: 60px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background:
+        rgba(255, 30, 37, 0.1);
+
+    border:
+        1px solid #ff1e25;
+
+    color: #ff1e25;
+
+    font-size: 18px;
+
+    font-weight: 600;
+}
+
+
+/* PRIVACY CONTENT */
+
+.privacy-content h2 {
+    margin-bottom: 15px;
+
+    color: white;
+
+    font-size: 25px;
+}
+
+.privacy-content p {
+    color: #aaa;
+
+    font-size: 15px;
+
+    line-height: 1.8;
+}
+
+.privacy-content strong {
+    color: #ff1e25;
+}
+
+
+/* ================================
    FOOTER
-========================================================= */
+================================ */
 
 footer {
     margin-top: 80px;
@@ -602,7 +789,8 @@ footer {
 
     background: #020202;
 
-    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    border-top:
+        1px solid rgba(255, 255, 255, 0.08);
 }
 
 .footer-brand {
@@ -626,7 +814,7 @@ footer {
 }
 
 .footer-brand span {
-    color: #fff;
+    color: white;
 
     font-size: 20px;
 
@@ -650,9 +838,9 @@ footer .copyright {
 }
 
 
-/* =========================================================
-   TABLET / MOBILE
-========================================================= */
+/* ================================
+   MOBILE
+================================ */
 
 @media (max-width: 850px) {
 
@@ -691,8 +879,6 @@ footer .copyright {
     }
 
 
-    /* Terms */
-
     .hero {
         min-height: 350px;
 
@@ -706,6 +892,7 @@ footer .copyright {
     .hero p {
         font-size: 14px;
     }
+
 
     .term-card {
         grid-template-columns: 1fr;
@@ -724,34 +911,47 @@ footer .copyright {
     }
 
 
-    /* Privacy */
+    /* AGREEMENT */
 
-    .privacy-hero {
-        min-height: 320px;
+    .agreement-card {
+        flex-direction: column;
 
-        padding: 60px 20px;
+        padding: 25px;
+
+        gap: 18px;
     }
 
-    .privacy-hero h1 {
-        font-size: 45px;
+    .agreement-content h2 {
+        font-size: 21px;
     }
 
-    .privacy-hero p {
+    .agreement-checkbox {
+        align-items: flex-start;
+
         font-size: 14px;
     }
+
+
+    /* PRIVACY */
 
     .privacy-container {
         width: 90%;
 
-        margin: 60px auto;
+        margin: 70px auto;
+    }
+
+    .privacy-header {
+        padding: 45px 20px;
+    }
+
+    .privacy-header h1 {
+        font-size: 45px;
     }
 
     .privacy-card {
         grid-template-columns: 1fr;
 
         padding: 25px;
-
-        gap: 18px;
     }
 
     .privacy-number {
@@ -764,22 +964,12 @@ footer .copyright {
         font-size: 21px;
     }
 
-    .privacy-content p {
-        font-size: 14px;
-    }
-
-
-    /* Contact */
-
-    .contact-card {
-        width: 90%;
-    }
 }
 
 
-/* =========================================================
+/* ================================
    SMALL MOBILE
-========================================================= */
+================================ */
 
 @media (max-width: 500px) {
 
@@ -790,9 +980,6 @@ footer .copyright {
     .navbar nav a {
         font-size: 12px;
     }
-
-
-    /* Terms */
 
     .hero h1 {
         font-size: 38px;
@@ -808,41 +995,29 @@ footer .copyright {
     }
 
 
-    /* Privacy */
+    /* AGREEMENT */
 
-    .privacy-hero {
-        min-height: 290px;
+    .agreement-card {
+        padding: 22px;
     }
 
-    .privacy-hero h1 {
-        font-size: 38px;
+    .agreement-checkbox {
+        font-size: 13px;
     }
+
+
+    /* PRIVACY */
 
     .privacy-container {
         width: 92%;
     }
 
+    .privacy-header h1 {
+        font-size: 38px;
+    }
+
     .privacy-card {
         padding: 22px;
-    }
-
-    .privacy-content h2 {
-        font-size: 20px;
-    }
-
-
-    /* Contact */
-
-    .contact-card {
-        width: 92%;
-
-        padding: 40px 20px;
-    }
-
-    .contact-details {
-        flex-direction: column;
-
-        gap: 12px;
     }
 
 }
