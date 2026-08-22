@@ -4,52 +4,54 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <!-- Primary Title & Meta Description -->
     <title>RAPTORA - AI College Predictor, KCET, COMEDK, JEE & NEET Counselling</title>
+
     <meta name="title" content="RAPTORA - AI College Predictor, KCET, COMEDK, JEE & NEET Counselling">
+
     <meta name="description" content="Predict college seat allotments using AI for KCET, COMEDK, JEE Main, NEET UG, and WBJEE. Track seat filling analytics, compare colleges, and download PYQs free.">
-    
-    <!-- Meta Keywords -->
-    <meta name="keywords" content="Raptora, RAPTORA college predictor, KCET college predictor rank wise, COMEDK rank vs college predictor, JEE Main rank predictor, NEET UG seat allotment matrix, seat filling analytics, RVCE vs BMSCE vs MSRIT comparison, download free KCET PYQs PDF, COMEDK previous year questions, college admission ecosystem, college branch ROI calculator">
+
+    <meta name="keywords" content="Raptora, RAPTORA college predictor, KCET college predictor rank wise, COMEDK rank vs college predictor, JEE Main rank predictor, NEET UG seat allotment matrix, seat filling analytics, college admission ecosystem">
 
     <meta name="robots" content="index, follow">
     <meta name="author" content="RAPTORA">
 
-    <!-- Open Graph / Facebook / WhatsApp Preview -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://raptora.in/">
     <meta property="og:title" content="RAPTORA - AI-Powered College Admission & Counselling Ecosystem">
     <meta property="og:description" content="Check college chances for KCET, COMEDK, JEE, and NEET with AI seat allotment analysis, ROI comparisons, and senior mentor guidance.">
     <meta property="og:image" content="https://raptora.in/assets/raptora-preview.jpg">
 
-    <!-- Twitter / X Preview -->
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:url" content="https://raptora.in/">
     <meta property="twitter:title" content="RAPTORA - AI College Predictor & Allotment Analytics">
     <meta property="twitter:description" content="Predict college allotments, analyze cutoffs, and download chapterwise PYQs for KCET, COMEDK, JEE, and NEET.">
     <meta property="twitter:image" content="https://raptora.in/assets/raptora-preview.jpg">
 
-    <!-- Schema.org JSON-LD Structured Data -->
     <script type="application/ld+json">
     {
-      "@context": "https://schema.org",
-      "@type": "EducationalOrganization",
-      "name": "RAPTORA",
-      "url": "https://raptora.in",
-      "logo": "https://raptora.in/assets/logo.png",
-      "description": "AI-Powered College Admission Ecosystem featuring KCET, COMEDK, JEE, and NEET rank predictors, seat allotment analytics, and PYQ resources.",
-      "sameAs": [
-        "https://www.instagram.com/raptora247"
-      ]
+        "@context": "https://schema.org",
+        "@type": "EducationalOrganization",
+        "name": "RAPTORA",
+        "url": "https://raptora.in",
+        "logo": "https://raptora.in/assets/logo.png",
+        "description": "AI-Powered College Admission Ecosystem featuring KCET, COMEDK, JEE, and NEET rank predictors, seat allotment analytics, and PYQ resources.",
+        "sameAs": [
+            "https://www.instagram.com/raptora247"
+        ]
     }
     </script>
 
-    <!-- Font Awesome Icons & Custom Stylesheet -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
     <link rel="stylesheet" href="frontend/style.css">
 
-    <!-- PDF Dropdown Styling -->
     <style>
+
+        /* ================================
+           PDF DROPDOWN
+        ================================= */
+
         .pdf-dropdown {
             position: relative;
             display: inline-block;
@@ -103,471 +105,991 @@
         .pdf-shift:hover {
             background: rgba(255, 255, 255, 0.18);
         }
+
     </style>
+
 </head>
 
 <body>
 
-    <!-- Header / Navigation -->
-    <header class="navbar">
 
-        <div class="logo-container">
-            <img src="frontend/register.png" alt="RAPTORA logo" class="logo">
-            <span class="logo-text"></span>
-        </div>
+<!-- =====================================================
+     NAVBAR
+===================================================== -->
 
-        <nav>
-            <ul class="nav-links">
-                <li><a href="#home" class="active">Home</a></li>
-                <li><a href="#features">Features</a></li>
-                <li><a href="#resources">Resources</a></li>
-                <li><a href="#About Us">About Us</a></li>
-                <li><a href="#connect">Connect</a></li>
-            </ul>
-        </nav>
+<header class="navbar">
 
-        <div class="auth-buttons">
-            <a href="frontend/login.html" class="btn btn-secondary">Login</a>
-            <a href="frontend/register.html" class="btn btn-primary">Apply Now</a>
-        </div>
+    <div class="logo-container">
 
-    </header>
+        <img
+            src="frontend/register.png"
+            alt="RAPTORA logo"
+            class="logo">
+
+        <span class="logo-text"></span>
+
+    </div>
 
 
-    <!-- Hero Section -->
-    <section id="home" class="hero">
+    <nav>
 
-        <div class="hero-overlay"></div>
+        <ul class="nav-links">
 
-        <div class="hero-content">
-
-            <p class="tagline">
-                FIND. PREDICT. COMPARE. CONNECT. SUCCEED.
-            </p>
-
-            <h1>
-                YOUR ADMISSION JOURNEY,<br>
-                <span class="highlight">REIMAGINED BY RAPTORA.</span>
-            </h1>
-
-            <p class="hero-description">
-                Raptora is a college admission ecosystem that helps students discover colleges,
-                predict seat allotments, compare institutions, and connect with experienced mentors.
-            </p>
-
-            <div class="hero-cta">
-
-                <a href="#features" class="btn btn-primary btn-large">
-                    Explore Ecosystem
-                    <i class="fa-solid fa-arrow-right"></i>
+            <li>
+                <a href="#home" class="active">
+                    Home
                 </a>
+            </li>
 
-                <a href="#resources" class="btn btn-outline btn-large">
+            <li>
+                <a href="#features">
+                    Features
+                </a>
+            </li>
+
+            <li>
+                <a href="#resources">
                     Resources
                 </a>
+            </li>
 
-            </div>
+            <li>
+                <a href="#about">
+                    About Us
+                </a>
+            </li>
+
+            <li>
+                <a href="#connect">
+                    Connect
+                </a>
+            </li>
+
+        </ul>
+
+    </nav>
+
+
+    <div class="auth-buttons">
+
+        <a
+            href="frontend/login.html"
+            class="btn btn-secondary">
+
+            Login
+
+        </a>
+
+        <a
+            href="frontend/register.html"
+            class="btn btn-primary">
+
+            Apply Now
+
+        </a>
+
+    </div>
+
+</header>
+
+
+<!-- =====================================================
+     HERO
+===================================================== -->
+
+<section id="home" class="hero">
+
+    <div class="hero-overlay"></div>
+
+    <div class="hero-content">
+
+        <p class="tagline">
+            FIND. PREDICT. COMPARE. CONNECT. SUCCEED.
+        </p>
+
+        <h1>
+
+            YOUR ADMISSION JOURNEY,<br>
+
+            <span class="highlight">
+                REIMAGINED BY RAPTORA.
+            </span>
+
+        </h1>
+
+        <p class="hero-description">
+
+            Raptora is a college admission ecosystem that helps
+            students discover colleges, predict seat allotments,
+            compare institutions, and connect with experienced mentors.
+
+        </p>
+
+        <div class="hero-cta">
+
+            <a
+                href="#features"
+                class="btn btn-primary btn-large">
+
+                Explore Ecosystem
+
+                <i class="fa-solid fa-arrow-right"></i>
+
+            </a>
+
+            <a
+                href="#resources"
+                class="btn btn-outline btn-large">
+
+                Resources
+
+            </a>
 
         </div>
 
-    </section>
+    </div>
+
+</section>
 
 
-    <!-- Core Features / Key Concepts Grid -->
-    <section id="features" class="features-section">
+<!-- =====================================================
+     FEATURES
+===================================================== -->
 
-        <div class="section-title">
-            <h2>OUR KEY CONCEPTS</h2>
-            <div class="glow-line"></div>
-        </div>
+<section id="features" class="features-section">
 
-        <div class="grid-container">
+    <div class="section-title">
+
+        <h2>
+            OUR KEY CONCEPTS
+        </h2>
+
+        <div class="glow-line"></div>
+
+    </div>
 
 
-            <!-- Feature Card 1 -->
-            <div class="feature-card"
-                 onclick="window.location.href='college-list.html'"
-                 style="cursor: pointer;">
+    <div class="grid-container">
 
-                <div class="icon-box">
-                    <i class="fa-solid fa-magnifying-glass-location"></i>
-                </div>
 
-                <h3>List of Colleges</h3>
+        <div class="feature-card"
+             onclick="window.location.href='college-list.html'">
 
-                <p>
-                    Explore a wide range of colleges across India with
-                    detailed insights, cutoff history, and placement stats.
-                </p>
-
+            <div class="icon-box">
+                <i class="fa-solid fa-magnifying-glass-location"></i>
             </div>
 
-
-            <!-- Feature Card 2 -->
-            <div class="feature-card"
-                 onclick="window.location.href='mentors-seniors.html'"
-                 style="cursor: pointer;">
-
-                <div class="icon-box">
-                    <i class="fa-solid fa-user-tie"></i>
-                </div>
-
-                <h3>Mentors & Seniors</h3>
-
-                <p>
-                    Connect with experienced mentors and senior students
-                    who can share real experiences, honest advice,
-                    and guidance throughout your admission journey.
-                </p>
-
-            </div>
-
-
-            <!-- Feature Card 3 -->
-            <div class="feature-card"
-                 onclick="window.location.href='one-to-one.html'"
-                 style="cursor: pointer;">
-
-                <div class="icon-box">
-                    <i class="fa-solid fa-comments"></i>
-                </div>
-
-                <h3>One-to-One Interactions</h3>
-
-                <p>
-                    Get your personal doubts cleared with personalized
-                    1-on-1 guidance sessions, Google Meet consultations,
-                    and live Q&As.
-                </p>
-
-            </div>
-
-
-            <!-- Feature Card 4 -->
-            <div class="feature-card"
-                 onclick="window.location.href='based-on-rank.html'"
-                 style="cursor: pointer;">
-
-                <div class="icon-box">
-                    <i class="fa-solid fa-trophy"></i>
-                </div>
-
-                <h3>Based on Rank</h3>
-
-                <p>
-                    Find the best college and branch options specifically
-                    calculated for your exam rank and preferences.
-                </p>
-
-            </div>
-
-
-            <!-- Feature Card 5 -->
-            <div class="feature-card"
-                 onclick="window.location.href='seat-filling-analytics.html'"
-                 style="cursor: pointer;">
-
-                <div class="icon-box">
-                    <i class="fa-solid fa-chart-line"></i>
-                </div>
-
-                <h3>Seat Filling Analytics</h3>
-
-                <p>
-                    Track seat availability and counselling trends
-                    to make more informed admission choices.
-                </p>
-
-            </div>
-
-
-            <!-- Feature Card 6 -->
-            <div class="feature-card"
-                 onclick="window.location.href='branch-enquiries-comparison.html'"
-                 style="cursor: pointer;">
-
-                <div class="icon-box">
-                    <i class="fa-solid fa-scale-balanced"></i>
-                </div>
-
-                <h3>Branch Enquiries & Comparison</h3>
-
-                <p>
-                    Compare infrastructure, fees, placement figures,
-                    and branch prospects side-by-side.
-                </p>
-
-            </div>
-
-
-            <!-- Feature Card 7 -->
-            <div class="feature-card"
-                 onclick="window.location.href='roi-analysis.html'"
-                 style="cursor: pointer;">
-
-                <div class="icon-box">
-                    <i class="fa-solid fa-sack-dollar"></i>
-                </div>
-
-                <h3>ROI Analysis</h3>
-
-                <p>
-                    Make smarter investments by comparing the return on
-                    investment of tuition fees against placement packages.
-                </p>
-
-            </div>
-
-
-            <!-- Feature Card 8 -->
-            <div class="feature-card"
-                 onclick="window.location.href='pros-cons.html'"
-                 style="cursor: pointer;">
-
-                <div class="icon-box">
-                    <i class="fa-solid fa-list-check"></i>
-                </div>
-
-                <h3>Pros & Cons of Colleges</h3>
-
-                <p>
-                    Unfiltered student reviews, genuine campus pros/cons,
-                    and verified experiences.
-                </p>
-
-            </div>
-
-
-            <!-- Feature Card 9 -->
-            <div class="feature-card"
-                 onclick="window.location.href='frontend/rankpredictor.html';"
-                 style="cursor: pointer;">
-
-                <div class="icon-box">
-                    <i class="fa-solid fa-robot"></i>
-                </div>
-
-                <h3>AI Seat Allotment Predictor</h3>
-
-                <p>
-                    Get high-accuracy seat predictions using advanced machine
-                    learning models built on past counselling trends.
-                </p>
-
-            </div>
-
-
-            <!-- Feature Card 10 -->
-            <div class="feature-card"
-                 onclick="window.location.href='admission-milestones.html'"
-                 style="cursor: pointer;">
-
-                <div class="icon-box">
-                    <i class="fa-solid fa-route"></i>
-                </div>
-
-                <h3>Admission Milestones</h3>
-
-                <p>
-                    Understand the complete admission journey from entrance exams
-                    and counselling to seat allotment, document verification,
-                    and college joining.
-                </p>
-
-            </div>
-
-
-            <!-- Feature Card 11 -->
-            <div class="feature-card"
-                 onclick="window.location.href='content-hub.html'"
-                 style="cursor: pointer;">
-
-                <div class="icon-box">
-                    <i class="fa-solid fa-book-open-reader"></i>
-                </div>
-
-                <h3>Content Hub & Guidance</h3>
-
-                <p>
-                    In-depth blogs, admission roadmaps, career guidance
-                    modules, and state-wise quota breakdowns.
-                </p>
-
-            </div>
-
-
-            <!-- Feature Card 12 -->
-            <div class="feature-card"
-                 onclick="window.location.href='frontend/login.html'"
-                 style="cursor: pointer;">
-
-                <div class="icon-box">
-                    <i class="fa-solid fa-gauge-high"></i>
-                </div>
-
-                <h3>Personalized Dashboard</h3>
-
-                <p>
-                    Manage all your target colleges, application statuses,
-                    saved mentors, and notes in one central hub.
-                </p>
-
-            </div>
+            <h3>
+                List of Colleges
+            </h3>
+
+            <p>
+                Explore a wide range of colleges across India with
+                detailed insights, cutoff history, and placement stats.
+            </p>
 
         </div>
 
-    </section>
 
+        <div class="feature-card"
+             onclick="window.location.href='mentors-seniors.html'">
 
-    <!-- Resources & Previous Year Papers -->
-    <section id="resources" class="resources-section">
+            <div class="icon-box">
+                <i class="fa-solid fa-user-tie"></i>
+            </div>
 
-        <div class="section-title">
-            <h2>RESOURCES</h2>
-            <div class="glow-line"></div>
+            <h3>
+                Mentors & Seniors
+            </h3>
+
+            <p>
+                Connect with experienced mentors and senior students
+                who can share real experiences and guidance.
+            </p>
+
         </div>
 
-        <div class="resource-container">
+
+        <div class="feature-card"
+             onclick="window.location.href='one-to-one.html'">
+
+            <div class="icon-box">
+                <i class="fa-solid fa-comments"></i>
+            </div>
+
+            <h3>
+                One-to-One Interactions
+            </h3>
+
+            <p>
+                Get personalized 1-on-1 guidance sessions and live Q&As.
+            </p>
+
+        </div>
 
 
-            <!-- Resource Tabs -->
-            <div class="resource-tabs">
+        <div class="feature-card"
+             onclick="window.location.href='based-on-rank.html'">
 
-                <button class="tab-btn active"
-                        onclick="openTab(event, 'pyq')">
-                    Previous Year Papers
-                </button>
+            <div class="icon-box">
+                <i class="fa-solid fa-trophy"></i>
+            </div>
 
-                <button class="tab-btn"
-                        onclick="openTab(event, 'notes')">
-                    Study Notes & Formula Sheets
-                </button>
+            <h3>
+                Based on Rank
+            </h3>
 
-                <button class="tab-btn"
-                        onclick="openTab(event, 'mocks')">
-                    Mock Tests & Analysis
-                </button>
+            <p>
+                Find college and branch options based on your exam rank.
+            </p>
+
+        </div>
+
+
+        <div class="feature-card"
+             onclick="window.location.href='seat-filling-analytics.html'">
+
+            <div class="icon-box">
+                <i class="fa-solid fa-chart-line"></i>
+            </div>
+
+            <h3>
+                Seat Filling Analytics
+            </h3>
+
+            <p>
+                Track seat availability and counselling trends.
+            </p>
+
+        </div>
+
+
+        <div class="feature-card"
+             onclick="window.location.href='branch-enquiries-comparison.html'">
+
+            <div class="icon-box">
+                <i class="fa-solid fa-scale-balanced"></i>
+            </div>
+
+            <h3>
+                Branch Enquiries & Comparison
+            </h3>
+
+            <p>
+                Compare infrastructure, fees, placements, and branch prospects.
+            </p>
+
+        </div>
+
+
+        <div class="feature-card"
+             onclick="window.location.href='roi-analysis.html'">
+
+            <div class="icon-box">
+                <i class="fa-solid fa-sack-dollar"></i>
+            </div>
+
+            <h3>
+                ROI Analysis
+            </h3>
+
+            <p>
+                Compare tuition fees against placement opportunities.
+            </p>
+
+        </div>
+
+
+        <div class="feature-card"
+             onclick="window.location.href='pros-cons.html'">
+
+            <div class="icon-box">
+                <i class="fa-solid fa-list-check"></i>
+            </div>
+
+            <h3>
+                Pros & Cons of Colleges
+            </h3>
+
+            <p>
+                Understand the strengths and limitations of different colleges.
+            </p>
+
+        </div>
+
+
+        <div class="feature-card"
+             onclick="window.location.href='frontend/rankpredictor.html'">
+
+            <div class="icon-box">
+                <i class="fa-solid fa-robot"></i>
+            </div>
+
+            <h3>
+                AI Seat Allotment Predictor
+            </h3>
+
+            <p>
+                Get seat predictions using past counselling trends.
+            </p>
+
+        </div>
+
+
+        <div class="feature-card"
+             onclick="window.location.href='admission-milestones.html'">
+
+            <div class="icon-box">
+                <i class="fa-solid fa-route"></i>
+            </div>
+
+            <h3>
+                Admission Milestones
+            </h3>
+
+            <p>
+                Track your complete admission journey.
+            </p>
+
+        </div>
+
+
+        <div class="feature-card"
+             onclick="window.location.href='content-hub.html'">
+
+            <div class="icon-box">
+                <i class="fa-solid fa-book-open-reader"></i>
+            </div>
+
+            <h3>
+                Content Hub & Guidance
+            </h3>
+
+            <p>
+                Access admission roadmaps, blogs, and career guidance.
+            </p>
+
+        </div>
+
+
+        <div class="feature-card"
+             onclick="window.location.href='frontend/login.html'">
+
+            <div class="icon-box">
+                <i class="fa-solid fa-gauge-high"></i>
+            </div>
+
+            <h3>
+                Personalized Dashboard
+            </h3>
+
+            <p>
+                Manage target colleges, applications, mentors, and notes.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     ABOUT US
+===================================================== -->
+
+<section id="about" class="about-section">
+
+    <div class="section-title">
+
+        <h2>
+            ABOUT US
+        </h2>
+
+        <div class="glow-line"></div>
+
+    </div>
+
+
+    <div class="about-main-card">
+
+        <div class="about-intro">
+
+            <div class="about-icon">
+
+                <i class="fa-solid fa-graduation-cap"></i>
+
+            </div>
+
+            <h2>
+                Raptora —
+                <span class="highlight">
+                    Your Admission Journey, Reimagined
+                </span>
+            </h2>
+
+            <p>
+
+                Raptora.in is a student-focused college admission
+                and guidance ecosystem designed to help students
+                make informed, confident, and well-researched
+                decisions about their higher education.
+
+            </p>
+
+            <p>
+
+                The college admission process involves more than
+                selecting a college. Students need to evaluate
+                eligibility, ranks, branches, cutoffs, fees,
+                placements, return on investment, college environment,
+                career opportunities, and admission procedures.
+
+            </p>
+
+            <p>
+
+                Raptora brings these essential aspects together
+                through technology, structured information, and
+                personalized guidance.
+
+            </p>
+
+        </div>
+
+
+        <!-- WHAT WE OFFER -->
+
+        <div class="about-block">
+
+            <div class="about-heading">
+
+                <i class="fa-solid fa-layer-group"></i>
+
+                <h3>
+                    What Raptora Offers
+                </h3>
 
             </div>
 
 
-            <!-- Previous Year Papers -->
-            <div id="pyq" class="tab-content active">
-
-                <div class="resource-grid">
+            <div class="about-features-grid">
 
 
-                    <!-- JEE Main -->
-                    <div class="resource-card">
+                <div class="about-feature">
 
-                        <i class="fa-solid fa-file-pdf pdf-icon"></i>
+                    <i class="fa-solid fa-magnifying-glass"></i>
 
-                        <h4>JEE Main PYQs</h4>
+                    <div>
+                        <h4>College Discovery</h4>
 
                         <p>
-                            JEE Main 2026 — Session-wise papers
+                            Explore colleges and access relevant
+                            information to support informed decisions.
                         </p>
+                    </div>
+
+                </div>
 
 
-                        <!-- Download PDF Dropdown -->
-                        <div class="pdf-dropdown">
+                <div class="about-feature">
 
-                            <button type="button"
-                                    class="btn btn-outline btn-sm"
-                                    onclick="togglePDFMenu()">
+                    <i class="fa-solid fa-robot"></i>
 
-                                <i class="fa-solid fa-download"></i>
-                                Download PDF
+                    <div>
+                        <h4>AI Seat Allotment Predictor</h4>
 
-                            </button>
+                        <p>
+                            Understand potential admission and
+                            seat-allotment outcomes using available data.
+                        </p>
+                    </div>
 
-
-                            <div id="pdfMenu" class="pdf-menu">
-
-
-                                <!-- 2nd April -->
-                                <div class="pdf-date">
-
-                                    <span class="pdf-date-title">
-                                        2nd April 2026
-                                    </span>
-
-                                    <a href="2 april shift 1.pdf"
-                                       target="_blank"
-                                       rel="noopener noreferrer"
-                                       class="pdf-shift">
-
-                                        Shift 1
-
-                                    </a>
-
-                                    <a href="2nd april shift 2.pdf"
-                                       target="_blank"
-                                       rel="noopener noreferrer"
-                                       class="pdf-shift">
-
-                                        Shift 2
-
-                                    </a>
-
-                                </div>
+                </div>
 
 
-                                <!-- 4th April -->
-                                <div class="pdf-date">
+                <div class="about-feature">
 
-                                    <span class="pdf-date-title">
-                                        4th April 2026
-                                    </span>
+                    <i class="fa-solid fa-trophy"></i>
 
-                                    <a href="4 april shift 1.pdf"
-                                       target="_blank"
-                                       rel="noopener noreferrer"
-                                       class="pdf-shift">
+                    <div>
+                        <h4>Based on Rank</h4>
 
-                                        Shift 1
+                        <p>
+                            Identify suitable colleges and branches
+                            based on examination rank.
+                        </p>
+                    </div>
 
-                                    </a>
-
-                                    <a href="4 april shift 2.pdf"
-                                       target="_blank"
-                                       rel="noopener noreferrer"
-                                       class="pdf-shift">
-
-                                        Shift 2
-
-                                    </a>
-
-                                </div>
+                </div>
 
 
-                                <!-- 6th April - Add PDFs later -->
-                                <div class="pdf-date">
+                <div class="about-feature">
 
-                                    <span class="pdf-date-title">
-                                        6th April 2026
-                                    </span>
+                    <i class="fa-solid fa-code-branch"></i>
 
-                                    <a href="6 april shift 1.pdf"
-                                       target="_blank"
-                                       rel="noopener noreferrer"
-                                       class="pdf-shift">
+                    <div>
+                        <h4>Branch Comparison</h4>
 
-                                        Shift 1
+                        <p>
+                            Compare branches and understand their
+                            academic and career prospects.
+                        </p>
+                    </div>
 
-                                    </a>
+                </div>
 
-                                    <a href="6 april shift 2.pdf"
-                                       target="_blank"
-                                       rel="noopener noreferrer"
-                                       class="pdf-shift">
 
-                                        Shift 2
+                <div class="about-feature">
 
-                                    </a>
+                    <i class="fa-solid fa-chart-pie"></i>
 
-                                </div>
+                    <div>
+                        <h4>ROI Analysis</h4>
 
+                        <p>
+                            Evaluate college fees in relation to
+                            placement opportunities and potential returns.
+                        </p>
+                    </div>
+
+                </div>
+
+
+                <div class="about-feature">
+
+                    <i class="fa-solid fa-scale-balanced"></i>
+
+                    <div>
+                        <h4>Pros & Cons of Colleges</h4>
+
+                        <p>
+                            Gain a balanced perspective on the
+                            strengths and limitations of institutions.
+                        </p>
+                    </div>
+
+                </div>
+
+
+                <div class="about-feature">
+
+                    <i class="fa-solid fa-chart-line"></i>
+
+                    <div>
+                        <h4>Seat Filling Analytics</h4>
+
+                        <p>
+                            Understand counselling and seat-filling
+                            trends to support better choices.
+                        </p>
+                    </div>
+
+                </div>
+
+
+                <div class="about-feature">
+
+                    <i class="fa-solid fa-route"></i>
+
+                    <div>
+                        <h4>Admission Milestone Tracker</h4>
+
+                        <p>
+                            Track important stages, deadlines, and
+                            progress throughout admission.
+                        </p>
+                    </div>
+
+                </div>
+
+
+                <div class="about-feature">
+
+                    <i class="fa-solid fa-user-group"></i>
+
+                    <div>
+                        <h4>Mentors & Seniors Guidance</h4>
+
+                        <p>
+                            Gain practical insights and experiences
+                            from mentors and senior students.
+                        </p>
+                    </div>
+
+                </div>
+
+
+                <div class="about-feature">
+
+                    <i class="fa-solid fa-comments"></i>
+
+                    <div>
+                        <h4>One-to-One Interactions</h4>
+
+                        <p>
+                            Access personalized discussions and
+                            guidance for admission-related queries.
+                        </p>
+                    </div>
+
+                </div>
+
+
+                <div class="about-feature">
+
+                    <i class="fa-solid fa-gauge-high"></i>
+
+                    <div>
+                        <h4>Personalized Dashboard</h4>
+
+                        <p>
+                            Organize colleges, applications, mentors,
+                            notes, and admission information in one place.
+                        </p>
+                    </div>
+
+                </div>
+
+
+                <div class="about-feature">
+
+                    <i class="fa-solid fa-book-open"></i>
+
+                    <div>
+                        <h4>Content Hub & Guidance</h4>
+
+                        <p>
+                            Access structured articles, educational
+                            insights, and career-related resources.
+                        </p>
+                    </div>
+
+                </div>
+
+
+                <div class="about-feature">
+
+                    <i class="fa-solid fa-file-lines"></i>
+
+                    <div>
+                        <h4>PYQs & Study Resources</h4>
+
+                        <p>
+                            Access previous-year question papers
+                            and academic resources for preparation.
+                        </p>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- VISION + APPROACH -->
+
+        <div class="about-two-column">
+
+
+            <div class="about-info-card">
+
+                <div class="about-info-icon">
+                    <i class="fa-solid fa-eye"></i>
+                </div>
+
+                <h3>
+                    Our Vision
+                </h3>
+
+                <p>
+
+                    Our vision is to make the college admission
+                    process simpler, smarter, and more transparent
+                    by bringing together technology, reliable
+                    information, student experiences, and
+                    personalized guidance within a single ecosystem.
+
+                </p>
+
+            </div>
+
+
+            <div class="about-info-card">
+
+                <div class="about-info-icon">
+                    <i class="fa-solid fa-compass"></i>
+                </div>
+
+                <h3>
+                    Our Approach
+                </h3>
+
+                <div class="approach-flow">
+
+                    <span>FIND</span>
+
+                    <i class="fa-solid fa-arrow-right"></i>
+
+                    <span>PREDICT</span>
+
+                    <i class="fa-solid fa-arrow-right"></i>
+
+                    <span>COMPARE</span>
+
+                    <i class="fa-solid fa-arrow-right"></i>
+
+                    <span>CONNECT</span>
+
+                    <i class="fa-solid fa-arrow-right"></i>
+
+                    <span>SUCCEED</span>
+
+                </div>
+
+                <p>
+
+                    Raptora is built with a student-first approach,
+                    combining technology and human guidance to help
+                    students navigate their admission journey with
+                    greater clarity and confidence.
+
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- COMMITMENT -->
+
+        <div class="commitment-card">
+
+            <div class="commitment-icon">
+
+                <i class="fa-solid fa-shield-heart"></i>
+
+            </div>
+
+            <div>
+
+                <h3>
+                    Our Commitment
+                </h3>
+
+                <p>
+
+                    Raptora aims to be more than an admission tool.
+                    We strive to be a trusted admission guidance
+                    platform that helps students discover opportunities,
+                    evaluate their options, connect with relevant
+                    guidance, and make informed decisions about their
+                    academic future.
+
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- BRAND MESSAGE -->
+
+        <div class="about-brand">
+
+            <h2>
+                RAPTORA.IN
+            </h2>
+
+            <p>
+                SMARTER CHOICES.
+                BETTER OPPORTUNITIES.
+                BRIGHTER FUTURES.
+            </p>
+
+        </div>
+
+
+        <!-- DISCLAIMER -->
+
+        <div class="about-disclaimer">
+
+            <i class="fa-solid fa-circle-info"></i>
+
+            <p>
+
+                Raptora's predictions, recommendations, and analytical
+                tools are provided for informational and guidance purposes
+                only. They do not guarantee admission, seat allotment,
+                ranks, cutoffs, placements, or any particular outcome.
+                Students are encouraged to verify important information
+                with the relevant official authorities and institutions.
+
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     RESOURCES
+===================================================== -->
+
+<section id="resources" class="resources-section">
+
+    <div class="section-title">
+
+        <h2>
+            RESOURCES
+        </h2>
+
+        <div class="glow-line"></div>
+
+    </div>
+
+
+    <div class="resource-container">
+
+        <div class="resource-tabs">
+
+            <button
+                class="tab-btn active"
+                onclick="openTab(event, 'pyq')">
+
+                Previous Year Papers
+
+            </button>
+
+            <button
+                class="tab-btn"
+                onclick="openTab(event, 'notes')">
+
+                Study Notes & Formula Sheets
+
+            </button>
+
+            <button
+                class="tab-btn"
+                onclick="openTab(event, 'mocks')">
+
+                Mock Tests & Analysis
+
+            </button>
+
+        </div>
+
+
+        <div id="pyq" class="tab-content active">
+
+            <div class="resource-grid">
+
+                <div class="resource-card">
+
+                    <i class="fa-solid fa-file-pdf pdf-icon"></i>
+
+                    <h4>
+                        JEE Main PYQs
+                    </h4>
+
+                    <p>
+                        JEE Main 2026 — Session-wise papers
+                    </p>
+
+                    <div class="pdf-dropdown">
+
+                        <button
+                            type="button"
+                            class="btn btn-outline btn-sm"
+                            onclick="togglePDFMenu()">
+
+                            <i class="fa-solid fa-download"></i>
+                            Download PDF
+
+                        </button>
+
+                        <div id="pdfMenu" class="pdf-menu">
+
+                            <div class="pdf-date">
+
+                                <span class="pdf-date-title">
+                                    2nd April 2026
+                                </span>
+
+                                <a href="2 april shift 1.pdf"
+                                   target="_blank"
+                                   rel="noopener noreferrer"
+                                   class="pdf-shift">
+
+                                    Shift 1
+
+                                </a>
+
+                                <a href="2nd april shift 2.pdf"
+                                   target="_blank"
+                                   rel="noopener noreferrer"
+                                   class="pdf-shift">
+
+                                    Shift 2
+
+                                </a>
+
+                            </div>
+
+
+                            <div class="pdf-date">
+
+                                <span class="pdf-date-title">
+                                    4th April 2026
+                                </span>
+
+                                <a href="4 april shift 1.pdf"
+                                   target="_blank"
+                                   rel="noopener noreferrer"
+                                   class="pdf-shift">
+
+                                    Shift 1
+
+                                </a>
+
+                                <a href="4 april shift 2.pdf"
+                                   target="_blank"
+                                   rel="noopener noreferrer"
+                                   class="pdf-shift">
+
+                                    Shift 2
+
+                                </a>
+
+                            </div>
+
+
+                            <div class="pdf-date">
+
+                                <span class="pdf-date-title">
+                                    6th April 2026
+                                </span>
+
+                                <a href="6 april shift 1.pdf"
+                                   target="_blank"
+                                   rel="noopener noreferrer"
+                                   class="pdf-shift">
+
+                                    Shift 1
+
+                                </a>
+
+                                <a href="6 april shift 2.pdf"
+                                   target="_blank"
+                                   rel="noopener noreferrer"
+                                   class="pdf-shift">
+
+                                    Shift 2
+
+                                </a>
 
                             </div>
 
@@ -575,294 +1097,104 @@
 
                     </div>
 
-
-                    <!-- JEE Advanced -->
-                    <div class="resource-card">
-
-                        <i class="fa-solid fa-file-pdf pdf-icon"></i>
-
-                        <h4>JEE Advanced PYQs</h4>
-
-                        <p>
-                            Chapter-wise categorized questions with detailed
-                            analysis and video solutions.
-                        </p>
-
-                        <a href="#"
-                           class="btn btn-outline btn-sm">
-
-                            Download PDF
-
-                        </a>
-
-                    </div>
-
-
-                    <!-- NEET -->
-                    <div class="resource-card">
-
-                        <i class="fa-solid fa-file-pdf pdf-icon"></i>
-
-                        <h4>NEET PYQs</h4>
-
-                        <p>
-                            Physics, Chemistry, and Biology organized by
-                            weightage and difficulty level.
-                        </p>
-
-                        <a href="#"
-                           class="btn btn-outline btn-sm">
-
-                            Download PDF
-
-                        </a>
-
-                    </div>
-
-
-                    <!-- KCET -->
-                    <div class="resource-card">
-
-                        <i class="fa-solid fa-file-pdf pdf-icon"></i>
-
-                        <h4>KCET PYQs</h4>
-
-                        <p>
-                            Physics, Chemistry, Maths and Biology organized
-                            by weightage and difficulty level.
-                        </p>
-
-                        <a href="#"
-                           class="btn btn-outline btn-sm">
-
-                            Download PDF
-
-                        </a>
-
-                    </div>
-
-
-                    <!-- COMEDK -->
-                    <div class="resource-card">
-
-                        <i class="fa-solid fa-file-pdf pdf-icon"></i>
-
-                        <h4>COMEDK PYQs</h4>
-
-                        <p>
-                            Physics, Chemistry, Maths and Biology organized
-                            by weightage and difficulty level.
-                        </p>
-
-                        <a href="#"
-                           class="btn btn-outline btn-sm">
-
-                            Download PDF
-
-                        </a>
-
-                    </div>
-
-
-                    <!-- WBJEE -->
-                    <div class="resource-card">
-
-                        <i class="fa-solid fa-file-pdf pdf-icon"></i>
-
-                        <h4>WBJEE PYQs</h4>
-
-                        <p>
-                            Physics, Chemistry and Maths organized by
-                            weightage and difficulty level.
-                        </p>
-
-                        <a href="#"
-                           class="btn btn-outline btn-sm">
-
-                            Download PDF
-
-                        </a>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-
-            <!-- Study Notes -->
-            <div id="notes" class="tab-content">
-
-                <div class="resource-grid">
-
-                    <div class="resource-card">
-
-                        <i class="fa-solid fa-book-journal-whills pdf-icon"></i>
-
-                        <h4>Physics Formula Handbook</h4>
-
-                        <p>
-                            Quick revision formula handbook covering Mechanics,
-                            Electromagnetism, & Optics.
-                        </p>
-
-                        <a href="#"
-                           class="btn btn-outline btn-sm">
-
-                            Download PDF
-
-                        </a>
-
-                    </div>
-
-
-                    <div class="resource-card">
-
-                        <i class="fa-solid fa-flask pdf-icon"></i>
-
-                        <h4>Organic Chemistry Reaction Maps</h4>
-
-                        <p>
-                            Visual mindmaps for reaction mechanisms and named reactions.
-                        </p>
-
-                        <a href="#"
-                           class="btn btn-outline btn-sm">
-
-                            Download PDF
-
-                        </a>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-
-            <!-- Mock Tests -->
-            <div id="mocks" class="tab-content">
-
-                <div class="resource-grid">
-
-                    <div class="resource-card">
-
-                        <i class="fa-solid fa-laptop-code pdf-icon"></i>
-
-                        <h4>Full Syllabus Mock Test Series</h4>
-
-                        <p>
-                            Simulated NTA interface tests with real-time
-                            performance analytics.
-                        </p>
-
-                        <a href="#"
-                           class="btn btn-primary btn-sm">
-
-                            Take Test
-
-                        </a>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-        </div>
-
-    </section>
-
-
-    <!-- Join the Movement Section -->
-    <section id="connect" class="join-section">
-
-        <div class="join-box">
-
-            <h2>
-                JOIN THE MOVEMENT.<br>
-                <span class="highlight">JOIN RAPTORA TODAY!</span>
-            </h2>
-
-            <p class="join-subtext">
-                For Students. By Students. With Technology.
-            </p>
-
-
-            <div class="social-connect">
-
-
-                <div class="qr-container">
-
-                    <img src="frontend/WhatsApp Image 2026-07-25 at 4.22.08 PM.jpeg"
-                         height="200"
-                         alt="Raptora Instagram QR Code"
-                         class="qr-code">
-
-                    <br>
-
-                    <span>SCAN TO CONNECT</span>
-
                 </div>
 
 
-                <div class="social-details">
+                <div class="resource-card">
+
+                    <i class="fa-solid fa-file-pdf pdf-icon"></i>
+
+                    <h4>
+                        JEE Advanced PYQs
+                    </h4>
 
                     <p>
-
-                        <i class="fa-brands fa-instagram"></i>
-
-                        <a href="https://www.instagram.com/raptora247?igsh=MWp1c2RvMzloMTc1aQ=="
-                           target="_blank"
-                           rel="noopener noreferrer"
-                           class="social-link">
-
-                            @RAPTORA247
-
-                        </a>
-
+                        Chapter-wise categorized questions with
+                        detailed analysis and video solutions.
                     </p>
 
+                    <a href="#" class="btn btn-outline btn-sm">
+                        Download PDF
+                    </a>
+
+                </div>
+
+
+                <div class="resource-card">
+
+                    <i class="fa-solid fa-file-pdf pdf-icon"></i>
+
+                    <h4>
+                        NEET PYQs
+                    </h4>
 
                     <p>
-
-                        <i class="fa-brands fa-facebook"></i>
-
-                        <a href="https://www.facebook.com/share/1JNWsdP12U/"
-                           target="_blank"
-                           rel="noopener noreferrer"
-                           class="social-link">
-
-                            @RAPTORA
-
-                        </a>
-
+                        Physics, Chemistry, and Biology organized
+                        by weightage and difficulty level.
                     </p>
 
+                    <a href="#" class="btn btn-outline btn-sm">
+                        Download PDF
+                    </a>
+
+                </div>
+
+
+                <div class="resource-card">
+
+                    <i class="fa-solid fa-file-pdf pdf-icon"></i>
+
+                    <h4>
+                        KCET PYQs
+                    </h4>
 
                     <p>
-
-                        <i class="fa-solid fa-envelope"></i>
-
-                        <a href="mailto:raptora247@gmail.com"
-                           class="social-link">
-
-                            raptora247@gmail.com
-
-                        </a>
-
+                        Physics, Chemistry, Maths and Biology
+                        organized by weightage and difficulty level.
                     </p>
 
+                    <a href="#" class="btn btn-outline btn-sm">
+                        Download PDF
+                    </a>
 
-                    <a href="https://www.instagram.com/raptora247?igsh=MWp1c2RvMzloMTc1aQ=="
-                       target="_blank"
-                       rel="noopener noreferrer"
-                       class="btn btn-primary">
+                </div>
 
-                        Follow on Instagram
 
-                        <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                <div class="resource-card">
 
+                    <i class="fa-solid fa-file-pdf pdf-icon"></i>
+
+                    <h4>
+                        COMEDK PYQs
+                    </h4>
+
+                    <p>
+                        Physics, Chemistry, Maths and Biology
+                        organized by weightage and difficulty level.
+                    </p>
+
+                    <a href="#" class="btn btn-outline btn-sm">
+                        Download PDF
+                    </a>
+
+                </div>
+
+
+                <div class="resource-card">
+
+                    <i class="fa-solid fa-file-pdf pdf-icon"></i>
+
+                    <h4>
+                        WBJEE PYQs
+                    </h4>
+
+                    <p>
+                        Physics, Chemistry and Maths organized
+                        by weightage and difficulty level.
+                    </p>
+
+                    <a href="#" class="btn btn-outline btn-sm">
+                        Download PDF
                     </a>
 
                 </div>
@@ -871,70 +1203,269 @@
 
         </div>
 
-    </section>
+
+        <div id="notes" class="tab-content">
+
+            <div class="resource-grid">
+
+                <div class="resource-card">
+
+                    <i class="fa-solid fa-book-journal-whills pdf-icon"></i>
+
+                    <h4>
+                        Physics Formula Handbook
+                    </h4>
+
+                    <p>
+                        Quick revision formula handbook covering
+                        Mechanics, Electromagnetism, & Optics.
+                    </p>
+
+                    <a href="#" class="btn btn-outline btn-sm">
+                        Download PDF
+                    </a>
+
+                </div>
 
 
-    <!-- Footer -->
-    <footer>
+                <div class="resource-card">
 
-        <div class="footer-top">
+                    <i class="fa-solid fa-flask pdf-icon"></i>
 
-            <span class="footer-motto">
-                SMARTER CHOICES.
-            </span>
+                    <h4>
+                        Organic Chemistry Reaction Maps
+                    </h4>
 
-            |
+                    <p>
+                        Visual mindmaps for reaction mechanisms
+                        and named reactions.
+                    </p>
 
-            <span class="footer-motto">
-                BETTER COLLEGES.
-            </span>
+                    <a href="#" class="btn btn-outline btn-sm">
+                        Download PDF
+                    </a>
 
-            |
+                </div>
 
-            <span class="footer-motto">
-                BRIGHTER FUTURES.
-            </span>
+            </div>
 
         </div>
 
-        <p class="footer-bottom">
-            RAPTORA &mdash; YOUR ADMISSION PARTNER FOR LIFE. ❤️
+
+        <div id="mocks" class="tab-content">
+
+            <div class="resource-grid">
+
+                <div class="resource-card">
+
+                    <i class="fa-solid fa-laptop-code pdf-icon"></i>
+
+                    <h4>
+                        Full Syllabus Mock Test Series
+                    </h4>
+
+                    <p>
+                        Simulated NTA interface tests with
+                        real-time performance analytics.
+                    </p>
+
+                    <a href="#" class="btn btn-primary btn-sm">
+                        Take Test
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     CONNECT
+===================================================== -->
+
+<section id="connect" class="join-section">
+
+    <div class="join-box">
+
+        <h2>
+
+            JOIN THE MOVEMENT.<br>
+
+            <span class="highlight">
+                JOIN RAPTORA TODAY!
+            </span>
+
+        </h2>
+
+        <p class="join-subtext">
+            For Students. By Students. With Technology.
         </p>
 
-    </footer>
+
+        <div class="social-connect">
+
+            <div class="qr-container">
+
+                <img
+                    src="frontend/WhatsApp Image 2026-07-25 at 4.22.08 PM.jpeg"
+                    height="200"
+                    alt="Raptora Instagram QR Code"
+                    class="qr-code">
+
+                <br>
+
+                <span>
+                    SCAN TO CONNECT
+                </span>
+
+            </div>
 
 
-    <!-- PDF Dropdown JavaScript -->
-    <script>
+            <div class="social-details">
 
-        function togglePDFMenu() {
+                <p>
 
-            const menu = document.getElementById("pdfMenu");
+                    <i class="fa-brands fa-instagram"></i>
 
-            menu.classList.toggle("show");
+                    <a
+                        href="https://www.instagram.com/raptora247"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="social-link">
 
-        }
+                        @RAPTORA247
 
+                    </a>
 
-        // Close PDF menu when clicking outside
-        document.addEventListener("click", function(event) {
-
-            const dropdown = document.querySelector(".pdf-dropdown");
-            const menu = document.getElementById("pdfMenu");
-
-            if (!dropdown.contains(event.target)) {
-
-                menu.classList.remove("show");
-
-            }
-
-        });
-
-    </script>
+                </p>
 
 
-    <!-- Custom JS -->
-    <script src="frontend/script.js"></script>
+                <p>
+
+                    <i class="fa-brands fa-facebook"></i>
+
+                    <a
+                        href="https://www.facebook.com/share/1JNWsdP12U/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="social-link">
+
+                        @RAPTORA
+
+                    </a>
+
+                </p>
+
+
+                <p>
+
+                    <i class="fa-solid fa-envelope"></i>
+
+                    <a
+                        href="mailto:raptora247@gmail.com"
+                        class="social-link">
+
+                        raptora247@gmail.com
+
+                    </a>
+
+                </p>
+
+
+                <a
+                    href="https://www.instagram.com/raptora247"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="btn btn-primary">
+
+                    Follow on Instagram
+
+                    <i class="fa-solid fa-arrow-up-right-from-square"></i>
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     FOOTER
+===================================================== -->
+
+<footer>
+
+    <div class="footer-top">
+
+        <span class="footer-motto">
+            SMARTER CHOICES.
+        </span>
+
+        |
+
+        <span class="footer-motto">
+            BETTER COLLEGES.
+        </span>
+
+        |
+
+        <span class="footer-motto">
+            BRIGHTER FUTURES.
+        </span>
+
+    </div>
+
+    <p class="footer-bottom">
+        RAPTORA &mdash; YOUR ADMISSION PARTNER FOR LIFE. ❤️
+    </p>
+
+</footer>
+
+
+<script>
+
+function togglePDFMenu() {
+
+    const menu = document.getElementById("pdfMenu");
+
+    menu.classList.toggle("show");
+
+}
+
+
+document.addEventListener("click", function(event) {
+
+    const dropdown =
+        document.querySelector(".pdf-dropdown");
+
+    const menu =
+        document.getElementById("pdfMenu");
+
+    if (
+        dropdown &&
+        menu &&
+        !dropdown.contains(event.target)
+    ) {
+
+        menu.classList.remove("show");
+
+    }
+
+});
+
+</script>
+
+
+<script src="frontend/script.js"></script>
 
 </body>
 </html>
