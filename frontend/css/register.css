@@ -9,10 +9,6 @@
     font-family: 'Poppins', sans-serif;
 }
 
-html {
-    scroll-behavior: smooth;
-}
-
 body {
     background: #0b0b0b;
     color: white;
@@ -39,7 +35,7 @@ body {
     background:
         radial-gradient(
             circle at center,
-            rgba(255, 0, 40, 0.18),
+            rgba(255, 0, 30, 0.15),
             transparent 55%
         ),
         linear-gradient(
@@ -67,9 +63,6 @@ body {
     letter-spacing: 3px;
 
     margin-bottom: 15px;
-
-    text-shadow:
-        0 0 20px rgba(255, 31, 61, 0.35);
 }
 
 .overlay p {
@@ -82,13 +75,7 @@ body {
 
 .overlay img {
     width: 90%;
-
     max-width: 450px;
-
-    filter:
-        drop-shadow(
-            0 15px 30px rgba(255, 0, 0, 0.18)
-        );
 }
 
 
@@ -100,57 +87,43 @@ body {
     width: 55%;
 
     display: flex;
-
     justify-content: center;
     align-items: center;
 
     padding: 40px;
-
-    background: #0b0b0b;
 }
 
 .register-box {
     width: 100%;
-
     max-width: 500px;
 
-    background:
-        linear-gradient(
-            145deg,
-            #1b1b1b,
-            #141414
-        );
+    background: #181818;
 
     padding: 40px;
 
     border-radius: 18px;
 
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.06);
 
     box-shadow:
-        0 0 25px rgba(255, 0, 0, 0.25),
-        0 20px 60px rgba(0, 0, 0, 0.45);
+        0 0 25px rgba(255, 0, 0, 0.25);
 }
 
 .register-box h2 {
     font-size: 32px;
 
     margin-bottom: 10px;
-
-    color: white;
 }
 
 .register-box > p {
     color: #bdbdbd;
 
     margin-bottom: 30px;
-
-    font-size: 14px;
 }
 
 
 /* ===========================
-   INPUT GROUP
+   INPUTS
 =========================== */
 
 .input-group {
@@ -164,15 +137,8 @@ body {
 
     font-size: 14px;
 
-    color: #e5e5e5;
-
-    font-weight: 500;
+    color: #eee;
 }
-
-
-/* ===========================
-   INPUT FIELD
-=========================== */
 
 .input-field {
     display: flex;
@@ -194,15 +160,13 @@ body {
     border-color: #ff1f3d;
 
     box-shadow:
-        0 0 0 2px rgba(255, 31, 61, 0.12);
+        0 0 10px rgba(255, 31, 61, 0.15);
 }
 
 .input-field i {
     color: #ff1f3d;
 
     margin-right: 12px;
-
-    flex-shrink: 0;
 }
 
 .input-field input {
@@ -225,28 +189,17 @@ body {
     color: #777;
 }
 
-
-/* ===========================
-   PASSWORD EYE
-=========================== */
-
 .eye {
     cursor: pointer;
 
-    margin-right: 0 !important;
-
     margin-left: 10px;
 
-    transition: 0.3s;
-}
-
-.eye:hover {
-    color: #ff526b;
+    margin-right: 0 !important;
 }
 
 
 /* ===========================
-   TERMS & PRIVACY CHECKBOX
+   TERMS CHECKBOX
 =========================== */
 
 .terms {
@@ -254,21 +207,18 @@ body {
 
     align-items: flex-start;
 
-    gap: 11px;
+    gap: 10px;
 
     margin: 22px 0;
 
-    color: #bdbdbd;
+    color: #bbb;
 
     font-size: 13px;
 
     line-height: 1.6;
 }
 
-
-/* Hide default checkbox */
-
-.terms input[type="checkbox"] {
+.terms input {
     appearance: none;
 
     -webkit-appearance: none;
@@ -284,85 +234,53 @@ body {
 
     border: 1px solid #555;
 
-    border-radius: 5px;
+    border-radius: 4px;
 
     cursor: pointer;
 
     position: relative;
 
-    transition: 0.25s;
+    transition: 0.2s;
 }
 
-
-/* Checkbox hover */
-
-.terms input[type="checkbox"]:hover {
+.terms input:hover {
     border-color: #ff1f3d;
-
-    box-shadow:
-        0 0 8px rgba(255, 31, 61, 0.25);
 }
 
+.terms input:checked {
+    background: #ff1f3d;
 
-/* Checked checkbox */
-
-.terms input[type="checkbox"]:checked {
-    background: #e50914;
-
-    border-color: #e50914;
-
-    box-shadow:
-        0 0 10px rgba(229, 9, 20, 0.35);
+    border-color: #ff1f3d;
 }
 
-
-/* Check mark */
-
-.terms input[type="checkbox"]:checked::after {
-    content: "";
+.terms input:checked::after {
+    content: "✓";
 
     position: absolute;
 
-    left: 5px;
-    top: 2px;
+    top: -3px;
+    left: 3px;
 
-    width: 5px;
-    height: 9px;
+    color: white;
 
-    border: solid white;
+    font-size: 14px;
 
-    border-width: 0 2px 2px 0;
-
-    transform: rotate(45deg);
+    font-weight: 700;
 }
-
-
-/* Agreement text */
 
 .terms label {
     cursor: pointer;
-
-    color: #bbb;
-
-    flex: 1;
 }
-
-
-/* Links */
 
 .terms a {
     color: #ff1f3d;
 
     text-decoration: none;
 
-    font-weight: 600;
-
-    transition: 0.3s;
+    font-weight: 500;
 }
 
 .terms a:hover {
-    color: #ff526b;
-
     text-decoration: underline;
 }
 
@@ -371,7 +289,7 @@ body {
    CREATE ACCOUNT BUTTON
 =========================== */
 
-button {
+button[type="submit"] {
     width: 100%;
 
     padding: 15px;
@@ -393,7 +311,7 @@ button {
     transition: 0.3s;
 }
 
-button:hover {
+button[type="submit"]:hover {
     background: #ff2b45;
 
     transform: translateY(-2px);
@@ -402,78 +320,8 @@ button:hover {
         0 0 20px rgba(255, 0, 0, 0.5);
 }
 
-button:active {
+button[type="submit"]:active {
     transform: translateY(0);
-}
-
-
-/* ===========================
-   DIVIDER
-=========================== */
-
-.divider {
-    display: flex;
-
-    align-items: center;
-
-    gap: 15px;
-
-    margin: 30px 0;
-
-    color: #777;
-
-    font-size: 13px;
-}
-
-.divider::before,
-.divider::after {
-    content: "";
-
-    flex: 1;
-
-    height: 1px;
-
-    background: #333;
-}
-
-.divider span {
-    padding: 0 5px;
-}
-
-
-/* ===========================
-   SOCIAL LOGIN
-=========================== */
-
-.social-login {
-    display: flex;
-
-    gap: 15px;
-}
-
-.google,
-.github {
-    background: #252525;
-
-    border: 1px solid #333;
-
-    color: white;
-}
-
-.google:hover,
-.github:hover {
-    background: #303030;
-
-    border-color: #444;
-
-    box-shadow:
-        0 0 15px rgba(255, 255, 255, 0.08);
-}
-
-.google i {
-    margin-right: 8px;
-
-    color: #fff;
 }
 
 
@@ -497,23 +345,10 @@ button:active {
     text-decoration: none;
 
     font-weight: 600;
-
-    margin-left: 4px;
 }
 
 .login-link a:hover {
     text-decoration: underline;
-
-    color: #ff526b;
-}
-
-
-/* ===========================
-   VALIDATION
-=========================== */
-
-.input-field input:invalid:not(:placeholder-shown) {
-    border-color: transparent;
 }
 
 
@@ -544,21 +379,17 @@ button:active {
 
         padding: 30px;
     }
-
-    .social-login {
-        flex-direction: column;
-    }
 }
 
 
 /* ===========================
-   TABLET
+   SMALL MOBILE
 =========================== */
 
-@media (max-width: 600px) {
+@media (max-width: 500px) {
 
     .right-panel {
-        padding: 18px;
+        padding: 15px;
     }
 
     .register-box {
@@ -568,59 +399,10 @@ button:active {
     }
 
     .register-box h2 {
-        font-size: 27px;
-    }
-
-    .register-box > p {
-        font-size: 13px;
+        font-size: 26px;
     }
 
     .terms {
         font-size: 12px;
-
-        gap: 9px;
-    }
-
-    .terms input[type="checkbox"] {
-        width: 17px;
-        height: 17px;
-
-        min-width: 17px;
-    }
-}
-
-
-/* ===========================
-   SMALL MOBILE
-=========================== */
-
-@media (max-width: 400px) {
-
-    .right-panel {
-        padding: 12px;
-    }
-
-    .register-box {
-        padding: 22px 16px;
-    }
-
-    .register-box h2 {
-        font-size: 24px;
-    }
-
-    .input-field input {
-        font-size: 14px;
-    }
-
-    .terms {
-        align-items: flex-start;
-
-        font-size: 11.5px;
-    }
-
-    button {
-        font-size: 15px;
-
-        padding: 14px;
     }
 }
