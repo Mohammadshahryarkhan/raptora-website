@@ -35,7 +35,7 @@
             <h1>RAPTORA</h1>
 
             <p>
-                Your Admission journey, Reimagined by Raptora
+                Your Admission Journey, Reimagined by Raptora
             </p>
 
             <img
@@ -63,7 +63,6 @@
 
 
             <form id="registerForm">
-
 
                 <!-- FULL NAME -->
 
@@ -237,8 +236,7 @@
 
                         <a
                             href="terms.html"
-                            target="_blank"
-                            rel="noopener noreferrer">
+                            id="termsLink">
 
                             Terms & Conditions
 
@@ -257,7 +255,6 @@
 
                 </button>
 
-
             </form>
 
 
@@ -272,7 +269,6 @@
                 </a>
 
             </div>
-
 
         </div>
 
@@ -302,6 +298,65 @@ function togglePassword(id) {
     }
 
 }
+
+
+/* ==========================================
+   CHECK IF TERMS WERE ACCEPTED
+========================================== */
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    const termsCheckbox =
+        document.getElementById("terms");
+
+    const termsAccepted =
+        localStorage.getItem("raptoraTermsAccepted");
+
+    if (termsAccepted === "true") {
+
+        termsCheckbox.checked = true;
+
+    }
+
+});
+
+
+/* ==========================================
+   TERMS LINK
+========================================== */
+
+document.getElementById("termsLink").addEventListener("click", function () {
+
+    /*
+       Remember that the user came from
+       the registration page.
+    */
+
+    localStorage.setItem(
+        "raptoraTermsReturn",
+        "true"
+    );
+
+});
+
+
+/* ==========================================
+   REGISTER FORM
+========================================== */
+
+document.getElementById("registerForm").addEventListener("submit", function (event) {
+
+    if (!document.getElementById("terms").checked) {
+
+        event.preventDefault();
+
+        alert("Please agree to the Terms & Conditions before creating your account.");
+
+        return;
+
+    }
+
+});
 
 </script>
 
