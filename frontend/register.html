@@ -234,12 +234,8 @@
 
                         I agree to Raptora's
 
-                        <a
-                            href="terms.html"
-                            id="termsLink">
-
+                        <a href="terms.html">
                             Terms & Conditions
-
                         </a>
 
                     </label>
@@ -250,9 +246,7 @@
                 <!-- CREATE ACCOUNT -->
 
                 <button type="submit">
-
                     Create Account
-
                 </button>
 
             </form>
@@ -278,11 +272,11 @@
 </div>
 
 
-<!-- ===========================
-     PASSWORD SCRIPT
-============================ -->
-
 <script>
+
+/* ==========================================
+   PASSWORD SHOW / HIDE
+========================================== */
 
 function togglePassword(id) {
 
@@ -302,12 +296,13 @@ function togglePassword(id) {
 
 
 /* ==========================================
-   CHECK IF USER AGREED ON TERMS PAGE
+   CHECK TERMS AGREEMENT
 ========================================== */
 
 document.addEventListener("DOMContentLoaded", function () {
 
-    const termsCheckbox = document.getElementById("terms");
+    const termsCheckbox =
+        document.getElementById("terms");
 
     const termsAccepted =
         sessionStorage.getItem("raptoraTermsAccepted");
@@ -316,7 +311,15 @@ document.addEventListener("DOMContentLoaded", function () {
 
         termsCheckbox.checked = true;
 
-        sessionStorage.removeItem("raptoraTermsAccepted");
+        /*
+         * Remove the flag after applying it.
+         * This prevents the checkbox from being
+         * automatically checked forever.
+         */
+
+        sessionStorage.removeItem(
+            "raptoraTermsAccepted"
+        );
 
     }
 
@@ -324,6 +327,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
 </script>
 
+
+<!-- REGISTER JAVASCRIPT -->
 
 <script src="js/register.js"></script>
 
