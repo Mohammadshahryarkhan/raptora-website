@@ -1,12 +1,7 @@
-```javascript
+
 /* =====================================================
    RAPTORA — MENTORS CART
    mentors/mentors.js
-===================================================== */
-
-
-/* =====================================================
-   CART DATA
 ===================================================== */
 
 let cart = JSON.parse(
@@ -19,12 +14,10 @@ let cart = JSON.parse(
 ===================================================== */
 
 function saveCart() {
-
     localStorage.setItem(
         "raptoraMentorCart",
         JSON.stringify(cart)
     );
-
 }
 
 
@@ -34,47 +27,74 @@ function saveCart() {
 
 function addToCart(name, price) {
 
-    /*
-       If the same plan is already in the cart,
-       don't add it again.
-    */
-
-    const alreadyExists = cart.some(
+    const existingItem = cart.find(
         item => item.name === name
     );
 
+    if (existingItem) {
 
-    if (alreadyExists) {
+        existingItem.quantity += 1;
 
-        updateCart();
+    } else {
 
-        openCart();
-
-        return;
+        cart.push({
+            name: name,
+            price: Number(price),
+            quantity: 1
+        });
 
     }
 
-
-    cart.push({
-
-        name: name,
-
-        price: Number(price)
-
-    });
-
-
     saveCart();
-
     updateCart();
-
     openCart();
-
 }
 
 
 /* =====================================================
-   REMOVE FROM CART
+   INCREASE QUANTITY
+===================================================== */
+
+function increaseQuantity(index) {
+
+    if (!cart[index]) {
+        return;
+    }
+
+    cart[index].quantity += 1;
+
+    saveCart();
+    updateCart();
+}
+
+
+/* =====================================================
+   DECREASE QUANTITY
+===================================================== */
+
+function decreaseQuantity(index) {
+
+    if (!cart[index]) {
+        return;
+    }
+
+    if (cart[index].quantity > 1) {
+
+        cart[index].quantity -= 1;
+
+    } else {
+
+        cart.splice(index, 1);
+
+    }
+
+    saveCart();
+    updateCart();
+}
+
+
+/* =====================================================
+   REMOVE ITEM
 ===================================================== */
 
 function removeFromCart(index) {
@@ -86,14 +106,10 @@ function removeFromCart(index) {
         return;
     }
 
-
     cart.splice(index, 1);
 
-
     saveCart();
-
     updateCart();
-
 }
 
 
@@ -122,13 +138,20 @@ function updateCart() {
 
 
     /* -----------------------------------------------
-       CART COUNT
+       TOTAL QUANTITY
     ------------------------------------------------ */
+
+    const totalQuantity = cart.reduce(
+        (total, item) =>
+            total + Number(item.quantity || 1),
+        0
+    );
+
 
     if (cartCount) {
 
         cartCount.textContent =
-            cart.length;
+            totalQuantity;
 
     }
 
@@ -154,7 +177,6 @@ function updateCart() {
         }
 
         return;
-
     }
 
 
@@ -164,13 +186,21 @@ function updateCart() {
 
     cartItems.innerHTML = "";
 
-
     let total = 0;
 
 
     cart.forEach((item, index) => {
 
-        total += Number(item.price);
+        const quantity =
+            Number(item.quantity || 1);
+
+        const price =
+            Number(item.price);
+
+        const itemTotal =
+            price * quantity;
+
+        total += itemTotal;
 
 
         const itemElement =
@@ -182,23 +212,74 @@ function updateCart() {
 
         itemElement.innerHTML = `
 
-            <div class="cart-item-name">
-                ${escapeHTML(item.name)}
+            <div class="cart-item-top">
+
+                <div>
+
+                    <div class="cart-item-name">
+                        ${escapeHTML(item.name)}
+                    </div>
+
+                    <div class="cart-item-price">
+                        ₹${price.toLocaleString("en-IN")}
+                        each
+                    </div>
+
+                </div>
+
+
+                <div class="cart-item-total">
+
+                    ₹${itemTotal.toLocaleString("en-IN")}
+
+                </div>
+
             </div>
 
 
-            <div class="cart-item-price">
-                ₹${Number(item.price).toLocaleString("en-IN")}
+            <div class="cart-item-bottom">
+
+                <div class="quantity-control">
+
+                    <button
+                        type="button"
+                        class="quantity-button"
+                        onclick="decreaseQuantity(${index})">
+
+                        −
+
+                    </button>
+
+
+                    <span class="quantity-value">
+
+                        ${quantity}
+
+                    </span>
+
+
+                    <button
+                        type="button"
+                        class="quantity-button"
+                        onclick="increaseQuantity(${index})">
+
+                        +
+
+                    </button>
+
+                </div>
+
+
+                <button
+                    type="button"
+                    class="remove-item"
+                    onclick="removeFromCart(${index})">
+
+                    Remove
+
+                </button>
+
             </div>
-
-
-            <button
-                class="remove-item"
-                onclick="removeFromCart(${index})">
-
-                Remove
-
-            </button>
 
         `;
 
@@ -247,21 +328,16 @@ function openCart() {
 
 
     if (drawer) {
-
         drawer.classList.add("active");
-
     }
 
 
     if (overlay) {
-
         overlay.classList.add("active");
-
     }
 
 
     document.body.style.overflow = "hidden";
-
 }
 
 
@@ -279,21 +355,16 @@ function closeCart() {
 
 
     if (drawer) {
-
         drawer.classList.remove("active");
-
     }
 
 
     if (overlay) {
-
         overlay.classList.remove("active");
-
     }
 
 
     document.body.style.overflow = "";
-
 }
 
 
@@ -304,42 +375,39 @@ function closeCart() {
 function checkout() {
 
     if (cart.length === 0) {
-
         return;
-
     }
-
-
-    /*
-       Razorpay will be connected here.
-
-       We will later send the selected plan
-       and amount to your Render backend.
-    */
 
 
     const total = cart.reduce(
         (sum, item) =>
-            sum + Number(item.price),
+            sum +
+            Number(item.price) *
+            Number(item.quantity || 1),
         0
     );
 
 
     console.log(
-        "Checkout amount:",
+        "RAPTORA checkout amount:",
         total
     );
 
 
     /*
-       Temporary message until Razorpay
-       backend integration is added.
+       Razorpay will be connected here.
+
+       The backend will receive:
+       - plan
+       - quantity
+       - total amount
+
+       and create the Razorpay order.
     */
 
     alert(
         "Razorpay checkout will open here."
     );
-
 }
 
 
@@ -356,7 +424,6 @@ function escapeHTML(value) {
         String(value);
 
     return div.innerHTML;
-
 }
 
 
@@ -366,12 +433,10 @@ function escapeHTML(value) {
 
 document.addEventListener(
     "keydown",
-    function (event) {
+    function(event) {
 
         if (event.key === "Escape") {
-
             closeCart();
-
         }
 
     }
@@ -384,10 +449,29 @@ document.addEventListener(
 
 document.addEventListener(
     "DOMContentLoaded",
-    function () {
+    function() {
+
+        /*
+           Fix old cart items that were saved
+           before quantity was introduced.
+        */
+
+        cart = cart.map(item => ({
+
+            ...item,
+
+            quantity:
+                Number(item.quantity) > 0
+                    ? Number(item.quantity)
+                    : 1
+
+        }));
+
+
+        saveCart();
 
         updateCart();
 
     }
 );
-```
+
