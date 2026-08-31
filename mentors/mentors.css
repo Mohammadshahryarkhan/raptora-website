@@ -1,405 +1,118 @@
-/* =========================================================
-   RAPTORA MENTORS PAGE
-   Red / Black Theme
-========================================================= */
+```css
+/* =====================================================
+   RAPTORA — MENTORS PAGE
+   mentors/mentors.css
+===================================================== */
 
 
-/* =========================================================
-   PAGE BASE
-========================================================= */
+/* ================================
+   PAGE
+================================ */
 
-body {
+.mentors-page {
+    min-height: calc(100vh - 80px);
     background: #080808;
     color: #ffffff;
 }
 
-
-/* =========================================================
-   NAVBAR
-========================================================= */
-
-.navbar {
-    position: relative;
-    z-index: 1000;
-}
-
-.navbar .logo {
-    height: 48px;
-    width: auto;
-    object-fit: contain;
-}
-
-.nav-links a.active {
-    color: #e50914;
+.mentors-section {
+    width: min(1200px, 92%);
+    margin: 0 auto;
+    padding: 80px 0 110px;
 }
 
 
-/* =========================================================
-   MENTOR HERO
-========================================================= */
+/* ================================
+   HEADING
+================================ */
 
-.mentor-page-hero {
-    position: relative;
-
-    min-height: 520px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    padding: 100px 30px 80px;
-
-    overflow: hidden;
-
-    background:
-        radial-gradient(
-            circle at 50% 35%,
-            rgba(229, 9, 20, 0.16),
-            transparent 42%
-        ),
-        #080808;
-}
-
-
-.mentor-page-hero::before {
-    content: "";
-
-    position: absolute;
-
-    width: 650px;
-    height: 650px;
-
-    border-radius: 50%;
-
-    border: 1px solid rgba(229, 9, 20, 0.12);
-
-    top: -300px;
-    left: 50%;
-
-    transform: translateX(-50%);
-}
-
-
-.mentor-page-hero::after {
-    content: "";
-
-    position: absolute;
-
-    width: 900px;
-    height: 1px;
-
-    left: 50%;
-    bottom: 0;
-
-    transform: translateX(-50%);
-
-    background:
-        linear-gradient(
-            90deg,
-            transparent,
-            rgba(229, 9, 20, 0.6),
-            transparent
-        );
-}
-
-
-.mentor-hero-content {
-    position: relative;
-    z-index: 2;
-
-    max-width: 850px;
-
+.mentors-heading {
     text-align: center;
+    margin-bottom: 55px;
 }
 
-
-.mentor-tagline {
-    margin-bottom: 18px;
-
-    color: #e50914;
-
-    font-size: 12px;
-
-    font-weight: 800;
-
-    letter-spacing: 4px;
-}
-
-
-.mentor-hero-content h1 {
+.mentors-heading h1 {
     margin: 0;
-
-    font-size: clamp(48px, 8vw, 92px);
-
-    line-height: 0.95;
-
+    color: #ffffff;
+    font-size: clamp(40px, 6vw, 64px);
     font-weight: 900;
-
-    letter-spacing: -4px;
-
-    text-transform: uppercase;
+    letter-spacing: -2px;
 }
 
-
-.mentor-hero-content h1 span {
-    color: #e50914;
-}
-
-
-.mentor-hero-content > p {
-    max-width: 620px;
-
-    margin: 30px auto 0;
-
-    color: rgba(255, 255, 255, 0.65);
-
+.mentors-heading p {
+    margin: 12px 0 0;
+    color: rgba(255, 255, 255, 0.55);
     font-size: 16px;
-
-    line-height: 1.8;
 }
 
 
-/* =========================================================
-   SECTION TITLES
-========================================================= */
+/* ================================
+   RED LINE UNDER HEADING
+================================ */
 
-.mentor-section-title {
-    max-width: 800px;
+.mentors-heading::after {
+    content: "";
+    display: block;
 
-    margin: 0 auto 60px;
-
-    text-align: center;
-}
-
-
-.small-heading {
-    margin-bottom: 14px;
-
-    color: #e50914;
-
-    font-size: 11px;
-
-    font-weight: 800;
-
-    letter-spacing: 3px;
-
-    text-transform: uppercase;
-}
-
-
-.mentor-section-title h2 {
-    margin: 0;
-
-    font-size: clamp(32px, 5vw, 52px);
-
-    line-height: 1.05;
-
-    font-weight: 900;
-
-    letter-spacing: -1.5px;
-}
-
-
-.mentor-section-title p {
-    max-width: 620px;
+    width: 55px;
+    height: 3px;
 
     margin: 22px auto 0;
 
-    color: rgba(255, 255, 255, 0.58);
-
-    font-size: 15px;
-
-    line-height: 1.8;
-}
-
-
-.mentor-glow-line {
-    width: 65px;
-    height: 3px;
-
-    margin: 20px auto;
-
+    background: #e50914;
     border-radius: 10px;
 
-    background: #e50914;
-
-    box-shadow:
-        0 0 18px rgba(229, 9, 20, 0.7);
+    box-shadow: 0 0 15px rgba(229, 9, 20, 0.5);
 }
 
 
-/* =========================================================
-   INTRO SECTION
-========================================================= */
+/* ================================
+   PLANS GRID
+================================ */
 
-.mentor-intro-section {
-    position: relative;
-
-    padding: 100px 7%;
-
-    background: #080808;
-}
-
-
-.mentor-benefits {
-    max-width: 1150px;
-
-    margin: 0 auto;
+.mentor-plans {
+    width: 100%;
 
     display: grid;
 
-    grid-template-columns:
-        repeat(3, 1fr);
+    grid-template-columns: repeat(4, 1fr);
 
-    gap: 22px;
-}
-
-
-.mentor-benefit-card {
-    position: relative;
-
-    padding: 35px 30px;
-
-    background:
-        linear-gradient(
-            145deg,
-            #151515,
-            #0d0d0d
-        );
-
-    border: 1px solid rgba(255, 255, 255, 0.07);
-
-    border-radius: 18px;
-
-    transition:
-        transform 0.3s ease,
-        border-color 0.3s ease,
-        box-shadow 0.3s ease;
-}
-
-
-.mentor-benefit-card:hover {
-    transform: translateY(-7px);
-
-    border-color:
-        rgba(229, 9, 20, 0.45);
-
-    box-shadow:
-        0 18px 50px rgba(0, 0, 0, 0.45);
-}
-
-
-.mentor-icon {
-    width: 52px;
-    height: 52px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    margin-bottom: 22px;
-
-    border-radius: 14px;
-
-    background:
-        rgba(229, 9, 20, 0.1);
-
-    border:
-        1px solid rgba(229, 9, 20, 0.3);
-
-    color: #e50914;
-
-    font-size: 20px;
-}
-
-
-.mentor-benefit-card h3 {
-    margin: 0 0 12px;
-
-    font-size: 19px;
-
-    font-weight: 800;
-}
-
-
-.mentor-benefit-card p {
-    margin: 0;
-
-    color: rgba(255, 255, 255, 0.55);
-
-    font-size: 14px;
-
-    line-height: 1.7;
-}
-
-
-/* =========================================================
-   PLANS SECTION
-========================================================= */
-
-.mentor-plans-section {
-    position: relative;
-
-    padding: 110px 7% 120px;
-
-    background:
-        linear-gradient(
-            180deg,
-            #080808,
-            #0b0b0b
-        );
-}
-
-
-.mentor-plans-grid {
-    max-width: 1200px;
-
-    margin: 0 auto;
-
-    display: grid;
-
-    grid-template-columns:
-        repeat(4, 1fr);
-
-    gap: 18px;
+    gap: 20px;
 
     align-items: stretch;
 }
 
 
-/* =========================================================
+/* ================================
    PLAN CARD
-========================================================= */
+================================ */
 
 .mentor-plan-card {
     position: relative;
 
-    display: flex;
+    min-height: 300px;
 
+    display: flex;
     flex-direction: column;
 
-    padding: 32px 26px;
+    padding: 30px 25px;
 
-    background:
-        linear-gradient(
-            145deg,
-            #151515,
-            #0e0e0e
-        );
+    background: #121212;
 
-    border:
-        1px solid rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.08);
 
-    border-radius: 20px;
+    border-radius: 18px;
 
     overflow: hidden;
 
     transition:
-        transform 0.3s ease,
-        border-color 0.3s ease,
-        box-shadow 0.3s ease;
+        transform 0.25s ease,
+        border-color 0.25s ease,
+        box-shadow 0.25s ease;
 }
 
+
+/* subtle top red line */
 
 .mentor-plan-card::before {
     content: "";
@@ -412,114 +125,73 @@ body {
     width: 100%;
     height: 2px;
 
-    background:
-        linear-gradient(
-            90deg,
-            transparent,
-            #e50914,
-            transparent
-        );
+    background: #e50914;
 
-    opacity: 0.3;
+    opacity: 0;
+
+    transition: opacity 0.25s ease;
 }
 
 
 .mentor-plan-card:hover {
-    transform: translateY(-8px);
+    transform: translateY(-7px);
 
-    border-color:
-        rgba(229, 9, 20, 0.5);
+    border-color: rgba(229, 9, 20, 0.45);
 
     box-shadow:
-        0 20px 55px rgba(0, 0, 0, 0.5);
+        0 18px 45px rgba(0, 0, 0, 0.45);
 }
 
 
-/* =========================================================
-   POPULAR CARD
-========================================================= */
-
-.mentor-plan-card.mentor-popular {
-    border-color:
-        rgba(229, 9, 20, 0.65);
-
-    box-shadow:
-        0 0 35px rgba(229, 9, 20, 0.08);
-}
-
-
-.mentor-plan-card.mentor-popular::before {
+.mentor-plan-card:hover::before {
     opacity: 1;
 }
 
 
-.popular-label {
-    position: absolute;
+/* ================================
+   PLAN TITLE
+================================ */
 
-    top: 15px;
-    right: 15px;
-
-    padding: 6px 9px;
-
-    border-radius: 50px;
-
-    background: #e50914;
+.mentor-plan-card h2 {
+    margin: 0;
 
     color: #ffffff;
 
-    font-size: 8px;
+    font-size: 24px;
 
-    font-weight: 900;
+    font-weight: 800;
 
-    letter-spacing: 0.7px;
+    letter-spacing: -0.5px;
 }
 
 
-/* =========================================================
-   PLAN CONTENT
-========================================================= */
+/* ================================
+   DESCRIPTION
+================================ */
 
-.plan-duration {
-    margin-bottom: 18px;
+.mentor-description {
+    margin: 10px 0 0;
 
-    color: #e50914;
+    min-height: 42px;
 
-    font-size: 10px;
-
-    font-weight: 900;
-
-    letter-spacing: 2px;
-}
-
-
-.mentor-plan-card h3 {
-    margin: 0 0 12px;
-
-    font-size: 25px;
-
-    font-weight: 900;
-}
-
-
-.plan-text {
-    min-height: 65px;
-
-    margin: 0 0 25px;
-
-    color: rgba(255, 255, 255, 0.55);
+    color: rgba(255, 255, 255, 0.48);
 
     font-size: 13px;
 
-    line-height: 1.65;
+    line-height: 1.6;
 }
 
 
-.plan-price {
-    margin-bottom: 25px;
+/* ================================
+   PRICE
+================================ */
 
-    color: #ffffff;
+.mentor-price {
+    margin-top: 24px;
 
-    font-size: 38px;
+    color: #e50914;
+
+    font-size: 34px;
 
     font-weight: 900;
 
@@ -527,133 +199,121 @@ body {
 }
 
 
-.plan-features {
-    display: flex;
+/* ================================
+   ADD TO CART
+================================ */
 
-    flex-direction: column;
-
-    gap: 12px;
-
-    margin: 0 0 30px;
-
-    padding: 0;
-
-    list-style: none;
-}
-
-
-.plan-features li {
-    display: flex;
-
-    align-items: center;
-
-    gap: 9px;
-
-    color: rgba(255, 255, 255, 0.7);
-
-    font-size: 12px;
-
-    line-height: 1.4;
-}
-
-
-.plan-features i {
-    color: #e50914;
-
-    font-size: 10px;
-}
-
-
-/* =========================================================
-   ADD TO CART BUTTON
-========================================================= */
-
-.mentor-add-cart {
+.add-to-cart {
     width: 100%;
+
+    height: 48px;
 
     margin-top: auto;
 
-    padding: 14px 18px;
+    border: none;
 
-    display: flex;
+    border-radius: 11px;
 
-    align-items: center;
-
-    justify-content: center;
-
-    gap: 9px;
-
-    border: 1px solid #e50914;
-
-    border-radius: 10px;
-
-    background: transparent;
+    background: #e50914;
 
     color: #ffffff;
 
-    font-size: 12px;
+    font-size: 13px;
 
     font-weight: 800;
 
     cursor: pointer;
 
     transition:
-        background 0.25s ease,
-        color 0.25s ease,
-        transform 0.2s ease;
+        background 0.2s ease,
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
 }
 
 
-.mentor-add-cart:hover {
-    background: #e50914;
-
-    color: #ffffff;
+.add-to-cart:hover {
+    background: #c70812;
 
     transform: translateY(-2px);
+
+    box-shadow:
+        0 8px 22px rgba(229, 9, 20, 0.25);
 }
 
 
-.mentor-add-cart:active {
+.add-to-cart:active {
     transform: scale(0.97);
 }
 
 
-.mentor-add-cart i {
-    color: #e50914;
+/* ================================
+   POPULAR PLAN
+================================ */
 
-    transition: color 0.25s ease;
+.mentor-plan-card.popular {
+    border-color:
+        rgba(229, 9, 20, 0.55);
+
+    box-shadow:
+        0 0 30px rgba(229, 9, 20, 0.06);
 }
 
 
-.mentor-add-cart:hover i {
+.mentor-plan-card.popular::before {
+    opacity: 1;
+}
+
+
+/* ================================
+   POPULAR BADGE
+================================ */
+
+.popular-badge {
+    position: absolute;
+
+    top: 15px;
+    right: 15px;
+
+    padding: 6px 10px;
+
+    border-radius: 20px;
+
+    background: #e50914;
+
     color: #ffffff;
+
+    font-size: 9px;
+
+    font-weight: 900;
+
+    letter-spacing: 0.6px;
 }
 
 
-/* =========================================================
+/* ================================
    FLOATING CART
-========================================================= */
+================================ */
 
-.mentor-cart-floating {
+.cart-button {
     position: fixed;
 
-    right: 28px;
-    bottom: 28px;
+    right: 25px;
+    bottom: 25px;
 
     z-index: 900;
 
-    width: 54px;
-    height: 54px;
+    width: 55px;
+    height: 55px;
 
     display: flex;
     align-items: center;
     justify-content: center;
 
-    border: 1px solid rgba(229, 9, 20, 0.65);
+    border: none;
 
     border-radius: 50%;
 
-    background: #121212;
+    background: #e50914;
 
     color: #ffffff;
 
@@ -662,20 +322,25 @@ body {
     cursor: pointer;
 
     box-shadow:
-        0 10px 35px rgba(0, 0, 0, 0.5);
+        0 10px 30px rgba(0, 0, 0, 0.5);
 
     transition:
         transform 0.2s ease,
-        background 0.2s ease;
+        box-shadow 0.2s ease;
 }
 
 
-.mentor-cart-floating:hover {
-    background: #e50914;
+.cart-button:hover {
+    transform: scale(1.08);
 
-    transform: translateY(-3px);
+    box-shadow:
+        0 12px 35px rgba(229, 9, 20, 0.3);
 }
 
+
+/* ================================
+   CART COUNT
+================================ */
 
 #cart-count {
     position: absolute;
@@ -683,8 +348,8 @@ body {
     top: -3px;
     right: -3px;
 
-    min-width: 19px;
-    height: 19px;
+    min-width: 20px;
+    height: 20px;
 
     display: flex;
     align-items: center;
@@ -694,11 +359,11 @@ body {
 
     border: 2px solid #080808;
 
-    border-radius: 50px;
+    border-radius: 50%;
 
-    background: #e50914;
+    background: #ffffff;
 
-    color: #ffffff;
+    color: #e50914;
 
     font-size: 9px;
 
@@ -706,9 +371,9 @@ body {
 }
 
 
-/* =========================================================
+/* ================================
    CART OVERLAY
-========================================================= */
+================================ */
 
 .cart-overlay {
     position: fixed;
@@ -717,16 +382,15 @@ body {
 
     z-index: 1000;
 
-    background:
-        rgba(0, 0, 0, 0.72);
+    background: rgba(0, 0, 0, 0.72);
 
     opacity: 0;
 
     visibility: hidden;
 
     transition:
-        opacity 0.3s ease,
-        visibility 0.3s ease;
+        opacity 0.25s ease,
+        visibility 0.25s ease;
 }
 
 
@@ -737,9 +401,9 @@ body {
 }
 
 
-/* =========================================================
+/* ================================
    CART DRAWER
-========================================================= */
+================================ */
 
 .cart-drawer {
     position: fixed;
@@ -749,20 +413,15 @@ body {
 
     z-index: 1100;
 
-    width: min(430px, 92vw);
+    width: 410px;
+    max-width: 92vw;
 
     height: 100vh;
 
     display: flex;
-
     flex-direction: column;
 
-    background:
-        linear-gradient(
-            180deg,
-            #151515,
-            #090909
-        );
+    background: #101010;
 
     border-left:
         1px solid rgba(229, 9, 20, 0.25);
@@ -773,12 +432,7 @@ body {
     transform: translateX(100%);
 
     transition:
-        transform 0.35s cubic-bezier(
-            0.4,
-            0,
-            0.2,
-            1
-        );
+        transform 0.3s ease;
 }
 
 
@@ -787,41 +441,29 @@ body {
 }
 
 
-/* =========================================================
+/* ================================
    CART HEADER
-========================================================= */
+================================ */
 
 .cart-header {
     display: flex;
 
-    align-items: flex-start;
-
+    align-items: center;
     justify-content: space-between;
 
-    padding: 30px;
+    padding: 24px;
 
     border-bottom:
         1px solid rgba(255, 255, 255, 0.07);
 }
 
 
-.cart-small-title {
-    color: #e50914;
-
-    font-size: 9px;
-
-    font-weight: 900;
-
-    letter-spacing: 3px;
-}
-
-
 .cart-header h2 {
-    margin: 6px 0 0;
+    margin: 0;
 
-    font-size: 26px;
+    font-size: 24px;
 
-    font-weight: 900;
+    font-weight: 800;
 }
 
 
@@ -833,169 +475,124 @@ body {
     align-items: center;
     justify-content: center;
 
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    border: none;
 
     border-radius: 50%;
 
-    background: transparent;
+    background: #1c1c1c;
 
-    color: rgba(255, 255, 255, 0.7);
+    color: #ffffff;
+
+    font-size: 15px;
 
     cursor: pointer;
 
     transition:
-        background 0.2s ease,
-        color 0.2s ease;
+        background 0.2s ease;
 }
 
 
 .close-cart:hover {
     background: #e50914;
-
-    color: #ffffff;
 }
 
 
-/* =========================================================
+/* ================================
    CART ITEMS
-========================================================= */
+================================ */
 
 .cart-items {
     flex: 1;
 
     overflow-y: auto;
 
-    padding: 25px 30px;
-}
-
-
-.cart-items::-webkit-scrollbar {
-    width: 5px;
-}
-
-
-.cart-items::-webkit-scrollbar-track {
-    background: transparent;
-}
-
-
-.cart-items::-webkit-scrollbar-thumb {
-    background: #e50914;
-
-    border-radius: 10px;
+    padding: 20px;
 }
 
 
 .cart-item {
-    margin-bottom: 14px;
+    padding: 17px;
 
-    padding: 18px;
+    margin-bottom: 12px;
+
+    background: #171717;
 
     border:
         1px solid rgba(255, 255, 255, 0.07);
 
     border-radius: 13px;
-
-    background: #111111;
-}
-
-
-.cart-item-top {
-    display: flex;
-
-    align-items: center;
-
-    justify-content: space-between;
-
-    gap: 15px;
 }
 
 
 .cart-item-name {
     color: #ffffff;
 
-    font-size: 13px;
+    font-size: 14px;
 
     font-weight: 700;
 }
 
 
 .cart-item-price {
+    margin-top: 6px;
+
     color: #e50914;
 
     font-size: 14px;
 
-    font-weight: 900;
-
-    white-space: nowrap;
+    font-weight: 800;
 }
 
 
-.remove-cart-item {
-    margin-top: 12px;
+.remove-item {
+    margin-top: 10px;
 
     padding: 0;
 
     border: none;
 
-    background: transparent;
+    background: none;
 
     color: rgba(255, 255, 255, 0.4);
 
-    font-size: 10px;
+    font-size: 11px;
 
     cursor: pointer;
 }
 
 
-.remove-cart-item:hover {
+.remove-item:hover {
     color: #e50914;
 }
 
 
-.empty-cart {
-    height: 100%;
+/* ================================
+   CART BOTTOM
+================================ */
 
-    display: flex;
-
-    align-items: center;
-
-    justify-content: center;
-
-    color: rgba(255, 255, 255, 0.4);
-
-    font-size: 14px;
-}
-
-
-/* =========================================================
-   CART FOOTER
-========================================================= */
-
-.cart-footer {
-    padding: 25px 30px 30px;
+.cart-bottom {
+    padding: 22px;
 
     border-top:
         1px solid rgba(255, 255, 255, 0.07);
 }
 
 
-.total-row {
+.cart-total-row {
     display: flex;
 
     align-items: center;
-
     justify-content: space-between;
 
-    margin-bottom: 18px;
+    margin-bottom: 16px;
 
-    color: rgba(255, 255, 255, 0.65);
+    color: rgba(255, 255, 255, 0.55);
 
-    font-size: 13px;
+    font-size: 14px;
 }
 
 
-.total-row strong {
+.cart-total-row strong {
     color: #ffffff;
 
     font-size: 22px;
@@ -1007,33 +604,25 @@ body {
 .checkout-button {
     width: 100%;
 
-    padding: 15px 20px;
-
-    display: flex;
-
-    align-items: center;
-
-    justify-content: center;
-
-    gap: 10px;
+    height: 50px;
 
     border: none;
 
-    border-radius: 10px;
+    border-radius: 12px;
 
     background: #e50914;
 
     color: #ffffff;
 
-    font-size: 13px;
+    font-size: 14px;
 
-    font-weight: 900;
+    font-weight: 800;
 
     cursor: pointer;
 
     transition:
-        transform 0.2s ease,
-        opacity 0.2s ease;
+        opacity 0.2s ease,
+        transform 0.2s ease;
 }
 
 
@@ -1049,187 +638,58 @@ body {
 }
 
 
-.secure-payment {
-    margin: 13px 0 0;
-
-    text-align: center;
-
-    color: rgba(255, 255, 255, 0.35);
-
-    font-size: 9px;
-}
-
-
-.secure-payment i {
-    margin-right: 5px;
-
-    color: #e50914;
-}
-
-
-/* =========================================================
-   FOOTER
-========================================================= */
-
-.mentor-footer {
-    padding: 45px 7%;
-
-    border-top:
-        1px solid rgba(255, 255, 255, 0.06);
-
-    background: #050505;
-}
-
-
-.mentor-footer-content {
-    max-width: 1200px;
-
-    margin: auto;
-
-    display: flex;
-
-    align-items: center;
-
-    justify-content: space-between;
-
-    gap: 30px;
-}
-
-
-.mentor-footer strong {
-    color: #ffffff;
-
-    font-size: 18px;
-
-    font-weight: 900;
-
-    letter-spacing: 2px;
-}
-
-
-.mentor-footer p {
-    margin: 8px 0 0;
-
-    color: rgba(255, 255, 255, 0.4);
-
-    font-size: 11px;
-}
-
-
-.footer-links {
-    display: flex;
-
-    gap: 22px;
-}
-
-
-.footer-links a {
-    color: rgba(255, 255, 255, 0.5);
-
-    font-size: 11px;
-
-    text-decoration: none;
-
-    transition: color 0.2s ease;
-}
-
-
-.footer-links a:hover {
-    color: #e50914;
-}
-
-
-/* =========================================================
+/* ================================
    RESPONSIVE
-========================================================= */
+================================ */
 
 @media (max-width: 1050px) {
 
-    .mentor-plans-grid {
-        grid-template-columns:
-            repeat(2, 1fr);
+    .mentor-plans {
+        grid-template-columns: repeat(2, 1fr);
     }
 
 }
 
 
-@media (max-width: 800px) {
+@media (max-width: 650px) {
 
-    .mentor-benefits {
-        grid-template-columns:
-            1fr;
-    }
-
-
-    .mentor-page-hero {
-        min-height: 460px;
-
-        padding-top: 120px;
-    }
-
-
-    .mentor-hero-content h1 {
-        letter-spacing: -2px;
-    }
-
-
-    .mentor-footer-content {
-        flex-direction: column;
-
-        align-items: flex-start;
-    }
-
-}
-
-
-@media (max-width: 600px) {
-
-    .mentor-plans-section,
-    .mentor-intro-section {
-        padding-left: 20px;
-        padding-right: 20px;
-    }
-
-
-    .mentor-plans-grid {
-        grid-template-columns:
-            1fr;
-    }
-
-
-    .mentor-page-hero {
-        min-height: 430px;
+    .mentors-section {
+        width: 90%;
 
         padding:
-            100px 20px 70px;
+            55px 0 80px;
     }
 
 
-    .mentor-hero-content h1 {
-        font-size: 48px;
-
-        line-height: 1;
+    .mentors-heading {
+        margin-bottom: 35px;
     }
 
 
-    .mentor-hero-content > p {
-        font-size: 13px;
+    .mentors-heading h1 {
+        font-size: 40px;
     }
 
 
-    .mentor-cart-floating {
+    .mentor-plans {
+        grid-template-columns: 1fr;
+
+        gap: 15px;
+    }
+
+
+    .mentor-plan-card {
+        min-height: 260px;
+    }
+
+
+    .cart-button {
         right: 18px;
         bottom: 18px;
 
-        width: 50px;
-        height: 50px;
-    }
-
-
-    .footer-links {
-        flex-wrap: wrap;
-
-        gap: 14px;
+        width: 52px;
+        height: 52px;
     }
 
 }
+```
