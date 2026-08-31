@@ -1,3 +1,4 @@
+
 const express = require("express");
 const crypto = require("crypto");
 const Razorpay = require("razorpay");
@@ -57,11 +58,6 @@ const DISCOUNT_CODES = {
         value: 10
     },
 
-    RAPTORA99: {
-        type: "percentage",
-        value: 99
-    },
-
     RAPTORA100: {
         type: "percentage",
         value: 100
@@ -69,7 +65,7 @@ const DISCOUNT_CODES = {
 
     PAPA99: {
         type: "percentage",
-        value: 99.7
+        value: 99
     },
 
     WELCOME50: {
@@ -81,7 +77,7 @@ const DISCOUNT_CODES = {
 
 
 // =====================================================
-// CALCULATE SERVER-SIDE CART TOTAL
+// CALCULATE CART SUBTOTAL
 // =====================================================
 
 function calculateCartSubtotal(items) {
@@ -97,19 +93,17 @@ function calculateCartSubtotal(items) {
         const name = String(item.name || "");
         const quantity = Number(item.quantity || 1);
 
-        if (!MENTOR_PLANS[name]) {
+        const plan = MENTOR_PLANS[name];
+
+        if (!plan) {
             return 0;
         }
 
-        if (
-            !Number.isInteger(quantity) ||
-            quantity < 1
-        ) {
+        if (!Number.isInteger(quantity) || quantity < 1) {
             return 0;
         }
 
-        subtotal +=
-            MENTOR_PLANS[name].price * quantity;
+        subtotal += plan.price * quantity;
     }
 
     return subtotal;
@@ -140,10 +134,7 @@ function calculateDiscount(subtotal, coupon) {
 
     let discount = 0;
 
-    if (
-        discountCode.type ===
-        "percentage"
-    ) {
+    if (discountCode.type === "percentage") {
 
         discount =
             subtotal *
@@ -152,10 +143,7 @@ function calculateDiscount(subtotal, coupon) {
 
     }
 
-    else if (
-        discountCode.type ===
-        "fixed"
-    ) {
+    else if (discountCode.type === "fixed") {
 
         discount =
             discountCode.value;
@@ -170,33 +158,30 @@ function calculateDiscount(subtotal, coupon) {
 
 
 // =====================================================
-// AUTHENTICATION
+// GET USER FROM JWT
 // =====================================================
 
-function authenticateUser(req, res, next) {
+async function getUserFromToken(req) {
+
+    const authHeader =
+        req.headers.authorization;
+
+    if (!authHeader) {
+        return null;
+    }
+
+    if (!authHeader.startsWith("Bearer ")) {
+        return null;
+    }
+
+    const token =
+        authHeader.split(" ")[1];
+
+    if (!token) {
+        return null;
+    }
 
     try {
-
-        const authHeader =
-            req.headers.authorization;
-
-        if (!authHeader) {
-
-            return res.status(401).json({
-
-                success: false,
-
-                message:
-                    "Authentication required."
-
-            });
-
-        }
-
-        const token =
-            authHeader.startsWith("Bearer ")
-                ? authHeader.substring(7)
-                : authHeader;
 
         const decoded =
             jwt.verify(
@@ -204,30 +189,20 @@ function authenticateUser(req, res, next) {
                 process.env.JWT_SECRET
             );
 
-        req.user = decoded;
+        const user =
+            await User.findById(decoded.id);
 
-        next();
+        return user || null;
 
-    }
-
-    catch (error) {
+    } catch (error) {
 
         console.error(
-            "Authentication error:",
-            error.message
+            "JWT verification error:",
+            error
         );
 
-        return res.status(401).json({
-
-            success: false,
-
-            message:
-                "Invalid or expired login session."
-
-        });
-
+        return null;
     }
-
 }
 
 
@@ -237,7 +212,6 @@ function authenticateUser(req, res, next) {
 
 router.post(
     "/create-order",
-    authenticateUser,
     async (req, res) => {
 
         try {
@@ -249,7 +223,29 @@ router.post(
 
 
             // -----------------------------------------
-            // VALIDATE CART
+            // USER
+            // -----------------------------------------
+
+            const user =
+                await getUserFromToken(req);
+
+
+            if (!user) {
+
+                return res.status(401).json({
+
+                    success: false,
+
+                    message:
+                        "Please login before purchasing a mentor plan."
+
+                });
+
+            }
+
+
+            // -----------------------------------------
+            // CART
             // -----------------------------------------
 
             const subtotal =
@@ -274,7 +270,7 @@ router.post(
 
 
             // -----------------------------------------
-            // CALCULATE DISCOUNT
+            // DISCOUNT
             // -----------------------------------------
 
             const discount =
@@ -295,6 +291,13 @@ router.post(
                 );
 
 
+            /*
+             * Razorpay does not accept a zero-value order.
+             *
+             * Therefore 100% discount codes cannot be
+             * processed through Razorpay.
+             */
+
             if (
                 !finalAmount ||
                 finalAmount <= 0
@@ -305,7 +308,7 @@ router.post(
                     success: false,
 
                     message:
-                        "Invalid payment amount."
+                        "This discount makes the order free. Please use a paid order."
 
                 });
 
@@ -333,7 +336,7 @@ router.post(
                     notes: {
 
                         userId:
-                            String(req.user.id),
+                            String(user._id),
 
                         coupon:
                             coupon || "",
@@ -397,12 +400,11 @@ router.post(
 
 
 // =====================================================
-// VERIFY PAYMENT + ACTIVATE MENTOR PLAN
+// VERIFY PAYMENT + ACTIVATE MENTORSHIP
 // =====================================================
 
 router.post(
     "/verify",
-    authenticateUser,
     async (req, res) => {
 
         try {
@@ -416,7 +418,7 @@ router.post(
 
 
             // -----------------------------------------
-            // VALIDATE PAYMENT
+            // PAYMENT DATA
             // -----------------------------------------
 
             if (
@@ -438,7 +440,29 @@ router.post(
 
 
             // -----------------------------------------
-            // GENERATE SIGNATURE
+            // USER
+            // -----------------------------------------
+
+            const user =
+                await getUserFromToken(req);
+
+
+            if (!user) {
+
+                return res.status(401).json({
+
+                    success: false,
+
+                    message:
+                        "Please login again."
+
+                });
+
+            }
+
+
+            // -----------------------------------------
+            // SIGNATURE
             // -----------------------------------------
 
             const generatedSignature =
@@ -457,22 +481,9 @@ router.post(
             // SAFE SIGNATURE COMPARISON
             // -----------------------------------------
 
-            const expected =
-                Buffer.from(
-                    generatedSignature,
-                    "utf8"
-                );
-
-            const received =
-                Buffer.from(
-                    razorpay_signature,
-                    "utf8"
-                );
-
-
             if (
-                expected.length !==
-                received.length
+                generatedSignature.length !==
+                razorpay_signature.length
             ) {
 
                 return res.status(400).json({
@@ -489,8 +500,14 @@ router.post(
 
             if (
                 !crypto.timingSafeEqual(
-                    expected,
-                    received
+                    Buffer.from(
+                        generatedSignature,
+                        "utf8"
+                    ),
+                    Buffer.from(
+                        razorpay_signature,
+                        "utf8"
+                    )
                 )
             ) {
 
@@ -507,75 +524,51 @@ router.post(
 
 
             // -----------------------------------------
-            // FIND USER
-            // -----------------------------------------
-
-            const user =
-                await User.findById(
-                    req.user.id
-                );
-
-
-            if (!user) {
-
-                return res.status(404).json({
-
-                    success: false,
-
-                    message:
-                        "User account not found."
-
-                });
-
-            }
-
-
-            // -----------------------------------------
             // FIND PURCHASED PLAN
             // -----------------------------------------
 
-            if (
-                !Array.isArray(items) ||
-                items.length === 0
-            ) {
+            let purchasedPlan = null;
 
-                return res.status(400).json({
+            if (Array.isArray(items)) {
 
-                    success: false,
+                for (const item of items) {
 
-                    message:
-                        "Mentor plan information is missing."
+                    const plan =
+                        MENTOR_PLANS[
+                            String(item.name || "")
+                        ];
 
-                });
+                    if (plan) {
+
+                        purchasedPlan = {
+
+                            name:
+                                String(item.name),
+
+                            price:
+                                plan.price,
+
+                            months:
+                                plan.months
+
+                        };
+
+                        break;
+                    }
+
+                }
 
             }
 
 
-            // For now, activate the first mentor plan
-            // in the cart.
-
-            const purchasedPlan =
-                items[0];
-
-
-            const planName =
-                String(
-                    purchasedPlan.name || ""
-                );
-
-
-            const plan =
-                MENTOR_PLANS[planName];
-
-
-            if (!plan) {
+            if (!purchasedPlan) {
 
                 return res.status(400).json({
 
                     success: false,
 
                     message:
-                        "Invalid mentor plan."
+                        "Unable to identify mentor plan."
 
                 });
 
@@ -583,102 +576,102 @@ router.post(
 
 
             // -----------------------------------------
-            // START DATE
+            // DATES
             // -----------------------------------------
 
             const startDate =
                 new Date();
 
 
-            // -----------------------------------------
-            // EXPIRY DATE
-            // -----------------------------------------
+            const endDate =
+                new Date(
+                    startDate
+                );
 
-            const expiryDate =
-                new Date(startDate);
-
-
-            expiryDate.setMonth(
-                expiryDate.getMonth() +
-                plan.months
+            endDate.setMonth(
+                endDate.getMonth() +
+                purchasedPlan.months
             );
 
 
             // -----------------------------------------
-            // ACTIVATE MENTOR PLAN
+            // UPDATE USER
             // -----------------------------------------
 
-            user.mentorPlan =
-                planName;
+            user.mentorSubscription = {
 
-            user.mentorPlanPrice =
-                plan.price;
+                active: true,
 
-            user.mentorStartDate =
+                plan:
+                    purchasedPlan.name,
+
+                durationMonths:
+                    purchasedPlan.months,
+
+                price:
+                    purchasedPlan.price,
+
+                startDate:
+                    startDate,
+
+                endDate:
+                    endDate,
+
+                razorpayOrderId:
+                    razorpay_order_id,
+
+                razorpayPaymentId:
+                    razorpay_payment_id
+
+            };
+
+
+            // -----------------------------------------
+            // COURSE START DATE
+            // -----------------------------------------
+
+            user.courseStartDate =
                 startDate;
 
-            user.mentorExpiryDate =
-                expiryDate;
 
-            user.mentorActive =
-                true;
+            // -----------------------------------------
+            // DEFAULT MENTORSHIP PROGRESS
+            // -----------------------------------------
+
+            user.mentorshipProgress = {
+
+                completedMilestones:
+                    0,
+
+                totalMilestones:
+                    10,
+
+                currentMilestone:
+                    "Getting Started"
+
+            };
 
 
             // -----------------------------------------
             // BADGE
             // -----------------------------------------
 
-            if (
-                user.badge ===
-                "New Member"
-            ) {
+            user.badge =
+                "Raptora Mentor Member";
 
-                user.badge =
-                    "Mentor Student";
-
-            }
-
-
-            // -----------------------------------------
-            // SAVE USER
-            // -----------------------------------------
 
             await user.save();
 
 
             // -----------------------------------------
-            // LOG PAYMENT
+            // SUCCESS
             // -----------------------------------------
 
             console.log(
-                "Razorpay payment verified:",
+                "Razorpay payment verified and mentorship activated:",
                 razorpay_payment_id
             );
 
-            console.log(
-                "Mentor activated for:",
-                user.email
-            );
-
-            console.log(
-                "Plan:",
-                planName
-            );
-
-            console.log(
-                "Start:",
-                startDate
-            );
-
-            console.log(
-                "Expiry:",
-                expiryDate
-            );
-
-
-            // -----------------------------------------
-            // SUCCESS
-            // -----------------------------------------
 
             res.json({
 
@@ -694,13 +687,13 @@ router.post(
                     razorpay_order_id,
 
                 mentorPlan:
-                    planName,
+                    purchasedPlan.name,
 
-                mentorStartDate:
+                startDate:
                     startDate,
 
-                mentorExpiryDate:
-                    expiryDate
+                endDate:
+                    endDate
 
             });
 
@@ -713,7 +706,6 @@ router.post(
                 "Payment verification error:",
                 error
             );
-
 
             res.status(500).json({
 
@@ -731,3 +723,4 @@ router.post(
 
 
 module.exports = router;
+
