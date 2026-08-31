@@ -5,30 +5,21 @@
 
     <meta charset="UTF-8">
 
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
 
     <title>RAPTORA | Mentors</title>
 
-    <meta
-        name="description"
-        content="Get personalised guidance from experienced RAPTORA mentors.">
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-    <!-- Font Awesome -->
-    <link
-        rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- EXISTING RAPTORA CSS -->
+    <link rel="stylesheet"
+          href="../frontend/style.css">
 
-    <!-- Existing Raptora CSS -->
-    <link
-        rel="stylesheet"
-        href="../frontend/style.css">
-
-    <!-- Mentors CSS -->
-    <link
-        rel="stylesheet"
-        href="mentors.css">
+    <!-- MENTORS CSS -->
+    <link rel="stylesheet"
+          href="mentors.css">
 
 </head>
 
@@ -37,7 +28,7 @@
 
 
 <!-- =====================================================
-     NAVBAR
+     EXISTING RAPTORA NAVBAR
 ===================================================== -->
 
 <header class="navbar">
@@ -68,13 +59,11 @@
                 </a>
             </li>
 
-
             <li>
                 <a href="../index.html#features">
                     Features
                 </a>
             </li>
-
 
             <li>
                 <a href="../index.html#resources">
@@ -82,17 +71,11 @@
                 </a>
             </li>
 
-
             <li>
-                <a
-                    href="mentors.html"
-                    class="active">
-
+                <a href="mentors.html" class="active">
                     Mentor
-
                 </a>
             </li>
-
 
             <li>
                 <a href="../index.html#about">
@@ -126,476 +109,204 @@
 
     </div>
 
-
 </header>
 
 
 
 <!-- =====================================================
-     HERO
+     MENTORS PAGE
 ===================================================== -->
 
-<section class="mentor-page-hero">
-
-    <div class="mentor-hero-content">
-
-        <div class="mentor-tagline">
-
-            RAPTORA MENTORSHIP
-
-        </div>
+<main class="mentors-page">
 
 
-        <h1>
-
-            YOUR JOURNEY.
-
-            <br>
-
-            <span>OUR GUIDANCE.</span>
-
-        </h1>
+    <section class="mentors-section">
 
 
-        <p>
+        <!-- PAGE TITLE -->
 
-            Get personalised guidance from experienced
-            mentors who understand your admission journey.
+        <div class="mentors-heading">
 
-        </p>
-
-    </div>
-
-</section>
-
-
-
-<!-- =====================================================
-     WHY MENTORS
-===================================================== -->
-
-<section class="mentor-intro-section">
-
-    <div class="mentor-section-title">
-
-        <div class="small-heading">
-            WHY RAPTORA MENTORS?
-        </div>
-
-
-        <h2>
-            Don't Navigate Admissions Alone.
-        </h2>
-
-
-        <div class="mentor-glow-line"></div>
-
-
-        <p>
-
-            Get the right guidance at every step of your
-            college admission journey.
-
-        </p>
-
-    </div>
-
-
-    <div class="mentor-benefits">
-
-
-        <div class="mentor-benefit-card">
-
-            <div class="mentor-icon">
-
-                <i class="fa-solid fa-user-graduate"></i>
-
-            </div>
-
-
-            <h3>
-                Experienced Guidance
-            </h3>
-
+            <h1>
+                Mentors
+            </h1>
 
             <p>
-
-                Learn from mentors who understand the
-                admission process.
-
+                Get guidance from experienced mentors.
             </p>
 
         </div>
 
 
 
-        <div class="mentor-benefit-card">
+        <!-- =================================================
+             PLANS
+        ================================================== -->
 
-            <div class="mentor-icon">
+        <div class="mentor-plans">
 
-                <i class="fa-solid fa-comments"></i>
+
+            <!-- ================= 1 MONTH ================= -->
+
+            <div
+                class="mentor-plan-card"
+                data-name="1 Month Mentor Plan"
+                data-price="400">
+
+
+                <h2>
+                    1 Month
+                </h2>
+
+
+                <p class="mentor-description">
+                    Perfect for quick guidance
+                </p>
+
+
+                <div class="mentor-price">
+                    ₹400
+                </div>
+
+
+                <button
+                    class="add-to-cart"
+                    onclick="addToCart(
+                        '1 Month Mentor Plan',
+                        400
+                    )">
+
+                    Add to Cart
+
+                </button>
 
             </div>
 
 
-            <h3>
-                Personalised Support
-            </h3>
+
+            <!-- ================= 3 MONTHS ================= -->
+
+            <div
+                class="mentor-plan-card"
+                data-name="3 Months Mentor Plan"
+                data-price="1100">
 
 
-            <p>
+                <h2>
+                    3 Months
+                </h2>
 
-                Get guidance based on your rank,
-                goals and preferences.
 
-            </p>
+                <p class="mentor-description">
+                    Get consistent mentorship
+                </p>
+
+
+                <div class="mentor-price">
+                    ₹1,100
+                </div>
+
+
+                <button
+                    class="add-to-cart"
+                    onclick="addToCart(
+                        '3 Months Mentor Plan',
+                        1100
+                    )">
+
+                    Add to Cart
+
+                </button>
+
+            </div>
+
+
+
+            <!-- ================= 6 MONTHS ================= -->
+
+            <div
+                class="mentor-plan-card popular"
+                data-name="6 Months Mentor Plan"
+                data-price="2200">
+
+
+                <div class="popular-badge">
+                    POPULAR
+                </div>
+
+
+                <h2>
+                    6 Months
+                </h2>
+
+
+                <p class="mentor-description">
+                    Long-term admission guidance
+                </p>
+
+
+                <div class="mentor-price">
+                    ₹2,200
+                </div>
+
+
+                <button
+                    class="add-to-cart"
+                    onclick="addToCart(
+                        '6 Months Mentor Plan',
+                        2200
+                    )">
+
+                    Add to Cart
+
+                </button>
+
+            </div>
+
+
+
+            <!-- ================= 12 MONTHS ================= -->
+
+            <div
+                class="mentor-plan-card"
+                data-name="12 Months Mentor Plan"
+                data-price="4600">
+
+
+                <h2>
+                    12 Months
+                </h2>
+
+
+                <p class="mentor-description">
+                    Complete yearly mentorship
+                </p>
+
+
+                <div class="mentor-price">
+                    ₹4,600
+                </div>
+
+
+                <button
+                    class="add-to-cart"
+                    onclick="addToCart(
+                        '12 Months Mentor Plan',
+                        4600
+                    )">
+
+                    Add to Cart
+
+                </button>
+
+            </div>
+
 
         </div>
 
+    </section>
 
-
-        <div class="mentor-benefit-card">
-
-            <div class="mentor-icon">
-
-                <i class="fa-solid fa-compass"></i>
-
-            </div>
-
-
-            <h3>
-                Better Decisions
-            </h3>
-
-
-            <p>
-
-                Make informed decisions about colleges,
-                branches and your future.
-
-            </p>
-
-        </div>
-
-
-    </div>
-
-</section>
-
-
-
-<!-- =====================================================
-     PLANS
-===================================================== -->
-
-<section
-    id="plans"
-    class="mentor-plans-section">
-
-
-    <div class="mentor-section-title">
-
-        <div class="small-heading">
-            MENTORSHIP PLANS
-        </div>
-
-
-        <h2>
-            Choose Your Plan
-        </h2>
-
-
-        <div class="mentor-glow-line"></div>
-
-
-        <p>
-
-            Choose the mentorship duration that works
-            best for you.
-
-        </p>
-
-    </div>
-
-
-
-    <div class="mentor-plans-grid">
-
-
-        <!-- ================= 1 MONTH ================= -->
-
-        <div class="mentor-plan-card">
-
-            <div class="plan-duration">
-                1 MONTH
-            </div>
-
-
-            <h3>
-                Starter
-            </h3>
-
-
-            <p class="plan-text">
-
-                Perfect for quick guidance and
-                admission-related support.
-
-            </p>
-
-
-            <div class="plan-price">
-                ₹400
-            </div>
-
-
-            <ul class="plan-features">
-
-                <li>
-                    <i class="fa-solid fa-check"></i>
-                    Mentor guidance
-                </li>
-
-                <li>
-                    <i class="fa-solid fa-check"></i>
-                    Admission support
-                </li>
-
-                <li>
-                    <i class="fa-solid fa-check"></i>
-                    College guidance
-                </li>
-
-            </ul>
-
-
-            <button
-                class="mentor-add-cart"
-                onclick="addToCart(
-                    '1 Month Mentor Plan',
-                    400
-                )">
-
-                <i class="fa-solid fa-cart-plus"></i>
-
-                Add to Cart
-
-            </button>
-
-        </div>
-
-
-
-        <!-- ================= 3 MONTHS ================= -->
-
-        <div class="mentor-plan-card">
-
-            <div class="plan-duration">
-                3 MONTHS
-            </div>
-
-
-            <h3>
-                Growth
-            </h3>
-
-
-            <p class="plan-text">
-
-                Consistent mentorship throughout
-                your admission preparation.
-
-            </p>
-
-
-            <div class="plan-price">
-                ₹1,100
-            </div>
-
-
-            <ul class="plan-features">
-
-                <li>
-                    <i class="fa-solid fa-check"></i>
-                    Mentor guidance
-                </li>
-
-                <li>
-                    <i class="fa-solid fa-check"></i>
-                    Admission support
-                </li>
-
-                <li>
-                    <i class="fa-solid fa-check"></i>
-                    College comparison
-                </li>
-
-            </ul>
-
-
-            <button
-                class="mentor-add-cart"
-                onclick="addToCart(
-                    '3 Months Mentor Plan',
-                    1100
-                )">
-
-                <i class="fa-solid fa-cart-plus"></i>
-
-                Add to Cart
-
-            </button>
-
-        </div>
-
-
-
-        <!-- ================= 6 MONTHS ================= -->
-
-        <div
-            class="mentor-plan-card mentor-popular">
-
-            <div class="popular-label">
-                MOST POPULAR
-            </div>
-
-
-            <div class="plan-duration">
-                6 MONTHS
-            </div>
-
-
-            <h3>
-                Pro
-            </h3>
-
-
-            <p class="plan-text">
-
-                Long-term support through your
-                complete admission journey.
-
-            </p>
-
-
-            <div class="plan-price">
-                ₹2,200
-            </div>
-
-
-            <ul class="plan-features">
-
-                <li>
-                    <i class="fa-solid fa-check"></i>
-                    Mentor guidance
-                </li>
-
-                <li>
-                    <i class="fa-solid fa-check"></i>
-                    Admission support
-                </li>
-
-                <li>
-                    <i class="fa-solid fa-check"></i>
-                    College & branch guidance
-                </li>
-
-                <li>
-                    <i class="fa-solid fa-check"></i>
-                    Personalised counselling
-                </li>
-
-            </ul>
-
-
-            <button
-                class="mentor-add-cart"
-                onclick="addToCart(
-                    '6 Months Mentor Plan',
-                    2200
-                )">
-
-                <i class="fa-solid fa-cart-plus"></i>
-
-                Add to Cart
-
-            </button>
-
-        </div>
-
-
-
-        <!-- ================= 12 MONTHS ================= -->
-
-        <div class="mentor-plan-card">
-
-            <div class="plan-duration">
-                12 MONTHS
-            </div>
-
-
-            <h3>
-                Complete
-            </h3>
-
-
-            <p class="plan-text">
-
-                Complete yearly mentorship for
-                your admission journey.
-
-            </p>
-
-
-            <div class="plan-price">
-                ₹4,600
-            </div>
-
-
-            <ul class="plan-features">
-
-                <li>
-                    <i class="fa-solid fa-check"></i>
-                    Long-term mentor support
-                </li>
-
-                <li>
-                    <i class="fa-solid fa-check"></i>
-                    Admission guidance
-                </li>
-
-                <li>
-                    <i class="fa-solid fa-check"></i>
-                    College & branch guidance
-                </li>
-
-                <li>
-                    <i class="fa-solid fa-check"></i>
-                    Personalised counselling
-                </li>
-
-            </ul>
-
-
-            <button
-                class="mentor-add-cart"
-                onclick="addToCart(
-                    '12 Months Mentor Plan',
-                    4600
-                )">
-
-                <i class="fa-solid fa-cart-plus"></i>
-
-                Add to Cart
-
-            </button>
-
-        </div>
-
-
-    </div>
-
-</section>
+</main>
 
 
 
@@ -604,7 +315,8 @@
 ===================================================== -->
 
 <button
-    class="mentor-cart-floating"
+    id="cart-button"
+    class="cart-button"
     onclick="openCart()"
     aria-label="Open cart">
 
@@ -634,30 +346,22 @@
      CART DRAWER
 ===================================================== -->
 
-<aside
+<div
     id="cart-drawer"
     class="cart-drawer">
 
 
     <div class="cart-header">
 
-        <div>
-
-            <span class="cart-small-title">
-                RAPTORA
-            </span>
-
-
-            <h2>
-                Your Cart
-            </h2>
-
-        </div>
+        <h2>
+            Cart
+        </h2>
 
 
         <button
             class="close-cart"
-            onclick="closeCart()">
+            onclick="closeCart()"
+            aria-label="Close cart">
 
             <i class="fa-solid fa-xmark"></i>
 
@@ -671,18 +375,19 @@
         id="cart-items"
         class="cart-items">
 
+        <!-- JavaScript inserts items here -->
+
     </div>
 
 
 
-    <div class="cart-footer">
+    <div class="cart-bottom">
 
-        <div class="total-row">
+        <div class="cart-total-row">
 
             <span>
                 Total
             </span>
-
 
             <strong id="cart-total">
                 ₹0
@@ -699,82 +404,15 @@
 
             Proceed to Checkout
 
-            <i class="fa-solid fa-arrow-right"></i>
-
         </button>
 
-
-        <p class="secure-payment">
-
-            <i class="fa-solid fa-lock"></i>
-
-            Secure payment powered by Razorpay
-
-        </p>
-
     </div>
 
-
-</aside>
-
+</div>
 
 
-<!-- =====================================================
-     FOOTER
-===================================================== -->
-
-<footer class="mentor-footer">
-
-    <div class="mentor-footer-content">
-
-
-        <div>
-
-            <strong>
-                RAPTORA
-            </strong>
-
-
-            <p>
-                Your Admission Journey, Reimagined.
-            </p>
-
-        </div>
-
-
-        <div class="footer-links">
-
-            <a href="../index.html">
-                Home
-            </a>
-
-            <a href="../index.html#features">
-                Features
-            </a>
-
-            <a href="../index.html#resources">
-                Resources
-            </a>
-
-            <a href="../index.html#about">
-                About Us
-            </a>
-
-        </div>
-
-
-    </div>
-
-</footer>
-
-
-
-<!-- =====================================================
-     JAVASCRIPT
-===================================================== -->
 
 <script src="mentors.js"></script>
-
 
 </body>
 
