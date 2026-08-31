@@ -1,4 +1,4 @@
-
+```html
 <!DOCTYPE html>
 <html lang="en">
 
@@ -11,7 +11,7 @@
 
     <title>RAPTORA | Mentors</title>
 
-    <!-- Font Awesome -->
+    <!-- FONT AWESOME -->
     <link rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
@@ -30,7 +30,7 @@
 
 
 <!-- =====================================================
-     EXISTING RAPTORA NAVBAR
+     RAPTORA NAVBAR
 ===================================================== -->
 
 <header class="navbar">
@@ -116,7 +116,7 @@
 
 
 <!-- =====================================================
-     MENTORS PAGE
+     MENTORS
 ===================================================== -->
 
 <main class="mentors-page">
@@ -124,9 +124,7 @@
     <section class="mentors-section">
 
 
-        <!-- =================================================
-             PAGE TITLE
-        ================================================== -->
+        <!-- PAGE HEADING -->
 
         <div class="mentors-heading">
 
@@ -149,7 +147,7 @@
         <div class="mentor-plans">
 
 
-            <!-- ================= 1 MONTH ================= -->
+            <!-- 1 MONTH -->
 
             <div
                 class="mentor-plan-card"
@@ -171,10 +169,7 @@
                 <button
                     type="button"
                     class="add-to-cart"
-                    onclick="addToCart(
-                        '1 Month Mentor Plan',
-                        400
-                    )">
+                    onclick="addToCart('1 Month Mentor Plan', 400)">
 
                     Add to Cart
 
@@ -184,7 +179,7 @@
 
 
 
-            <!-- ================= 3 MONTHS ================= -->
+            <!-- 3 MONTHS -->
 
             <div
                 class="mentor-plan-card"
@@ -206,10 +201,7 @@
                 <button
                     type="button"
                     class="add-to-cart"
-                    onclick="addToCart(
-                        '3 Months Mentor Plan',
-                        1100
-                    )">
+                    onclick="addToCart('3 Months Mentor Plan', 1100)">
 
                     Add to Cart
 
@@ -219,7 +211,7 @@
 
 
 
-            <!-- ================= 6 MONTHS ================= -->
+            <!-- 6 MONTHS -->
 
             <div
                 class="mentor-plan-card popular"
@@ -245,10 +237,7 @@
                 <button
                     type="button"
                     class="add-to-cart"
-                    onclick="addToCart(
-                        '6 Months Mentor Plan',
-                        2200
-                    )">
+                    onclick="addToCart('6 Months Mentor Plan', 2200)">
 
                     Add to Cart
 
@@ -258,7 +247,7 @@
 
 
 
-            <!-- ================= 12 MONTHS ================= -->
+            <!-- 12 MONTHS -->
 
             <div
                 class="mentor-plan-card"
@@ -280,10 +269,7 @@
                 <button
                     type="button"
                     class="add-to-cart"
-                    onclick="addToCart(
-                        '12 Months Mentor Plan',
-                        4600
-                    )">
+                    onclick="addToCart('12 Months Mentor Plan', 4600)">
 
                     Add to Cart
 
@@ -301,7 +287,7 @@
 
 
 <!-- =====================================================
-     CART BUTTON
+     FLOATING CART BUTTON
 ===================================================== -->
 
 <button
@@ -350,6 +336,7 @@
             Cart
         </h2>
 
+
         <button
             type="button"
             class="close-cart"
@@ -364,7 +351,9 @@
 
 
 
-    <!-- CART ITEMS -->
+    <!-- =================================================
+         CART ITEMS
+    ================================================== -->
 
     <div
         id="cart-items"
@@ -378,9 +367,133 @@
 
 
 
-    <!-- CART TOTAL -->
+    <!-- =================================================
+         DISCOUNT
+    ================================================== -->
+
+    <div
+        id="mentor-discount-box"
+        class="mentor-discount-box">
+
+
+        <div class="discount-title">
+
+            <i class="fa-solid fa-tag"></i>
+
+            <span>
+                Discount Code
+            </span>
+
+        </div>
+
+
+        <div class="discount-input-row">
+
+            <input
+                id="discount-code"
+                type="text"
+                placeholder="Enter coupon code"
+                autocomplete="off">
+
+            <button
+                id="apply-discount-button"
+                type="button"
+                onclick="applyDiscount()">
+
+                Apply
+
+            </button>
+
+        </div>
+
+
+        <div
+            id="discount-message"
+            class="discount-message">
+        </div>
+
+
+        <!-- AVAILABLE CODES -->
+
+        <div class="available-discounts">
+
+            <span>
+                Available:
+            </span>
+
+            <button
+                type="button"
+                onclick="useCoupon('RAPTORA8')">
+
+                RAPTORA8
+
+            </button>
+
+            <button
+                type="button"
+                onclick="useCoupon('RAPTORA10')">
+
+                RAPTORA10
+
+            </button>
+
+            <button
+                type="button"
+                onclick="useCoupon('WELCOME15')">
+
+                WELCOME15
+
+            </button>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- =================================================
+         CART BOTTOM
+    ================================================== -->
 
     <div class="cart-bottom">
+
+
+        <!-- SUBTOTAL -->
+
+        <div class="cart-summary-row">
+
+            <span>
+                Subtotal
+            </span>
+
+            <strong id="cart-subtotal">
+                ₹0
+            </strong>
+
+        </div>
+
+
+
+        <!-- DISCOUNT -->
+
+        <div
+            class="cart-summary-row discount-row"
+            id="cart-discount-row"
+            style="display: none;">
+
+            <span>
+                Discount
+            </span>
+
+            <strong id="cart-discount">
+                -₹0
+            </strong>
+
+        </div>
+
+
+
+        <!-- TOTAL -->
 
         <div class="cart-total-row">
 
@@ -394,6 +507,9 @@
 
         </div>
 
+
+
+        <!-- CHECKOUT -->
 
         <button
             id="checkout-button"
@@ -413,14 +529,15 @@
 
 
 <!-- =====================================================
-     RAZORPAY CHECKOUT
+     RAZORPAY
 ===================================================== -->
 
 <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 
 
+
 <!-- =====================================================
-     MENTORS JAVASCRIPT
+     MENTORS JS
 ===================================================== -->
 
 <script src="mentors.js"></script>
@@ -429,4 +546,4 @@
 </body>
 
 </html>
-
+```
