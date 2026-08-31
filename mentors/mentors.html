@@ -1,1 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+  <title>Raptora Mentors</title>
+
+  <!-- Razorpay -->
+  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+  <!-- Mentor CSS -->
+  <link rel="stylesheet" href="mentors.css">
+</head>
+
+<body>
+
+  <!-- ================= HEADER ================= -->
+
+  <header class="mentor-header">
+
+    <a href="../index.html" class="logo">
+      RAPTORA
+    </a>
+
+    <div class="header-actions">
+
+      <button
+        class="cart-button"
+        onclick="openCart()">
+
+        🛒
+
+        <span id="cart-count">
+          0
+        </span>
+
+      </button>
+
+    </div>
+
+  </header>
+
+
+  <!-- ================= HERO ================= -->
+
+  <main>
+
+    <section class="mentor-hero">
+
+      <div class="hero-content">
+
+        <div class="hero-tag">
+          RAPTORА MENTORSHIP
+        </div>
+
+        <h1>
+          Get Guidance From
+          <span>Experienced Mentors.</span>
+        </h1>
+
+        <p>
+          Get personalised guidance throughout your
+          admission journey with Raptora mentors.
+        </p>
+
+      </div>
+
+    </section>
+
+
+    <!-- ================= PLANS ================= -->
+
+    <section class="plans-section">
+
+      <div class="section-heading">
+
+        <h2>
+          Choose Your Plan
+        </h2>
+
+        <p>
+          Select the mentorship duration that works
+          best for you.
+        </p>
+
+      </div>
+
+
+      <div class="plans-grid">
+
+
+        <!-- 1 MONTH -->
+
+        <div class="plan-card">
+
+          <h3>
+            1 Month
+          </h3>
+
+          <p class="plan-description">
+            Perfect for quick guidance
+          </p>
+
+          <div class="price">
+            ₹400
+          </div>
+
+          <button
+            onclick="addToCart(
+              '1 Month Mentor Plan',
+              400
+            )">
+
+            Add to Cart
+
+          </button>
+
+        </div>
+
+
+        <!-- 3 MONTHS -->
+
+        <div class="plan-card">
+
+          <h3>
+            3 Months
+          </h3>
+
+          <p class="plan-description">
+            Get consistent mentorship
+          </p>
+
+          <div class="price">
+            ₹1,100
+          </div>
+
+          <button
+            onclick="addToCart(
+              '3 Months Mentor Plan',
+              1100
+            )">
+
+            Add to Cart
+
+          </button>
+
+        </div>
+
+
+        <!-- 6 MONTHS -->
+
+        <div class="plan-card popular">
+
+          <div class="popular-badge">
+            POPULAR
+          </div>
+
+          <h3>
+            6 Months
+          </h3>
+
+          <p class="plan-description">
+            Long-term admission guidance
+          </p>
+
+          <div class="price">
+            ₹2,200
+          </div>
+
+          <button
+            onclick="addToCart(
+              '6 Months Mentor Plan',
+              2200
+            )">
+
+            Add to Cart
+
+          </button>
+
+        </div>
+
+
+        <!-- 12 MONTHS -->
+
+        <div class="plan-card">
+
+          <h3>
+            12 Months
+          </h3>
+
+          <p class="plan-description">
+            Complete yearly mentorship
+          </p>
+
+          <div class="price">
+            ₹4,600
+          </div>
+
+          <button
+            onclick="addToCart(
+              '12 Months Mentor Plan',
+              4600
+            )">
+
+            Add to Cart
+
+          </button>
+
+        </div>
+
+
+      </div>
+
+    </section>
+
+  </main>
+
+
+  <!-- ================= CART OVERLAY ================= -->
+
+  <div
+    id="cart-overlay"
+    class="cart-overlay"
+    onclick="closeCart()">
+  </div>
+
+
+  <!-- ================= CART ================= -->
+
+  <aside
+    id="cart-drawer"
+    class="cart-drawer">
+
+
+    <div class="cart-header">
+
+      <h2>
+        Your Cart
+      </h2>
+
+      <button
+        class="close-cart"
+        onclick="closeCart()">
+
+        ×
+
+      </button>
+
+    </div>
+
+
+    <div
+      id="cart-items"
+      class="cart-items">
+
+    </div>
+
+
+    <div class="cart-footer">
+
+      <div class="total-row">
+
+        <span>
+          Total
+        </span>
+
+        <strong id="cart-total">
+          ₹0
+        </strong>
+
+      </div>
+
+
+      <button
+        id="checkout-button"
+        class="checkout-button"
+        onclick="checkout()">
+
+        Proceed to Checkout
+
+      </button>
+
+    </div>
+
+
+  </aside>
+
+
+  <!-- ================= JAVASCRIPT ================= -->
+
+  <script src="mentors.js"></script>
+
+</body>
+</html>
