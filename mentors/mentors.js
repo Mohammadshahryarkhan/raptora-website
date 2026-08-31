@@ -1,7 +1,7 @@
 
 /* =====================================================
-   RAPTORA — MENTORS CART + RAZORPAY
-   mentors/mentors.js
+   RAPTORA — MENTORS
+   CART + QUANTITY + DISCOUNT + RAZORPAY
 ===================================================== */
 
 
@@ -20,6 +20,39 @@ const API_BASE_URL =
 let cart = JSON.parse(
     localStorage.getItem("raptoraMentorCart")
 ) || [];
+
+
+/* =====================================================
+   DISCOUNT
+===================================================== */
+
+let appliedCoupon = "";
+let discountAmount = 0;
+
+
+/* =====================================================
+   DISCOUNT CODES
+   SAME AS FLUTTER MAIN.DART
+===================================================== */
+
+const DISCOUNT_CODES = {
+
+    RAPTORA8: {
+        type: "percentage",
+        value: 8
+    },
+
+    RAPTORA10: {
+        type: "percentage",
+        value: 10
+    },
+
+    WELCOME15: {
+        type: "fixed",
+        value: 15
+    }
+
+};
 
 
 /* =====================================================
@@ -159,10 +192,10 @@ function removeFromCart(index) {
 
 
 /* =====================================================
-   CALCULATE TOTAL
+   CART SUBTOTAL
 ===================================================== */
 
-function getCartTotal() {
+function getCartSubtotal() {
 
     return cart.reduce(
 
@@ -174,7 +207,8 @@ function getCartTotal() {
             const quantity =
                 Number(item.quantity || 1);
 
-            return total + (price * quantity);
+            return total +
+                (price * quantity);
 
         },
 
@@ -186,7 +220,7 @@ function getCartTotal() {
 
 
 /* =====================================================
-   TOTAL QUANTITY
+   CART QUANTITY
 ===================================================== */
 
 function getCartQuantity() {
@@ -208,22 +242,270 @@ function getCartQuantity() {
 
 
 /* =====================================================
+   APPLY DISCOUNT
+===================================================== */
+
+function applyDiscount() {
+
+    const input =
+        document.getElementById(
+            "discount-code"
+        );
+
+
+    if (!input) {
+        return;
+    }
+
+
+    const code =
+        input.value
+            .trim()
+            .toUpperCase();
+
+
+    const subtotal =
+        getCartSubtotal();
+
+
+    if (subtotal <= 0) {
+
+        showDiscountMessage(
+            "Add a mentor plan to your cart first.",
+            false
+        );
+
+        return;
+
+    }
+
+
+    if (!code) {
+
+        showDiscountMessage(
+            "Please enter a discount code.",
+            false
+        );
+
+        return;
+
+    }
+
+
+    const coupon =
+        DISCOUNT_CODES[code];
+
+
+    if (!coupon) {
+
+        appliedCoupon = "";
+
+        discountAmount = 0;
+
+
+        showDiscountMessage(
+            "Invalid discount code.",
+            false
+        );
+
+
+        updateCart();
+
+        return;
+
+    }
+
+
+    /* -----------------------------------------------
+       PERCENTAGE DISCOUNT
+    ------------------------------------------------ */
+
+    if (coupon.type === "percentage") {
+
+        discountAmount =
+            subtotal *
+            (coupon.value / 100);
+
+    }
+
+
+    /* -----------------------------------------------
+       FIXED DISCOUNT
+    ------------------------------------------------ */
+
+    else if (coupon.type === "fixed") {
+
+        discountAmount =
+            coupon.value;
+
+    }
+
+
+    /* -----------------------------------------------
+       DISCOUNT CANNOT EXCEED SUBTOTAL
+    ------------------------------------------------ */
+
+    discountAmount =
+        Math.min(
+            discountAmount,
+            subtotal
+        );
+
+
+    appliedCoupon =
+        code;
+
+
+    showDiscountMessage(
+
+        `${code} applied successfully.`,
+
+        true
+
+    );
+
+
+    updateCart();
+
+}
+
+
+/* =====================================================
+   REMOVE DISCOUNT
+===================================================== */
+
+function removeDiscount() {
+
+    appliedCoupon = "";
+
+    discountAmount = 0;
+
+
+    const input =
+        document.getElementById(
+            "discount-code"
+        );
+
+
+    if (input) {
+
+        input.value = "";
+
+    }
+
+
+    showDiscountMessage(
+        "",
+        true
+    );
+
+
+    updateCart();
+
+}
+
+
+/* =====================================================
+   DISCOUNT MESSAGE
+===================================================== */
+
+function showDiscountMessage(
+    message,
+    success
+) {
+
+    const messageElement =
+        document.getElementById(
+            "discount-message"
+        );
+
+
+    if (!messageElement) {
+        return;
+    }
+
+
+    messageElement.textContent =
+        message;
+
+
+    if (success) {
+
+        messageElement.classList.add(
+            "success"
+        );
+
+        messageElement.classList.remove(
+            "error"
+        );
+
+    } else {
+
+        messageElement.classList.add(
+            "error"
+        );
+
+        messageElement.classList.remove(
+            "success"
+        );
+
+    }
+
+}
+
+
+/* =====================================================
+   GET FINAL TOTAL
+===================================================== */
+
+function getFinalTotal() {
+
+    const subtotal =
+        getCartSubtotal();
+
+
+    if (subtotal <= 0) {
+        return 0;
+    }
+
+
+    const finalTotal =
+        subtotal - discountAmount;
+
+
+    return Math.max(
+        0,
+        finalTotal
+    );
+
+}
+
+
+/* =====================================================
    UPDATE CART
 ===================================================== */
 
 function updateCart() {
 
     const cartItems =
-        document.getElementById("cart-items");
+        document.getElementById(
+            "cart-items"
+        );
 
     const cartCount =
-        document.getElementById("cart-count");
+        document.getElementById(
+            "cart-count"
+        );
 
     const cartTotal =
-        document.getElementById("cart-total");
+        document.getElementById(
+            "cart-total"
+        );
 
     const checkoutButton =
-        document.getElementById("checkout-button");
+        document.getElementById(
+            "checkout-button"
+        );
 
 
     if (!cartItems) {
@@ -249,6 +531,11 @@ function updateCart() {
 
     if (cart.length === 0) {
 
+        appliedCoupon = "";
+
+        discountAmount = 0;
+
+
         cartItems.innerHTML = `
 
             <div class="empty-cart">
@@ -270,7 +557,8 @@ function updateCart() {
 
         if (checkoutButton) {
 
-            checkoutButton.disabled = true;
+            checkoutButton.disabled =
+                true;
 
             checkoutButton.textContent =
                 "Proceed to Checkout";
@@ -304,7 +592,9 @@ function updateCart() {
 
 
             const itemElement =
-                document.createElement("div");
+                document.createElement(
+                    "div"
+                );
 
 
             itemElement.className =
@@ -319,14 +609,19 @@ function updateCart() {
 
                         <div class="cart-item-name">
 
-                            ${escapeHTML(item.name)}
+                            ${escapeHTML(
+                                item.name
+                            )}
 
                         </div>
 
 
                         <div class="cart-item-price">
 
-                            ₹${price.toLocaleString("en-IN")}
+                            ₹${price.toLocaleString(
+                                "en-IN"
+                            )}
+
                             each
 
                         </div>
@@ -336,7 +631,9 @@ function updateCart() {
 
                     <div class="cart-item-total">
 
-                        ₹${itemTotal.toLocaleString("en-IN")}
+                        ₹${itemTotal.toLocaleString(
+                            "en-IN"
+                        )}
 
                     </div>
 
@@ -403,14 +700,184 @@ function updateCart() {
 
 
     /* -----------------------------------------------
-       TOTAL
+       DISCOUNT SECTION
+    ------------------------------------------------ */
+
+    const subtotal =
+        getCartSubtotal();
+
+
+    let discountHTML = "";
+
+
+    if (appliedCoupon) {
+
+        discountHTML = `
+
+            <div class="discount-applied">
+
+                <div>
+
+                    <span>
+                        Coupon
+                    </span>
+
+                    <strong>
+                        ${escapeHTML(
+                            appliedCoupon
+                        )}
+                    </strong>
+
+                </div>
+
+
+                <button
+                    type="button"
+                    onclick="removeDiscount()">
+
+                    Remove
+
+                </button>
+
+            </div>
+
+        `;
+
+    }
+
+
+    /* -----------------------------------------------
+       INSERT DISCOUNT BOX
+    ------------------------------------------------ */
+
+    let discountBox =
+        document.getElementById(
+            "mentor-discount-box"
+        );
+
+
+    if (!discountBox) {
+
+        discountBox =
+            document.createElement(
+                "div"
+            );
+
+        discountBox.id =
+            "mentor-discount-box";
+
+        discountBox.className =
+            "mentor-discount-box";
+
+
+        const cartBottom =
+            document.querySelector(
+                ".cart-bottom"
+            );
+
+
+        if (cartBottom) {
+
+            cartBottom.insertBefore(
+                discountBox,
+                cartBottom.firstChild
+            );
+
+        }
+
+    }
+
+
+    if (discountBox) {
+
+        discountBox.innerHTML = `
+
+            <div class="discount-title">
+
+                <i class="fa-solid fa-tag"></i>
+
+                Discount Code
+
+            </div>
+
+
+            <div class="discount-input-row">
+
+                <input
+                    id="discount-code"
+                    type="text"
+                    placeholder="Enter coupon code"
+                    value="${escapeHTML(
+                        appliedCoupon
+                    )}"
+                    ${appliedCoupon ? "disabled" : ""}
+                >
+
+
+                ${
+                    appliedCoupon
+
+                    ? `
+
+                        <button
+                            type="button"
+                            onclick="removeDiscount()">
+
+                            Remove
+
+                        </button>
+
+                    `
+
+                    : `
+
+                        <button
+                            type="button"
+                            onclick="applyDiscount()">
+
+                            Apply
+
+                        </button>
+
+                    `
+                }
+
+            </div>
+
+
+            <div
+                id="discount-message"
+                class="discount-message">
+
+                ${appliedCoupon
+                    ? `${escapeHTML(appliedCoupon)} applied successfully.`
+                    : ""
+                }
+
+            </div>
+
+
+            ${discountHTML}
+
+        `;
+
+    }
+
+
+    /* -----------------------------------------------
+       TOTALS
     ------------------------------------------------ */
 
     if (cartTotal) {
 
         cartTotal.textContent =
             "₹" +
-            getCartTotal().toLocaleString("en-IN");
+            getFinalTotal().toLocaleString(
+                "en-IN",
+                {
+                    maximumFractionDigits: 2
+                }
+            );
 
     }
 
@@ -421,7 +888,8 @@ function updateCart() {
 
     if (checkoutButton) {
 
-        checkoutButton.disabled = false;
+        checkoutButton.disabled =
+            false;
 
         checkoutButton.textContent =
             "Proceed to Checkout";
@@ -438,22 +906,30 @@ function updateCart() {
 function openCart() {
 
     const drawer =
-        document.getElementById("cart-drawer");
+        document.getElementById(
+            "cart-drawer"
+        );
 
     const overlay =
-        document.getElementById("cart-overlay");
+        document.getElementById(
+            "cart-overlay"
+        );
 
 
     if (drawer) {
 
-        drawer.classList.add("active");
+        drawer.classList.add(
+            "active"
+        );
 
     }
 
 
     if (overlay) {
 
-        overlay.classList.add("active");
+        overlay.classList.add(
+            "active"
+        );
 
     }
 
@@ -471,22 +947,30 @@ function openCart() {
 function closeCart() {
 
     const drawer =
-        document.getElementById("cart-drawer");
+        document.getElementById(
+            "cart-drawer"
+        );
 
     const overlay =
-        document.getElementById("cart-overlay");
+        document.getElementById(
+            "cart-overlay"
+        );
 
 
     if (drawer) {
 
-        drawer.classList.remove("active");
+        drawer.classList.remove(
+            "active"
+        );
 
     }
 
 
     if (overlay) {
 
-        overlay.classList.remove("active");
+        overlay.classList.remove(
+            "active"
+        );
 
     }
 
@@ -498,7 +982,7 @@ function closeCart() {
 
 
 /* =====================================================
-   CHECKOUT
+   RAZORPAY CHECKOUT
 ===================================================== */
 
 async function checkout() {
@@ -514,17 +998,11 @@ async function checkout() {
     }
 
 
-    const checkoutButton =
-        document.getElementById(
-            "checkout-button"
-        );
+    const finalTotal =
+        getFinalTotal();
 
 
-    const total =
-        getCartTotal();
-
-
-    if (total <= 0) {
+    if (finalTotal <= 0) {
 
         alert(
             "Invalid cart amount."
@@ -535,11 +1013,13 @@ async function checkout() {
     }
 
 
-    try {
+    const checkoutButton =
+        document.getElementById(
+            "checkout-button"
+        );
 
-        /* -------------------------------------------
-           DISABLE BUTTON
-        ------------------------------------------- */
+
+    try {
 
         if (checkoutButton) {
 
@@ -553,7 +1033,7 @@ async function checkout() {
 
 
         /* -------------------------------------------
-           CREATE RAZORPAY ORDER
+           CREATE ORDER
         ------------------------------------------- */
 
         const response =
@@ -576,7 +1056,17 @@ async function checkout() {
 
                         items: cart,
 
-                        amount: total
+                        subtotal:
+                            getCartSubtotal(),
+
+                        discount:
+                            discountAmount,
+
+                        coupon:
+                            appliedCoupon,
+
+                        amount:
+                            finalTotal
 
                     })
 
@@ -602,7 +1092,7 @@ async function checkout() {
 
 
         /* -------------------------------------------
-           CHECK RAZORPAY SCRIPT
+           RAZORPAY SCRIPT CHECK
         ------------------------------------------- */
 
         if (
@@ -611,26 +1101,31 @@ async function checkout() {
         ) {
 
             throw new Error(
-                "Razorpay checkout is not loaded. Add the Razorpay checkout script to mentors.html."
+
+                "Razorpay checkout is not loaded. Add the Razorpay script to mentors.html."
+
             );
 
         }
 
 
         /* -------------------------------------------
-           RAZORPAY OPTIONS
+           RAZORPAY
         ------------------------------------------- */
 
         const options = {
 
-            key: data.key,
+            key:
+                data.key,
 
-            amount: data.amount,
+            amount:
+                data.amount,
 
             currency:
                 data.currency || "INR",
 
-            name: "RAPTORA",
+            name:
+                "RAPTORA",
 
             description:
                 "RAPTORA Mentor Plan",
@@ -651,7 +1146,8 @@ async function checkout() {
 
             theme: {
 
-                color: "#e50914"
+                color:
+                    "#e50914"
 
             },
 
@@ -670,12 +1166,10 @@ async function checkout() {
         };
 
 
-        /* -------------------------------------------
-           OPEN RAZORPAY
-        ------------------------------------------- */
-
         const razorpay =
-            new Razorpay(options);
+            new Razorpay(
+                options
+            );
 
 
         razorpay.on(
@@ -713,8 +1207,10 @@ async function checkout() {
 
 
         alert(
+
             error.message ||
             "Unable to start checkout."
+
         );
 
 
@@ -729,7 +1225,9 @@ async function checkout() {
    VERIFY PAYMENT
 ===================================================== */
 
-async function verifyPayment(payment) {
+async function verifyPayment(
+    payment
+) {
 
     try {
 
@@ -760,7 +1258,14 @@ async function verifyPayment(payment) {
                         razorpay_signature:
                             payment.razorpay_signature,
 
-                        items: cart
+                        items:
+                            cart,
+
+                        coupon:
+                            appliedCoupon,
+
+                        discount:
+                            discountAmount
 
                     })
 
@@ -785,12 +1290,10 @@ async function verifyPayment(payment) {
         }
 
 
-        /* -------------------------------------------
-           SUCCESS
-        ------------------------------------------- */
-
         alert(
+
             "Payment successful! Your mentor plan has been activated."
+
         );
 
 
@@ -800,13 +1303,16 @@ async function verifyPayment(payment) {
 
         cart = [];
 
+        appliedCoupon = "";
+
+        discountAmount = 0;
+
 
         saveCart();
 
         updateCart();
 
         closeCart();
-
 
     }
 
@@ -883,12 +1389,24 @@ function escapeHTML(value) {
 
 
 /* =====================================================
-   ESC KEY
+   ENTER KEY FOR COUPON
 ===================================================== */
 
 document.addEventListener(
     "keydown",
     function(event) {
+
+        if (
+            event.key === "Enter" &&
+            document.activeElement &&
+            document.activeElement.id ===
+                "discount-code"
+        ) {
+
+            applyDiscount();
+
+        }
+
 
         if (
             event.key === "Escape"
@@ -910,26 +1428,30 @@ document.addEventListener(
     "DOMContentLoaded",
     function() {
 
-        /*
-         * Make sure every old cart item
-         * has a valid quantity.
-         */
+        cart =
+            cart.map(
+                item => ({
 
-        cart = cart.map(
-            item => ({
+                    ...item,
 
-                ...item,
+                    price:
+                        Number(
+                            item.price || 0
+                        ),
 
-                price:
-                    Number(item.price || 0),
+                    quantity:
+                        Number(
+                            item.quantity
+                        ) > 0
 
-                quantity:
-                    Number(item.quantity) > 0
-                        ? Number(item.quantity)
-                        : 1
+                            ? Number(
+                                item.quantity
+                              )
 
-            })
-        );
+                            : 1
+
+                })
+            );
 
 
         saveCart();
