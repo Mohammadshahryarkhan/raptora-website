@@ -1,3 +1,4 @@
+
 const mongoose = require("mongoose");
 
 const userSchema = new mongoose.Schema({
@@ -13,7 +14,8 @@ const userSchema = new mongoose.Schema({
 
     email: {
         type: String,
-        required: true
+        required: true,
+        unique: true
     },
 
     phone: {
@@ -43,46 +45,10 @@ const userSchema = new mongoose.Schema({
 
 
     // =====================================================
-    // MENTOR PLAN
-    // =====================================================
-
-    mentorPlan: {
-        type: String,
-        default: null
-    },
-
-    mentorPlanPrice: {
-        type: Number,
-        default: 0
-    },
-
-    mentorStartDate: {
-        type: Date,
-        default: null
-    },
-
-    mentorExpiryDate: {
-        type: Date,
-        default: null
-    },
-
-    mentorActive: {
-        type: Boolean,
-        default: false
-    },
-
-
-    // =====================================================
     // REFERRAL SYSTEM
     // =====================================================
 
     referralCode: {
-        type: String,
-        unique: true,
-        sparse: true
-    },
-
-    referredBy: {
         type: String,
         default: null
     },
@@ -99,96 +65,106 @@ const userSchema = new mongoose.Schema({
 
 
     // =====================================================
+    // MENTORSHIP
+    // =====================================================
+
+    mentorSubscription: {
+
+        active: {
+            type: Boolean,
+            default: false
+        },
+
+        plan: {
+            type: String,
+            default: null
+        },
+
+        durationMonths: {
+            type: Number,
+            default: 0
+        },
+
+        price: {
+            type: Number,
+            default: 0
+        },
+
+        startDate: {
+            type: Date,
+            default: null
+        },
+
+        endDate: {
+            type: Date,
+            default: null
+        },
+
+        razorpayOrderId: {
+            type: String,
+            default: null
+        },
+
+        razorpayPaymentId: {
+            type: String,
+            default: null
+        }
+
+    },
+
+
+    // =====================================================
+    // MENTORSHIP PROGRESS
+    // =====================================================
+
+    mentorshipProgress: {
+
+        completedMilestones: {
+            type: Number,
+            default: 0
+        },
+
+        totalMilestones: {
+            type: Number,
+            default: 10
+        },
+
+        currentMilestone: {
+            type: String,
+            default: "Getting Started"
+        }
+
+    },
+
+
+    // =====================================================
+    // COURSE / JOURNEY
+    // =====================================================
+
+    courseStartDate: {
+        type: Date,
+        default: null
+    },
+
+    selectedCourse: {
+        type: String,
+        default: null
+    },
+
+
+    // =====================================================
     // BADGE
     // =====================================================
 
     badge: {
         type: String,
-        default: "New Member"
-    },
-
-
-    // =====================================================
-    // MILESTONES
-    // =====================================================
-
-    milestones: {
-
-        profileCompleted: {
-            type: Boolean,
-            default: false
-        },
-
-        examSelected: {
-            type: Boolean,
-            default: false
-        },
-
-        rankPredictionCompleted: {
-            type: Boolean,
-            default: false
-        },
-
-        collegeShortlistCreated: {
-            type: Boolean,
-            default: false
-        },
-
-        mentorConsultationCompleted: {
-            type: Boolean,
-            default: false
-        },
-
-        applicationSubmitted: {
-            type: Boolean,
-            default: false
-        },
-
-        counsellingCompleted: {
-            type: Boolean,
-            default: false
-        },
-
-        admissionCompleted: {
-            type: Boolean,
-            default: false
-        }
-
-    },
-
-
-    // =====================================================
-    // CALENDAR / IMPORTANT DATES
-    // =====================================================
-
-    calendarEvents: [
-
-        {
-            title: {
-                type: String
-            },
-
-            description: {
-                type: String,
-                default: ""
-            },
-
-            date: {
-                type: Date
-            },
-
-            completed: {
-                type: Boolean,
-                default: false
-            }
-
-        }
-
-    ]
+        default: "Raptora Member"
+    }
 
 }, {
     timestamps: true
 });
 
 
-module.exports = mongoose.model("User", userSchema);module.exports = mongoose.model("User", userSchema);
+module.exports = mongoose.model("User", userSchema);
+
