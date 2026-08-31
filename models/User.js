@@ -1,183 +1,160 @@
+
 const mongoose = require("mongoose");
 
-const userSchema = new mongoose.Schema({
+const userSchema = new mongoose.Schema(
+    {
 
-    // =====================================================
-    // BASIC USER DETAILS
-    // =====================================================
+        // =====================================================
+        // BASIC USER INFORMATION
+        // =====================================================
 
-    name: {
-        type: String,
-        required: true
-    },
+        name: {
+            type: String,
+            required: true
+        },
 
-    email: {
-        type: String,
-        required: true,
-        unique: true,
-        lowercase: true,
-        trim: true
-    },
+        email: {
+            type: String,
+            required: true,
+            unique: true
+        },
 
-    phone: {
-        type: String,
-        required: true
-    },
+        phone: {
+            type: String,
+            required: true
+        },
 
-    password: {
-        type: String,
-        required: true
-    },
-
-
-    // =====================================================
-    // PASSWORD RESET
-    // =====================================================
-
-    resetPasswordToken: {
-        type: String,
-        default: null
-    },
-
-    resetPasswordExpires: {
-        type: Date,
-        default: null
-    },
+        password: {
+            type: String,
+            required: true
+        },
 
 
-    // =====================================================
-    // REFERRAL SYSTEM
-    // =====================================================
+        // =====================================================
+        // PASSWORD RESET
+        // =====================================================
 
-    referralCode: {
-        type: String,
-        default: null
-    },
+        resetPasswordToken: {
+            type: String,
+            default: null
+        },
 
-    referralPoints: {
-        type: Number,
-        default: 0
-    },
-
-
-    // =====================================================
-    // MENTOR / COURSE
-    // =====================================================
-
-    mentorPlan: {
-        type: String,
-        default: null
-    },
-
-    mentorPlanPrice: {
-        type: Number,
-        default: 0
-    },
-
-    mentorStartDate: {
-        type: Date,
-        default: null
-    },
-
-    mentorEndDate: {
-        type: Date,
-        default: null
-    },
+        resetPasswordExpires: {
+            type: Date,
+            default: null
+        },
 
 
-    // =====================================================
-    // PAYMENT
-    // =====================================================
+        // =====================================================
+        // MENTORSHIP SUBSCRIPTION
+        // =====================================================
 
-    paymentStatus: {
-        type: String,
-        enum: [
-            "pending",
-            "paid",
-            "failed"
-        ],
-        default: "pending"
-    },
+        mentorSubscription: {
 
-    razorpayPaymentId: {
-        type: String,
-        default: null
-    },
-
-    razorpayOrderId: {
-        type: String,
-        default: null
-    },
-
-
-    // =====================================================
-    // BADGE
-    // =====================================================
-
-    badge: {
-        type: String,
-        default: "Raptora Explorer"
-    },
-
-
-    // =====================================================
-    // MILESTONES
-    // =====================================================
-
-    milestones: [
-        {
-            title: {
-                type: String
-            },
-
-            description: {
-                type: String
-            },
-
-            completed: {
+            active: {
                 type: Boolean,
                 default: false
             },
 
-            completedDate: {
+            plan: {
+                type: String,
+                default: null
+            },
+
+            durationMonths: {
+                type: Number,
+                default: 0
+            },
+
+            price: {
+                type: Number,
+                default: 0
+            },
+
+            startDate: {
                 type: Date,
                 default: null
+            },
+
+            endDate: {
+                type: Date,
+                default: null
+            },
+
+            razorpayOrderId: {
+                type: String,
+                default: null
+            },
+
+            razorpayPaymentId: {
+                type: String,
+                default: null
             }
-        }
-    ],
+
+        },
 
 
-    // =====================================================
-    // CALENDAR EVENTS
-    // =====================================================
+        // =====================================================
+        // COURSE START DATE
+        // =====================================================
 
-    calendarEvents: [
-        {
-            title: {
-                type: String
+        courseStartDate: {
+            type: Date,
+            default: null
+        },
+
+
+        // =====================================================
+        // MENTORSHIP PROGRESS
+        // =====================================================
+
+        mentorshipProgress: {
+
+            completedMilestones: {
+                type: Number,
+                default: 0
             },
 
-            description: {
-                type: String
+            totalMilestones: {
+                type: Number,
+                default: 10
             },
 
-            date: {
-                type: Date
-            },
-
-            completed: {
-                type: Boolean,
-                default: false
+            currentMilestone: {
+                type: String,
+                default: "Getting Started"
             }
+
+        },
+
+
+        // =====================================================
+        // REFERRAL POINTS
+        // =====================================================
+
+        referralPoints: {
+            type: Number,
+            default: 0
+        },
+
+
+        // =====================================================
+        // BADGE
+        // =====================================================
+
+        badge: {
+            type: String,
+            default: "Raptora Member"
         }
-    ]
 
-}, {
-    timestamps: true
-});
+    },
 
-
-module.exports = mongoose.model(
-    "User",
-    userSchema
+    {
+        timestamps: true
+    }
 );
+
+
+module.exports =
+    mongoose.model("User", userSchema);
+
