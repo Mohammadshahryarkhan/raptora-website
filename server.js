@@ -35,6 +35,7 @@ app.use("/api/josaa", josaaRoutes);
 app.use("/api/kcet", kcetRoutes);
 app.use("/api/comedk", comedkRoutes);
 app.use("/api/mcc", mccRoutes);
+app.use("/api/payment", paymentRoutes);
 
 // Test Backend
 app.get("/test", (req, res) => {
