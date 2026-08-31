@@ -12,6 +12,7 @@ const josaaRoutes = require("./routes/josaaRoutes");
 const kcetRoutes = require("./routes/kcetRoutes");
 const comedkRoutes = require("./routes/comedkRoutes");
 const mccRoutes = require("./routes/mccRoutes");
+const paymentRoutes = require("./routes/paymentRoutes");
 
 // Create App
 const app = express();
