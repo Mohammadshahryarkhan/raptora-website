@@ -1,7 +1,20 @@
 
 /* =====================================================
-   RAPTORA — MENTORS CART
+   RAPTORA — MENTORS CART + RAZORPAY
    mentors/mentors.js
+===================================================== */
+
+
+/* =====================================================
+   RENDER BACKEND
+===================================================== */
+
+const API_BASE_URL =
+    "https://raptora-website-1.onrender.com";
+
+
+/* =====================================================
+   CART
 ===================================================== */
 
 let cart = JSON.parse(
@@ -14,10 +27,12 @@ let cart = JSON.parse(
 ===================================================== */
 
 function saveCart() {
+
     localStorage.setItem(
         "raptoraMentorCart",
         JSON.stringify(cart)
     );
+
 }
 
 
@@ -27,27 +42,39 @@ function saveCart() {
 
 function addToCart(name, price) {
 
+    price = Number(price);
+
     const existingItem = cart.find(
         item => item.name === name
     );
 
+
     if (existingItem) {
 
-        existingItem.quantity += 1;
+        existingItem.quantity =
+            Number(existingItem.quantity || 1) + 1;
 
     } else {
 
         cart.push({
+
             name: name,
-            price: Number(price),
+
+            price: price,
+
             quantity: 1
+
         });
 
     }
 
+
     saveCart();
+
     updateCart();
+
     openCart();
+
 }
 
 
@@ -61,10 +88,15 @@ function increaseQuantity(index) {
         return;
     }
 
-    cart[index].quantity += 1;
+
+    cart[index].quantity =
+        Number(cart[index].quantity || 1) + 1;
+
 
     saveCart();
+
     updateCart();
+
 }
 
 
@@ -78,9 +110,15 @@ function decreaseQuantity(index) {
         return;
     }
 
-    if (cart[index].quantity > 1) {
 
-        cart[index].quantity -= 1;
+    const quantity =
+        Number(cart[index].quantity || 1);
+
+
+    if (quantity > 1) {
+
+        cart[index].quantity =
+            quantity - 1;
 
     } else {
 
@@ -88,8 +126,11 @@ function decreaseQuantity(index) {
 
     }
 
+
     saveCart();
+
     updateCart();
+
 }
 
 
@@ -106,10 +147,63 @@ function removeFromCart(index) {
         return;
     }
 
+
     cart.splice(index, 1);
 
+
     saveCart();
+
     updateCart();
+
+}
+
+
+/* =====================================================
+   CALCULATE TOTAL
+===================================================== */
+
+function getCartTotal() {
+
+    return cart.reduce(
+
+        (total, item) => {
+
+            const price =
+                Number(item.price || 0);
+
+            const quantity =
+                Number(item.quantity || 1);
+
+            return total + (price * quantity);
+
+        },
+
+        0
+
+    );
+
+}
+
+
+/* =====================================================
+   TOTAL QUANTITY
+===================================================== */
+
+function getCartQuantity() {
+
+    return cart.reduce(
+
+        (total, item) => {
+
+            return total +
+                Number(item.quantity || 1);
+
+        },
+
+        0
+
+    );
+
 }
 
 
@@ -138,20 +232,13 @@ function updateCart() {
 
 
     /* -----------------------------------------------
-       TOTAL QUANTITY
+       CART COUNT
     ------------------------------------------------ */
-
-    const totalQuantity = cart.reduce(
-        (total, item) =>
-            total + Number(item.quantity || 1),
-        0
-    );
-
 
     if (cartCount) {
 
         cartCount.textContent =
-            totalQuantity;
+            getCartQuantity();
 
     }
 
@@ -163,20 +250,36 @@ function updateCart() {
     if (cart.length === 0) {
 
         cartItems.innerHTML = `
+
             <div class="empty-cart">
+
                 Your cart is empty.
+
             </div>
+
         `;
 
+
         if (cartTotal) {
-            cartTotal.textContent = "₹0";
+
+            cartTotal.textContent =
+                "₹0";
+
         }
+
 
         if (checkoutButton) {
+
             checkoutButton.disabled = true;
+
+            checkoutButton.textContent =
+                "Proceed to Checkout";
+
         }
 
+
         return;
+
     }
 
 
@@ -186,107 +289,117 @@ function updateCart() {
 
     cartItems.innerHTML = "";
 
-    let total = 0;
+
+    cart.forEach(
+        (item, index) => {
+
+            const price =
+                Number(item.price || 0);
+
+            const quantity =
+                Number(item.quantity || 1);
+
+            const itemTotal =
+                price * quantity;
 
 
-    cart.forEach((item, index) => {
-
-        const quantity =
-            Number(item.quantity || 1);
-
-        const price =
-            Number(item.price);
-
-        const itemTotal =
-            price * quantity;
-
-        total += itemTotal;
+            const itemElement =
+                document.createElement("div");
 
 
-        const itemElement =
-            document.createElement("div");
-
-        itemElement.className =
-            "cart-item";
+            itemElement.className =
+                "cart-item";
 
 
-        itemElement.innerHTML = `
+            itemElement.innerHTML = `
 
-            <div class="cart-item-top">
+                <div class="cart-item-top">
 
-                <div>
+                    <div>
 
-                    <div class="cart-item-name">
-                        ${escapeHTML(item.name)}
+                        <div class="cart-item-name">
+
+                            ${escapeHTML(item.name)}
+
+                        </div>
+
+
+                        <div class="cart-item-price">
+
+                            ₹${price.toLocaleString("en-IN")}
+                            each
+
+                        </div>
+
                     </div>
 
-                    <div class="cart-item-price">
-                        ₹${price.toLocaleString("en-IN")}
-                        each
+
+                    <div class="cart-item-total">
+
+                        ₹${itemTotal.toLocaleString("en-IN")}
+
                     </div>
 
                 </div>
 
 
-                <div class="cart-item-total">
-
-                    ₹${itemTotal.toLocaleString("en-IN")}
-
-                </div>
-
-            </div>
+                <div class="cart-item-bottom">
 
 
-            <div class="cart-item-bottom">
+                    <div class="quantity-control">
 
-                <div class="quantity-control">
+
+                        <button
+                            type="button"
+                            class="quantity-button"
+                            onclick="decreaseQuantity(${index})">
+
+                            −
+
+                        </button>
+
+
+                        <span class="quantity-value">
+
+                            ${quantity}
+
+                        </span>
+
+
+                        <button
+                            type="button"
+                            class="quantity-button"
+                            onclick="increaseQuantity(${index})">
+
+                            +
+
+                        </button>
+
+
+                    </div>
+
 
                     <button
                         type="button"
-                        class="quantity-button"
-                        onclick="decreaseQuantity(${index})">
+                        class="remove-item"
+                        onclick="removeFromCart(${index})">
 
-                        −
+                        Remove
 
                     </button>
 
 
-                    <span class="quantity-value">
-
-                        ${quantity}
-
-                    </span>
-
-
-                    <button
-                        type="button"
-                        class="quantity-button"
-                        onclick="increaseQuantity(${index})">
-
-                        +
-
-                    </button>
-
                 </div>
 
-
-                <button
-                    type="button"
-                    class="remove-item"
-                    onclick="removeFromCart(${index})">
-
-                    Remove
-
-                </button>
-
-            </div>
-
-        `;
+            `;
 
 
-        cartItems.appendChild(itemElement);
+            cartItems.appendChild(
+                itemElement
+            );
 
-    });
+        }
+    );
 
 
     /* -----------------------------------------------
@@ -296,18 +409,22 @@ function updateCart() {
     if (cartTotal) {
 
         cartTotal.textContent =
-            "₹" + total.toLocaleString("en-IN");
+            "₹" +
+            getCartTotal().toLocaleString("en-IN");
 
     }
 
 
     /* -----------------------------------------------
-       CHECKOUT
+       ENABLE CHECKOUT
     ------------------------------------------------ */
 
     if (checkoutButton) {
 
         checkoutButton.disabled = false;
+
+        checkoutButton.textContent =
+            "Proceed to Checkout";
 
     }
 
@@ -328,16 +445,22 @@ function openCart() {
 
 
     if (drawer) {
+
         drawer.classList.add("active");
+
     }
 
 
     if (overlay) {
+
         overlay.classList.add("active");
+
     }
 
 
-    document.body.style.overflow = "hidden";
+    document.body.style.overflow =
+        "hidden";
+
 }
 
 
@@ -355,16 +478,22 @@ function closeCart() {
 
 
     if (drawer) {
+
         drawer.classList.remove("active");
+
     }
 
 
     if (overlay) {
+
         overlay.classList.remove("active");
+
     }
 
 
-    document.body.style.overflow = "";
+    document.body.style.overflow =
+        "";
+
 }
 
 
@@ -372,42 +501,363 @@ function closeCart() {
    CHECKOUT
 ===================================================== */
 
-function checkout() {
+async function checkout() {
 
     if (cart.length === 0) {
+
+        alert(
+            "Your cart is empty."
+        );
+
+        return;
+
+    }
+
+
+    const checkoutButton =
+        document.getElementById(
+            "checkout-button"
+        );
+
+
+    const total =
+        getCartTotal();
+
+
+    if (total <= 0) {
+
+        alert(
+            "Invalid cart amount."
+        );
+
+        return;
+
+    }
+
+
+    try {
+
+        /* -------------------------------------------
+           DISABLE BUTTON
+        ------------------------------------------- */
+
+        if (checkoutButton) {
+
+            checkoutButton.disabled =
+                true;
+
+            checkoutButton.textContent =
+                "Creating Order...";
+
+        }
+
+
+        /* -------------------------------------------
+           CREATE RAZORPAY ORDER
+        ------------------------------------------- */
+
+        const response =
+            await fetch(
+
+                `${API_BASE_URL}/api/payment/create-order`,
+
+                {
+
+                    method: "POST",
+
+                    headers: {
+
+                        "Content-Type":
+                            "application/json"
+
+                    },
+
+                    body: JSON.stringify({
+
+                        items: cart,
+
+                        amount: total
+
+                    })
+
+                }
+
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if (!response.ok) {
+
+            throw new Error(
+
+                data.message ||
+                "Unable to create payment order."
+
+            );
+
+        }
+
+
+        /* -------------------------------------------
+           CHECK RAZORPAY SCRIPT
+        ------------------------------------------- */
+
+        if (
+            typeof Razorpay ===
+            "undefined"
+        ) {
+
+            throw new Error(
+                "Razorpay checkout is not loaded. Add the Razorpay checkout script to mentors.html."
+            );
+
+        }
+
+
+        /* -------------------------------------------
+           RAZORPAY OPTIONS
+        ------------------------------------------- */
+
+        const options = {
+
+            key: data.key,
+
+            amount: data.amount,
+
+            currency:
+                data.currency || "INR",
+
+            name: "RAPTORA",
+
+            description:
+                "RAPTORA Mentor Plan",
+
+            order_id:
+                data.orderId,
+
+
+            handler:
+                async function(payment) {
+
+                    await verifyPayment(
+                        payment
+                    );
+
+                },
+
+
+            theme: {
+
+                color: "#e50914"
+
+            },
+
+
+            modal: {
+
+                ondismiss:
+                    function() {
+
+                        resetCheckoutButton();
+
+                    }
+
+            }
+
+        };
+
+
+        /* -------------------------------------------
+           OPEN RAZORPAY
+        ------------------------------------------- */
+
+        const razorpay =
+            new Razorpay(options);
+
+
+        razorpay.on(
+            "payment.failed",
+            function(response) {
+
+                console.error(
+                    "Razorpay payment failed:",
+                    response
+                );
+
+
+                alert(
+                    "Payment failed. Please try again."
+                );
+
+
+                resetCheckoutButton();
+
+            }
+        );
+
+
+        razorpay.open();
+
+    }
+
+
+    catch (error) {
+
+        console.error(
+            "Checkout error:",
+            error
+        );
+
+
+        alert(
+            error.message ||
+            "Unable to start checkout."
+        );
+
+
+        resetCheckoutButton();
+
+    }
+
+}
+
+
+/* =====================================================
+   VERIFY PAYMENT
+===================================================== */
+
+async function verifyPayment(payment) {
+
+    try {
+
+        const response =
+            await fetch(
+
+                `${API_BASE_URL}/api/payment/verify`,
+
+                {
+
+                    method: "POST",
+
+                    headers: {
+
+                        "Content-Type":
+                            "application/json"
+
+                    },
+
+                    body: JSON.stringify({
+
+                        razorpay_order_id:
+                            payment.razorpay_order_id,
+
+                        razorpay_payment_id:
+                            payment.razorpay_payment_id,
+
+                        razorpay_signature:
+                            payment.razorpay_signature,
+
+                        items: cart
+
+                    })
+
+                }
+
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if (!response.ok) {
+
+            throw new Error(
+
+                data.message ||
+                "Payment verification failed."
+
+            );
+
+        }
+
+
+        /* -------------------------------------------
+           SUCCESS
+        ------------------------------------------- */
+
+        alert(
+            "Payment successful! Your mentor plan has been activated."
+        );
+
+
+        /* -------------------------------------------
+           CLEAR CART
+        ------------------------------------------- */
+
+        cart = [];
+
+
+        saveCart();
+
+        updateCart();
+
+        closeCart();
+
+
+    }
+
+
+    catch (error) {
+
+        console.error(
+            "Payment verification error:",
+            error
+        );
+
+
+        alert(
+
+            error.message ||
+            "Payment verification failed. Please contact RAPTORA support."
+
+        );
+
+
+        resetCheckoutButton();
+
+    }
+
+}
+
+
+/* =====================================================
+   RESET CHECKOUT BUTTON
+===================================================== */
+
+function resetCheckoutButton() {
+
+    const checkoutButton =
+        document.getElementById(
+            "checkout-button"
+        );
+
+
+    if (!checkoutButton) {
         return;
     }
 
 
-    const total = cart.reduce(
-        (sum, item) =>
-            sum +
-            Number(item.price) *
-            Number(item.quantity || 1),
-        0
-    );
+    checkoutButton.disabled =
+        cart.length === 0;
 
 
-    console.log(
-        "RAPTORA checkout amount:",
-        total
-    );
+    checkoutButton.textContent =
+        "Proceed to Checkout";
 
-
-    /*
-       Razorpay will be connected here.
-
-       The backend will receive:
-       - plan
-       - quantity
-       - total amount
-
-       and create the Razorpay order.
-    */
-
-    alert(
-        "Razorpay checkout will open here."
-    );
 }
 
 
@@ -418,12 +868,17 @@ function checkout() {
 function escapeHTML(value) {
 
     const div =
-        document.createElement("div");
+        document.createElement(
+            "div"
+        );
+
 
     div.textContent =
         String(value);
 
+
     return div.innerHTML;
+
 }
 
 
@@ -435,8 +890,12 @@ document.addEventListener(
     "keydown",
     function(event) {
 
-        if (event.key === "Escape") {
+        if (
+            event.key === "Escape"
+        ) {
+
             closeCart();
+
         }
 
     }
@@ -452,20 +911,25 @@ document.addEventListener(
     function() {
 
         /*
-           Fix old cart items that were saved
-           before quantity was introduced.
-        */
+         * Make sure every old cart item
+         * has a valid quantity.
+         */
 
-        cart = cart.map(item => ({
+        cart = cart.map(
+            item => ({
 
-            ...item,
+                ...item,
 
-            quantity:
-                Number(item.quantity) > 0
-                    ? Number(item.quantity)
-                    : 1
+                price:
+                    Number(item.price || 0),
 
-        }));
+                quantity:
+                    Number(item.quantity) > 0
+                        ? Number(item.quantity)
+                        : 1
+
+            })
+        );
 
 
         saveCart();
