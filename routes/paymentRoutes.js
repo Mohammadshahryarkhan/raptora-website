@@ -79,6 +79,10 @@ const DISCOUNT_CODES = {
         type: "percentage",
         value: 100
     },
+     PAPA99: {
+        type: "percentage",
+        value: 99
+    },
 
     WELCOME50: {
         type: "fixed",
