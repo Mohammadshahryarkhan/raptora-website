@@ -1,9 +1,9 @@
-
 const express = require("express");
 const crypto = require("crypto");
 const Razorpay = require("razorpay");
-const jwt = require("jsonwebtoken");
+
 const User = require("../models/User");
+const authMiddleware = require("../middleware/authMiddleware");
 
 const router = express.Router();
 
@@ -58,6 +58,11 @@ const DISCOUNT_CODES = {
         value: 10
     },
 
+    RAPTORA99: {
+        type: "percentage",
+        value: 99
+    },
+
     RAPTORA100: {
         type: "percentage",
         value: 100
@@ -82,7 +87,10 @@ const DISCOUNT_CODES = {
 
 function calculateCartSubtotal(items) {
 
-    if (!Array.isArray(items) || items.length === 0) {
+    if (
+        !Array.isArray(items) ||
+        items.length === 0
+    ) {
         return 0;
     }
 
@@ -90,20 +98,28 @@ function calculateCartSubtotal(items) {
 
     for (const item of items) {
 
-        const name = String(item.name || "");
-        const quantity = Number(item.quantity || 1);
+        const name =
+            String(item.name || "");
 
-        const plan = MENTOR_PLANS[name];
+        const quantity =
+            Number(item.quantity || 1);
+
+        const plan =
+            MENTOR_PLANS[name];
 
         if (!plan) {
             return 0;
         }
 
-        if (!Number.isInteger(quantity) || quantity < 1) {
+        if (
+            !Number.isInteger(quantity) ||
+            quantity < 1
+        ) {
             return 0;
         }
 
-        subtotal += plan.price * quantity;
+        subtotal +=
+            plan.price * quantity;
     }
 
     return subtotal;
@@ -114,7 +130,10 @@ function calculateCartSubtotal(items) {
 // CALCULATE DISCOUNT
 // =====================================================
 
-function calculateDiscount(subtotal, coupon) {
+function calculateDiscount(
+    subtotal,
+    coupon
+) {
 
     if (!coupon) {
         return 0;
@@ -134,7 +153,10 @@ function calculateDiscount(subtotal, coupon) {
 
     let discount = 0;
 
-    if (discountCode.type === "percentage") {
+    if (
+        discountCode.type ===
+        "percentage"
+    ) {
 
         discount =
             subtotal *
@@ -143,7 +165,10 @@ function calculateDiscount(subtotal, coupon) {
 
     }
 
-    else if (discountCode.type === "fixed") {
+    else if (
+        discountCode.type ===
+        "fixed"
+    ) {
 
         discount =
             discountCode.value;
@@ -158,60 +183,12 @@ function calculateDiscount(subtotal, coupon) {
 
 
 // =====================================================
-// GET USER FROM JWT
-// =====================================================
-
-async function getUserFromToken(req) {
-
-    const authHeader =
-        req.headers.authorization;
-
-    if (!authHeader) {
-        return null;
-    }
-
-    if (!authHeader.startsWith("Bearer ")) {
-        return null;
-    }
-
-    const token =
-        authHeader.split(" ")[1];
-
-    if (!token) {
-        return null;
-    }
-
-    try {
-
-        const decoded =
-            jwt.verify(
-                token,
-                process.env.JWT_SECRET
-            );
-
-        const user =
-            await User.findById(decoded.id);
-
-        return user || null;
-
-    } catch (error) {
-
-        console.error(
-            "JWT verification error:",
-            error
-        );
-
-        return null;
-    }
-}
-
-
-// =====================================================
 // CREATE RAZORPAY ORDER
 // =====================================================
 
 router.post(
     "/create-order",
+    authMiddleware,
     async (req, res) => {
 
         try {
@@ -223,11 +200,13 @@ router.post(
 
 
             // -----------------------------------------
-            // USER
+            // FIND LOGGED-IN USER
             // -----------------------------------------
 
             const user =
-                await getUserFromToken(req);
+                await User.findById(
+                    req.user.id
+                );
 
 
             if (!user) {
@@ -245,7 +224,7 @@ router.post(
 
 
             // -----------------------------------------
-            // CART
+            // CALCULATE SUBTOTAL
             // -----------------------------------------
 
             const subtotal =
@@ -270,7 +249,7 @@ router.post(
 
 
             // -----------------------------------------
-            // DISCOUNT
+            // CALCULATE DISCOUNT
             // -----------------------------------------
 
             const discount =
@@ -291,15 +270,11 @@ router.post(
                 );
 
 
-            /*
-             * Razorpay does not accept a zero-value order.
-             *
-             * Therefore 100% discount codes cannot be
-             * processed through Razorpay.
-             */
+            // -----------------------------------------
+            // ZERO VALUE ORDER
+            // -----------------------------------------
 
             if (
-                !finalAmount ||
                 finalAmount <= 0
             ) {
 
@@ -308,7 +283,7 @@ router.post(
                     success: false,
 
                     message:
-                        "This discount makes the order free. Please use a paid order."
+                        "This discount makes the order free. Razorpay requires a paid order."
 
                 });
 
@@ -316,7 +291,7 @@ router.post(
 
 
             // -----------------------------------------
-            // CREATE ORDER
+            // CREATE RAZORPAY ORDER
             // -----------------------------------------
 
             const order =
@@ -376,7 +351,6 @@ router.post(
 
         }
 
-
         catch (error) {
 
             console.error(
@@ -405,6 +379,7 @@ router.post(
 
 router.post(
     "/verify",
+    authMiddleware,
     async (req, res) => {
 
         try {
@@ -418,7 +393,7 @@ router.post(
 
 
             // -----------------------------------------
-            // PAYMENT DATA
+            // VALIDATE PAYMENT DATA
             // -----------------------------------------
 
             if (
@@ -440,11 +415,13 @@ router.post(
 
 
             // -----------------------------------------
-            // USER
+            // FIND LOGGED-IN USER
             // -----------------------------------------
 
             const user =
-                await getUserFromToken(req);
+                await User.findById(
+                    req.user.id
+                );
 
 
             if (!user) {
@@ -462,7 +439,7 @@ router.post(
 
 
             // -----------------------------------------
-            // SIGNATURE
+            // GENERATE SIGNATURE
             // -----------------------------------------
 
             const generatedSignature =
@@ -524,18 +501,24 @@ router.post(
 
 
             // -----------------------------------------
-            // FIND PURCHASED PLAN
+            // IDENTIFY MENTOR PLAN
             // -----------------------------------------
 
             let purchasedPlan = null;
 
-            if (Array.isArray(items)) {
+            if (
+                Array.isArray(items)
+            ) {
 
-                for (const item of items) {
+                for (
+                    const item of items
+                ) {
 
                     const plan =
                         MENTOR_PLANS[
-                            String(item.name || "")
+                            String(
+                                item.name || ""
+                            )
                         ];
 
                     if (plan) {
@@ -543,7 +526,9 @@ router.post(
                         purchasedPlan = {
 
                             name:
-                                String(item.name),
+                                String(
+                                    item.name
+                                ),
 
                             price:
                                 plan.price,
@@ -554,6 +539,7 @@ router.post(
                         };
 
                         break;
+
                     }
 
                 }
@@ -576,17 +562,22 @@ router.post(
 
 
             // -----------------------------------------
-            // DATES
+            // START DATE
             // -----------------------------------------
 
             const startDate =
                 new Date();
 
 
+            // -----------------------------------------
+            // END DATE
+            // -----------------------------------------
+
             const endDate =
                 new Date(
                     startDate
                 );
+
 
             endDate.setMonth(
                 endDate.getMonth() +
@@ -595,12 +586,162 @@ router.post(
 
 
             // -----------------------------------------
-            // UPDATE USER
+            // MILESTONES
+            // -----------------------------------------
+
+            const milestones = [
+
+                {
+                    title:
+                        "Complete Student Profile",
+
+                    description:
+                        "Complete your Raptora student profile.",
+
+                    completed:
+                        false,
+
+                    completedDate:
+                        null
+                },
+
+                {
+                    title:
+                        "Mentor Introduction",
+
+                    description:
+                        "Connect with your assigned Raptora mentor.",
+
+                    completed:
+                        false,
+
+                    completedDate:
+                        null
+                },
+
+                {
+                    title:
+                        "Understand Your Goals",
+
+                    description:
+                        "Discuss your college and career goals with your mentor.",
+
+                    completed:
+                        false,
+
+                    completedDate:
+                        null
+                },
+
+                {
+                    title:
+                        "College Shortlisting",
+
+                    description:
+                        "Create your personalized college shortlist.",
+
+                    completed:
+                        false,
+
+                    completedDate:
+                        null
+                },
+
+                {
+                    title:
+                        "Rank & College Strategy",
+
+                    description:
+                        "Review your predicted colleges and admission strategy.",
+
+                    completed:
+                        false,
+
+                    completedDate:
+                        null
+                },
+
+                {
+                    title:
+                        "Application Planning",
+
+                    description:
+                        "Plan your applications and important admission deadlines.",
+
+                    completed:
+                        false,
+
+                    completedDate:
+                        null
+                },
+
+                {
+                    title:
+                        "Document Preparation",
+
+                    description:
+                        "Prepare the documents required for admission.",
+
+                    completed:
+                        false,
+
+                    completedDate:
+                        null
+                },
+
+                {
+                    title:
+                        "Application Review",
+
+                    description:
+                        "Review your applications before submission.",
+
+                    completed:
+                        false,
+
+                    completedDate:
+                        null
+                },
+
+                {
+                    title:
+                        "Admission Updates",
+
+                    description:
+                        "Track important admission and counselling updates.",
+
+                    completed:
+                        false,
+
+                    completedDate:
+                        null
+                },
+
+                {
+                    title:
+                        "Final College Decision",
+
+                    description:
+                        "Finalize your college choice with mentor guidance.",
+
+                    completed:
+                        false,
+
+                    completedDate:
+                        null
+                }
+
+            ];
+
+
+            // -----------------------------------------
+            // UPDATE MENTOR SUBSCRIPTION
             // -----------------------------------------
 
             user.mentorSubscription = {
 
-                active: true,
+                active:
+                    true,
 
                 plan:
                     purchasedPlan.name,
@@ -635,7 +776,7 @@ router.post(
 
 
             // -----------------------------------------
-            // DEFAULT MENTORSHIP PROGRESS
+            // PROGRESS
             // -----------------------------------------
 
             user.mentorshipProgress = {
@@ -644,12 +785,20 @@ router.post(
                     0,
 
                 totalMilestones:
-                    10,
+                    milestones.length,
 
                 currentMilestone:
-                    "Getting Started"
+                    milestones[0].title
 
             };
+
+
+            // -----------------------------------------
+            // SAVE MILESTONES
+            // -----------------------------------------
+
+            user.milestones =
+                milestones;
 
 
             // -----------------------------------------
@@ -660,18 +809,47 @@ router.post(
                 "Raptora Mentor Member";
 
 
+            // -----------------------------------------
+            // PAYMENT STATUS
+            // -----------------------------------------
+
+            user.paymentStatus =
+                "paid";
+
+
+            user.razorpayPaymentId =
+                razorpay_payment_id;
+
+
+            user.razorpayOrderId =
+                razorpay_order_id;
+
+
+            // -----------------------------------------
+            // SAVE USER
+            // -----------------------------------------
+
             await user.save();
 
 
             // -----------------------------------------
-            // SUCCESS
+            // LOG
             // -----------------------------------------
 
             console.log(
-                "Razorpay payment verified and mentorship activated:",
+                "Payment verified:",
                 razorpay_payment_id
             );
 
+            console.log(
+                "Mentorship activated for:",
+                user.email
+            );
+
+
+            // -----------------------------------------
+            // SUCCESS RESPONSE
+            // -----------------------------------------
 
             res.json({
 
@@ -699,7 +877,6 @@ router.post(
 
         }
 
-
         catch (error) {
 
             console.error(
@@ -723,4 +900,3 @@ router.post(
 
 
 module.exports = router;
-
