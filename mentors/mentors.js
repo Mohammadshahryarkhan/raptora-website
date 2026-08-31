@@ -1,12 +1,7 @@
 
 /* =====================================================
    RAPTORA — MENTORS
-   CART + QUANTITY + DISCOUNT + RAZORPAY
-===================================================== */
-
-
-/* =====================================================
-   RENDER BACKEND
+   CART + DISCOUNT + RAZORPAY
 ===================================================== */
 
 const API_BASE_URL =
@@ -23,7 +18,7 @@ let cart = JSON.parse(
 
 
 /* =====================================================
-   DISCOUNT
+   DISCOUNT STATE
 ===================================================== */
 
 let appliedCoupon = "";
@@ -32,7 +27,7 @@ let discountAmount = 0;
 
 /* =====================================================
    DISCOUNT CODES
-   SAME AS FLUTTER MAIN.DART
+   SAME AS RAPTORA FLUTTER APP
 ===================================================== */
 
 const DISCOUNT_CODES = {
@@ -75,8 +70,6 @@ function saveCart() {
 
 function addToCart(name, price) {
 
-    price = Number(price);
-
     const existingItem = cart.find(
         item => item.name === name
     );
@@ -93,7 +86,7 @@ function addToCart(name, price) {
 
             name: name,
 
-            price: price,
+            price: Number(price),
 
             quantity: 1
 
@@ -192,7 +185,7 @@ function removeFromCart(index) {
 
 
 /* =====================================================
-   CART SUBTOTAL
+   GET SUBTOTAL
 ===================================================== */
 
 function getCartSubtotal() {
@@ -220,7 +213,7 @@ function getCartSubtotal() {
 
 
 /* =====================================================
-   CART QUANTITY
+   GET TOTAL QUANTITY
 ===================================================== */
 
 function getCartQuantity() {
@@ -236,6 +229,28 @@ function getCartQuantity() {
 
         0
 
+    );
+
+}
+
+
+/* =====================================================
+   GET FINAL TOTAL
+===================================================== */
+
+function getFinalTotal() {
+
+    const subtotal =
+        getCartSubtotal();
+
+
+    const total =
+        subtotal - discountAmount;
+
+
+    return Math.max(
+        0,
+        total
     );
 
 }
@@ -268,6 +283,10 @@ function applyDiscount() {
         getCartSubtotal();
 
 
+    /* -----------------------------------------------
+       EMPTY CART
+    ------------------------------------------------ */
+
     if (subtotal <= 0) {
 
         showDiscountMessage(
@@ -280,17 +299,33 @@ function applyDiscount() {
     }
 
 
+    /* -----------------------------------------------
+       EMPTY CODE
+    ------------------------------------------------ */
+
     if (!code) {
+
+        appliedCoupon = "";
+
+        discountAmount = 0;
+
 
         showDiscountMessage(
             "Please enter a discount code.",
             false
         );
 
+
+        updateCart();
+
         return;
 
     }
 
+
+    /* -----------------------------------------------
+       CHECK CODE
+    ------------------------------------------------ */
 
     const coupon =
         DISCOUNT_CODES[code];
@@ -317,23 +352,25 @@ function applyDiscount() {
 
 
     /* -----------------------------------------------
-       PERCENTAGE DISCOUNT
+       CALCULATE DISCOUNT
     ------------------------------------------------ */
 
-    if (coupon.type === "percentage") {
+    if (
+        coupon.type ===
+        "percentage"
+    ) {
 
         discountAmount =
             subtotal *
-            (coupon.value / 100);
+            coupon.value /
+            100;
 
     }
 
-
-    /* -----------------------------------------------
-       FIXED DISCOUNT
-    ------------------------------------------------ */
-
-    else if (coupon.type === "fixed") {
+    else if (
+        coupon.type ===
+        "fixed"
+    ) {
 
         discountAmount =
             coupon.value;
@@ -342,7 +379,7 @@ function applyDiscount() {
 
 
     /* -----------------------------------------------
-       DISCOUNT CANNOT EXCEED SUBTOTAL
+       NEVER EXCEED SUBTOTAL
     ------------------------------------------------ */
 
     discountAmount =
@@ -357,15 +394,38 @@ function applyDiscount() {
 
 
     showDiscountMessage(
-
         `${code} applied successfully.`,
-
         true
-
     );
 
 
     updateCart();
+
+}
+
+
+/* =====================================================
+   QUICK COUPON BUTTON
+===================================================== */
+
+function useCoupon(code) {
+
+    const input =
+        document.getElementById(
+            "discount-code"
+        );
+
+
+    if (!input) {
+        return;
+    }
+
+
+    input.value =
+        code;
+
+
+    applyDiscount();
 
 }
 
@@ -391,6 +451,8 @@ function removeDiscount() {
 
         input.value = "";
 
+        input.disabled = false;
+
     }
 
 
@@ -414,68 +476,36 @@ function showDiscountMessage(
     success
 ) {
 
-    const messageElement =
+    const element =
         document.getElementById(
             "discount-message"
         );
 
 
-    if (!messageElement) {
+    if (!element) {
         return;
     }
 
 
-    messageElement.textContent =
+    element.textContent =
         message;
 
 
-    if (success) {
-
-        messageElement.classList.add(
-            "success"
-        );
-
-        messageElement.classList.remove(
-            "error"
-        );
-
-    } else {
-
-        messageElement.classList.add(
-            "error"
-        );
-
-        messageElement.classList.remove(
-            "success"
-        );
-
-    }
-
-}
+    element.classList.remove(
+        "success",
+        "error"
+    );
 
 
-/* =====================================================
-   GET FINAL TOTAL
-===================================================== */
-
-function getFinalTotal() {
-
-    const subtotal =
-        getCartSubtotal();
-
-
-    if (subtotal <= 0) {
-        return 0;
+    if (!message) {
+        return;
     }
 
 
-    const finalTotal =
-        subtotal - discountAmount;
-
-
-    return Math.max(
-        0,
-        finalTotal
+    element.classList.add(
+        success
+            ? "success"
+            : "error"
     );
 
 }
@@ -497,7 +527,22 @@ function updateCart() {
             "cart-count"
         );
 
-    const cartTotal =
+    const subtotalElement =
+        document.getElementById(
+            "cart-subtotal"
+        );
+
+    const discountElement =
+        document.getElementById(
+            "cart-discount"
+        );
+
+    const discountRow =
+        document.getElementById(
+            "cart-discount-row"
+        );
+
+    const totalElement =
         document.getElementById(
             "cart-total"
         );
@@ -511,6 +556,26 @@ function updateCart() {
     if (!cartItems) {
         return;
     }
+
+
+    /* -----------------------------------------------
+       NORMALIZE CART
+    ------------------------------------------------ */
+
+    cart =
+        cart.map(item => ({
+
+            ...item,
+
+            price:
+                Number(item.price || 0),
+
+            quantity:
+                Number(item.quantity) > 0
+                    ? Number(item.quantity)
+                    : 1
+
+        }));
 
 
     /* -----------------------------------------------
@@ -547,9 +612,33 @@ function updateCart() {
         `;
 
 
-        if (cartTotal) {
+        if (subtotalElement) {
 
-            cartTotal.textContent =
+            subtotalElement.textContent =
+                "₹0";
+
+        }
+
+
+        if (discountElement) {
+
+            discountElement.textContent =
+                "-₹0";
+
+        }
+
+
+        if (discountRow) {
+
+            discountRow.style.display =
+                "none";
+
+        }
+
+
+        if (totalElement) {
+
+            totalElement.textContent =
                 "₹0";
 
         }
@@ -560,11 +649,10 @@ function updateCart() {
             checkoutButton.disabled =
                 true;
 
-            checkoutButton.textContent =
-                "Proceed to Checkout";
-
         }
 
+
+        saveCart();
 
         return;
 
@@ -642,9 +730,7 @@ function updateCart() {
 
                 <div class="cart-item-bottom">
 
-
                     <div class="quantity-control">
-
 
                         <button
                             type="button"
@@ -672,7 +758,6 @@ function updateCart() {
 
                         </button>
 
-
                     </div>
 
 
@@ -684,7 +769,6 @@ function updateCart() {
                         Remove
 
                     </button>
-
 
                 </div>
 
@@ -700,179 +784,41 @@ function updateCart() {
 
 
     /* -----------------------------------------------
-       DISCOUNT SECTION
+       TOTALS
     ------------------------------------------------ */
 
     const subtotal =
         getCartSubtotal();
 
 
-    let discountHTML = "";
+    /* -----------------------------------------------
+       DISCOUNT SAFETY
+    ------------------------------------------------ */
 
+    if (
+        discountAmount >
+        subtotal
+    ) {
 
-    if (appliedCoupon) {
-
-        discountHTML = `
-
-            <div class="discount-applied">
-
-                <div>
-
-                    <span>
-                        Coupon
-                    </span>
-
-                    <strong>
-                        ${escapeHTML(
-                            appliedCoupon
-                        )}
-                    </strong>
-
-                </div>
-
-
-                <button
-                    type="button"
-                    onclick="removeDiscount()">
-
-                    Remove
-
-                </button>
-
-            </div>
-
-        `;
+        discountAmount =
+            subtotal;
 
     }
+
+
+    const finalTotal =
+        getFinalTotal();
 
 
     /* -----------------------------------------------
-       INSERT DISCOUNT BOX
+       SUBTOTAL
     ------------------------------------------------ */
 
-    let discountBox =
-        document.getElementById(
-            "mentor-discount-box"
-        );
+    if (subtotalElement) {
 
-
-    if (!discountBox) {
-
-        discountBox =
-            document.createElement(
-                "div"
-            );
-
-        discountBox.id =
-            "mentor-discount-box";
-
-        discountBox.className =
-            "mentor-discount-box";
-
-
-        const cartBottom =
-            document.querySelector(
-                ".cart-bottom"
-            );
-
-
-        if (cartBottom) {
-
-            cartBottom.insertBefore(
-                discountBox,
-                cartBottom.firstChild
-            );
-
-        }
-
-    }
-
-
-    if (discountBox) {
-
-        discountBox.innerHTML = `
-
-            <div class="discount-title">
-
-                <i class="fa-solid fa-tag"></i>
-
-                Discount Code
-
-            </div>
-
-
-            <div class="discount-input-row">
-
-                <input
-                    id="discount-code"
-                    type="text"
-                    placeholder="Enter coupon code"
-                    value="${escapeHTML(
-                        appliedCoupon
-                    )}"
-                    ${appliedCoupon ? "disabled" : ""}
-                >
-
-
-                ${
-                    appliedCoupon
-
-                    ? `
-
-                        <button
-                            type="button"
-                            onclick="removeDiscount()">
-
-                            Remove
-
-                        </button>
-
-                    `
-
-                    : `
-
-                        <button
-                            type="button"
-                            onclick="applyDiscount()">
-
-                            Apply
-
-                        </button>
-
-                    `
-                }
-
-            </div>
-
-
-            <div
-                id="discount-message"
-                class="discount-message">
-
-                ${appliedCoupon
-                    ? `${escapeHTML(appliedCoupon)} applied successfully.`
-                    : ""
-                }
-
-            </div>
-
-
-            ${discountHTML}
-
-        `;
-
-    }
-
-
-    /* -----------------------------------------------
-       TOTALS
-    ------------------------------------------------ */
-
-    if (cartTotal) {
-
-        cartTotal.textContent =
+        subtotalElement.textContent =
             "₹" +
-            getFinalTotal().toLocaleString(
+            subtotal.toLocaleString(
                 "en-IN",
                 {
                     maximumFractionDigits: 2
@@ -883,18 +829,74 @@ function updateCart() {
 
 
     /* -----------------------------------------------
-       ENABLE CHECKOUT
+       DISCOUNT
+    ------------------------------------------------ */
+
+    if (discountRow) {
+
+        if (
+            appliedCoupon &&
+            discountAmount > 0
+        ) {
+
+            discountRow.style.display =
+                "flex";
+
+        } else {
+
+            discountRow.style.display =
+                "none";
+
+        }
+
+    }
+
+
+    if (discountElement) {
+
+        discountElement.textContent =
+            "-₹" +
+            discountAmount.toLocaleString(
+                "en-IN",
+                {
+                    maximumFractionDigits: 2
+                }
+            );
+
+    }
+
+
+    /* -----------------------------------------------
+       FINAL TOTAL
+    ------------------------------------------------ */
+
+    if (totalElement) {
+
+        totalElement.textContent =
+            "₹" +
+            finalTotal.toLocaleString(
+                "en-IN",
+                {
+                    maximumFractionDigits: 2
+                }
+            );
+
+    }
+
+
+    /* -----------------------------------------------
+       CHECKOUT
     ------------------------------------------------ */
 
     if (checkoutButton) {
 
         checkoutButton.disabled =
-            false;
-
-        checkoutButton.textContent =
-            "Proceed to Checkout";
+            finalTotal <= 0;
 
     }
+
+
+    saveCart();
 
 }
 
@@ -998,11 +1000,18 @@ async function checkout() {
     }
 
 
+    const subtotal =
+        getCartSubtotal();
+
+
     const finalTotal =
         getFinalTotal();
 
 
-    if (finalTotal <= 0) {
+    if (
+        subtotal <= 0 ||
+        finalTotal <= 0
+    ) {
 
         alert(
             "Invalid cart amount."
@@ -1033,7 +1042,7 @@ async function checkout() {
 
 
         /* -------------------------------------------
-           CREATE ORDER
+           SEND DISCOUNTED TOTAL TO BACKEND
         ------------------------------------------- */
 
         const response =
@@ -1057,13 +1066,13 @@ async function checkout() {
                         items: cart,
 
                         subtotal:
-                            getCartSubtotal(),
-
-                        discount:
-                            discountAmount,
+                            subtotal,
 
                         coupon:
                             appliedCoupon,
+
+                        discount:
+                            discountAmount,
 
                         amount:
                             finalTotal
@@ -1092,7 +1101,7 @@ async function checkout() {
 
 
         /* -------------------------------------------
-           RAZORPAY SCRIPT CHECK
+           RAZORPAY CHECK
         ------------------------------------------- */
 
         if (
@@ -1101,16 +1110,14 @@ async function checkout() {
         ) {
 
             throw new Error(
-
-                "Razorpay checkout is not loaded. Add the Razorpay script to mentors.html."
-
+                "Razorpay checkout is not loaded."
             );
 
         }
 
 
         /* -------------------------------------------
-           RAZORPAY
+           RAZORPAY OPTIONS
         ------------------------------------------- */
 
         const options = {
@@ -1122,7 +1129,8 @@ async function checkout() {
                 data.amount,
 
             currency:
-                data.currency || "INR",
+                data.currency ||
+                "INR",
 
             name:
                 "RAPTORA",
@@ -1207,10 +1215,8 @@ async function checkout() {
 
 
         alert(
-
             error.message ||
             "Unable to start checkout."
-
         );
 
 
@@ -1222,7 +1228,7 @@ async function checkout() {
 
 
 /* =====================================================
-   VERIFY PAYMENT
+   VERIFY RAZORPAY PAYMENT
 ===================================================== */
 
 async function verifyPayment(
@@ -1291,9 +1297,7 @@ async function verifyPayment(
 
 
         alert(
-
             "Payment successful! Your mentor plan has been activated."
-
         );
 
 
@@ -1328,7 +1332,7 @@ async function verifyPayment(
         alert(
 
             error.message ||
-            "Payment verification failed. Please contact RAPTORA support."
+            "Payment verification failed."
 
         );
 
@@ -1341,27 +1345,27 @@ async function verifyPayment(
 
 
 /* =====================================================
-   RESET CHECKOUT BUTTON
+   RESET CHECKOUT
 ===================================================== */
 
 function resetCheckoutButton() {
 
-    const checkoutButton =
+    const button =
         document.getElementById(
             "checkout-button"
         );
 
 
-    if (!checkoutButton) {
+    if (!button) {
         return;
     }
 
 
-    checkoutButton.disabled =
+    button.disabled =
         cart.length === 0;
 
 
-    checkoutButton.textContent =
+    button.textContent =
         "Proceed to Checkout";
 
 }
@@ -1389,7 +1393,7 @@ function escapeHTML(value) {
 
 
 /* =====================================================
-   ENTER KEY FOR COUPON
+   KEYBOARD
 ===================================================== */
 
 document.addEventListener(
