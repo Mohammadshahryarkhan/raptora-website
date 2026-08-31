@@ -1,4 +1,3 @@
-
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
@@ -14,6 +13,7 @@ const comedkRoutes = require("./routes/comedkRoutes");
 const mccRoutes = require("./routes/mccRoutes");
 const mentorRoutes = require("./routes/mentorRoutes");
 const paymentRoutes = require("./routes/paymentRoutes");
+
 // Create App
 const app = express();
 
@@ -35,6 +35,7 @@ app.use("/api/josaa", josaaRoutes);
 app.use("/api/kcet", kcetRoutes);
 app.use("/api/comedk", comedkRoutes);
 app.use("/api/mcc", mccRoutes);
+app.use("/api/mentors", mentorRoutes);
 app.use("/api/payment", paymentRoutes);
 
 // Test Backend
@@ -43,7 +44,8 @@ app.get("/test", (req, res) => {
 });
 
 // MongoDB Connection
-mongoose.connect(process.env.MONGO_URI)
+mongoose
+    .connect(process.env.MONGO_URI)
     .then(() => {
         console.log("MongoDB Connected");
     })
@@ -57,4 +59,3 @@ const PORT = process.env.PORT || 8000;
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
 });
-
