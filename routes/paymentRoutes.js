@@ -75,10 +75,14 @@ const DISCOUNT_CODES = {
         type: "percentage",
         value: 10
     },
+     RAPTORA100: {
+        type: "percentage",
+        value: 100
+    },
 
-    WELCOME15: {
+    WELCOME50: {
         type: "fixed",
-        value: 15
+        value: 50
     }
 
 };
