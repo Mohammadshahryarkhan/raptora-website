@@ -1,449 +1,393 @@
-/* =========================================================
-   RAPTORA MENTORS
-   Cart System
-   ========================================================= */
+```javascript
+/* =====================================================
+   RAPTORA — MENTORS CART
+   mentors/mentors.js
+===================================================== */
 
-let mentorCart = [];
+
+/* =====================================================
+   CART DATA
+===================================================== */
+
+let cart = JSON.parse(
+    localStorage.getItem("raptoraMentorCart")
+) || [];
 
 
-/* =========================================================
+/* =====================================================
+   SAVE CART
+===================================================== */
+
+function saveCart() {
+
+    localStorage.setItem(
+        "raptoraMentorCart",
+        JSON.stringify(cart)
+    );
+
+}
+
+
+/* =====================================================
    ADD TO CART
-   ========================================================= */
+===================================================== */
 
 function addToCart(name, price) {
 
-  // Prevent the same plan from being added twice
-  const alreadyExists = mentorCart.some(
-    item => item.name === name
-  );
+    /*
+       If the same plan is already in the cart,
+       don't add it again.
+    */
 
-  if (alreadyExists) {
+    const alreadyExists = cart.some(
+        item => item.name === name
+    );
 
-    showMessage("This plan is already in your cart.");
+
+    if (alreadyExists) {
+
+        updateCart();
+
+        openCart();
+
+        return;
+
+    }
+
+
+    cart.push({
+
+        name: name,
+
+        price: Number(price)
+
+    });
+
+
+    saveCart();
+
+    updateCart();
 
     openCart();
 
-    return;
-  }
-
-
-  mentorCart.push({
-    name: name,
-    price: Number(price)
-  });
-
-
-  updateCart();
-
-  openCart();
-
-  showMessage("Plan added to cart.");
 }
 
 
-/* =========================================================
+/* =====================================================
    REMOVE FROM CART
-   ========================================================= */
+===================================================== */
 
 function removeFromCart(index) {
 
-  if (
-    index < 0 ||
-    index >= mentorCart.length
-  ) {
-    return;
-  }
+    if (
+        index < 0 ||
+        index >= cart.length
+    ) {
+        return;
+    }
 
 
-  mentorCart.splice(index, 1);
+    cart.splice(index, 1);
 
-  updateCart();
+
+    saveCart();
+
+    updateCart();
+
 }
 
 
-/* =========================================================
+/* =====================================================
    UPDATE CART
-   ========================================================= */
+===================================================== */
 
 function updateCart() {
 
-  const cartItems =
-    document.getElementById("cart-items");
+    const cartItems =
+        document.getElementById("cart-items");
 
-  const cartCount =
-    document.getElementById("cart-count");
+    const cartCount =
+        document.getElementById("cart-count");
 
-  const cartTotal =
-    document.getElementById("cart-total");
+    const cartTotal =
+        document.getElementById("cart-total");
 
-  const checkoutButton =
-    document.getElementById("checkout-button");
-
-
-  if (!cartItems) return;
+    const checkoutButton =
+        document.getElementById("checkout-button");
 
 
-  /* -------------------------
-     CART COUNT
-     ------------------------- */
-
-  if (cartCount) {
-
-    cartCount.textContent =
-      mentorCart.length;
-
-  }
+    if (!cartItems) {
+        return;
+    }
 
 
-  /* -------------------------
-     EMPTY CART
-     ------------------------- */
+    /* -----------------------------------------------
+       CART COUNT
+    ------------------------------------------------ */
 
-  if (mentorCart.length === 0) {
+    if (cartCount) {
 
-    cartItems.innerHTML = `
-      <div class="empty-cart">
-        Your cart is empty.
-      </div>
-    `;
-
-
-    if (cartTotal) {
-
-      cartTotal.textContent =
-        "₹0";
+        cartCount.textContent =
+            cart.length;
 
     }
 
 
-    if (checkoutButton) {
+    /* -----------------------------------------------
+       EMPTY CART
+    ------------------------------------------------ */
 
-      checkoutButton.disabled =
-        true;
+    if (cart.length === 0) {
+
+        cartItems.innerHTML = `
+            <div class="empty-cart">
+                Your cart is empty.
+            </div>
+        `;
+
+        if (cartTotal) {
+            cartTotal.textContent = "₹0";
+        }
+
+        if (checkoutButton) {
+            checkoutButton.disabled = true;
+        }
+
+        return;
 
     }
 
 
-    return;
-  }
+    /* -----------------------------------------------
+       CART ITEMS
+    ------------------------------------------------ */
+
+    cartItems.innerHTML = "";
 
 
-  /* -------------------------
-     CART HAS ITEMS
-     ------------------------- */
-
-  if (checkoutButton) {
-
-    checkoutButton.disabled =
-      false;
-
-  }
+    let total = 0;
 
 
-  let total = 0;
+    cart.forEach((item, index) => {
+
+        total += Number(item.price);
 
 
-  cartItems.innerHTML =
-    mentorCart.map(
-      (item, index) => {
+        const itemElement =
+            document.createElement("div");
 
-        total += item.price;
+        itemElement.className =
+            "cart-item";
 
 
-        return `
-          <div class="cart-item">
+        itemElement.innerHTML = `
 
-            <div class="cart-item-top">
-
-              <div class="cart-item-name">
+            <div class="cart-item-name">
                 ${escapeHTML(item.name)}
-              </div>
+            </div>
 
-              <div class="cart-item-price">
-                ₹${formatPrice(item.price)}
-              </div>
 
+            <div class="cart-item-price">
+                ₹${Number(item.price).toLocaleString("en-IN")}
             </div>
 
 
             <button
-              class="remove-cart-item"
-              onclick="removeFromCart(${index})">
+                class="remove-item"
+                onclick="removeFromCart(${index})">
 
-              Remove
+                Remove
 
             </button>
 
-          </div>
         `;
 
-      }
-    ).join("");
+
+        cartItems.appendChild(itemElement);
+
+    });
 
 
-  if (cartTotal) {
+    /* -----------------------------------------------
+       TOTAL
+    ------------------------------------------------ */
 
-    cartTotal.textContent =
-      "₹" + formatPrice(total);
+    if (cartTotal) {
 
-  }
-}
-
-
-/* =========================================================
-   CALCULATE TOTAL
-   ========================================================= */
-
-function getCartTotal() {
-
-  return mentorCart.reduce(
-    (total, item) => {
-
-      return total + Number(item.price);
-
-    },
-    0
-  );
-
-}
-
-
-/* =========================================================
-   FORMAT PRICE
-   ========================================================= */
-
-function formatPrice(price) {
-
-  return Number(price).toLocaleString(
-    "en-IN"
-  );
-
-}
-
-
-/* =========================================================
-   OPEN CART
-   ========================================================= */
-
-function openCart() {
-
-  const drawer =
-    document.getElementById("cart-drawer");
-
-  const overlay =
-    document.getElementById("cart-overlay");
-
-
-  if (drawer) {
-
-    drawer.classList.add("active");
-
-  }
-
-
-  if (overlay) {
-
-    overlay.classList.add("active");
-
-  }
-
-
-  document.body.style.overflow =
-    "hidden";
-
-}
-
-
-/* =========================================================
-   CLOSE CART
-   ========================================================= */
-
-function closeCart() {
-
-  const drawer =
-    document.getElementById("cart-drawer");
-
-  const overlay =
-    document.getElementById("cart-overlay");
-
-
-  if (drawer) {
-
-    drawer.classList.remove("active");
-
-  }
-
-
-  if (overlay) {
-
-    overlay.classList.remove("active");
-
-  }
-
-
-  document.body.style.overflow =
-    "";
-
-}
-
-
-/* =========================================================
-   ESCAPE KEY
-   ========================================================= */
-
-document.addEventListener(
-  "keydown",
-  function(event) {
-
-    if (event.key === "Escape") {
-
-      closeCart();
+        cartTotal.textContent =
+            "₹" + total.toLocaleString("en-IN");
 
     }
 
-  }
-);
+
+    /* -----------------------------------------------
+       CHECKOUT
+    ------------------------------------------------ */
+
+    if (checkoutButton) {
+
+        checkoutButton.disabled = false;
+
+    }
+
+}
 
 
-/* =========================================================
-   SIMPLE MESSAGE
-   ========================================================= */
+/* =====================================================
+   OPEN CART
+===================================================== */
 
-function showMessage(message) {
+function openCart() {
 
-  let messageBox =
-    document.getElementById(
-      "mentor-message"
+    const drawer =
+        document.getElementById("cart-drawer");
+
+    const overlay =
+        document.getElementById("cart-overlay");
+
+
+    if (drawer) {
+
+        drawer.classList.add("active");
+
+    }
+
+
+    if (overlay) {
+
+        overlay.classList.add("active");
+
+    }
+
+
+    document.body.style.overflow = "hidden";
+
+}
+
+
+/* =====================================================
+   CLOSE CART
+===================================================== */
+
+function closeCart() {
+
+    const drawer =
+        document.getElementById("cart-drawer");
+
+    const overlay =
+        document.getElementById("cart-overlay");
+
+
+    if (drawer) {
+
+        drawer.classList.remove("active");
+
+    }
+
+
+    if (overlay) {
+
+        overlay.classList.remove("active");
+
+    }
+
+
+    document.body.style.overflow = "";
+
+}
+
+
+/* =====================================================
+   CHECKOUT
+===================================================== */
+
+function checkout() {
+
+    if (cart.length === 0) {
+
+        return;
+
+    }
+
+
+    /*
+       Razorpay will be connected here.
+
+       We will later send the selected plan
+       and amount to your Render backend.
+    */
+
+
+    const total = cart.reduce(
+        (sum, item) =>
+            sum + Number(item.price),
+        0
     );
 
 
-  if (!messageBox) {
-
-    messageBox =
-      document.createElement("div");
-
-    messageBox.id =
-      "mentor-message";
-
-
-    messageBox.style.position =
-      "fixed";
-
-    messageBox.style.bottom =
-      "25px";
-
-    messageBox.style.left =
-      "50%";
-
-    messageBox.style.transform =
-      "translateX(-50%)";
-
-    messageBox.style.zIndex =
-      "10001";
-
-    messageBox.style.padding =
-      "13px 20px";
-
-    messageBox.style.background =
-      "#121212";
-
-    messageBox.style.border =
-      "1px solid rgba(229,9,20,.45)";
-
-    messageBox.style.borderRadius =
-      "12px";
-
-    messageBox.style.color =
-      "#ffffff";
-
-    messageBox.style.fontSize =
-      "13px";
-
-    messageBox.style.fontWeight =
-      "700";
-
-    messageBox.style.boxShadow =
-      "0 10px 35px rgba(0,0,0,.45)";
-
-    document.body.appendChild(
-      messageBox
+    console.log(
+        "Checkout amount:",
+        total
     );
 
-  }
 
+    /*
+       Temporary message until Razorpay
+       backend integration is added.
+    */
 
-  messageBox.textContent =
-    message;
-
-
-  messageBox.style.display =
-    "block";
-
-
-  clearTimeout(
-    messageBox.hideTimer
-  );
-
-
-  messageBox.hideTimer =
-    setTimeout(
-      function() {
-
-        messageBox.style.display =
-          "none";
-
-      },
-      2200
+    alert(
+        "Razorpay checkout will open here."
     );
 
 }
 
 
-/* =========================================================
-   BASIC HTML ESCAPE
-   ========================================================= */
+/* =====================================================
+   ESCAPE HTML
+===================================================== */
 
 function escapeHTML(value) {
 
-  return String(value)
+    const div =
+        document.createElement("div");
 
-    .replace(
-      /&/g,
-      "&amp;"
-    )
+    div.textContent =
+        String(value);
 
-    .replace(
-      /</g,
-      "&lt;"
-    )
-
-    .replace(
-      />/g,
-      "&gt;"
-    )
-
-    .replace(
-      /"/g,
-      "&quot;"
-    )
-
-    .replace(
-      /'/g,
-      "&#039;"
-    );
+    return div.innerHTML;
 
 }
 
 
-/* =========================================================
-   INITIALIZE
-   ========================================================= */
+/* =====================================================
+   ESC KEY
+===================================================== */
 
 document.addEventListener(
-  "DOMContentLoaded",
-  function() {
+    "keydown",
+    function (event) {
 
-    updateCart();
+        if (event.key === "Escape") {
 
-  }
+            closeCart();
+
+        }
+
+    }
 );
+
+
+/* =====================================================
+   INITIALIZE
+===================================================== */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function () {
+
+        updateCart();
+
+    }
+);
+```
