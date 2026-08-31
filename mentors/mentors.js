@@ -1,4 +1,3 @@
-
 /* =====================================================
    RAPTORA — MENTORS
    CART + DISCOUNT + RAZORPAY
@@ -27,7 +26,6 @@ let discountAmount = 0;
 
 /* =====================================================
    DISCOUNT CODES
-   SAME AS RAPTORA FLUTTER APP
 ===================================================== */
 
 const DISCOUNT_CODES = {
@@ -283,10 +281,6 @@ function applyDiscount() {
         getCartSubtotal();
 
 
-    /* -----------------------------------------------
-       EMPTY CART
-    ------------------------------------------------ */
-
     if (subtotal <= 0) {
 
         showDiscountMessage(
@@ -298,10 +292,6 @@ function applyDiscount() {
 
     }
 
-
-    /* -----------------------------------------------
-       EMPTY CODE
-    ------------------------------------------------ */
 
     if (!code) {
 
@@ -322,10 +312,6 @@ function applyDiscount() {
 
     }
 
-
-    /* -----------------------------------------------
-       CHECK CODE
-    ------------------------------------------------ */
 
     const coupon =
         DISCOUNT_CODES[code];
@@ -351,10 +337,6 @@ function applyDiscount() {
     }
 
 
-    /* -----------------------------------------------
-       CALCULATE DISCOUNT
-    ------------------------------------------------ */
-
     if (
         coupon.type ===
         "percentage"
@@ -377,10 +359,6 @@ function applyDiscount() {
 
     }
 
-
-    /* -----------------------------------------------
-       NEVER EXCEED SUBTOTAL
-    ------------------------------------------------ */
 
     discountAmount =
         Math.min(
@@ -1042,7 +1020,7 @@ async function checkout() {
 
 
         /* -------------------------------------------
-           SEND DISCOUNTED TOTAL TO BACKEND
+           CREATE ORDER
         ------------------------------------------- */
 
         const response =
@@ -1063,7 +1041,8 @@ async function checkout() {
 
                     body: JSON.stringify({
 
-                        items: cart,
+                        items:
+                            cart,
 
                         subtotal:
                             subtotal,
@@ -1084,8 +1063,18 @@ async function checkout() {
             );
 
 
+        /* -------------------------------------------
+           READ RESPONSE
+        ------------------------------------------- */
+
         const data =
             await response.json();
+
+
+        console.log(
+            "Razorpay order response:",
+            data
+        );
 
 
         if (!response.ok) {
@@ -1100,9 +1089,48 @@ async function checkout() {
         }
 
 
+        if (!data.success) {
+
+            throw new Error(
+
+                data.message ||
+                "Payment order creation failed."
+
+            );
+
+        }
+
+
         /* -------------------------------------------
-           RAZORPAY CHECK
+           VALIDATE RAZORPAY DATA
         ------------------------------------------- */
+
+        if (!data.key) {
+
+            throw new Error(
+                "Razorpay key was not returned by the server."
+            );
+
+        }
+
+
+        if (!data.orderId) {
+
+            throw new Error(
+                "Razorpay order ID was not returned by the server."
+            );
+
+        }
+
+
+        if (!data.amount) {
+
+            throw new Error(
+                "Razorpay order amount was not returned by the server."
+            );
+
+        }
+
 
         if (
             typeof Razorpay ===
@@ -1126,7 +1154,7 @@ async function checkout() {
                 data.key,
 
             amount:
-                data.amount,
+                Number(data.amount),
 
             currency:
                 data.currency ||
@@ -1174,13 +1202,21 @@ async function checkout() {
         };
 
 
-        const razorpay =
+        /* -------------------------------------------
+           CREATE RAZORPAY CHECKOUT
+        ------------------------------------------- */
+
+        const razorpayCheckout =
             new Razorpay(
                 options
             );
 
 
-        razorpay.on(
+        /* -------------------------------------------
+           PAYMENT FAILED
+        ------------------------------------------- */
+
+        razorpayCheckout.on(
             "payment.failed",
             function(response) {
 
@@ -1201,7 +1237,11 @@ async function checkout() {
         );
 
 
-        razorpay.open();
+        /* -------------------------------------------
+           OPEN RAZORPAY
+        ------------------------------------------- */
+
+        razorpayCheckout.open();
 
     }
 
@@ -1285,6 +1325,18 @@ async function verifyPayment(
 
 
         if (!response.ok) {
+
+            throw new Error(
+
+                data.message ||
+                "Payment verification failed."
+
+            );
+
+        }
+
+
+        if (!data.success) {
 
             throw new Error(
 
@@ -1464,4 +1516,3 @@ document.addEventListener(
 
     }
 );
-
