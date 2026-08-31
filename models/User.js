@@ -5,7 +5,7 @@ const userSchema = new mongoose.Schema(
     {
 
         // =====================================================
-        // BASIC USER INFORMATION
+        // BASIC USER DETAILS
         // =====================================================
 
         name: {
@@ -46,7 +46,7 @@ const userSchema = new mongoose.Schema(
 
 
         // =====================================================
-        // MENTORSHIP SUBSCRIPTION
+        // MENTOR SUBSCRIPTION
         // =====================================================
 
         mentorSubscription: {
@@ -129,22 +129,22 @@ const userSchema = new mongoose.Schema(
 
 
         // =====================================================
-        // REFERRAL POINTS
-        // =====================================================
-
-        referralPoints: {
-            type: Number,
-            default: 0
-        },
-
-
-        // =====================================================
         // BADGE
         // =====================================================
 
         badge: {
             type: String,
             default: "Raptora Member"
+        },
+
+
+        // =====================================================
+        // REFERRAL POINTS
+        // =====================================================
+
+        referralPoints: {
+            type: Number,
+            default: 0
         }
 
     },
