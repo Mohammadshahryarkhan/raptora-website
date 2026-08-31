@@ -1,6 +1,6 @@
 /* =====================================================
    RAPTORA — MENTORS
-   CART + DISCOUNT + RAZORPAY
+   CART + DISCOUNT + RAZORPAY + DASHBOARD REDIRECT
 ===================================================== */
 
 const API_BASE_URL =
@@ -39,11 +39,18 @@ const DISCOUNT_CODES = {
         type: "percentage",
         value: 10
     },
-   RAPTORA100: {
+
+    RAPTORA100: {
         type: "percentage",
         value: 100
     },
-   PAPA99: {
+
+    PAPA99: {
+        type: "percentage",
+        value: 99
+    },
+
+    RAPTORA99: {
         type: "percentage",
         value: 99
     },
@@ -391,7 +398,7 @@ function applyDiscount() {
 
 
 /* =====================================================
-   QUICK COUPON BUTTON
+   QUICK COUPON
 ===================================================== */
 
 function useCoupon(code) {
@@ -590,9 +597,7 @@ function updateCart() {
         cartItems.innerHTML = `
 
             <div class="empty-cart">
-
                 Your cart is empty.
-
             </div>
 
         `;
@@ -776,10 +781,6 @@ function updateCart() {
     const subtotal =
         getCartSubtotal();
 
-
-    /* -----------------------------------------------
-       DISCOUNT SAFETY
-    ------------------------------------------------ */
 
     if (
         discountAmount >
@@ -970,6 +971,198 @@ function closeCart() {
 
 
 /* =====================================================
+   SAVE PURCHASE FOR DASHBOARD
+===================================================== */
+
+function savePurchaseForDashboard(
+    payment,
+    planItems,
+    subtotal,
+    discount,
+    finalAmount
+) {
+
+    const existingPurchaseData =
+        JSON.parse(
+            localStorage.getItem(
+                "raptoraMentorship"
+            )
+        ) || {};
+
+
+    const startDate =
+        new Date();
+
+
+    const planName =
+        planItems.length === 1
+            ? planItems[0].name
+            : planItems
+                .map(item => item.name)
+                .join(", ");
+
+
+    /* -----------------------------------------------
+       DETERMINE DURATION
+    ------------------------------------------------ */
+
+    let durationMonths = 1;
+
+
+    if (
+        planName.includes("3 Months")
+    ) {
+
+        durationMonths = 3;
+
+    }
+
+    else if (
+        planName.includes("6 Months")
+    ) {
+
+        durationMonths = 6;
+
+    }
+
+    else if (
+        planName.includes("12 Months")
+    ) {
+
+        durationMonths = 12;
+
+    }
+
+
+    const endDate =
+        new Date(startDate);
+
+
+    endDate.setMonth(
+        endDate.getMonth() +
+        durationMonths
+    );
+
+
+    const purchaseData = {
+
+        active: true,
+
+        planName: planName,
+
+        durationMonths:
+            durationMonths,
+
+        startDate:
+            startDate.toISOString(),
+
+        endDate:
+            endDate.toISOString(),
+
+        subtotal:
+            subtotal,
+
+        discount:
+            discount,
+
+        finalAmount:
+            finalAmount,
+
+        coupon:
+            appliedCoupon,
+
+        paymentId:
+            payment.razorpay_payment_id,
+
+        orderId:
+            payment.razorpay_order_id,
+
+        purchasedAt:
+            new Date().toISOString(),
+
+        referralPoints:
+            Number(
+                existingPurchaseData.referralPoints || 0
+            ),
+
+        badge:
+            existingPurchaseData.badge ||
+            "Mentorship Member"
+
+    };
+
+
+    localStorage.setItem(
+        "raptoraMentorship",
+        JSON.stringify(
+            purchaseData
+        )
+    );
+
+
+    /* -----------------------------------------------
+       DASHBOARD FLAGS
+    ------------------------------------------------ */
+
+    localStorage.setItem(
+        "raptoraMentorActive",
+        "true"
+    );
+
+
+    localStorage.setItem(
+        "raptoraMentorPlan",
+        planName
+    );
+
+
+    localStorage.setItem(
+        "raptoraMentorStartDate",
+        startDate.toISOString()
+    );
+
+
+    localStorage.setItem(
+        "raptoraMentorEndDate",
+        endDate.toISOString()
+    );
+
+
+    localStorage.setItem(
+        "raptoraPaymentId",
+        payment.razorpay_payment_id
+    );
+
+
+    localStorage.setItem(
+        "raptoraOrderId",
+        payment.razorpay_order_id
+    );
+
+}
+
+
+/* =====================================================
+   REDIRECT TO PERSONALIZED DASHBOARD
+===================================================== */
+
+function redirectToDashboard() {
+
+    /*
+       Mentors page:
+       /mentors/mentors.html
+
+       Dashboard:
+       /frontend/dashboard.html
+    */
+
+    window.location.href =
+        "../frontend/dashboard.html";
+
+}
+
+
+/* =====================================================
    RAZORPAY CHECKOUT
 ===================================================== */
 
@@ -1071,10 +1264,6 @@ async function checkout() {
             );
 
 
-        /* -------------------------------------------
-           READ RESPONSE
-        ------------------------------------------- */
-
         const data =
             await response.json();
 
@@ -1108,10 +1297,6 @@ async function checkout() {
 
         }
 
-
-        /* -------------------------------------------
-           VALIDATE RAZORPAY DATA
-        ------------------------------------------- */
 
         if (!data.key) {
 
@@ -1211,7 +1396,7 @@ async function checkout() {
 
 
         /* -------------------------------------------
-           CREATE RAZORPAY CHECKOUT
+           RAZORPAY INSTANCE
         ------------------------------------------- */
 
         const razorpayCheckout =
@@ -1219,10 +1404,6 @@ async function checkout() {
                 options
             );
 
-
-        /* -------------------------------------------
-           PAYMENT FAILED
-        ------------------------------------------- */
 
         razorpayCheckout.on(
             "payment.failed",
@@ -1244,10 +1425,6 @@ async function checkout() {
             }
         );
 
-
-        /* -------------------------------------------
-           OPEN RAZORPAY
-        ------------------------------------------- */
 
         razorpayCheckout.open();
 
@@ -1284,6 +1461,10 @@ async function verifyPayment(
 ) {
 
     try {
+
+        /* -------------------------------------------
+           VERIFY PAYMENT WITH BACKEND
+        ------------------------------------------- */
 
         const response =
             await fetch(
@@ -1332,6 +1513,12 @@ async function verifyPayment(
             await response.json();
 
 
+        console.log(
+            "Payment verification response:",
+            data
+        );
+
+
         if (!response.ok) {
 
             throw new Error(
@@ -1356,8 +1543,34 @@ async function verifyPayment(
         }
 
 
-        alert(
-            "Payment successful! Your mentor plan has been activated."
+        /* -------------------------------------------
+           PAYMENT SUCCESS
+        ------------------------------------------- */
+
+        const subtotal =
+            getCartSubtotal();
+
+
+        const finalAmount =
+            getFinalTotal();
+
+
+        /* -------------------------------------------
+           SAVE PURCHASE DATA
+        ------------------------------------------- */
+
+        savePurchaseForDashboard(
+
+            payment,
+
+            cart,
+
+            subtotal,
+
+            discountAmount,
+
+            finalAmount
+
         );
 
 
@@ -1377,6 +1590,22 @@ async function verifyPayment(
         updateCart();
 
         closeCart();
+
+
+        /* -------------------------------------------
+           SUCCESS MESSAGE
+        ------------------------------------------- */
+
+        alert(
+            "Payment successful!\n\nYour personalized Raptora dashboard is ready."
+        );
+
+
+        /* -------------------------------------------
+           REDIRECT
+        ------------------------------------------- */
+
+        redirectToDashboard();
 
     }
 
