@@ -2,7 +2,6 @@ const express = require("express");
 const crypto = require("crypto");
 const Razorpay = require("razorpay");
 
-const User = require("../models/User");
 const authMiddleware = require("../middleware/authMiddleware");
 
 const router = express.Router();
@@ -886,12 +885,14 @@ router.post(
 
             res.status(500).json({
 
-                success: false,
+    success: false,
 
-                message:
-                    "Payment verification failed."
+    message:
+        "Payment verification failed."
 
-            });
+});
+
+            
 
         }
 
