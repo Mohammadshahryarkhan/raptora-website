@@ -1,10 +1,9 @@
-
 const mongoose = require("mongoose");
 
 const userSchema = new mongoose.Schema({
 
     // =====================================================
-    // BASIC USER INFORMATION
+    // BASIC USER DETAILS
     // =====================================================
 
     name: {
@@ -15,7 +14,9 @@ const userSchema = new mongoose.Schema({
     email: {
         type: String,
         required: true,
-        unique: true
+        unique: true,
+        lowercase: true,
+        trim: true
     },
 
     phone: {
@@ -58,95 +59,52 @@ const userSchema = new mongoose.Schema({
         default: 0
     },
 
-    referralCount: {
+
+    // =====================================================
+    // MENTOR / COURSE
+    // =====================================================
+
+    mentorPlan: {
+        type: String,
+        default: null
+    },
+
+    mentorPlanPrice: {
         type: Number,
         default: 0
     },
 
-
-    // =====================================================
-    // MENTORSHIP
-    // =====================================================
-
-    mentorSubscription: {
-
-        active: {
-            type: Boolean,
-            default: false
-        },
-
-        plan: {
-            type: String,
-            default: null
-        },
-
-        durationMonths: {
-            type: Number,
-            default: 0
-        },
-
-        price: {
-            type: Number,
-            default: 0
-        },
-
-        startDate: {
-            type: Date,
-            default: null
-        },
-
-        endDate: {
-            type: Date,
-            default: null
-        },
-
-        razorpayOrderId: {
-            type: String,
-            default: null
-        },
-
-        razorpayPaymentId: {
-            type: String,
-            default: null
-        }
-
-    },
-
-
-    // =====================================================
-    // MENTORSHIP PROGRESS
-    // =====================================================
-
-    mentorshipProgress: {
-
-        completedMilestones: {
-            type: Number,
-            default: 0
-        },
-
-        totalMilestones: {
-            type: Number,
-            default: 10
-        },
-
-        currentMilestone: {
-            type: String,
-            default: "Getting Started"
-        }
-
-    },
-
-
-    // =====================================================
-    // COURSE / JOURNEY
-    // =====================================================
-
-    courseStartDate: {
+    mentorStartDate: {
         type: Date,
         default: null
     },
 
-    selectedCourse: {
+    mentorEndDate: {
+        type: Date,
+        default: null
+    },
+
+
+    // =====================================================
+    // PAYMENT
+    // =====================================================
+
+    paymentStatus: {
+        type: String,
+        enum: [
+            "pending",
+            "paid",
+            "failed"
+        ],
+        default: "pending"
+    },
+
+    razorpayPaymentId: {
+        type: String,
+        default: null
+    },
+
+    razorpayOrderId: {
         type: String,
         default: null
     },
@@ -158,13 +116,68 @@ const userSchema = new mongoose.Schema({
 
     badge: {
         type: String,
-        default: "Raptora Member"
-    }
+        default: "Raptora Explorer"
+    },
+
+
+    // =====================================================
+    // MILESTONES
+    // =====================================================
+
+    milestones: [
+        {
+            title: {
+                type: String
+            },
+
+            description: {
+                type: String
+            },
+
+            completed: {
+                type: Boolean,
+                default: false
+            },
+
+            completedDate: {
+                type: Date,
+                default: null
+            }
+        }
+    ],
+
+
+    // =====================================================
+    // CALENDAR EVENTS
+    // =====================================================
+
+    calendarEvents: [
+        {
+            title: {
+                type: String
+            },
+
+            description: {
+                type: String
+            },
+
+            date: {
+                type: Date
+            },
+
+            completed: {
+                type: Boolean,
+                default: false
+            }
+        }
+    ]
 
 }, {
     timestamps: true
 });
 
 
-module.exports = mongoose.model("User", userSchema);
-
+module.exports = mongoose.model(
+    "User",
+    userSchema
+);
