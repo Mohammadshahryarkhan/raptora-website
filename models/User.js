@@ -153,6 +153,56 @@ const userSchema = new mongoose.Schema(
         timestamps: true
     }
 );
+        // =====================================================
+        // MENTOR MILESTONES
+        // =====================================================
+
+        milestones: {
+            type: [
+                {
+                    title: {
+                        type: String,
+                        required: true
+                    },
+
+                    description: {
+                        type: String,
+                        required: true
+                    },
+
+                    completed: {
+                        type: Boolean,
+                        default: false
+                    },
+
+                    completedDate: {
+                        type: Date,
+                        default: null
+                    }
+                }
+            ],
+            default: []
+        },
+
+
+        // =====================================================
+        // PAYMENT
+        // =====================================================
+
+        paymentStatus: {
+            type: String,
+            default: "unpaid"
+        },
+
+        razorpayPaymentId: {
+            type: String,
+            default: null
+        },
+
+        razorpayOrderId: {
+            type: String,
+            default: null
+        }
 
 
 module.exports =
