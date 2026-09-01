@@ -4,7 +4,6 @@
 
 <head>
 
-
 <meta charset="UTF-8">
 
 <meta name="viewport"
@@ -30,865 +29,398 @@
 
 <style>
 
-    /* =====================================================
-       RAPTORA DASHBOARD ADDITIONS
-    ===================================================== */
+/* =====================================================
+   RAPTORA DASHBOARD ADDITIONS
+===================================================== */
 
-    .dashboard-section {
-        margin-top: 30px;
-    }
+.dashboard-section {
+    margin-top: 30px;
+}
 
-
-    .section-title {
-        font-size: 22px;
-        margin-bottom: 18px;
-    }
-
-
-    /* =====================================================
-       MENTORSHIP OVERVIEW
-    ===================================================== */
-
-    .mentorship-grid {
-
-        display: grid;
-
-        grid-template-columns:
-            repeat(
-                auto-fit,
-                minmax(220px, 1fr)
-            );
-
-        gap: 20px;
-
-        margin-bottom: 30px;
-
-    }
+.section-title {
+    font-size: 22px;
+    margin-bottom: 18px;
+}
 
 
-    .mentor-dashboard-card {
+/* =====================================================
+   MENTORSHIP OVERVIEW
+===================================================== */
 
-        background:
-            linear-gradient(
-                145deg,
-                #151515,
-                #0c0c0c
-            );
+.mentorship-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+    margin-bottom: 30px;
+}
 
-        border:
-            1px solid
-            rgba(229, 9, 20, 0.35);
+.mentor-dashboard-card {
+    background: linear-gradient(145deg, #151515, #0c0c0c);
+    border: 1px solid rgba(229, 9, 20, 0.35);
+    border-radius: 16px;
+    padding: 22px;
+    position: relative;
+    overflow: hidden;
+}
 
-        border-radius: 16px;
+.mentor-dashboard-card::before {
+    content: "";
+    position: absolute;
+    width: 90px;
+    height: 90px;
+    background: rgba(229, 9, 20, 0.08);
+    border-radius: 50%;
+    top: -35px;
+    right: -30px;
+}
 
-        padding: 22px;
+.mentor-dashboard-card i {
+    font-size: 24px;
+    color: #e50914;
+    margin-bottom: 12px;
+}
 
-        position: relative;
+.mentor-dashboard-card h3 {
+    margin: 5px 0 8px;
+    font-size: 16px;
+}
 
-        overflow: hidden;
+.mentor-dashboard-card p {
+    margin: 0;
+    color: #bdbdbd;
+    font-size: 14px;
+}
 
-    }
-
-
-    .mentor-dashboard-card::before {
-
-        content: "";
-
-        position: absolute;
-
-        width: 90px;
-        height: 90px;
-
-        background:
-            rgba(229, 9, 20, 0.08);
-
-        border-radius: 50%;
-
-        top: -35px;
-        right: -30px;
-
-    }
-
-
-    .mentor-dashboard-card i {
-
-        font-size: 24px;
-
-        color:
-            #e50914;
-
-        margin-bottom: 12px;
-
-    }
-
-
-    .mentor-dashboard-card h3 {
-
-        margin:
-            5px 0 8px;
-
-        font-size:
-            16px;
-
-    }
+.mentor-value {
+    font-size: 22px;
+    font-weight: 600;
+    color: white;
+}
 
 
-    .mentor-dashboard-card p {
+/* =====================================================
+   ACTIVE MENTORSHIP
+===================================================== */
 
-        margin: 0;
+.active-mentorship {
+    background: linear-gradient(135deg, #180608, #0d0d0d);
+    border: 1px solid rgba(229, 9, 20, 0.45);
+    border-radius: 18px;
+    padding: 25px;
+    margin-bottom: 30px;
+}
 
-        color:
-            #bdbdbd;
+.active-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 20px;
+}
 
-        font-size:
-            14px;
+.active-header h2 {
+    margin: 0;
+    font-size: 21px;
+}
 
-    }
+.active-badge {
+    background: rgba(40, 200, 100, 0.12);
+    border: 1px solid rgba(40, 200, 100, 0.35);
+    color: #55e889;
+    padding: 7px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.plan-name {
+    font-size: 25px;
+    font-weight: 600;
+    color: #e50914;
+    margin-bottom: 8px;
+}
+
+.plan-description {
+    color: #aaa;
+    margin-bottom: 22px;
+}
+
+.date-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 15px;
+}
+
+.date-box {
+    background: rgba(255, 255, 255, 0.04);
+    border-radius: 12px;
+    padding: 15px;
+}
+
+.date-box span {
+    display: block;
+    font-size: 12px;
+    color: #888;
+    margin-bottom: 6px;
+}
+
+.date-box strong {
+    font-size: 15px;
+}
 
 
-    .mentor-value {
+/* =====================================================
+   PROGRESS
+===================================================== */
 
-        font-size:
-            22px;
+.progress-container {
+    margin-top: 22px;
+}
 
-        font-weight:
-            600;
+.progress-top {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+    font-size: 13px;
+}
 
-        color:
-            white;
+.progress-bar {
+    width: 100%;
+    height: 9px;
+    background: #252525;
+    border-radius: 20px;
+    overflow: hidden;
+}
 
-    }
+.progress-fill {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, #e50914, #ff4b55);
+    border-radius: 20px;
+    transition: width 0.5s ease;
+}
 
 
-    /* =====================================================
-       ACTIVE MENTORSHIP
-    ===================================================== */
+/* =====================================================
+   BADGE + REFERRAL
+===================================================== */
 
-    .active-mentorship {
+.reward-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 20px;
+    margin-bottom: 30px;
+}
 
-        background:
-            linear-gradient(
-                135deg,
-                #180608,
-                #0d0d0d
-            );
+.reward-card {
+    background: #111;
+    border: 1px solid #252525;
+    border-radius: 16px;
+    padding: 22px;
+}
 
-        border:
-            1px solid
-            rgba(229, 9, 20, 0.45);
+.reward-card i {
+    color: #e50914;
+    font-size: 25px;
+    margin-bottom: 12px;
+}
 
-        border-radius:
-            18px;
+.reward-number {
+    font-size: 28px;
+    font-weight: 700;
+}
 
-        padding:
-            25px;
+.badge {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 7px 14px;
+    border-radius: 20px;
+    background: rgba(229, 9, 20, 0.12);
+    color: #ff4b55;
+    border: 1px solid rgba(229, 9, 20, 0.3);
+    font-size: 12px;
+    font-weight: 600;
+}
 
-        margin-bottom:
-            30px;
 
-    }
+/* =====================================================
+   MILESTONES
+===================================================== */
 
+.milestones {
+    background: #111;
+    border: 1px solid #252525;
+    border-radius: 16px;
+    padding: 24px;
+    margin-bottom: 30px;
+}
+
+.milestone {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 15px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.milestone:last-child {
+    border-bottom: none;
+}
+
+.milestone-icon {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #242424;
+    color: #777;
+    flex-shrink: 0;
+}
+
+.milestone.completed .milestone-icon {
+    background: rgba(40, 200, 100, 0.12);
+    color: #55e889;
+}
+
+.milestone-info {
+    flex: 1;
+}
+
+.milestone-info strong {
+    display: block;
+    margin-bottom: 4px;
+}
+
+.milestone-info span {
+    color: #888;
+    font-size: 12px;
+}
+
+
+/* =====================================================
+   CALENDAR
+===================================================== */
+
+.calendar {
+    background: #111;
+    border: 1px solid #252525;
+    border-radius: 16px;
+    padding: 24px;
+    margin-bottom: 30px;
+}
+
+.calendar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.calendar-header button {
+    width: 35px;
+    height: 35px;
+    border: 1px solid #333;
+    background: #191919;
+    color: white;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.calendar-days {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 6px;
+    text-align: center;
+}
+
+.calendar-day {
+    padding: 9px 3px;
+    border-radius: 8px;
+    font-size: 12px;
+}
+
+.calendar-day.heading {
+    color: #777;
+    font-weight: 600;
+}
+
+.calendar-day.today {
+    background: #e50914;
+    color: white;
+    font-weight: 600;
+}
+
+.calendar-day.milestone-day {
+    border: 1px solid #e50914;
+    color: #ff5a62;
+}
+
+
+/* =====================================================
+   NO MENTORSHIP
+===================================================== */
+
+.no-mentorship {
+    display: none;
+    background: #111;
+    border: 1px solid #292929;
+    border-radius: 16px;
+    padding: 25px;
+    margin-bottom: 30px;
+}
+
+.no-mentorship h2 {
+    margin-top: 0;
+}
+
+.mentor-button {
+    display: inline-block;
+    margin-top: 12px;
+    padding: 11px 18px;
+    background: #e50914;
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+}
+
+
+/* =====================================================
+   LOADING
+===================================================== */
+
+.dashboard-loading {
+    color: #aaa;
+    font-size: 14px;
+    margin-top: 10px;
+}
+
+
+/* =====================================================
+   MOBILE
+===================================================== */
+
+@media(max-width: 700px) {
 
     .active-header {
-
-        display:
-            flex;
-
-        justify-content:
-            space-between;
-
-        align-items:
-            center;
-
-        gap:
-            15px;
-
-        margin-bottom:
-            20px;
-
+        flex-direction: column;
+        align-items: flex-start;
     }
-
-
-    .active-header h2 {
-
-        margin: 0;
-
-        font-size:
-            21px;
-
-    }
-
-
-    .active-badge {
-
-        background:
-            rgba(40, 200, 100, 0.12);
-
-        border:
-            1px solid
-            rgba(40, 200, 100, 0.35);
-
-        color:
-            #55e889;
-
-        padding:
-            7px 12px;
-
-        border-radius:
-            20px;
-
-        font-size:
-            12px;
-
-        font-weight:
-            600;
-
-    }
-
 
     .plan-name {
-
-        font-size:
-            25px;
-
-        font-weight:
-            600;
-
-        color:
-            #e50914;
-
-        margin-bottom:
-            8px;
-
+        font-size: 21px;
     }
 
-
-    .plan-description {
-
-        color:
-            #aaa;
-
-        margin-bottom:
-            22px;
-
-    }
-
-
-    .date-grid {
-
-        display:
-            grid;
-
-        grid-template-columns:
-            repeat(
-                auto-fit,
-                minmax(180px, 1fr)
-            );
-
-        gap:
-            15px;
-
-    }
-
-
-    .date-box {
-
-        background:
-            rgba(
-                255,
-                255,
-                255,
-                0.04
-            );
-
-        border-radius:
-            12px;
-
-        padding:
-            15px;
-
-    }
-
-
-    .date-box span {
-
-        display:
-            block;
-
-        font-size:
-            12px;
-
-        color:
-            #888;
-
-        margin-bottom:
-            6px;
-
-    }
-
-
-    .date-box strong {
-
-        font-size:
-            15px;
-
-    }
-
-
-    /* =====================================================
-       PROGRESS
-    ===================================================== */
-
-    .progress-container {
-
-        margin-top:
-            22px;
-
-    }
-
-
-    .progress-top {
-
-        display:
-            flex;
-
-        justify-content:
-            space-between;
-
-        margin-bottom:
-            8px;
-
-        font-size:
-            13px;
-
-    }
-
-
-    .progress-bar {
-
-        width:
-            100%;
-
-        height:
-            9px;
-
-        background:
-            #252525;
-
-        border-radius:
-            20px;
-
-        overflow:
-            hidden;
-
-    }
-
-
-    .progress-fill {
-
-        height:
-            100%;
-
-        width:
-            0%;
-
-        background:
-            linear-gradient(
-                90deg,
-                #e50914,
-                #ff4b55
-            );
-
-        border-radius:
-            20px;
-
-        transition:
-            width 0.5s ease;
-
-    }
-
-
-    /* =====================================================
-       BADGE + REFERRAL
-    ===================================================== */
-
-    .reward-grid {
-
-        display:
-            grid;
-
-        grid-template-columns:
-            repeat(
-                auto-fit,
-                minmax(260px, 1fr)
-            );
-
-        gap:
-            20px;
-
-        margin-bottom:
-            30px;
-
-    }
-
-
-    .reward-card {
-
-        background:
-            #111;
-
-        border:
-            1px solid
-            #252525;
-
-        border-radius:
-            16px;
-
-        padding:
-            22px;
-
-    }
-
-
-    .reward-card i {
-
-        color:
-            #e50914;
-
-        font-size:
-            25px;
-
-        margin-bottom:
-            12px;
-
-    }
-
-
-    .reward-number {
-
-        font-size:
-            28px;
-
-        font-weight:
-            700;
-
-    }
-
-
-    .badge {
-
-        display:
-            inline-block;
-
-        margin-top:
-            10px;
-
-        padding:
-            7px 14px;
-
-        border-radius:
-            20px;
-
-        background:
-            rgba(
-                229,
-                9,
-                20,
-                0.12
-            );
-
-        color:
-            #ff4b55;
-
-        border:
-            1px solid
-            rgba(
-                229,
-                9,
-                20,
-                0.3
-            );
-
-        font-size:
-            12px;
-
-        font-weight:
-            600;
-
-    }
-
-
-    /* =====================================================
-       MILESTONES
-    ===================================================== */
-
-    .milestones {
-
-        background:
-            #111;
-
-        border:
-            1px solid
-            #252525;
-
-        border-radius:
-            16px;
-
-        padding:
-            24px;
-
-        margin-bottom:
-            30px;
-
-    }
-
-
-    .milestone {
-
-        display:
-            flex;
-
-        align-items:
-            center;
-
-        gap:
-            15px;
-
-        padding:
-            15px 0;
-
-        border-bottom:
-            1px solid
-            rgba(
-                255,
-                255,
-                255,
-                0.06
-            );
-
-    }
-
-
-    .milestone:last-child {
-
-        border-bottom:
-            none;
-
-    }
-
-
-    .milestone-icon {
-
-        width:
-            38px;
-
-        height:
-            38px;
-
-        border-radius:
-            50%;
-
-        display:
-            flex;
-
-        align-items:
-            center;
-
-        justify-content:
-            center;
-
-        background:
-            #242424;
-
-        color:
-            #777;
-
-        flex-shrink:
-            0;
-
-    }
-
-
-    .milestone.completed
-    .milestone-icon {
-
-        background:
-            rgba(
-                40,
-                200,
-                100,
-                0.12
-            );
-
-        color:
-            #55e889;
-
-    }
-
-
-    .milestone-info {
-
-        flex:
-            1;
-
-    }
-
-
-    .milestone-info strong {
-
-        display:
-            block;
-
-        margin-bottom:
-            4px;
-
-    }
-
-
-    .milestone-info span {
-
-        color:
-            #888;
-
-        font-size:
-            12px;
-
-    }
-
-
-    /* =====================================================
-       CALENDAR
-    ===================================================== */
-
-    .calendar {
-
-        background:
-            #111;
-
-        border:
-            1px solid
-            #252525;
-
-        border-radius:
-            16px;
-
-        padding:
-            24px;
-
-        margin-bottom:
-            30px;
-
-    }
-
-
-    .calendar-header {
-
-        display:
-            flex;
-
-        justify-content:
-            space-between;
-
-        align-items:
-            center;
-
-        margin-bottom:
-            20px;
-
-    }
-
-
-    .calendar-header button {
-
-        width:
-            35px;
-
-        height:
-            35px;
-
-        border:
-            1px solid
-            #333;
-
-        background:
-            #191919;
-
-        color:
-            white;
-
-        border-radius:
-            8px;
-
-        cursor:
-            pointer;
-
-    }
-
-
-    .calendar-days {
-
-        display:
-            grid;
-
-        grid-template-columns:
-            repeat(
-                7,
-                1fr
-            );
-
-        gap:
-            6px;
-
-        text-align:
-            center;
-
-    }
-
-
-    .calendar-day {
-
-        padding:
-            9px 3px;
-
-        border-radius:
-            8px;
-
-        font-size:
-            12px;
-
-    }
-
-
-    .calendar-day.heading {
-
-        color:
-            #777;
-
-        font-weight:
-            600;
-
-    }
-
-
-    .calendar-day.today {
-
-        background:
-            #e50914;
-
-        color:
-            white;
-
-        font-weight:
-            600;
-
-    }
-
-
-    .calendar-day.milestone-day {
-
-        border:
-            1px solid
-            #e50914;
-
-        color:
-            #ff5a62;
-
-    }
-
-
-    /* =====================================================
-       NO MENTORSHIP
-    ===================================================== */
-
-    .no-mentorship {
-
-        display:
-            none;
-
-        background:
-            #111;
-
-        border:
-            1px solid
-            #292929;
-
-        border-radius:
-            16px;
-
-        padding:
-            25px;
-
-        margin-bottom:
-            30px;
-
-    }
-
-
-    .no-mentorship h2 {
-
-        margin-top:
-            0;
-
-    }
-
-
-    .mentor-button {
-
-        display:
-            inline-block;
-
-        margin-top:
-            12px;
-
-        padding:
-            11px 18px;
-
-        background:
-            #e50914;
-
-        color:
-            white;
-
-        text-decoration:
-            none;
-
-        border-radius:
-            8px;
-
-    }
-
-
-    /* =====================================================
-       MOBILE
-    ===================================================== */
-
-    @media(max-width: 700px) {
-
-        .active-header {
-
-            flex-direction:
-                column;
-
-            align-items:
-                flex-start;
-
-        }
-
-        .plan-name {
-
-            font-size:
-                21px;
-
-        }
-
-    }
+}
 
 </style>
 
-
 </head>
 
+
 <body>
+
 
 <!-- =====================================================
      SIDEBAR
@@ -896,29 +428,40 @@
 
 <div class="sidebar">
 
-```
-<h2>RAPTORA</h2>
+    <h2>RAPTORA</h2>
 
-<ul>
+    <ul>
 
-    <li>
-        <a href="#" class="active">
-            <i class="fa-solid fa-house"></i>
-            Dashboard
-        </a>
-    </li>
+        <li>
 
-    <li>
-        <a href="profile.html">
-            <i class="fa-solid fa-user-graduate"></i>
-            Student Profile
-        </a>
-    </li>
+            <a href="#" class="active">
 
-</ul>
+                <i class="fa-solid fa-house"></i>
 
+                Dashboard
+
+            </a>
+
+        </li>
+
+
+        <li>
+
+            <a href="profile.html">
+
+                <i class="fa-solid fa-user-graduate"></i>
+
+                Student Profile
+
+            </a>
+
+        </li>
+
+    </ul>
 
 </div>
+
+
 
 <!-- =====================================================
      MAIN
@@ -927,7 +470,9 @@
 <div class="main">
 
 
-<!-- TOPBAR -->
+<!-- =====================================================
+     TOPBAR
+===================================================== -->
 
 <div class="topbar">
 
@@ -944,9 +489,10 @@
 </div>
 
 
-<!-- =================================================
+
+<!-- =====================================================
      WELCOME
-================================================== -->
+===================================================== -->
 
 <div class="welcome-card">
 
@@ -954,7 +500,7 @@
 
         Welcome,
 
-        <span id="studentName"></span>
+        <span id="studentName">Student</span>
 
         👋
 
@@ -970,9 +516,10 @@
 </div>
 
 
-<!-- =================================================
+
+<!-- =====================================================
      EXISTING DASHBOARD CARDS
-================================================== -->
+===================================================== -->
 
 <div class="cards">
 
@@ -995,6 +542,7 @@
     </div>
 
 
+
     <div
         class="card"
         onclick="openRankPredictor()"
@@ -1012,6 +560,7 @@
         </p>
 
     </div>
+
 
 
     <div
@@ -1035,9 +584,10 @@
 </div>
 
 
-<!-- =================================================
+
+<!-- =====================================================
      MENTORSHIP
-================================================== -->
+===================================================== -->
 
 <div
     id="mentorshipSection"
@@ -1045,23 +595,32 @@
 
 
     <h2 class="section-title">
+
         Your Raptora Mentorship
+
     </h2>
 
 
-    <!-- NO MENTORSHIP -->
+
+    <!-- =================================================
+         NO MENTORSHIP
+    ================================================== -->
 
     <div
         id="noMentorship"
         class="no-mentorship">
 
         <h2>
+
             Start Your Mentorship
+
         </h2>
 
         <p>
+
             Get personalized admission guidance
             from Raptora mentors.
+
         </p>
 
         <a
@@ -1075,7 +634,10 @@
     </div>
 
 
-    <!-- ACTIVE MENTORSHIP -->
+
+    <!-- =================================================
+         ACTIVE MENTORSHIP
+    ================================================== -->
 
     <div
         id="activeMentorship"
@@ -1085,11 +647,15 @@
         <div class="active-header">
 
             <h2>
+
                 Active Mentorship
+
             </h2>
 
             <span class="active-badge">
+
                 ACTIVE
+
             </span>
 
         </div>
@@ -1157,6 +723,7 @@
         </div>
 
 
+
         <div class="progress-container">
 
             <div class="progress-top">
@@ -1187,6 +754,7 @@
     </div>
 
 
+
     <!-- =================================================
          REWARDS
     ================================================== -->
@@ -1211,11 +779,14 @@
             </div>
 
             <p>
+
                 Earn points by referring friends
                 to Raptora.
+
             </p>
 
         </div>
+
 
 
         <div class="reward-card">
@@ -1235,7 +806,9 @@
             </div>
 
             <p>
+
                 Your current Raptora achievement badge.
+
             </p>
 
         </div>
@@ -1244,12 +817,15 @@
     </div>
 
 
+
     <!-- =================================================
          MILESTONES
     ================================================== -->
 
     <h2 class="section-title">
+
         Admission Milestones
+
     </h2>
 
 
@@ -1269,16 +845,21 @@
             <div class="milestone-info">
 
                 <strong>
+
                     Profile Completed
+
                 </strong>
 
                 <span>
+
                     Complete your student profile.
+
                 </span>
 
             </div>
 
         </div>
+
 
 
         <div
@@ -1294,16 +875,21 @@
             <div class="milestone-info">
 
                 <strong>
+
                     Rank Prediction
+
                 </strong>
 
                 <span>
+
                     Check your expected college options.
+
                 </span>
 
             </div>
 
         </div>
+
 
 
         <div
@@ -1319,16 +905,21 @@
             <div class="milestone-info">
 
                 <strong>
+
                     College Shortlist
+
                 </strong>
 
                 <span>
+
                     Build your preferred college list.
+
                 </span>
 
             </div>
 
         </div>
+
 
 
         <div
@@ -1344,11 +935,15 @@
             <div class="milestone-info">
 
                 <strong>
+
                     Admission Ready
+
                 </strong>
 
                 <span>
+
                     Complete your final admission journey.
+
                 </span>
 
             </div>
@@ -1359,12 +954,15 @@
     </div>
 
 
+
     <!-- =================================================
          CALENDAR
     ================================================== -->
 
     <h2 class="section-title">
+
         Your Calendar
+
     </h2>
 
 
@@ -1373,8 +971,8 @@
 
         <div class="calendar-header">
 
-            <button
-                onclick="previousMonth()">
+
+            <button onclick="previousMonth()">
 
                 <i class="fa-solid fa-chevron-left"></i>
 
@@ -1382,16 +980,18 @@
 
 
             <strong id="calendarTitle">
+
                 —
+
             </strong>
 
 
-            <button
-                onclick="nextMonth()">
+            <button onclick="nextMonth()">
 
                 <i class="fa-solid fa-chevron-right"></i>
 
             </button>
+
 
         </div>
 
@@ -1399,6 +999,7 @@
         <div
             id="calendarDays"
             class="calendar-days">
+
         </div>
 
 
@@ -1410,21 +1011,40 @@
 
 </div>
 
+
+
 <script>
+
+/* =====================================================
+   CONFIGURATION
+===================================================== */
+
+/*
+   THIS IS YOUR CURRENT LIVE RENDER BACKEND.
+
+   DO NOT USE:
+   https://raptora-website-1.onrender.com
+
+   USE:
+   https://raptora-website.onrender.com
+*/
+
+const API_BASE_URL =
+    "https://raptora-website.onrender.com";
+
 
 /* =====================================================
    LOGIN CHECK
 ===================================================== */
 
-const name =
+const storedName =
     localStorage.getItem("name");
 
-
-const token =
+const storedToken =
     localStorage.getItem("token");
 
 
-if (!name || !token) {
+if (!storedToken) {
 
     window.location.href =
         "login.html";
@@ -1432,10 +1052,14 @@ if (!name || !token) {
 }
 
 
+/* =====================================================
+   INITIAL NAME
+===================================================== */
+
 document.getElementById(
     "studentName"
 ).innerText =
-    name || "Student";
+    storedName || "Student";
 
 
 /* =====================================================
@@ -1467,7 +1091,35 @@ function openCollegeSearch() {
 
 
 /* =====================================================
-   MENTORSHIP DATA
+   DATE FORMAT
+===================================================== */
+
+function formatDate(date) {
+
+    if (
+        !date ||
+        isNaN(date.getTime())
+    ) {
+
+        return "—";
+
+    }
+
+
+    return date.toLocaleDateString(
+        "en-IN",
+        {
+            day: "2-digit",
+            month: "short",
+            year: "numeric"
+        }
+    );
+
+}
+
+
+/* =====================================================
+   LOAD MENTORSHIP FROM LOCAL STORAGE
 ===================================================== */
 
 function loadMentorship() {
@@ -1511,7 +1163,9 @@ function loadMentorship() {
         data =
             JSON.parse(raw);
 
-    } catch (error) {
+    }
+
+    catch (error) {
 
         console.error(
             "Invalid mentorship data:",
@@ -1549,20 +1203,12 @@ function loadMentorship() {
         "none";
 
 
-    /* -----------------------------------------------
-       PLAN
-    ------------------------------------------------ */
-
     document.getElementById(
         "planName"
     ).innerText =
         data.planName ||
         "Mentor Plan";
 
-
-    /* -----------------------------------------------
-       DATES
-    ------------------------------------------------ */
 
     const start =
         new Date(
@@ -1587,10 +1233,6 @@ function loadMentorship() {
     ).innerText =
         formatDate(end);
 
-
-    /* -----------------------------------------------
-       DAYS REMAINING
-    ------------------------------------------------ */
 
     const now =
         new Date();
@@ -1617,10 +1259,6 @@ function loadMentorship() {
         days;
 
 
-    /* -----------------------------------------------
-       PROGRESS
-    ------------------------------------------------ */
-
     const totalDuration =
         end.getTime() -
         start.getTime();
@@ -1631,10 +1269,17 @@ function loadMentorship() {
         start.getTime();
 
 
-    let progress =
-        (elapsed /
-            totalDuration) *
-        100;
+    let progress = 0;
+
+
+    if (totalDuration > 0) {
+
+        progress =
+            (elapsed /
+                totalDuration) *
+            100;
+
+    }
 
 
     progress =
@@ -1660,53 +1305,17 @@ function loadMentorship() {
         "%";
 
 
-    /* -----------------------------------------------
-       REFERRAL POINTS
-    ------------------------------------------------ */
-
     document.getElementById(
         "referralPoints"
     ).innerText =
         data.referralPoints || 0;
 
 
-    /* -----------------------------------------------
-       BADGE
-    ------------------------------------------------ */
-
     document.getElementById(
         "badge"
     ).innerText =
         data.badge ||
-        "Mentorship Member";
-
-}
-
-
-/* =====================================================
-   DATE FORMAT
-===================================================== */
-
-function formatDate(date) {
-
-    if (
-        !date ||
-        isNaN(date.getTime())
-    ) {
-
-        return "—";
-
-    }
-
-
-    return date.toLocaleDateString(
-        "en-IN",
-        {
-            day: "2-digit",
-            month: "short",
-            year: "numeric"
-        }
-    );
+        "Raptora Member";
 
 }
 
@@ -1741,7 +1350,7 @@ function renderCalendar() {
         calendarDate.getMonth();
 
 
-    const monthName =
+    calendarTitle.innerText =
         calendarDate.toLocaleDateString(
             "en-IN",
             {
@@ -1749,10 +1358,6 @@ function renderCalendar() {
                 year: "numeric"
             }
         );
-
-
-    calendarTitle.innerText =
-        monthName;
 
 
     calendarDays.innerHTML =
@@ -1778,11 +1383,14 @@ function renderCalendar() {
                     "div"
                 );
 
+
             element.className =
                 "calendar-day heading";
 
+
             element.innerText =
                 day;
+
 
             calendarDays.appendChild(
                 element
@@ -1819,8 +1427,10 @@ function renderCalendar() {
                 "div"
             );
 
+
         empty.className =
             "calendar-day";
+
 
         calendarDays.appendChild(
             empty
@@ -1936,7 +1546,10 @@ function updateMilestones() {
         );
 
 
-    if (mentorship === "true") {
+    if (
+        mentorship ===
+        "true"
+    ) {
 
         document.getElementById(
             "milestone2"
@@ -1982,6 +1595,7 @@ function logout() {
 
 }
 
+
 /* =====================================================
    LOAD USER DATA FROM MONGODB
 ===================================================== */
@@ -1989,7 +1603,9 @@ function logout() {
 async function loadUserData() {
 
     const token =
-        localStorage.getItem("token");
+        localStorage.getItem(
+            "token"
+        );
 
 
     if (!token) {
@@ -2004,70 +1620,240 @@ async function loadUserData() {
 
     try {
 
-     const response =
-    await fetch(
-        "https://raptora-website-1.onrender.com/api/auth/me",
+        console.log(
+            "Loading user from:",
+            API_BASE_URL + "/api/auth/me"
+        );
+
+
+        const response =
+            await fetch(
+                API_BASE_URL +
+                "/api/auth/me",
                 {
                     method: "GET",
 
                     headers: {
+
                         "Authorization":
-                            `Bearer ${token}`,
+                            "Bearer " + token,
 
                         "Content-Type":
                             "application/json"
+
                     }
                 }
             );
 
 
-        const data =
-            await response.json();
+        /*
+        ==================================================
+        READ RESPONSE
+        ==================================================
+        */
+
+        let data = null;
 
 
-        if (!response.ok || !data.success) {
+        try {
+
+            data =
+                await response.json();
+
+        }
+
+        catch (jsonError) {
+
+            console.error(
+                "Invalid server response:",
+                jsonError
+            );
 
             throw new Error(
-                data.message ||
-                "Unable to load dashboard."
+                "Server returned an invalid response."
             );
 
         }
 
 
+        console.log(
+            "Dashboard API:",
+            response.status,
+            data
+        );
+
+
+        /*
+        ==================================================
+        AUTHENTICATION FAILURE
+        ==================================================
+        */
+
+        if (
+            response.status === 401
+        ) {
+
+            console.error(
+                "Authentication failed:",
+                data
+            );
+
+
+            localStorage.removeItem(
+                "token"
+            );
+
+
+            alert(
+                "Your login session has expired. Please login again."
+            );
+
+
+            window.location.href =
+                "login.html";
+
+
+            return;
+
+        }
+
+
+        /*
+        ==================================================
+        OTHER SERVER ERROR
+        ==================================================
+        */
+
+        if (!response.ok) {
+
+            throw new Error(
+                data.message ||
+                "Server error: " +
+                response.status
+            );
+
+        }
+
+
+        /*
+        ==================================================
+        API SUCCESS CHECK
+        ==================================================
+        */
+
+        if (
+            !data.success
+        ) {
+
+            throw new Error(
+                data.message ||
+                "Unable to load user data."
+            );
+
+        }
+
+
+        /*
+        ==================================================
+        USER
+        ==================================================
+        */
+
         const user =
             data.user;
 
 
-        /* USER NAME */
+        if (!user) {
+
+            throw new Error(
+                "User data was not returned by server."
+            );
+
+        }
+
+
+        /*
+        ==================================================
+        NAME
+        ==================================================
+        */
 
         document.getElementById(
             "studentName"
         ).innerText =
-            user.name || "Student";
+            user.name ||
+            "Student";
 
 
-        /* MENTORSHIP */
+        /*
+        ==================================================
+        UPDATE LOCAL STORAGE
+        ==================================================
+        */
 
-        loadMentorshipFromDatabase(user);
+        if (user.name) {
+
+            localStorage.setItem(
+                "name",
+                user.name
+            );
+
+        }
+
+
+        if (user.email) {
+
+            localStorage.setItem(
+                "email",
+                user.email
+            );
+
+        }
+
+
+        if (user.phone) {
+
+            localStorage.setItem(
+                "phone",
+                user.phone
+            );
+
+        }
+
+
+        /*
+        ==================================================
+        LOAD MENTORSHIP
+        ==================================================
+        */
+
+        loadMentorshipFromDatabase(
+            user
+        );
 
     }
+
 
     catch (error) {
 
         console.error(
-            "Dashboard error:",
+            "Dashboard API error:",
             error
         );
 
+
+        /*
+        IMPORTANT:
+
+        Do NOT remove the token here.
+
+        A temporary Render/network error
+        should NOT log the user out.
+        */
+
         alert(
-            "Session expired. Please login again."
+            "Unable to load your dashboard right now. Please try again."
         );
-
-        localStorage.removeItem("token");
-
-        window.location.href =
-            "login.html";
 
     }
 
@@ -2078,12 +1864,15 @@ async function loadUserData() {
    LOAD MENTORSHIP FROM MONGODB
 ===================================================== */
 
-function loadMentorshipFromDatabase(user) {
+function loadMentorshipFromDatabase(
+    user
+) {
 
     const noMentorship =
         document.getElementById(
             "noMentorship"
         );
+
 
     const activeMentorship =
         document.getElementById(
@@ -2095,6 +1884,12 @@ function loadMentorshipFromDatabase(user) {
         user.mentorSubscription;
 
 
+    /*
+    ==================================================
+    NO ACTIVE MENTORSHIP
+    ==================================================
+    */
+
     if (
         !subscription ||
         subscription.active !== true
@@ -2103,22 +1898,52 @@ function loadMentorshipFromDatabase(user) {
         activeMentorship.style.display =
             "none";
 
+
         noMentorship.style.display =
             "block";
+
+
+        /*
+        Still show rewards from database.
+        */
+
+        document.getElementById(
+            "referralPoints"
+        ).innerText =
+            user.referralPoints || 0;
+
+
+        document.getElementById(
+            "badge"
+        ).innerText =
+            user.badge ||
+            "Raptora Member";
+
 
         return;
 
     }
 
 
+    /*
+    ==================================================
+    ACTIVE MENTORSHIP
+    ==================================================
+    */
+
     activeMentorship.style.display =
         "block";
+
 
     noMentorship.style.display =
         "none";
 
 
-    /* PLAN */
+    /*
+    ==================================================
+    PLAN
+    ==================================================
+    */
 
     document.getElementById(
         "planName"
@@ -2127,12 +1952,17 @@ function loadMentorshipFromDatabase(user) {
         "Mentor Plan";
 
 
-    /* DATES */
+    /*
+    ==================================================
+    DATES
+    ==================================================
+    */
 
     const start =
         new Date(
             subscription.startDate
         );
+
 
     const end =
         new Date(
@@ -2152,7 +1982,11 @@ function loadMentorshipFromDatabase(user) {
         formatDate(end);
 
 
-    /* DAYS REMAINING */
+    /*
+    ==================================================
+    DAYS REMAINING
+    ==================================================
+    */
 
     const now =
         new Date();
@@ -2179,31 +2013,42 @@ function loadMentorshipFromDatabase(user) {
         days;
 
 
-    /* PROGRESS */
+    /*
+    ==================================================
+    MENTORSHIP PROGRESS
+    ==================================================
+    */
 
     const progressData =
-        user.mentorshipProgress || {};
+        user.mentorshipProgress ||
+        {};
 
 
     const completed =
         Number(
-            progressData.completedMilestones || 0
+            progressData.completedMilestones ||
+            0
         );
 
 
     const total =
         Number(
-            progressData.totalMilestones || 10
+            progressData.totalMilestones ||
+            10
         );
 
 
     let progress = 0;
 
 
-    if (total > 0) {
+    if (
+        total > 0
+    ) {
 
         progress =
-            (completed / total) * 100;
+            (completed /
+                total) *
+            100;
 
     }
 
@@ -2227,18 +2072,28 @@ function loadMentorshipFromDatabase(user) {
     document.getElementById(
         "progressText"
     ).innerText =
-        Math.round(progress) + "%";
+        Math.round(progress) +
+        "%";
 
 
-    /* REFERRAL POINTS */
+    /*
+    ==================================================
+    REFERRAL POINTS
+    ==================================================
+    */
 
     document.getElementById(
         "referralPoints"
     ).innerText =
-        user.referralPoints || 0;
+        user.referralPoints ||
+        0;
 
 
-    /* BADGE */
+    /*
+    ==================================================
+    BADGE
+    ==================================================
+    */
 
     document.getElementById(
         "badge"
@@ -2248,6 +2103,7 @@ function loadMentorshipFromDatabase(user) {
 
 }
 
+
 /* =====================================================
    INITIALIZE
 ===================================================== */
@@ -2256,11 +2112,11 @@ document.addEventListener(
     "DOMContentLoaded",
     function() {
 
-        loadUserData();
-
         renderCalendar();
 
         updateMilestones();
+
+        loadUserData();
 
     }
 );
