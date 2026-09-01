@@ -5,7 +5,10 @@ const path = require("path");
 
 require("dotenv").config();
 
-// Import Routes
+// =====================================================
+// IMPORT ROUTES
+// =====================================================
+
 const authRoutes = require("./routes/authRoutes");
 const josaaRoutes = require("./routes/josaaRoutes");
 const kcetRoutes = require("./routes/kcetRoutes");
@@ -14,48 +17,184 @@ const mccRoutes = require("./routes/mccRoutes");
 const mentorRoutes = require("./routes/mentorRoutes");
 const paymentRoutes = require("./routes/paymentRoutes");
 
-// Create App
+// =====================================================
+// CREATE APP
+// =====================================================
+
 const app = express();
 
-// Middleware
+// =====================================================
+// MIDDLEWARE
+// =====================================================
+
 app.use(cors());
+
 app.use(express.json());
 
-// Serve frontend files from project root
+app.use(express.urlencoded({ extended: true }));
+
+// =====================================================
+// SERVE FRONTEND
+// =====================================================
+
 app.use(express.static(__dirname));
 
-// Home Route
+// =====================================================
+// HOME ROUTE
+// =====================================================
+
 app.get("/", (req, res) => {
-    res.sendFile(path.join(__dirname, "index.html"));
+    res.sendFile(
+        path.join(__dirname, "index.html")
+    );
 });
 
-// API Routes
-app.use("/api/auth", authRoutes);
-app.use("/api/josaa", josaaRoutes);
-app.use("/api/kcet", kcetRoutes);
-app.use("/api/comedk", comedkRoutes);
-app.use("/api/mcc", mccRoutes);
-app.use("/api/mentors", mentorRoutes);
-app.use("/api/payment", paymentRoutes);
+// =====================================================
+// API ROUTES
+// =====================================================
 
-// Test Backend
+app.use(
+    "/api/auth",
+    authRoutes
+);
+
+app.use(
+    "/api/josaa",
+    josaaRoutes
+);
+
+app.use(
+    "/api/kcet",
+    kcetRoutes
+);
+
+app.use(
+    "/api/comedk",
+    comedkRoutes
+);
+
+app.use(
+    "/api/mcc",
+    mccRoutes
+);
+
+app.use(
+    "/api/mentors",
+    mentorRoutes
+);
+
+app.use(
+    "/api/payment",
+    paymentRoutes
+);
+
+// =====================================================
+// TEST ROUTE
+// =====================================================
+
 app.get("/test", (req, res) => {
-    res.send("Backend working");
-});
 
-// MongoDB Connection
-mongoose
-    .connect(process.env.MONGO_URI)
-    .then(() => {
-        console.log("MongoDB Connected");
-    })
-    .catch((err) => {
-        console.log("MongoDB Error:", err);
+    res.json({
+        success: true,
+        message: "Raptora backend working"
     });
 
-// Start Server
-const PORT = process.env.PORT || 8000;
-
-app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
 });
+
+// =====================================================
+// HEALTH CHECK
+// =====================================================
+
+app.get("/api/health", (req, res) => {
+
+    res.json({
+        success: true,
+        message: "Raptora API is running",
+        mongodb:
+            mongoose.connection.readyState === 1
+                ? "connected"
+                : "disconnected"
+    });
+
+});
+
+// =====================================================
+// 404 API HANDLER
+// =====================================================
+
+app.use("/api", (req, res) => {
+
+    res.status(404).json({
+
+        success: false,
+
+        message:
+            "API endpoint not found."
+
+    });
+
+});
+
+// =====================================================
+// GLOBAL ERROR HANDLER
+// =====================================================
+
+app.use((err, req, res, next) => {
+
+    console.error(
+        "Server Error:",
+        err
+    );
+
+    res.status(500).json({
+
+        success: false,
+
+        message:
+            "Internal server error."
+
+    });
+
+});
+
+// =====================================================
+// MONGODB CONNECTION
+// =====================================================
+
+mongoose
+    .connect(process.env.MONGO_URI)
+
+    .then(() => {
+
+        console.log(
+            "MongoDB Connected"
+        );
+
+    })
+
+    .catch((err) => {
+
+        console.error(
+            "MongoDB Connection Error:",
+            err
+        );
+
+    });
+
+// =====================================================
+// START SERVER
+// =====================================================
+
+const PORT =
+    process.env.PORT || 8000;
+
+app.listen(
+    PORT,
+    () => {
+
+        console.log(
+            `Raptora server running on port ${PORT}`
+        );
+
+    }
+);
