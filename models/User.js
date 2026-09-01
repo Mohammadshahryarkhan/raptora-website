@@ -59,12 +59,14 @@ const userSchema = new mongoose.Schema(
             trim: true
         },
 
+        // IMPORTANT:
+        // Default value prevents old users without a phone
+        // number from failing when their document is saved.
         phone: {
-    type: String,
-    required: false,
-    default: null,
-    trim: true
-},
+            type: String,
+            default: "",
+            trim: true
+        },
 
         password: {
             type: String,
