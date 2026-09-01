@@ -1,17 +1,32 @@
-const authMiddleware = require("../middleware/authMiddleware");
+
 const express = require("express");
+const authMiddleware = require("../middleware/authMiddleware");
+const authController = require("../controllers/authController");
+const User = require("../models/User");
 
 const router = express.Router();
 
-const authController = require("../controllers/authController");
+
+// =====================================================
+// REGISTER
+// =====================================================
+
+router.post(
+    "/register",
+    authController.register
+);
 
 
-// Register
-router.post("/register", authController.register);
+// =====================================================
+// LOGIN
+// =====================================================
+
+router.post(
+    "/login",
+    authController.login
+);
 
 
-// Login
-router.post("/login", authController.login);
 // =====================================================
 // GET CURRENT USER / DASHBOARD DATA
 // =====================================================
@@ -24,7 +39,10 @@ router.get(
         try {
 
             const user = await User.findById(req.user.id)
-                .select("-password -resetPasswordToken -resetPasswordExpires");
+                .select(
+                    "-password -resetPasswordToken -resetPasswordExpires"
+                );
+
 
             if (!user) {
 
@@ -45,35 +63,65 @@ router.get(
 
                 user: {
 
-                    name: user.name,
+                    name:
+                        user.name,
 
-                    email: user.email,
+                    email:
+                        user.email,
 
-                    phone: user.phone,
+                    phone:
+                        user.phone,
 
+
+                    // =================================================
+                    // MENTOR SUBSCRIPTION
+                    // =================================================
 
                     mentorSubscription:
                         user.mentorSubscription || {
+
                             active: false
+
                         },
 
+
+                    // =================================================
+                    // COURSE START DATE
+                    // =================================================
 
                     courseStartDate:
                         user.courseStartDate || null,
 
 
+                    // =================================================
+                    // MENTORSHIP PROGRESS
+                    // =================================================
+
                     mentorshipProgress:
                         user.mentorshipProgress || {
+
                             completedMilestones: 0,
+
                             totalMilestones: 10,
-                            currentMilestone: "Getting Started"
+
+                            currentMilestone:
+                                "Getting Started"
+
                         },
 
+
+                    // =================================================
+                    // BADGE
+                    // =================================================
 
                     badge:
                         user.badge ||
                         "Raptora Member",
 
+
+                    // =================================================
+                    // REFERRAL POINTS
+                    // =================================================
 
                     referralPoints:
                         user.referralPoints || 0
@@ -91,7 +139,8 @@ router.get(
                 error
             );
 
-            res.status(500).json({
+
+            return res.status(500).json({
 
                 success: false,
 
@@ -106,12 +155,29 @@ router.get(
 );
 
 
-// Forgot Password
-router.post("/forgot-password", authController.forgotPassword);
+// =====================================================
+// FORGOT PASSWORD
+// =====================================================
+
+router.post(
+    "/forgot-password",
+    authController.forgotPassword
+);
 
 
-// Reset Password
-router.post("/reset-password/:token", authController.resetPassword);
+// =====================================================
+// RESET PASSWORD
+// =====================================================
 
+router.post(
+    "/reset-password/:token",
+    authController.resetPassword
+);
+
+
+// =====================================================
+// EXPORT ROUTER
+// =====================================================
 
 module.exports = router;
+
