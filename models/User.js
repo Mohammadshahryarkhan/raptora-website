@@ -1,6 +1,43 @@
 
 const mongoose = require("mongoose");
 
+
+// =====================================================
+// MILESTONE SCHEMA
+// =====================================================
+
+const milestoneSchema = new mongoose.Schema(
+    {
+        title: {
+            type: String,
+            required: true
+        },
+
+        description: {
+            type: String,
+            default: ""
+        },
+
+        completed: {
+            type: Boolean,
+            default: false
+        },
+
+        completedDate: {
+            type: Date,
+            default: null
+        }
+    },
+    {
+        _id: false
+    }
+);
+
+
+// =====================================================
+// USER SCHEMA
+// =====================================================
+
 const userSchema = new mongoose.Schema(
     {
 
@@ -10,18 +47,22 @@ const userSchema = new mongoose.Schema(
 
         name: {
             type: String,
-            required: true
+            required: true,
+            trim: true
         },
 
         email: {
             type: String,
             required: true,
-            unique: true
+            unique: true,
+            lowercase: true,
+            trim: true
         },
 
         phone: {
             type: String,
-            required: true
+            required: true,
+            trim: true
         },
 
         password: {
@@ -129,12 +170,47 @@ const userSchema = new mongoose.Schema(
 
 
         // =====================================================
+        // MILESTONES
+        // =====================================================
+
+        milestones: {
+            type: [milestoneSchema],
+            default: []
+        },
+
+
+        // =====================================================
         // BADGE
         // =====================================================
 
         badge: {
             type: String,
             default: "Raptora Member"
+        },
+
+
+        // =====================================================
+        // PAYMENT STATUS
+        // =====================================================
+
+        paymentStatus: {
+            type: String,
+            enum: [
+                "pending",
+                "paid",
+                "failed"
+            ],
+            default: "pending"
+        },
+
+        razorpayPaymentId: {
+            type: String,
+            default: null
+        },
+
+        razorpayOrderId: {
+            type: String,
+            default: null
         },
 
 
@@ -153,57 +229,11 @@ const userSchema = new mongoose.Schema(
         timestamps: true
     }
 );
-        // =====================================================
-        // MENTOR MILESTONES
-        // =====================================================
-
-        milestones: {
-            type: [
-                {
-                    title: {
-                        type: String,
-                        required: true
-                    },
-
-                    description: {
-                        type: String,
-                        required: true
-                    },
-
-                    completed: {
-                        type: Boolean,
-                        default: false
-                    },
-
-                    completedDate: {
-                        type: Date,
-                        default: null
-                    }
-                }
-            ],
-            default: []
-        },
 
 
-        // =====================================================
-        // PAYMENT
-        // =====================================================
-
-        paymentStatus: {
-            type: String,
-            default: "unpaid"
-        },
-
-        razorpayPaymentId: {
-            type: String,
-            default: null
-        },
-
-        razorpayOrderId: {
-            type: String,
-            default: null
-        }
-
+// =====================================================
+// EXPORT MODEL
+// =====================================================
 
 module.exports =
     mongoose.model("User", userSchema);
