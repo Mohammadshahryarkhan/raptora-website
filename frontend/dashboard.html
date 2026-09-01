@@ -916,7 +916,7 @@
     </li>
 
 </ul>
-```
+
 
 </div>
 
@@ -926,7 +926,7 @@
 
 <div class="main">
 
-```
+
 <!-- TOPBAR -->
 
 <div class="topbar">
@@ -1406,7 +1406,7 @@
 
 
 </div>
-```
+
 
 </div>
 
@@ -1982,6 +1982,271 @@ function logout() {
 
 }
 
+/* =====================================================
+   LOAD USER DATA FROM MONGODB
+===================================================== */
+
+async function loadUserData() {
+
+    const token =
+        localStorage.getItem("token");
+
+
+    if (!token) {
+
+        window.location.href =
+            "login.html";
+
+        return;
+
+    }
+
+
+    try {
+
+        const response =
+            await fetch(
+                "https://raptora-website.onrender.com/api/auth/me",
+                {
+                    method: "GET",
+
+                    headers: {
+                        "Authorization":
+                            `Bearer ${token}`,
+
+                        "Content-Type":
+                            "application/json"
+                    }
+                }
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if (!response.ok || !data.success) {
+
+            throw new Error(
+                data.message ||
+                "Unable to load dashboard."
+            );
+
+        }
+
+
+        const user =
+            data.user;
+
+
+        /* USER NAME */
+
+        document.getElementById(
+            "studentName"
+        ).innerText =
+            user.name || "Student";
+
+
+        /* MENTORSHIP */
+
+        loadMentorshipFromDatabase(user);
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "Dashboard error:",
+            error
+        );
+
+        alert(
+            "Session expired. Please login again."
+        );
+
+        localStorage.removeItem("token");
+
+        window.location.href =
+            "login.html";
+
+    }
+
+}
+
+
+/* =====================================================
+   LOAD MENTORSHIP FROM MONGODB
+===================================================== */
+
+function loadMentorshipFromDatabase(user) {
+
+    const noMentorship =
+        document.getElementById(
+            "noMentorship"
+        );
+
+    const activeMentorship =
+        document.getElementById(
+            "activeMentorship"
+        );
+
+
+    const subscription =
+        user.mentorSubscription;
+
+
+    if (
+        !subscription ||
+        subscription.active !== true
+    ) {
+
+        activeMentorship.style.display =
+            "none";
+
+        noMentorship.style.display =
+            "block";
+
+        return;
+
+    }
+
+
+    activeMentorship.style.display =
+        "block";
+
+    noMentorship.style.display =
+        "none";
+
+
+    /* PLAN */
+
+    document.getElementById(
+        "planName"
+    ).innerText =
+        subscription.plan ||
+        "Mentor Plan";
+
+
+    /* DATES */
+
+    const start =
+        new Date(
+            subscription.startDate
+        );
+
+    const end =
+        new Date(
+            subscription.endDate
+        );
+
+
+    document.getElementById(
+        "startDate"
+    ).innerText =
+        formatDate(start);
+
+
+    document.getElementById(
+        "endDate"
+    ).innerText =
+        formatDate(end);
+
+
+    /* DAYS REMAINING */
+
+    const now =
+        new Date();
+
+
+    const difference =
+        end.getTime() -
+        now.getTime();
+
+
+    const days =
+        Math.max(
+            0,
+            Math.ceil(
+                difference /
+                (1000 * 60 * 60 * 24)
+            )
+        );
+
+
+    document.getElementById(
+        "daysRemaining"
+    ).innerText =
+        days;
+
+
+    /* PROGRESS */
+
+    const progressData =
+        user.mentorshipProgress || {};
+
+
+    const completed =
+        Number(
+            progressData.completedMilestones || 0
+        );
+
+
+    const total =
+        Number(
+            progressData.totalMilestones || 10
+        );
+
+
+    let progress = 0;
+
+
+    if (total > 0) {
+
+        progress =
+            (completed / total) * 100;
+
+    }
+
+
+    progress =
+        Math.max(
+            0,
+            Math.min(
+                100,
+                progress
+            )
+        );
+
+
+    document.getElementById(
+        "progressFill"
+    ).style.width =
+        progress + "%";
+
+
+    document.getElementById(
+        "progressText"
+    ).innerText =
+        Math.round(progress) + "%";
+
+
+    /* REFERRAL POINTS */
+
+    document.getElementById(
+        "referralPoints"
+    ).innerText =
+        user.referralPoints || 0;
+
+
+    /* BADGE */
+
+    document.getElementById(
+        "badge"
+    ).innerText =
+        user.badge ||
+        "Raptora Member";
+
+}
 
 /* =====================================================
    INITIALIZE
@@ -1991,7 +2256,7 @@ document.addEventListener(
     "DOMContentLoaded",
     function() {
 
-        loadMentorship();
+        loadUserData();
 
         renderCalendar();
 
