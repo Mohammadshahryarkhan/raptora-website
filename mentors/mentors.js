@@ -1,6 +1,7 @@
 /* =====================================================
    RAPTORA — MENTORS
-   CART + DISCOUNT + RAZORPAY + DASHBOARD REDIRECT
+   CART + DISCOUNT + RAZORPAY + AUTHENTICATED PAYMENT
+   + DASHBOARD REDIRECT
 ===================================================== */
 
 const API_BASE_URL =
@@ -40,6 +41,11 @@ const DISCOUNT_CODES = {
         value: 10
     },
 
+    RAPTORA99: {
+        type: "percentage",
+        value: 99
+    },
+
     RAPTORA100: {
         type: "percentage",
         value: 100
@@ -50,17 +56,53 @@ const DISCOUNT_CODES = {
         value: 99
     },
 
-    RAPTORA99: {
-        type: "percentage",
-        value: 99
-    },
-
     WELCOME50: {
         type: "fixed",
         value: 50
     }
 
 };
+
+
+/* =====================================================
+   AUTH TOKEN
+===================================================== */
+
+function getAuthToken() {
+
+    return localStorage.getItem("token");
+
+}
+
+
+/* =====================================================
+   AUTH HEADERS
+===================================================== */
+
+function getAuthHeaders() {
+
+    const token =
+        getAuthToken();
+
+
+    if (!token) {
+        return {
+            "Content-Type": "application/json"
+        };
+    }
+
+
+    return {
+
+        "Content-Type":
+            "application/json",
+
+        "Authorization":
+            `Bearer ${token}`
+
+    };
+
+}
 
 
 /* =====================================================
@@ -83,9 +125,10 @@ function saveCart() {
 
 function addToCart(name, price) {
 
-    const existingItem = cart.find(
-        item => item.name === name
-    );
+    const existingItem =
+        cart.find(
+            item => item.name === name
+        );
 
 
     if (existingItem) {
@@ -93,15 +136,20 @@ function addToCart(name, price) {
         existingItem.quantity =
             Number(existingItem.quantity || 1) + 1;
 
-    } else {
+    }
+
+    else {
 
         cart.push({
 
-            name: name,
+            name:
+                name,
 
-            price: Number(price),
+            price:
+                Number(price),
 
-            quantity: 1
+            quantity:
+                1
 
         });
 
@@ -151,7 +199,9 @@ function decreaseQuantity(index) {
 
 
     const quantity =
-        Number(cart[index].quantity || 1);
+        Number(
+            cart[index].quantity || 1
+        );
 
 
     if (quantity > 1) {
@@ -159,9 +209,14 @@ function decreaseQuantity(index) {
         cart[index].quantity =
             quantity - 1;
 
-    } else {
+    }
 
-        cart.splice(index, 1);
+    else {
+
+        cart.splice(
+            index,
+            1
+        );
 
     }
 
@@ -187,7 +242,10 @@ function removeFromCart(index) {
     }
 
 
-    cart.splice(index, 1);
+    cart.splice(
+        index,
+        1
+    );
 
 
     saveCart();
@@ -205,16 +263,27 @@ function getCartSubtotal() {
 
     return cart.reduce(
 
-        (total, item) => {
+        (
+            total,
+            item
+        ) => {
 
             const price =
-                Number(item.price || 0);
+                Number(
+                    item.price || 0
+                );
 
             const quantity =
-                Number(item.quantity || 1);
+                Number(
+                    item.quantity || 1
+                );
+
 
             return total +
-                (price * quantity);
+                (
+                    price *
+                    quantity
+                );
 
         },
 
@@ -233,10 +302,15 @@ function getCartQuantity() {
 
     return cart.reduce(
 
-        (total, item) => {
+        (
+            total,
+            item
+        ) => {
 
             return total +
-                Number(item.quantity || 1);
+                Number(
+                    item.quantity || 1
+                );
 
         },
 
@@ -258,7 +332,8 @@ function getFinalTotal() {
 
 
     const total =
-        subtotal - discountAmount;
+        subtotal -
+        discountAmount;
 
 
     return Math.max(
@@ -377,7 +452,10 @@ function applyDiscount() {
 
     discountAmount =
         Math.min(
-            discountAmount,
+            Math.max(
+                0,
+                discountAmount
+            ),
             subtotal
         );
 
@@ -442,9 +520,11 @@ function removeDiscount() {
 
     if (input) {
 
-        input.value = "";
+        input.value =
+            "";
 
-        input.disabled = false;
+        input.disabled =
+            false;
 
     }
 
@@ -556,19 +636,29 @@ function updateCart() {
     ------------------------------------------------ */
 
     cart =
-        cart.map(item => ({
+        cart.map(
+            item => ({
 
-            ...item,
+                ...item,
 
-            price:
-                Number(item.price || 0),
+                price:
+                    Number(
+                        item.price || 0
+                    ),
 
-            quantity:
-                Number(item.quantity) > 0
-                    ? Number(item.quantity)
-                    : 1
+                quantity:
+                    Number(
+                        item.quantity
+                    ) > 0
 
-        }));
+                        ? Number(
+                            item.quantity
+                          )
+
+                        : 1
+
+            })
+        );
 
 
     /* -----------------------------------------------
@@ -654,20 +744,29 @@ function updateCart() {
        CART ITEMS
     ------------------------------------------------ */
 
-    cartItems.innerHTML = "";
+    cartItems.innerHTML =
+        "";
 
 
     cart.forEach(
-        (item, index) => {
+        (
+            item,
+            index
+        ) => {
 
             const price =
-                Number(item.price || 0);
+                Number(
+                    item.price || 0
+                );
 
             const quantity =
-                Number(item.quantity || 1);
+                Number(
+                    item.quantity || 1
+                );
 
             const itemTotal =
-                price * quantity;
+                price *
+                quantity;
 
 
             const itemElement =
@@ -829,7 +928,9 @@ function updateCart() {
             discountRow.style.display =
                 "flex";
 
-        } else {
+        }
+
+        else {
 
             discountRow.style.display =
                 "none";
@@ -996,9 +1097,13 @@ function savePurchaseForDashboard(
 
     const planName =
         planItems.length === 1
+
             ? planItems[0].name
+
             : planItems
-                .map(item => item.name)
+                .map(
+                    item => item.name
+                )
                 .join(", ");
 
 
@@ -1006,36 +1111,48 @@ function savePurchaseForDashboard(
        DETERMINE DURATION
     ------------------------------------------------ */
 
-    let durationMonths = 1;
+    let durationMonths =
+        1;
 
 
     if (
-        planName.includes("3 Months")
+        planName.includes(
+            "3 Months"
+        )
     ) {
 
-        durationMonths = 3;
+        durationMonths =
+            3;
 
     }
 
     else if (
-        planName.includes("6 Months")
+        planName.includes(
+            "6 Months"
+        )
     ) {
 
-        durationMonths = 6;
+        durationMonths =
+            6;
 
     }
 
     else if (
-        planName.includes("12 Months")
+        planName.includes(
+            "12 Months"
+        )
     ) {
 
-        durationMonths = 12;
+        durationMonths =
+            12;
 
     }
 
 
     const endDate =
-        new Date(startDate);
+        new Date(
+            startDate
+        );
 
 
     endDate.setMonth(
@@ -1046,9 +1163,11 @@ function savePurchaseForDashboard(
 
     const purchaseData = {
 
-        active: true,
+        active:
+            true,
 
-        planName: planName,
+        planName:
+            planName,
 
         durationMonths:
             durationMonths,
@@ -1143,21 +1262,44 @@ function savePurchaseForDashboard(
 
 
 /* =====================================================
-   REDIRECT TO PERSONALIZED DASHBOARD
+   REDIRECT TO DASHBOARD
 ===================================================== */
 
 function redirectToDashboard() {
 
-    /*
-       Mentors page:
-       /mentors/mentors.html
-
-       Dashboard:
-       /frontend/dashboard.html
-    */
-
     window.location.href =
         "../frontend/dashboard.html";
+
+}
+
+
+/* =====================================================
+   CHECK LOGIN
+===================================================== */
+
+function requireLogin() {
+
+    const token =
+        getAuthToken();
+
+
+    if (!token) {
+
+        alert(
+            "Please login before purchasing a mentor plan."
+        );
+
+
+        window.location.href =
+            "../frontend/login.html";
+
+
+        return false;
+
+    }
+
+
+    return true;
 
 }
 
@@ -1167,6 +1309,15 @@ function redirectToDashboard() {
 ===================================================== */
 
 async function checkout() {
+
+    /* -----------------------------------------------
+       CHECK LOGIN
+    ------------------------------------------------ */
+
+    if (!requireLogin()) {
+        return;
+    }
+
 
     if (cart.length === 0) {
 
@@ -1231,33 +1382,22 @@ async function checkout() {
 
                 {
 
-                    method: "POST",
+                    method:
+                        "POST",
 
-                    headers: {
+                    headers:
+                        getAuthHeaders(),
 
-                        "Content-Type":
-                            "application/json"
+                    body:
+                        JSON.stringify({
 
-                    },
+                            items:
+                                cart,
 
-                    body: JSON.stringify({
+                            coupon:
+                                appliedCoupon
 
-                        items:
-                            cart,
-
-                        subtotal:
-                            subtotal,
-
-                        coupon:
-                            appliedCoupon,
-
-                        discount:
-                            discountAmount,
-
-                        amount:
-                            finalTotal
-
-                    })
+                        })
 
                 }
 
@@ -1272,6 +1412,33 @@ async function checkout() {
             "Razorpay order response:",
             data
         );
+
+
+        /* -------------------------------------------
+           AUTH ERROR
+        ------------------------------------------- */
+
+        if (
+            response.status === 401
+        ) {
+
+            localStorage.removeItem(
+                "token"
+            );
+
+
+            alert(
+                "Your login session has expired. Please login again."
+            );
+
+
+            window.location.href =
+                "../frontend/login.html";
+
+
+            return;
+
+        }
 
 
         if (!response.ok) {
@@ -1347,7 +1514,9 @@ async function checkout() {
                 data.key,
 
             amount:
-                Number(data.amount),
+                Number(
+                    data.amount
+                ),
 
             currency:
                 data.currency ||
@@ -1473,36 +1642,31 @@ async function verifyPayment(
 
                 {
 
-                    method: "POST",
+                    method:
+                        "POST",
 
-                    headers: {
+                    headers:
+                        getAuthHeaders(),
 
-                        "Content-Type":
-                            "application/json"
+                    body:
+                        JSON.stringify({
 
-                    },
+                            razorpay_order_id:
+                                payment.razorpay_order_id,
 
-                    body: JSON.stringify({
+                            razorpay_payment_id:
+                                payment.razorpay_payment_id,
 
-                        razorpay_order_id:
-                            payment.razorpay_order_id,
+                            razorpay_signature:
+                                payment.razorpay_signature,
 
-                        razorpay_payment_id:
-                            payment.razorpay_payment_id,
+                            items:
+                                cart,
 
-                        razorpay_signature:
-                            payment.razorpay_signature,
+                            coupon:
+                                appliedCoupon
 
-                        items:
-                            cart,
-
-                        coupon:
-                            appliedCoupon,
-
-                        discount:
-                            discountAmount
-
-                    })
+                        })
 
                 }
 
@@ -1517,6 +1681,33 @@ async function verifyPayment(
             "Payment verification response:",
             data
         );
+
+
+        /* -------------------------------------------
+           AUTH ERROR
+        ------------------------------------------------ */
+
+        if (
+            response.status === 401
+        ) {
+
+            localStorage.removeItem(
+                "token"
+            );
+
+
+            alert(
+                "Your login session has expired. Please login again."
+            );
+
+
+            window.location.href =
+                "../frontend/login.html";
+
+
+            return;
+
+        }
 
 
         if (!response.ok) {
@@ -1545,7 +1736,7 @@ async function verifyPayment(
 
         /* -------------------------------------------
            PAYMENT SUCCESS
-        ------------------------------------------- */
+        ------------------------------------------------ */
 
         const subtotal =
             getCartSubtotal();
@@ -1557,7 +1748,7 @@ async function verifyPayment(
 
         /* -------------------------------------------
            SAVE PURCHASE DATA
-        ------------------------------------------- */
+        ------------------------------------------------ */
 
         savePurchaseForDashboard(
 
@@ -1576,13 +1767,16 @@ async function verifyPayment(
 
         /* -------------------------------------------
            CLEAR CART
-        ------------------------------------------- */
+        ------------------------------------------------ */
 
-        cart = [];
+        cart =
+            [];
 
-        appliedCoupon = "";
+        appliedCoupon =
+            "";
 
-        discountAmount = 0;
+        discountAmount =
+            0;
 
 
         saveCart();
@@ -1594,7 +1788,7 @@ async function verifyPayment(
 
         /* -------------------------------------------
            SUCCESS MESSAGE
-        ------------------------------------------- */
+        ------------------------------------------------ */
 
         alert(
             "Payment successful!\n\nYour personalized Raptora dashboard is ready."
@@ -1603,7 +1797,7 @@ async function verifyPayment(
 
         /* -------------------------------------------
            REDIRECT
-        ------------------------------------------- */
+        ------------------------------------------------ */
 
         redirectToDashboard();
 
@@ -1634,7 +1828,7 @@ async function verifyPayment(
 
 
 /* =====================================================
-   RESET CHECKOUT
+   RESET CHECKOUT BUTTON
 ===================================================== */
 
 function resetCheckoutButton() {
