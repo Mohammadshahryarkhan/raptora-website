@@ -4,9 +4,6 @@ const crypto = require("crypto");
 const Razorpay = require("razorpay");
 
 const authMiddleware = require("../middleware/authMiddleware");
-
-// IMPORTANT:
-// Change this path ONLY if your User model has a different filename/location.
 const User = require("../models/User");
 
 const router = express.Router();
@@ -116,12 +113,10 @@ function calculateCartSubtotal(items) {
         const plan =
             MENTOR_PLANS[name];
 
-        // Invalid plan
         if (!plan) {
             return 0;
         }
 
-        // Invalid quantity
         if (
             !Number.isInteger(quantity) ||
             quantity < 1
@@ -173,9 +168,7 @@ function calculateDiscount(
             discountCode.value /
             100;
 
-    }
-
-    else if (
+    } else if (
         discountCode.type === "fixed"
     ) {
 
@@ -197,7 +190,10 @@ function calculateDiscount(
 
 async function getUser(req) {
 
-    if (!req.user || !req.user.id) {
+    if (
+        !req.user ||
+        !req.user.id
+    ) {
         return null;
     }
 
@@ -222,6 +218,31 @@ router.post(
                 items,
                 coupon
             } = req.body;
+
+
+            // -----------------------------------------
+            // CHECK RAZORPAY CONFIG
+            // -----------------------------------------
+
+            if (
+                !process.env.RAZORPAY_KEY_ID ||
+                !process.env.RAZORPAY_KEY_SECRET
+            ) {
+
+                console.error(
+                    "Razorpay environment variables are missing."
+                );
+
+                return res.status(500).json({
+
+                    success: false,
+
+                    message:
+                        "Razorpay is not configured on the server."
+
+                });
+
+            }
 
 
             // -----------------------------------------
@@ -314,7 +335,7 @@ router.post(
 
 
             // -----------------------------------------
-            // RAZORPAY CANNOT PROCESS ZERO ORDER
+            // RAZORPAY ZERO AMOUNT CHECK
             // -----------------------------------------
 
             if (
@@ -334,7 +355,7 @@ router.post(
 
 
             // -----------------------------------------
-            // CREATE ORDER
+            // CREATE RAZORPAY ORDER
             // -----------------------------------------
 
             const order =
@@ -377,6 +398,22 @@ router.post(
                 });
 
 
+            console.log(
+                "Razorpay order created:",
+                order.id
+            );
+
+            console.log(
+                "User:",
+                user.email
+            );
+
+            console.log(
+                "Amount:",
+                finalAmount
+            );
+
+
             // -----------------------------------------
             // RESPONSE
             // -----------------------------------------
@@ -413,15 +450,34 @@ router.post(
         catch (error) {
 
             console.error(
-                "Razorpay order error:",
-                error
+                "================================="
             );
+
+            console.error(
+                "RAZORPAY CREATE ORDER ERROR"
+            );
+
+            console.error(
+                "Message:",
+                error.message
+            );
+
+            console.error(
+                "Stack:",
+                error.stack
+            );
+
+            console.error(
+                "================================="
+            );
+
 
             return res.status(500).json({
 
                 success: false,
 
                 message:
+                    error.message ||
                     "Unable to create payment order."
 
             });
@@ -443,12 +499,50 @@ router.post(
 
         try {
 
+            console.log(
+                "================================="
+            );
+
+            console.log(
+                "RAZORPAY PAYMENT VERIFICATION STARTED"
+            );
+
+            console.log(
+                "================================="
+            );
+
+
             const {
                 razorpay_order_id,
                 razorpay_payment_id,
                 razorpay_signature,
                 items
             } = req.body;
+
+
+            // -----------------------------------------
+            // CHECK RAZORPAY CONFIG
+            // -----------------------------------------
+
+            if (
+                !process.env.RAZORPAY_KEY_ID ||
+                !process.env.RAZORPAY_KEY_SECRET
+            ) {
+
+                console.error(
+                    "Razorpay environment variables are missing."
+                );
+
+                return res.status(500).json({
+
+                    success: false,
+
+                    message:
+                        "Razorpay is not configured on the server."
+
+                });
+
+            }
 
 
             // -----------------------------------------
@@ -473,6 +567,17 @@ router.post(
             }
 
 
+            console.log(
+                "Order ID:",
+                razorpay_order_id
+            );
+
+            console.log(
+                "Payment ID:",
+                razorpay_payment_id
+            );
+
+
             // -----------------------------------------
             // FIND USER
             // -----------------------------------------
@@ -495,8 +600,14 @@ router.post(
             }
 
 
+            console.log(
+                "Authenticated user:",
+                user.email
+            );
+
+
             // -----------------------------------------
-            // FIND RAZORPAY ORDER
+            // FETCH RAZORPAY ORDER
             // -----------------------------------------
 
             let razorpayOrder;
@@ -513,8 +624,11 @@ router.post(
             catch (error) {
 
                 console.error(
-                    "Unable to fetch Razorpay order:",
-                    error
+                    "Unable to fetch Razorpay order."
+                );
+
+                console.error(
+                    error.message
                 );
 
                 return res.status(400).json({
@@ -530,7 +644,7 @@ router.post(
 
 
             // -----------------------------------------
-            // MAKE SURE ORDER BELONGS TO USER
+            // CHECK ORDER OWNER
             // -----------------------------------------
 
             if (
@@ -539,6 +653,10 @@ router.post(
                     razorpayOrder.notes.userId
                 ) !== String(user._id)
             ) {
+
+                console.error(
+                    "Order owner mismatch."
+                );
 
                 return res.status(403).json({
 
@@ -553,7 +671,7 @@ router.post(
 
 
             // -----------------------------------------
-            // GENERATE SIGNATURE
+            // GENERATE RAZORPAY SIGNATURE
             // -----------------------------------------
 
             const generatedSignature =
@@ -569,7 +687,7 @@ router.post(
 
 
             // -----------------------------------------
-            // SAFE SIGNATURE COMPARISON
+            // COMPARE SIGNATURE LENGTH
             // -----------------------------------------
 
             if (
@@ -577,30 +695,9 @@ router.post(
                 razorpay_signature.length
             ) {
 
-                return res.status(400).json({
-
-                    success: false,
-
-                    message:
-                        "Invalid payment signature."
-
-                });
-
-            }
-
-
-            if (
-                !crypto.timingSafeEqual(
-                    Buffer.from(
-                        generatedSignature,
-                        "utf8"
-                    ),
-                    Buffer.from(
-                        razorpay_signature,
-                        "utf8"
-                    )
-                )
-            ) {
+                console.error(
+                    "Signature length mismatch."
+                );
 
                 return res.status(400).json({
 
@@ -615,7 +712,50 @@ router.post(
 
 
             // -----------------------------------------
-            // CHECK PAYMENT
+            // SAFE SIGNATURE COMPARISON
+            // -----------------------------------------
+
+            const signatureMatches =
+                crypto.timingSafeEqual(
+
+                    Buffer.from(
+                        generatedSignature,
+                        "utf8"
+                    ),
+
+                    Buffer.from(
+                        razorpay_signature,
+                        "utf8"
+                    )
+
+                );
+
+
+            if (!signatureMatches) {
+
+                console.error(
+                    "Invalid Razorpay signature."
+                );
+
+                return res.status(400).json({
+
+                    success: false,
+
+                    message:
+                        "Invalid payment signature."
+
+                });
+
+            }
+
+
+            console.log(
+                "Razorpay signature verified."
+            );
+
+
+            // -----------------------------------------
+            // FETCH PAYMENT
             // -----------------------------------------
 
             let payment;
@@ -632,8 +772,11 @@ router.post(
             catch (error) {
 
                 console.error(
-                    "Unable to fetch Razorpay payment:",
-                    error
+                    "Unable to fetch Razorpay payment."
+                );
+
+                console.error(
+                    error.message
                 );
 
                 return res.status(400).json({
@@ -648,8 +791,14 @@ router.post(
             }
 
 
+            console.log(
+                "Payment status:",
+                payment.status
+            );
+
+
             // -----------------------------------------
-            // PAYMENT MUST BE CAPTURED
+            // PAYMENT STATUS
             // -----------------------------------------
 
             if (
@@ -661,7 +810,7 @@ router.post(
                     success: false,
 
                     message:
-                        "Payment has not been captured yet."
+                        `Payment has not been captured. Current status: ${payment.status}`
 
                 });
 
@@ -735,6 +884,77 @@ router.post(
             }
 
 
+            // -----------------------------------------
+            // FALLBACK TO RAZORPAY ORDER NOTES
+            // -----------------------------------------
+
+            if (!purchasedPlan) {
+
+                console.log(
+                    "Could not identify plan from frontend items."
+                );
+
+                console.log(
+                    "Attempting to identify plan from order amount."
+                );
+
+
+                const orderAmount =
+                    Number(
+                        razorpayOrder.amount || 0
+                    ) / 100;
+
+
+                for (
+                    const [name, plan]
+                    of Object.entries(
+                        MENTOR_PLANS
+                    )
+                ) {
+
+                    const discount =
+                        calculateDiscount(
+                            plan.price,
+                            razorpayOrder.notes
+                                ? razorpayOrder.notes.coupon
+                                : ""
+                        );
+
+
+                    const expectedAmount =
+                        plan.price -
+                        discount;
+
+
+                    if (
+                        Math.abs(
+                            expectedAmount -
+                            orderAmount
+                        ) < 0.01
+                    ) {
+
+                        purchasedPlan = {
+
+                            name:
+                                name,
+
+                            price:
+                                plan.price,
+
+                            months:
+                                plan.months
+
+                        };
+
+                        break;
+
+                    }
+
+                }
+
+            }
+
+
             if (!purchasedPlan) {
 
                 return res.status(400).json({
@@ -747,6 +967,12 @@ router.post(
                 });
 
             }
+
+
+            console.log(
+                "Purchased mentor plan:",
+                purchasedPlan.name
+            );
 
 
             // -----------------------------------------
@@ -762,7 +988,9 @@ router.post(
             // -----------------------------------------
 
             const endDate =
-                new Date(startDate);
+                new Date(
+                    startDate
+                );
 
 
             endDate.setMonth(
@@ -789,6 +1017,7 @@ router.post(
 
                     completedDate:
                         null
+
                 },
 
                 {
@@ -803,6 +1032,7 @@ router.post(
 
                     completedDate:
                         null
+
                 },
 
                 {
@@ -817,6 +1047,7 @@ router.post(
 
                     completedDate:
                         null
+
                 },
 
                 {
@@ -831,6 +1062,7 @@ router.post(
 
                     completedDate:
                         null
+
                 },
 
                 {
@@ -845,6 +1077,7 @@ router.post(
 
                     completedDate:
                         null
+
                 },
 
                 {
@@ -859,6 +1092,7 @@ router.post(
 
                     completedDate:
                         null
+
                 },
 
                 {
@@ -873,6 +1107,7 @@ router.post(
 
                     completedDate:
                         null
+
                 },
 
                 {
@@ -887,6 +1122,7 @@ router.post(
 
                     completedDate:
                         null
+
                 },
 
                 {
@@ -901,6 +1137,7 @@ router.post(
 
                     completedDate:
                         null
+
                 },
 
                 {
@@ -915,6 +1152,7 @@ router.post(
 
                     completedDate:
                         null
+
                 }
 
             ];
@@ -962,7 +1200,7 @@ router.post(
 
 
             // -----------------------------------------
-            // PROGRESS
+            // MENTORSHIP PROGRESS
             // -----------------------------------------
 
             user.mentorshipProgress = {
@@ -1002,42 +1240,72 @@ router.post(
             user.paymentStatus =
                 "paid";
 
+
             user.razorpayPaymentId =
                 razorpay_payment_id;
+
 
             user.razorpayOrderId =
                 razorpay_order_id;
 
 
             // -----------------------------------------
-            // SAVE USER TO MONGODB
+            // SAVE USER
             // -----------------------------------------
+
+            console.log(
+                "Saving user to MongoDB..."
+            );
+
 
             await user.save();
 
 
+            console.log(
+                "User saved successfully."
+            );
+
+
             // -----------------------------------------
-            // LOG
+            // SUCCESS LOG
             // -----------------------------------------
 
             console.log(
-                "Payment verified:",
+                "================================="
+            );
+
+            console.log(
+                "PAYMENT VERIFIED SUCCESSFULLY"
+            );
+
+            console.log(
+                "Payment ID:",
                 razorpay_payment_id
             );
 
             console.log(
-                "Mentorship activated for:",
+                "User:",
                 user.email
+            );
+
+            console.log(
+                "Plan:",
+                purchasedPlan.name
+            );
+
+            console.log(
+                "================================="
             );
 
 
             // -----------------------------------------
-            // SUCCESS
+            // SUCCESS RESPONSE
             // -----------------------------------------
 
             return res.json({
 
-                success: true,
+                success:
+                    true,
 
                 message:
                     "Payment verified and mentor plan activated.",
@@ -1064,15 +1332,65 @@ router.post(
         catch (error) {
 
             console.error(
-                "Payment verification error:",
-                error
+                "================================="
             );
+
+            console.error(
+                "PAYMENT VERIFICATION ERROR"
+            );
+
+            console.error(
+                "Message:",
+                error.message
+            );
+
+            console.error(
+                "Name:",
+                error.name
+            );
+
+            console.error(
+                "Stack:",
+                error.stack
+            );
+
+            if (
+                error.errors
+            ) {
+
+                console.error(
+                    "MONGOOSE VALIDATION ERRORS:"
+                );
+
+                for (
+                    const field
+                    of Object.keys(
+                        error.errors
+                    )
+                ) {
+
+                    console.error(
+                        field,
+                        ":",
+                        error.errors[field].message
+                    );
+
+                }
+
+            }
+
+            console.error(
+                "================================="
+            );
+
 
             return res.status(500).json({
 
-                success: false,
+                success:
+                    false,
 
                 message:
+                    error.message ||
                     "Payment verification failed."
 
             });
@@ -1088,4 +1406,3 @@ router.post(
 // =====================================================
 
 module.exports = router;
-
