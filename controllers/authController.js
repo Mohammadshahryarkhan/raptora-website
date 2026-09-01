@@ -4,159 +4,171 @@ const jwt = require("jsonwebtoken");
 const crypto = require("crypto");
 const { Resend } = require("resend");
 
-// =====================================================
-// REGISTER
-// =====================================================
 
+// ================= REGISTER =================
 exports.register = async (req, res) => {
 
+    try {
 
-try {
-
-    const {
-        name,
-        email,
-        phone,
-        password
-    } = req.body;
-
-
-    // -----------------------------------------
-    // VALIDATE INPUT
-    // -----------------------------------------
-
-    if (!name || !email || !phone || !password) {
-
-        return res.status(400).json({
-
-            message:
-                "Name, email, phone and password are required."
-
-        });
-
-    }
+        const {
+            name,
+            email,
+            phone,
+            password
+        } = req.body;
 
 
-    const normalizedEmail =
-        String(email)
-            .trim()
-            .toLowerCase();
+        // =====================================================
+        // VALIDATE REQUIRED FIELDS
+        // =====================================================
+
+        if (
+            !name ||
+            !email ||
+            !phone ||
+            !password
+        ) {
+
+            return res.status(400).json({
+
+                message:
+                    "Name, email, phone and password are required."
+
+            });
+
+        }
 
 
-    const normalizedPhone =
-        String(phone)
-            .trim();
+        // =====================================================
+        // NORMALIZE EMAIL
+        // =====================================================
+
+        const normalizedEmail =
+            String(email)
+                .trim()
+                .toLowerCase();
 
 
-    // -----------------------------------------
-    // CHECK EXISTING USER
-    // -----------------------------------------
+        // =====================================================
+        // NORMALIZE PHONE
+        // =====================================================
 
-    const existingUser =
-        await User.findOne({
-            email: normalizedEmail
-        });
-
-
-    console.log(
-        "Checking email:",
-        normalizedEmail
-    );
-
-    console.log(
-        "Existing user:",
-        existingUser
-            ? existingUser._id
-            : null
-    );
+        const normalizedPhone =
+            String(phone)
+                .trim();
 
 
-    if (existingUser) {
+        // =====================================================
+        // CHECK EXISTING USER
+        // =====================================================
 
-        return res.status(400).json({
-
-            message:
-                "User already exists"
-
-        });
-
-    }
+        const existingUser =
+            await User.findOne({
+                email: normalizedEmail
+            });
 
 
-    // -----------------------------------------
-    // HASH PASSWORD
-    // -----------------------------------------
+        console.log(
+            "Checking email:",
+            normalizedEmail
+        );
 
-    const hashedPassword =
-        await bcrypt.hash(
-            password,
-            10
+        console.log(
+            "Existing user:",
+            existingUser
         );
 
 
-    // -----------------------------------------
-    // CREATE USER
-    // -----------------------------------------
+        if (existingUser) {
 
-    const user =
-        new User({
+            return res.status(400).json({
 
-            name:
-                String(name).trim(),
+                message:
+                    "User already exists"
 
-            email:
-                normalizedEmail,
+            });
 
-            phone:
-                normalizedPhone,
+        }
 
-            password:
-                hashedPassword
+
+        // =====================================================
+        // HASH PASSWORD
+        // =====================================================
+
+        const hashedPassword =
+            await bcrypt.hash(
+                password,
+                10
+            );
+
+
+        // =====================================================
+        // CREATE USER
+        // =====================================================
+
+        const user =
+            new User({
+
+                name:
+                    String(name).trim(),
+
+                email:
+                    normalizedEmail,
+
+                phone:
+                    normalizedPhone,
+
+                password:
+                    hashedPassword
+
+            });
+
+
+        // =====================================================
+        // SAVE USER
+        // =====================================================
+
+        await user.save();
+
+
+        // =====================================================
+        // SUCCESS
+        // =====================================================
+
+        return res.status(201).json({
+
+            success: true,
+
+            message:
+                "Registration successful"
 
         });
 
+    }
 
-    await user.save();
+    catch (err) {
 
-
-    // -----------------------------------------
-    // RESPONSE
-    // -----------------------------------------
-
-    return res.status(201).json({
-
-        success:
-            true,
-
-        message:
-            "Registration successful"
-
-    });
-
-}
-
-catch (err) {
-
-    console.error(
-        "REGISTER ERROR:",
-        err
-    );
+        console.error(
+            "REGISTER ERROR:",
+            err
+        );
 
 
-    return res.status(500).json({
+        return res.status(500).json({
 
-        success:
-            false,
+            success: false,
 
-        message:
-            "Server Error"
+            message:
+                "Server Error"
 
-    });
+        });
 
-}
-
+    }
 
 };
+
+
+
 
 // =====================================================
 // LOGIN
