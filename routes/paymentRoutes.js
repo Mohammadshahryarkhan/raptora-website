@@ -1,10 +1,20 @@
+
 const express = require("express");
 const crypto = require("crypto");
 const Razorpay = require("razorpay");
 
 const authMiddleware = require("../middleware/authMiddleware");
 
+// IMPORTANT:
+// Change this path ONLY if your User model has a different filename/location.
+const User = require("../models/User");
+
 const router = express.Router();
+
+
+// =====================================================
+// RAZORPAY
+// =====================================================
 
 const razorpay = new Razorpay({
     key_id: process.env.RAZORPAY_KEY_ID,
@@ -98,7 +108,7 @@ function calculateCartSubtotal(items) {
     for (const item of items) {
 
         const name =
-            String(item.name || "");
+            String(item.name || "").trim();
 
         const quantity =
             Number(item.quantity || 1);
@@ -106,10 +116,12 @@ function calculateCartSubtotal(items) {
         const plan =
             MENTOR_PLANS[name];
 
+        // Invalid plan
         if (!plan) {
             return 0;
         }
 
+        // Invalid quantity
         if (
             !Number.isInteger(quantity) ||
             quantity < 1
@@ -153,8 +165,7 @@ function calculateDiscount(
     let discount = 0;
 
     if (
-        discountCode.type ===
-        "percentage"
+        discountCode.type === "percentage"
     ) {
 
         discount =
@@ -165,8 +176,7 @@ function calculateDiscount(
     }
 
     else if (
-        discountCode.type ===
-        "fixed"
+        discountCode.type === "fixed"
     ) {
 
         discount =
@@ -175,8 +185,24 @@ function calculateDiscount(
     }
 
     return Math.min(
-        discount,
+        Math.max(0, discount),
         subtotal
+    );
+}
+
+
+// =====================================================
+// GET LOGGED-IN USER
+// =====================================================
+
+async function getUser(req) {
+
+    if (!req.user || !req.user.id) {
+        return null;
+    }
+
+    return await User.findById(
+        req.user.id
     );
 }
 
@@ -199,13 +225,11 @@ router.post(
 
 
             // -----------------------------------------
-            // FIND LOGGED-IN USER
+            // FIND USER
             // -----------------------------------------
 
             const user =
-                await User.findById(
-                    req.user.id
-                );
+                await getUser(req);
 
 
             if (!user) {
@@ -223,6 +247,27 @@ router.post(
 
 
             // -----------------------------------------
+            // VALIDATE CART
+            // -----------------------------------------
+
+            if (
+                !Array.isArray(items) ||
+                items.length === 0
+            ) {
+
+                return res.status(400).json({
+
+                    success: false,
+
+                    message:
+                        "Your mentor cart is empty."
+
+                });
+
+            }
+
+
+            // -----------------------------------------
             // CALCULATE SUBTOTAL
             // -----------------------------------------
 
@@ -231,7 +276,6 @@ router.post(
 
 
             if (
-                !subtotal ||
                 subtotal <= 0
             ) {
 
@@ -270,7 +314,7 @@ router.post(
 
 
             // -----------------------------------------
-            // ZERO VALUE ORDER
+            // RAZORPAY CANNOT PROCESS ZERO ORDER
             // -----------------------------------------
 
             if (
@@ -290,7 +334,7 @@ router.post(
 
 
             // -----------------------------------------
-            // CREATE RAZORPAY ORDER
+            // CREATE ORDER
             // -----------------------------------------
 
             const order =
@@ -313,13 +357,20 @@ router.post(
                             String(user._id),
 
                         coupon:
-                            coupon || "",
+                            coupon
+                                ? String(coupon)
+                                    .trim()
+                                    .toUpperCase()
+                                : "",
+
+                        subtotal:
+                            String(subtotal),
 
                         discount:
                             String(discount),
 
-                        subtotal:
-                            String(subtotal)
+                        finalAmount:
+                            String(finalAmount)
 
                     }
 
@@ -330,7 +381,7 @@ router.post(
             // RESPONSE
             // -----------------------------------------
 
-            res.json({
+            return res.json({
 
                 success: true,
 
@@ -344,7 +395,16 @@ router.post(
                     order.amount,
 
                 currency:
-                    order.currency
+                    order.currency,
+
+                subtotal:
+                    subtotal,
+
+                discount:
+                    discount,
+
+                finalAmount:
+                    finalAmount
 
             });
 
@@ -357,7 +417,7 @@ router.post(
                 error
             );
 
-            res.status(500).json({
+            return res.status(500).json({
 
                 success: false,
 
@@ -414,13 +474,11 @@ router.post(
 
 
             // -----------------------------------------
-            // FIND LOGGED-IN USER
+            // FIND USER
             // -----------------------------------------
 
             const user =
-                await User.findById(
-                    req.user.id
-                );
+                await getUser(req);
 
 
             if (!user) {
@@ -431,6 +489,63 @@ router.post(
 
                     message:
                         "Please login again."
+
+                });
+
+            }
+
+
+            // -----------------------------------------
+            // FIND RAZORPAY ORDER
+            // -----------------------------------------
+
+            let razorpayOrder;
+
+            try {
+
+                razorpayOrder =
+                    await razorpay.orders.fetch(
+                        razorpay_order_id
+                    );
+
+            }
+
+            catch (error) {
+
+                console.error(
+                    "Unable to fetch Razorpay order:",
+                    error
+                );
+
+                return res.status(400).json({
+
+                    success: false,
+
+                    message:
+                        "Unable to validate Razorpay order."
+
+                });
+
+            }
+
+
+            // -----------------------------------------
+            // MAKE SURE ORDER BELONGS TO USER
+            // -----------------------------------------
+
+            if (
+                !razorpayOrder.notes ||
+                String(
+                    razorpayOrder.notes.userId
+                ) !== String(user._id)
+            ) {
+
+                return res.status(403).json({
+
+                    success: false,
+
+                    message:
+                        "This payment order does not belong to this account."
 
                 });
 
@@ -500,6 +615,81 @@ router.post(
 
 
             // -----------------------------------------
+            // CHECK PAYMENT
+            // -----------------------------------------
+
+            let payment;
+
+            try {
+
+                payment =
+                    await razorpay.payments.fetch(
+                        razorpay_payment_id
+                    );
+
+            }
+
+            catch (error) {
+
+                console.error(
+                    "Unable to fetch Razorpay payment:",
+                    error
+                );
+
+                return res.status(400).json({
+
+                    success: false,
+
+                    message:
+                        "Unable to validate payment."
+
+                });
+
+            }
+
+
+            // -----------------------------------------
+            // PAYMENT MUST BE CAPTURED
+            // -----------------------------------------
+
+            if (
+                payment.status !== "captured"
+            ) {
+
+                return res.status(400).json({
+
+                    success: false,
+
+                    message:
+                        "Payment has not been captured yet."
+
+                });
+
+            }
+
+
+            // -----------------------------------------
+            // PAYMENT MUST MATCH ORDER
+            // -----------------------------------------
+
+            if (
+                String(payment.order_id) !==
+                String(razorpay_order_id)
+            ) {
+
+                return res.status(400).json({
+
+                    success: false,
+
+                    message:
+                        "Payment does not match the order."
+
+                });
+
+            }
+
+
+            // -----------------------------------------
             // IDENTIFY MENTOR PLAN
             // -----------------------------------------
 
@@ -513,21 +703,20 @@ router.post(
                     const item of items
                 ) {
 
+                    const name =
+                        String(
+                            item.name || ""
+                        ).trim();
+
                     const plan =
-                        MENTOR_PLANS[
-                            String(
-                                item.name || ""
-                            )
-                        ];
+                        MENTOR_PLANS[name];
 
                     if (plan) {
 
                         purchasedPlan = {
 
                             name:
-                                String(
-                                    item.name
-                                ),
+                                name,
 
                             price:
                                 plan.price,
@@ -573,9 +762,7 @@ router.post(
             // -----------------------------------------
 
             const endDate =
-                new Date(
-                    startDate
-                );
+                new Date(startDate);
 
 
             endDate.setMonth(
@@ -815,17 +1002,15 @@ router.post(
             user.paymentStatus =
                 "paid";
 
-
             user.razorpayPaymentId =
                 razorpay_payment_id;
-
 
             user.razorpayOrderId =
                 razorpay_order_id;
 
 
             // -----------------------------------------
-            // SAVE USER
+            // SAVE USER TO MONGODB
             // -----------------------------------------
 
             await user.save();
@@ -847,10 +1032,10 @@ router.post(
 
 
             // -----------------------------------------
-            // SUCCESS RESPONSE
+            // SUCCESS
             // -----------------------------------------
 
-            res.json({
+            return res.json({
 
                 success: true,
 
@@ -883,16 +1068,14 @@ router.post(
                 error
             );
 
-            res.status(500).json({
+            return res.status(500).json({
 
-    success: false,
+                success: false,
 
-    message:
-        "Payment verification failed."
+                message:
+                    "Payment verification failed."
 
-});
-
-            
+            });
 
         }
 
@@ -900,4 +1083,9 @@ router.post(
 );
 
 
+// =====================================================
+// EXPORT
+// =====================================================
+
 module.exports = router;
+
