@@ -4,411 +4,740 @@ const jwt = require("jsonwebtoken");
 const crypto = require("crypto");
 const { Resend } = require("resend");
 
-// ================= REGISTER =================
+// =====================================================
+// REGISTER
+// =====================================================
+
 exports.register = async (req, res) => {
 
-    try {
 
-        const { name, email, phone, password } = req.body;
+try {
 
-        const existingUser = await User.findOne({ email });
+    const {
+        name,
+        email,
+        phone,
+        password
+    } = req.body;
 
-        console.log("Checking email:", email);
-        console.log("Existing user:", existingUser);
 
-        if (existingUser) {
-            return res.status(400).json({
-                message: "User already exists"
-            });
-        }
+    // -----------------------------------------
+    // VALIDATE INPUT
+    // -----------------------------------------
 
-        const hashedPassword = await bcrypt.hash(password, 10);
+    if (!name || !email || !phone || !password) {
 
-        const user = new User({
-            name,
-            email,
-            phone,
-            password: hashedPassword
-        });
+        return res.status(400).json({
 
-        await user.save();
+            message:
+                "Name, email, phone and password are required."
 
-        res.status(201).json({
-            message: "Registration successful"
-        });
-
-    } catch (err) {
-
-        console.log(err);
-
-        res.status(500).json({
-            message: "Server Error"
         });
 
     }
 
-};
+
+    const normalizedEmail =
+        String(email)
+            .trim()
+            .toLowerCase();
 
 
-// ================= LOGIN =================
-exports.login = async (req, res) => {
+    const normalizedPhone =
+        String(phone)
+            .trim();
 
-    try {
 
-        const { email, password } = req.body;
+    // -----------------------------------------
+    // CHECK EXISTING USER
+    // -----------------------------------------
 
-        const user = await User.findOne({ email });
+    const existingUser =
+        await User.findOne({
+            email: normalizedEmail
+        });
 
-        if (!user) {
-            return res.status(400).json({
-                message: "Invalid Email"
-            });
-        }
 
-        const match = await bcrypt.compare(password, user.password);
+    console.log(
+        "Checking email:",
+        normalizedEmail
+    );
 
-        if (!match) {
-            return res.status(400).json({
-                message: "Invalid Password"
-            });
-        }
+    console.log(
+        "Existing user:",
+        existingUser
+            ? existingUser._id
+            : null
+    );
 
-        const token = jwt.sign(
 
-            {
-                id: user._id,
-                name: user.name,
-                email: user.email
-            },
+    if (existingUser) {
 
-            process.env.JWT_SECRET,
+        return res.status(400).json({
 
-            {
-                expiresIn: "1d"
-            }
+            message:
+                "User already exists"
 
+        });
+
+    }
+
+
+    // -----------------------------------------
+    // HASH PASSWORD
+    // -----------------------------------------
+
+    const hashedPassword =
+        await bcrypt.hash(
+            password,
+            10
         );
 
-        res.json({
 
-            message: "Login Successful",
+    // -----------------------------------------
+    // CREATE USER
+    // -----------------------------------------
 
-            token,
+    const user =
+        new User({
 
-            name: user.name,
+            name:
+                String(name).trim(),
 
-            email: user.email,
+            email:
+                normalizedEmail,
 
-            phone: user.phone
+            phone:
+                normalizedPhone,
+
+            password:
+                hashedPassword
 
         });
 
-    } catch (err) {
 
-        console.log(err);
+    await user.save();
 
-        res.status(500).json({
-            message: "Server Error"
+
+    // -----------------------------------------
+    // RESPONSE
+    // -----------------------------------------
+
+    return res.status(201).json({
+
+        success:
+            true,
+
+        message:
+            "Registration successful"
+
+    });
+
+}
+
+catch (err) {
+
+    console.error(
+        "REGISTER ERROR:",
+        err
+    );
+
+
+    return res.status(500).json({
+
+        success:
+            false,
+
+        message:
+            "Server Error"
+
+    });
+
+}
+
+
+};
+
+// =====================================================
+// LOGIN
+// =====================================================
+
+exports.login = async (req, res) => {
+
+
+try {
+
+    const {
+        email,
+        password
+    } = req.body;
+
+
+    // -----------------------------------------
+    // VALIDATE INPUT
+    // -----------------------------------------
+
+    if (!email || !password) {
+
+        return res.status(400).json({
+
+            message:
+                "Email and password are required."
+
         });
 
     }
 
-};
+
+    const normalizedEmail =
+        String(email)
+            .trim()
+            .toLowerCase();
 
 
-// ================= FORGOT PASSWORD =================
-exports.forgotPassword = async (req, res) => {
+    // -----------------------------------------
+    // FIND USER
+    // -----------------------------------------
 
-    try {
-
-        const { email } = req.body;
-
-        const user = await User.findOne({ email });
-
-        if (!user) {
-
-            return res.json({
-                message:
-                    "If an account exists, a reset link has been sent."
-            });
-
-        }
+    const user =
+        await User.findOne({
+            email: normalizedEmail
+        });
 
 
-        // ================= GENERATE RESET TOKEN =================
+    if (!user) {
 
-        const resetToken =
-            crypto.randomBytes(32).toString("hex");
+        return res.status(400).json({
 
+            message:
+                "Invalid Email"
 
-        // ================= HASH TOKEN =================
+        });
 
-        const hashedToken =
-            crypto
-                .createHash("sha256")
-                .update(resetToken)
-                .digest("hex");
+    }
 
 
-        user.resetPasswordToken =
-            hashedToken;
+    // -----------------------------------------
+    // CHECK PASSWORD
+    // -----------------------------------------
+
+    const match =
+        await bcrypt.compare(
+            password,
+            user.password
+        );
 
 
-        // ================= TOKEN EXPIRY =================
+    if (!match) {
 
-        user.resetPasswordExpires =
-            Date.now() + 15 * 60 * 1000;
+        return res.status(400).json({
 
+            message:
+                "Invalid Password"
+
+        });
+
+    }
+
+
+    // -----------------------------------------
+    // FIX OLD USERS WITHOUT PHONE
+    // -----------------------------------------
+    //
+    // Some users may have been created before
+    // phone became required in User.js.
+    //
+    // We do NOT invent a phone number.
+    // We simply store an empty string for old
+    // accounts so future user.save() operations
+    // do not fail validation.
+    //
+    // New registrations still require a phone.
+    // -----------------------------------------
+
+    if (
+        user.phone === undefined ||
+        user.phone === null
+    ) {
+
+        user.phone = "";
 
         await user.save({
             validateBeforeSave: false
         });
 
-
-        // ================= RESET URL =================
-
-        const resetUrl =
-            `${process.env.FRONTEND_URL}/frontend/reset-password.html?token=${resetToken}`;
+    }
 
 
-        // ================= RESEND =================
+    // -----------------------------------------
+    // CREATE JWT
+    // -----------------------------------------
 
-        const resend =
-            new Resend(process.env.RESEND_API_KEY);
+    const token =
+        jwt.sign(
 
+            {
+                id:
+                    user._id,
 
-        // ================= SEND EMAIL =================
+                name:
+                    user.name,
 
-        const emailResult =
-            await resend.emails.send({
+                email:
+                    user.email
 
-                from:
-                    "Raptora <noreply@raptora.in>",
+            },
 
-                to:
-                    user.email,
+            process.env.JWT_SECRET,
 
-                subject:
-                    "Raptora Password Reset",
+            {
+                expiresIn:
+                    "1d"
+            }
 
-                html: `
-
-                    <div style="
-                        font-family: Arial, sans-serif;
-                        max-width: 600px;
-                        margin: auto;
-                        padding: 20px;
-                    ">
-
-                        <h2>
-                            Reset Your Raptora Password
-                        </h2>
-
-                        <p>
-                            Hello ${user.name},
-                        </p>
-
-                        <p>
-                            We received a request to reset
-                            your Raptora password.
-                        </p>
-
-                        <p>
-                            Click the button below to create
-                            a new password:
-                        </p>
-
-                        <p>
-
-                            <a
-                                href="${resetUrl}"
-
-                                style="
-                                    display:inline-block;
-                                    padding:12px 20px;
-                                    background:#007bff;
-                                    color:white;
-                                    text-decoration:none;
-                                    border-radius:6px;
-                                "
-                            >
-
-                                Reset Password
-
-                            </a>
-
-                        </p>
-
-                        <p>
-                            This link will expire in 15 minutes.
-                        </p>
-
-                        <p>
-                            If you did not request this
-                            password reset, you can safely
-                            ignore this email.
-                        </p>
-
-                    </div>
-
-                `
-
-            });
-
-
-        // ================= RESEND RESULT =================
-
-        console.log(
-            "RESEND RESULT:",
-            emailResult
         );
 
 
-        // ================= SUCCESS RESPONSE =================
+    // -----------------------------------------
+    // RESPONSE
+    // -----------------------------------------
 
-        res.json({
+    return res.json({
+
+        success:
+            true,
+
+        message:
+            "Login Successful",
+
+        token,
+
+        name:
+            user.name,
+
+        email:
+            user.email,
+
+        phone:
+            user.phone || ""
+
+    });
+
+}
+
+catch (err) {
+
+    console.error(
+        "LOGIN ERROR:",
+        err
+    );
+
+
+    return res.status(500).json({
+
+        success:
+            false,
+
+        message:
+            "Server Error"
+
+    });
+
+}
+
+
+};
+
+// =====================================================
+// FORGOT PASSWORD
+// =====================================================
+
+exports.forgotPassword = async (req, res) => {
+
+
+try {
+
+    const {
+        email
+    } = req.body;
+
+
+    if (!email) {
+
+        return res.status(400).json({
+
+            message:
+                "Email is required"
+
+        });
+
+    }
+
+
+    const normalizedEmail =
+        String(email)
+            .trim()
+            .toLowerCase();
+
+
+    const user =
+        await User.findOne({
+            email: normalizedEmail
+        });
+
+
+    // -----------------------------------------
+    // SECURITY:
+    // DO NOT REVEAL WHETHER ACCOUNT EXISTS
+    // -----------------------------------------
+
+    if (!user) {
+
+        return res.json({
 
             message:
                 "If an account exists, a reset link has been sent."
 
         });
 
+    }
 
-    } catch (err) {
 
-        console.log(
-            "Forgot Password Error:",
-            err
+    // -----------------------------------------
+    // GENERATE RESET TOKEN
+    // -----------------------------------------
+
+    const resetToken =
+        crypto
+            .randomBytes(32)
+            .toString("hex");
+
+
+    // -----------------------------------------
+    // HASH TOKEN
+    // -----------------------------------------
+
+    const hashedToken =
+        crypto
+            .createHash("sha256")
+            .update(resetToken)
+            .digest("hex");
+
+
+    user.resetPasswordToken =
+        hashedToken;
+
+
+    // -----------------------------------------
+    // EXPIRY: 15 MINUTES
+    // -----------------------------------------
+
+    user.resetPasswordExpires =
+        Date.now() +
+        15 * 60 * 1000;
+
+
+    await user.save({
+        validateBeforeSave: false
+    });
+
+
+    // -----------------------------------------
+    // RESET URL
+    // -----------------------------------------
+
+    const resetUrl =
+        `${process.env.FRONTEND_URL}/frontend/reset-password.html?token=${resetToken}`;
+
+
+    // -----------------------------------------
+    // RESEND
+    // -----------------------------------------
+
+    const resend =
+        new Resend(
+            process.env.RESEND_API_KEY
         );
 
-        res.status(500).json({
 
-            message:
-                "Server Error"
+    // -----------------------------------------
+    // SEND EMAIL
+    // -----------------------------------------
+
+    const emailResult =
+        await resend.emails.send({
+
+            from:
+                "Raptora <noreply@raptora.in>",
+
+            to:
+                user.email,
+
+            subject:
+                "Raptora Password Reset",
+
+            html: `
+
+                <div style="
+                    font-family: Arial, sans-serif;
+                    max-width: 600px;
+                    margin: auto;
+                    padding: 20px;
+                ">
+
+                    <h2>
+                        Reset Your Raptora Password
+                    </h2>
+
+                    <p>
+                        Hello ${user.name},
+                    </p>
+
+                    <p>
+                        We received a request to reset
+                        your Raptora password.
+                    </p>
+
+                    <p>
+                        Click the button below to create
+                        a new password:
+                    </p>
+
+                    <p>
+
+                        <a
+                            href="${resetUrl}"
+                            style="
+                                display:inline-block;
+                                padding:12px 20px;
+                                background:#007bff;
+                                color:white;
+                                text-decoration:none;
+                                border-radius:6px;
+                            "
+                        >
+                            Reset Password
+                        </a>
+
+                    </p>
+
+                    <p>
+                        This link will expire in 15 minutes.
+                    </p>
+
+                    <p>
+                        If you did not request this
+                        password reset, you can safely
+                        ignore this email.
+                    </p>
+
+                </div>
+
+            `
 
         });
 
-    }
+
+    console.log(
+        "RESEND RESULT:",
+        emailResult
+    );
+
+
+    // -----------------------------------------
+    // RESPONSE
+    // -----------------------------------------
+
+    return res.json({
+
+        message:
+            "If an account exists, a reset link has been sent."
+
+    });
+
+}
+
+catch (err) {
+
+    console.error(
+        "FORGOT PASSWORD ERROR:",
+        err
+    );
+
+
+    return res.status(500).json({
+
+        message:
+            "Server Error"
+
+    });
+
+}
+
 
 };
 
+// =====================================================
+// RESET PASSWORD
+// =====================================================
 
-// ================= RESET PASSWORD =================
 exports.resetPassword = async (req, res) => {
 
-    try {
 
-        const { token } =
-            req.params;
+try {
 
-        const { password } =
-            req.body;
-
-
-        // ================= CHECK PASSWORD =================
-
-        if (!password) {
-
-            return res.status(400).json({
-
-                message:
-                    "Password is required"
-
-            });
-
-        }
+    const {
+        token
+    } = req.params;
 
 
-        // ================= HASH RESET TOKEN =================
-
-        const hashedToken =
-            crypto
-                .createHash("sha256")
-                .update(token)
-                .digest("hex");
+    const {
+        password
+    } = req.body;
 
 
-        // ================= FIND USER =================
+    // -----------------------------------------
+    // VALIDATE PASSWORD
+    // -----------------------------------------
 
-        const user =
-            await User.findOne({
+    if (!password) {
 
-                resetPasswordToken:
-                    hashedToken,
-
-                resetPasswordExpires: {
-
-                    $gt:
-                        Date.now()
-
-                }
-
-            });
-
-
-        // ================= INVALID TOKEN =================
-
-        if (!user) {
-
-            return res.status(400).json({
-
-                message:
-                    "Invalid or expired reset link"
-
-            });
-
-        }
-
-
-        // ================= HASH NEW PASSWORD =================
-
-        const hashedPassword =
-            await bcrypt.hash(
-                password,
-                10
-            );
-
-
-        user.password =
-            hashedPassword;
-
-
-        // ================= CLEAR RESET TOKEN =================
-
-        user.resetPasswordToken =
-            null;
-
-        user.resetPasswordExpires =
-            null;
-
-
-        await user.save();
-
-
-        // ================= SUCCESS =================
-
-        res.json({
+        return res.status(400).json({
 
             message:
-                "Password reset successful"
-
-        });
-
-
-    } catch (err) {
-
-        console.log(
-            "Reset Password Error:",
-            err
-        );
-
-        res.status(500).json({
-
-            message:
-                "Server Error"
+                "Password is required"
 
         });
 
     }
+
+
+    if (password.length < 6) {
+
+        return res.status(400).json({
+
+            message:
+                "Password must be at least 6 characters long."
+
+        });
+
+    }
+
+
+    // -----------------------------------------
+    // HASH RESET TOKEN
+    // -----------------------------------------
+
+    const hashedToken =
+        crypto
+            .createHash("sha256")
+            .update(token)
+            .digest("hex");
+
+
+    // -----------------------------------------
+    // FIND USER
+    // -----------------------------------------
+
+    const user =
+        await User.findOne({
+
+            resetPasswordToken:
+                hashedToken,
+
+            resetPasswordExpires: {
+
+                $gt:
+                    Date.now()
+
+            }
+
+        });
+
+
+    // -----------------------------------------
+    // INVALID TOKEN
+    // -----------------------------------------
+
+    if (!user) {
+
+        return res.status(400).json({
+
+            message:
+                "Invalid or expired reset link"
+
+        });
+
+    }
+
+
+    // -----------------------------------------
+    // HASH NEW PASSWORD
+    // -----------------------------------------
+
+    const hashedPassword =
+        await bcrypt.hash(
+            password,
+            10
+        );
+
+
+    user.password =
+        hashedPassword;
+
+
+    // -----------------------------------------
+    // CLEAR RESET TOKEN
+    // -----------------------------------------
+
+    user.resetPasswordToken =
+        null;
+
+    user.resetPasswordExpires =
+        null;
+
+
+    // -----------------------------------------
+    // SAVE
+    // -----------------------------------------
+
+    await user.save({
+        validateBeforeSave: false
+    });
+
+
+    // -----------------------------------------
+    // SUCCESS
+    // -----------------------------------------
+
+    return res.json({
+
+        success:
+            true,
+
+        message:
+            "Password reset successful"
+
+    });
+
+}
+
+catch (err) {
+
+    console.error(
+        "RESET PASSWORD ERROR:",
+        err
+    );
+
+
+    return res.status(500).json({
+
+        message:
+            "Server Error"
+
+    });
+
+}
+
 
 };
