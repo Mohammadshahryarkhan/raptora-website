@@ -31,6 +31,9 @@ document
         const confirmPassword =
             document.getElementById("confirmPassword").value;
 
+        const referralCode =
+            document.getElementById("referralCode").value.trim();
+
         const terms =
             document.getElementById("terms");
 
@@ -70,7 +73,7 @@ document
         try {
 
             const response = await fetch(
-                "https://raptora-website-1.onrender.com/api/auth/register",
+                "https://raptora-website.onrender.com/api/auth/register",
                 {
 
                     method: "POST",
@@ -92,7 +95,9 @@ document
 
                         phone: phone,
 
-                        password: password
+                        password: password,
+
+                        referralCode: referralCode || null
 
                     })
 
