@@ -107,21 +107,34 @@ exports.register = async (req, res) => {
         // =====================================================
 
         const user =
-            new User({
+    new User({
 
-                name:
-                    String(name).trim(),
+        name:
+            String(name).trim(),
 
-                email:
-                    normalizedEmail,
+        email:
+            normalizedEmail,
 
-                phone:
-                    normalizedPhone,
+        phone:
+            normalizedPhone,
 
-                password:
-                    hashedPassword
+        password:
+            hashedPassword,
 
-            });
+        referralCode:
+            "RAPTORA-" +
+            crypto
+                .randomBytes(4)
+                .toString("hex")
+                .toUpperCase(),
+
+        referralPoints:
+            0,
+
+        badge:
+            "Raptora Member"
+
+    });
 
 
         // =====================================================
