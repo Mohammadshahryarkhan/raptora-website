@@ -1,4 +1,3 @@
-
 const express = require("express");
 const crypto = require("crypto");
 const Razorpay = require("razorpay");
@@ -27,25 +26,54 @@ const MENTOR_PLANS = {
 
     "1 Month Mentor Plan": {
         price: 400,
-        months: 1
+        months: 1,
+        referralPoints: 50
     },
 
     "3 Months Mentor Plan": {
         price: 1100,
-        months: 3
+        months: 3,
+        referralPoints: 150
     },
 
     "6 Months Mentor Plan": {
         price: 2200,
-        months: 6
+        months: 6,
+        referralPoints: 300
     },
 
     "12 Months Mentor Plan": {
         price: 4600,
-        months: 12
+        months: 12,
+        referralPoints: 600
     }
 
 };
+
+
+// =====================================================
+// REFERRAL BADGE CALCULATOR
+// =====================================================
+
+function getReferralBadge(points) {
+
+    const totalPoints =
+        Number(points || 0);
+
+    if (totalPoints >= 300) {
+        return "Raptora Elite";
+    }
+
+    if (totalPoints >= 150) {
+        return "Raptora Pro";
+    }
+
+    if (totalPoints >= 50) {
+        return "Raptora Starter";
+    }
+
+    return "Raptora Member";
+}
 
 
 // =====================================================
@@ -801,7 +829,10 @@ router.post(
                                 plan.price,
 
                             months:
-                                plan.months
+                                plan.months,
+
+                            referralPoints:
+                                plan.referralPoints
 
                         };
 
@@ -1065,7 +1096,7 @@ router.post(
 
 
             // -----------------------------------------
-            // BADGE
+            // MENTORSHIP BADGE
             // -----------------------------------------
 
             user.badge =
@@ -1089,7 +1120,73 @@ router.post(
 
 
             // -----------------------------------------
-            // SAVE TO DATABASE
+            // REFERRAL REWARD
+            // -----------------------------------------
+
+            let referralReward = 0;
+
+            let referringUser = null;
+
+
+            if (
+                user.referredBy &&
+                purchasedPlan.referralPoints > 0
+            ) {
+
+                referringUser =
+                    await User.findById(
+                        user.referredBy
+                    );
+
+
+                if (referringUser) {
+
+                    referralReward =
+                        purchasedPlan.referralPoints;
+
+
+                    referringUser.referralPoints =
+                        Number(
+                            referringUser.referralPoints || 0
+                        ) +
+                        referralReward;
+
+
+                    referringUser.referralBadge =
+                        getReferralBadge(
+                            referringUser.referralPoints
+                        );
+
+
+                    await referringUser.save();
+
+                    console.log(
+                        "REFERRAL REWARD AWARDED:",
+                        {
+                            referredStudent:
+                                user.email,
+
+                            referrer:
+                                referringUser.email,
+
+                            points:
+                                referralReward,
+
+                            totalPoints:
+                                referringUser.referralPoints,
+
+                            badge:
+                                referringUser.referralBadge
+                        }
+                    );
+
+                }
+
+            }
+
+
+            // -----------------------------------------
+            // SAVE STUDENT
             // -----------------------------------------
 
             await user.save();
@@ -1102,6 +1199,12 @@ router.post(
             console.log(
                 "Mentorship activated for:",
                 user.email
+            );
+
+
+            console.log(
+                "Referral points awarded:",
+                referralReward
             );
 
 
@@ -1139,7 +1242,10 @@ router.post(
                     startDate,
 
                 endDate:
-                    endDate
+                    endDate,
+
+                referralReward:
+                    referralReward
 
             });
 
@@ -1196,4 +1302,3 @@ router.post(
 // =====================================================
 
 module.exports = router;
-
