@@ -122,7 +122,8 @@ router.get(
                     // =================================================
                     // REFERRAL POINTS
                     // =================================================
-
+referralCode:
+    user.referralCode || null,
                     referralPoints:
                         user.referralPoints || 0
 
