@@ -5,7 +5,25 @@ const crypto = require("crypto");
 const { Resend } = require("resend");
 
 
+// =====================================================
+// GENERATE REFERRAL CODE
+// =====================================================
+
+function generateReferralCode() {
+
+    return (
+        "RAPTORA-" +
+        crypto
+            .randomBytes(4)
+            .toString("hex")
+            .toUpperCase()
+    );
+
+}
+
+
 // ================= REGISTER =================
+
 exports.register = async (req, res) => {
 
     try {
@@ -98,14 +116,17 @@ exports.register = async (req, res) => {
 
         let referringUser = null;
 
+
         if (referralCode) {
 
             referringUser =
                 await User.findOne({
+
                     referralCode:
-                        referralCode
+                        String(referralCode)
                             .trim()
                             .toUpperCase()
+
                 });
 
 
@@ -156,13 +177,8 @@ exports.register = async (req, res) => {
                     hashedPassword,
 
                 referralCode:
-                    "RAPTORA-" +
-                    crypto
-                        .randomBytes(4)
-                        .toString("hex")
-                        .toUpperCase(),
+                    generateReferralCode(),
 
-                // SAVE WHO REFERRED THIS USER
                 referredBy:
                     referringUser
                         ? referringUser._id
@@ -170,6 +186,9 @@ exports.register = async (req, res) => {
 
                 referralPoints:
                     0,
+
+                referralBadge:
+                    "Raptora Member",
 
                 badge:
                     "Raptora Member"
@@ -222,13 +241,11 @@ exports.register = async (req, res) => {
 
 
 
-
 // =====================================================
 // LOGIN
 // =====================================================
 
 exports.login = async (req, res) => {
-
 
     try {
 
@@ -238,11 +255,14 @@ exports.login = async (req, res) => {
         } = req.body;
 
 
-        // -----------------------------------------
+        // =====================================================
         // VALIDATE INPUT
-        // -----------------------------------------
+        // =====================================================
 
-        if (!email || !password) {
+        if (
+            !email ||
+            !password
+        ) {
 
             return res.status(400).json({
 
@@ -260,13 +280,16 @@ exports.login = async (req, res) => {
                 .toLowerCase();
 
 
-        // -----------------------------------------
+        // =====================================================
         // FIND USER
-        // -----------------------------------------
+        // =====================================================
 
         const user =
             await User.findOne({
-                email: normalizedEmail
+
+                email:
+                    normalizedEmail
+
             });
 
 
@@ -282,9 +305,9 @@ exports.login = async (req, res) => {
         }
 
 
-        // -----------------------------------------
+        // =====================================================
         // CHECK PASSWORD
-        // -----------------------------------------
+        // =====================================================
 
         const match =
             await bcrypt.compare(
@@ -305,20 +328,9 @@ exports.login = async (req, res) => {
         }
 
 
-        // -----------------------------------------
+        // =====================================================
         // FIX OLD USERS WITHOUT PHONE
-        // -----------------------------------------
-        //
-        // Some users may have been created before
-        // phone became required in User.js.
-        //
-        // We do NOT invent a phone number.
-        // We simply store an empty string for old
-        // accounts so future user.save() operations
-        // do not fail validation.
-        //
-        // New registrations still require a phone.
-        // -----------------------------------------
+        // =====================================================
 
         if (
             user.phone === undefined ||
@@ -327,21 +339,70 @@ exports.login = async (req, res) => {
 
             user.phone = "";
 
-            await user.save({
-                validateBeforeSave: false
-            });
+        }
+
+
+        // =====================================================
+        // FIX OLD USERS WITHOUT REFERRAL CODE
+        // =====================================================
+
+        if (
+            !user.referralCode
+        ) {
+
+            user.referralCode =
+                generateReferralCode();
 
         }
 
 
-        // -----------------------------------------
+        // =====================================================
+        // FIX OLD USERS WITHOUT REFERRAL POINTS
+        // =====================================================
+
+        if (
+            user.referralPoints === undefined ||
+            user.referralPoints === null
+        ) {
+
+            user.referralPoints =
+                0;
+
+        }
+
+
+        // =====================================================
+        // FIX OLD USERS WITHOUT REFERRAL BADGE
+        // =====================================================
+
+        if (
+            !user.referralBadge
+        ) {
+
+            user.referralBadge =
+                "Raptora Member";
+
+        }
+
+
+        // =====================================================
+        // SAVE UPDATED OLD USER
+        // =====================================================
+
+        await user.save({
+            validateBeforeSave: false
+        });
+
+
+        // =====================================================
         // CREATE JWT
-        // -----------------------------------------
+        // =====================================================
 
         const token =
             jwt.sign(
 
                 {
+
                     id:
                         user._id,
 
@@ -356,16 +417,18 @@ exports.login = async (req, res) => {
                 process.env.JWT_SECRET,
 
                 {
+
                     expiresIn:
                         "1d"
+
                 }
 
             );
 
 
-        // -----------------------------------------
+        // =====================================================
         // RESPONSE
-        // -----------------------------------------
+        // =====================================================
 
         return res.json({
 
@@ -414,13 +477,11 @@ exports.login = async (req, res) => {
 
 
 
-
 // =====================================================
 // FORGOT PASSWORD
 // =====================================================
 
 exports.forgotPassword = async (req, res) => {
-
 
     try {
 
@@ -449,14 +510,12 @@ exports.forgotPassword = async (req, res) => {
 
         const user =
             await User.findOne({
-                email: normalizedEmail
+
+                email:
+                    normalizedEmail
+
             });
 
-
-        // -----------------------------------------
-        // SECURITY:
-        // DO NOT REVEAL WHETHER ACCOUNT EXISTS
-        // -----------------------------------------
 
         if (!user) {
 
@@ -470,19 +529,11 @@ exports.forgotPassword = async (req, res) => {
         }
 
 
-        // -----------------------------------------
-        // GENERATE RESET TOKEN
-        // -----------------------------------------
-
         const resetToken =
             crypto
                 .randomBytes(32)
                 .toString("hex");
 
-
-        // -----------------------------------------
-        // HASH TOKEN
-        // -----------------------------------------
 
         const hashedToken =
             crypto
@@ -495,10 +546,6 @@ exports.forgotPassword = async (req, res) => {
             hashedToken;
 
 
-        // -----------------------------------------
-        // EXPIRY: 15 MINUTES
-        // -----------------------------------------
-
         user.resetPasswordExpires =
             Date.now() +
             15 * 60 * 1000;
@@ -509,27 +556,15 @@ exports.forgotPassword = async (req, res) => {
         });
 
 
-        // -----------------------------------------
-        // RESET URL
-        // -----------------------------------------
-
         const resetUrl =
             `${process.env.FRONTEND_URL}/frontend/reset-password.html?token=${resetToken}`;
 
-
-        // -----------------------------------------
-        // RESEND
-        // -----------------------------------------
 
         const resend =
             new Resend(
                 process.env.RESEND_API_KEY
             );
 
-
-        // -----------------------------------------
-        // SEND EMAIL
-        // -----------------------------------------
 
         const emailResult =
             await resend.emails.send({
@@ -611,10 +646,6 @@ exports.forgotPassword = async (req, res) => {
         );
 
 
-        // -----------------------------------------
-        // RESPONSE
-        // -----------------------------------------
-
         return res.json({
 
             message:
@@ -645,13 +676,11 @@ exports.forgotPassword = async (req, res) => {
 
 
 
-
 // =====================================================
 // RESET PASSWORD
 // =====================================================
 
 exports.resetPassword = async (req, res) => {
-
 
     try {
 
@@ -665,9 +694,9 @@ exports.resetPassword = async (req, res) => {
         } = req.body;
 
 
-        // -----------------------------------------
+        // =====================================================
         // VALIDATE PASSWORD
-        // -----------------------------------------
+        // =====================================================
 
         if (!password) {
 
@@ -681,7 +710,9 @@ exports.resetPassword = async (req, res) => {
         }
 
 
-        if (password.length < 6) {
+        if (
+            password.length < 6
+        ) {
 
             return res.status(400).json({
 
@@ -693,9 +724,9 @@ exports.resetPassword = async (req, res) => {
         }
 
 
-        // -----------------------------------------
+        // =====================================================
         // HASH RESET TOKEN
-        // -----------------------------------------
+        // =====================================================
 
         const hashedToken =
             crypto
@@ -704,9 +735,9 @@ exports.resetPassword = async (req, res) => {
                 .digest("hex");
 
 
-        // -----------------------------------------
+        // =====================================================
         // FIND USER
-        // -----------------------------------------
+        // =====================================================
 
         const user =
             await User.findOne({
@@ -724,9 +755,9 @@ exports.resetPassword = async (req, res) => {
             });
 
 
-        // -----------------------------------------
+        // =====================================================
         // INVALID TOKEN
-        // -----------------------------------------
+        // =====================================================
 
         if (!user) {
 
@@ -740,9 +771,9 @@ exports.resetPassword = async (req, res) => {
         }
 
 
-        // -----------------------------------------
+        // =====================================================
         // HASH NEW PASSWORD
-        // -----------------------------------------
+        // =====================================================
 
         const hashedPassword =
             await bcrypt.hash(
@@ -755,9 +786,9 @@ exports.resetPassword = async (req, res) => {
             hashedPassword;
 
 
-        // -----------------------------------------
+        // =====================================================
         // CLEAR RESET TOKEN
-        // -----------------------------------------
+        // =====================================================
 
         user.resetPasswordToken =
             null;
@@ -766,18 +797,18 @@ exports.resetPassword = async (req, res) => {
             null;
 
 
-        // -----------------------------------------
+        // =====================================================
         // SAVE
-        // -----------------------------------------
+        // =====================================================
 
         await user.save({
             validateBeforeSave: false
         });
 
 
-        // -----------------------------------------
+        // =====================================================
         // SUCCESS
-        // -----------------------------------------
+        // =====================================================
 
         return res.json({
 
