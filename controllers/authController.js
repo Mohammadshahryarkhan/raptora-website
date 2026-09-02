@@ -14,7 +14,8 @@ exports.register = async (req, res) => {
             name,
             email,
             phone,
-            password
+            password,
+            referralCode
         } = req.body;
 
 
@@ -89,6 +90,32 @@ exports.register = async (req, res) => {
             });
 
         }
+        // =====================================================
+// CHECK REFERRAL CODE
+// =====================================================
+
+let referringUser = null;
+
+if (referralCode) {
+
+    referringUser = await User.findOne({
+        referralCode: referralCode.trim().toUpperCase()
+    });
+
+    if (!referringUser) {
+
+        return res.status(400).json({
+
+            success: false,
+
+            message:
+                "Invalid referral code."
+
+        });
+
+    }
+
+}
 
 
         // =====================================================
@@ -142,6 +169,52 @@ exports.register = async (req, res) => {
         // =====================================================
 
         await user.save();
+        // =====================================================
+// AWARD REFERRAL POINTS
+// =====================================================
+
+if (referringUser) {
+
+    referringUser.referralPoints =
+        (referringUser.referralPoints || 0) + 50;
+
+    await referringUser.save();
+
+}
+        // =====================================================
+// UPDATE REFERRER BADGE
+// =====================================================
+
+if (referringUser) {
+
+    const points =
+        referringUser.referralPoints || 0;
+
+    if (points >= 300) {
+
+        referringUser.badge =
+            "Raptora Elite";
+
+    } else if (points >= 150) {
+
+        referringUser.badge =
+            "Raptora Pro";
+
+    } else if (points >= 50) {
+
+        referringUser.badge =
+            "Raptora Starter";
+
+    } else {
+
+        referringUser.badge =
+            "Raptora Member";
+
+    }
+
+    await referringUser.save();
+
+}
 
 
         // =====================================================
