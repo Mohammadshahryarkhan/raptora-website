@@ -221,11 +221,23 @@ const userSchema = new mongoose.Schema(
         // REFERRAL POINTS
         // =====================================================
 
-        referralPoints: {
-            type: Number,
-            default: 0
-        }
+        referralCode: {
+    type: String,
+    unique: true,
+    sparse: true,
+    default: null
+},
 
+referredBy: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+    default: null
+},
+
+referralPoints: {
+    type: Number,
+    default: 0
+}
     },
 
     {
