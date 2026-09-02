@@ -90,32 +90,39 @@ exports.register = async (req, res) => {
             });
 
         }
+
+
         // =====================================================
-// CHECK REFERRAL CODE
-// =====================================================
+        // CHECK REFERRAL CODE
+        // =====================================================
 
-let referringUser = null;
+        let referringUser = null;
 
-if (referralCode) {
+        if (referralCode) {
 
-    referringUser = await User.findOne({
-        referralCode: referralCode.trim().toUpperCase()
-    });
+            referringUser =
+                await User.findOne({
+                    referralCode:
+                        referralCode
+                            .trim()
+                            .toUpperCase()
+                });
 
-    if (!referringUser) {
 
-        return res.status(400).json({
+            if (!referringUser) {
 
-            success: false,
+                return res.status(400).json({
 
-            message:
-                "Invalid referral code."
+                    success: false,
 
-        });
+                    message:
+                        "Invalid referral code."
 
-    }
+                });
 
-}
+            }
+
+        }
 
 
         // =====================================================
@@ -134,34 +141,40 @@ if (referralCode) {
         // =====================================================
 
         const user =
-    new User({
+            new User({
 
-        name:
-            String(name).trim(),
+                name:
+                    String(name).trim(),
 
-        email:
-            normalizedEmail,
+                email:
+                    normalizedEmail,
 
-        phone:
-            normalizedPhone,
+                phone:
+                    normalizedPhone,
 
-        password:
-            hashedPassword,
+                password:
+                    hashedPassword,
 
-        referralCode:
-            "RAPTORA-" +
-            crypto
-                .randomBytes(4)
-                .toString("hex")
-                .toUpperCase(),
+                referralCode:
+                    "RAPTORA-" +
+                    crypto
+                        .randomBytes(4)
+                        .toString("hex")
+                        .toUpperCase(),
 
-        referralPoints:
-            0,
+                // SAVE WHO REFERRED THIS USER
+                referredBy:
+                    referringUser
+                        ? referringUser._id
+                        : null,
 
-        badge:
-            "Raptora Member"
+                referralPoints:
+                    0,
 
-    });
+                badge:
+                    "Raptora Member"
+
+            });
 
 
         // =====================================================
@@ -169,52 +182,6 @@ if (referralCode) {
         // =====================================================
 
         await user.save();
-        // =====================================================
-// AWARD REFERRAL POINTS
-// =====================================================
-
-if (referringUser) {
-
-    referringUser.referralPoints =
-        (referringUser.referralPoints || 0) + 50;
-
-    await referringUser.save();
-
-}
-        // =====================================================
-// UPDATE REFERRER BADGE
-// =====================================================
-
-if (referringUser) {
-
-    const points =
-        referringUser.referralPoints || 0;
-
-    if (points >= 300) {
-
-        referringUser.badge =
-            "Raptora Elite";
-
-    } else if (points >= 150) {
-
-        referringUser.badge =
-            "Raptora Pro";
-
-    } else if (points >= 50) {
-
-        referringUser.badge =
-            "Raptora Starter";
-
-    } else {
-
-        referringUser.badge =
-            "Raptora Member";
-
-    }
-
-    await referringUser.save();
-
-}
 
 
         // =====================================================
@@ -263,188 +230,190 @@ if (referringUser) {
 exports.login = async (req, res) => {
 
 
-try {
+    try {
 
-    const {
-        email,
-        password
-    } = req.body;
+        const {
+            email,
+            password
+        } = req.body;
 
 
-    // -----------------------------------------
-    // VALIDATE INPUT
-    // -----------------------------------------
+        // -----------------------------------------
+        // VALIDATE INPUT
+        // -----------------------------------------
 
-    if (!email || !password) {
+        if (!email || !password) {
 
-        return res.status(400).json({
+            return res.status(400).json({
+
+                message:
+                    "Email and password are required."
+
+            });
+
+        }
+
+
+        const normalizedEmail =
+            String(email)
+                .trim()
+                .toLowerCase();
+
+
+        // -----------------------------------------
+        // FIND USER
+        // -----------------------------------------
+
+        const user =
+            await User.findOne({
+                email: normalizedEmail
+            });
+
+
+        if (!user) {
+
+            return res.status(400).json({
+
+                message:
+                    "Invalid Email"
+
+            });
+
+        }
+
+
+        // -----------------------------------------
+        // CHECK PASSWORD
+        // -----------------------------------------
+
+        const match =
+            await bcrypt.compare(
+                password,
+                user.password
+            );
+
+
+        if (!match) {
+
+            return res.status(400).json({
+
+                message:
+                    "Invalid Password"
+
+            });
+
+        }
+
+
+        // -----------------------------------------
+        // FIX OLD USERS WITHOUT PHONE
+        // -----------------------------------------
+        //
+        // Some users may have been created before
+        // phone became required in User.js.
+        //
+        // We do NOT invent a phone number.
+        // We simply store an empty string for old
+        // accounts so future user.save() operations
+        // do not fail validation.
+        //
+        // New registrations still require a phone.
+        // -----------------------------------------
+
+        if (
+            user.phone === undefined ||
+            user.phone === null
+        ) {
+
+            user.phone = "";
+
+            await user.save({
+                validateBeforeSave: false
+            });
+
+        }
+
+
+        // -----------------------------------------
+        // CREATE JWT
+        // -----------------------------------------
+
+        const token =
+            jwt.sign(
+
+                {
+                    id:
+                        user._id,
+
+                    name:
+                        user.name,
+
+                    email:
+                        user.email
+
+                },
+
+                process.env.JWT_SECRET,
+
+                {
+                    expiresIn:
+                        "1d"
+                }
+
+            );
+
+
+        // -----------------------------------------
+        // RESPONSE
+        // -----------------------------------------
+
+        return res.json({
+
+            success:
+                true,
 
             message:
-                "Email and password are required."
+                "Login Successful",
+
+            token,
+
+            name:
+                user.name,
+
+            email:
+                user.email,
+
+            phone:
+                user.phone || ""
 
         });
 
     }
 
+    catch (err) {
 
-    const normalizedEmail =
-        String(email)
-            .trim()
-            .toLowerCase();
-
-
-    // -----------------------------------------
-    // FIND USER
-    // -----------------------------------------
-
-    const user =
-        await User.findOne({
-            email: normalizedEmail
-        });
-
-
-    if (!user) {
-
-        return res.status(400).json({
-
-            message:
-                "Invalid Email"
-
-        });
-
-    }
-
-
-    // -----------------------------------------
-    // CHECK PASSWORD
-    // -----------------------------------------
-
-    const match =
-        await bcrypt.compare(
-            password,
-            user.password
+        console.error(
+            "LOGIN ERROR:",
+            err
         );
 
 
-    if (!match) {
+        return res.status(500).json({
 
-        return res.status(400).json({
+            success:
+                false,
 
             message:
-                "Invalid Password"
+                "Server Error"
 
         });
 
     }
-
-
-    // -----------------------------------------
-    // FIX OLD USERS WITHOUT PHONE
-    // -----------------------------------------
-    //
-    // Some users may have been created before
-    // phone became required in User.js.
-    //
-    // We do NOT invent a phone number.
-    // We simply store an empty string for old
-    // accounts so future user.save() operations
-    // do not fail validation.
-    //
-    // New registrations still require a phone.
-    // -----------------------------------------
-
-    if (
-        user.phone === undefined ||
-        user.phone === null
-    ) {
-
-        user.phone = "";
-
-        await user.save({
-            validateBeforeSave: false
-        });
-
-    }
-
-
-    // -----------------------------------------
-    // CREATE JWT
-    // -----------------------------------------
-
-    const token =
-        jwt.sign(
-
-            {
-                id:
-                    user._id,
-
-                name:
-                    user.name,
-
-                email:
-                    user.email
-
-            },
-
-            process.env.JWT_SECRET,
-
-            {
-                expiresIn:
-                    "1d"
-            }
-
-        );
-
-
-    // -----------------------------------------
-    // RESPONSE
-    // -----------------------------------------
-
-    return res.json({
-
-        success:
-            true,
-
-        message:
-            "Login Successful",
-
-        token,
-
-        name:
-            user.name,
-
-        email:
-            user.email,
-
-        phone:
-            user.phone || ""
-
-    });
-
-}
-
-catch (err) {
-
-    console.error(
-        "LOGIN ERROR:",
-        err
-    );
-
-
-    return res.status(500).json({
-
-        success:
-            false,
-
-        message:
-            "Server Error"
-
-    });
-
-}
-
 
 };
+
+
+
 
 // =====================================================
 // FORGOT PASSWORD
@@ -453,43 +422,198 @@ catch (err) {
 exports.forgotPassword = async (req, res) => {
 
 
-try {
+    try {
 
-    const {
-        email
-    } = req.body;
+        const {
+            email
+        } = req.body;
 
 
-    if (!email) {
+        if (!email) {
 
-        return res.status(400).json({
+            return res.status(400).json({
 
-            message:
-                "Email is required"
+                message:
+                    "Email is required"
 
+            });
+
+        }
+
+
+        const normalizedEmail =
+            String(email)
+                .trim()
+                .toLowerCase();
+
+
+        const user =
+            await User.findOne({
+                email: normalizedEmail
+            });
+
+
+        // -----------------------------------------
+        // SECURITY:
+        // DO NOT REVEAL WHETHER ACCOUNT EXISTS
+        // -----------------------------------------
+
+        if (!user) {
+
+            return res.json({
+
+                message:
+                    "If an account exists, a reset link has been sent."
+
+            });
+
+        }
+
+
+        // -----------------------------------------
+        // GENERATE RESET TOKEN
+        // -----------------------------------------
+
+        const resetToken =
+            crypto
+                .randomBytes(32)
+                .toString("hex");
+
+
+        // -----------------------------------------
+        // HASH TOKEN
+        // -----------------------------------------
+
+        const hashedToken =
+            crypto
+                .createHash("sha256")
+                .update(resetToken)
+                .digest("hex");
+
+
+        user.resetPasswordToken =
+            hashedToken;
+
+
+        // -----------------------------------------
+        // EXPIRY: 15 MINUTES
+        // -----------------------------------------
+
+        user.resetPasswordExpires =
+            Date.now() +
+            15 * 60 * 1000;
+
+
+        await user.save({
+            validateBeforeSave: false
         });
 
-    }
+
+        // -----------------------------------------
+        // RESET URL
+        // -----------------------------------------
+
+        const resetUrl =
+            `${process.env.FRONTEND_URL}/frontend/reset-password.html?token=${resetToken}`;
 
 
-    const normalizedEmail =
-        String(email)
-            .trim()
-            .toLowerCase();
+        // -----------------------------------------
+        // RESEND
+        // -----------------------------------------
+
+        const resend =
+            new Resend(
+                process.env.RESEND_API_KEY
+            );
 
 
-    const user =
-        await User.findOne({
-            email: normalizedEmail
-        });
+        // -----------------------------------------
+        // SEND EMAIL
+        // -----------------------------------------
+
+        const emailResult =
+            await resend.emails.send({
+
+                from:
+                    "Raptora <noreply@raptora.in>",
+
+                to:
+                    user.email,
+
+                subject:
+                    "Raptora Password Reset",
+
+                html: `
+
+                    <div style="
+                        font-family: Arial, sans-serif;
+                        max-width: 600px;
+                        margin: auto;
+                        padding: 20px;
+                    ">
+
+                        <h2>
+                            Reset Your Raptora Password
+                        </h2>
+
+                        <p>
+                            Hello ${user.name},
+                        </p>
+
+                        <p>
+                            We received a request to reset
+                            your Raptora password.
+                        </p>
+
+                        <p>
+                            Click the button below to create
+                            a new password:
+                        </p>
+
+                        <p>
+
+                            <a
+                                href="${resetUrl}"
+                                style="
+                                    display:inline-block;
+                                    padding:12px 20px;
+                                    background:#007bff;
+                                    color:white;
+                                    text-decoration:none;
+                                    border-radius:6px;
+                                "
+                            >
+                                Reset Password
+                            </a>
+
+                        </p>
+
+                        <p>
+                            This link will expire in 15 minutes.
+                        </p>
+
+                        <p>
+                            If you did not request this
+                            password reset, you can safely
+                            ignore this email.
+                        </p>
+
+                    </div>
+
+                `
+
+            });
 
 
-    // -----------------------------------------
-    // SECURITY:
-    // DO NOT REVEAL WHETHER ACCOUNT EXISTS
-    // -----------------------------------------
+        console.log(
+            "RESEND RESULT:",
+            emailResult
+        );
 
-    if (!user) {
+
+        // -----------------------------------------
+        // RESPONSE
+        // -----------------------------------------
 
         return res.json({
 
@@ -500,180 +624,27 @@ try {
 
     }
 
+    catch (err) {
 
-    // -----------------------------------------
-    // GENERATE RESET TOKEN
-    // -----------------------------------------
-
-    const resetToken =
-        crypto
-            .randomBytes(32)
-            .toString("hex");
-
-
-    // -----------------------------------------
-    // HASH TOKEN
-    // -----------------------------------------
-
-    const hashedToken =
-        crypto
-            .createHash("sha256")
-            .update(resetToken)
-            .digest("hex");
-
-
-    user.resetPasswordToken =
-        hashedToken;
-
-
-    // -----------------------------------------
-    // EXPIRY: 15 MINUTES
-    // -----------------------------------------
-
-    user.resetPasswordExpires =
-        Date.now() +
-        15 * 60 * 1000;
-
-
-    await user.save({
-        validateBeforeSave: false
-    });
-
-
-    // -----------------------------------------
-    // RESET URL
-    // -----------------------------------------
-
-    const resetUrl =
-        `${process.env.FRONTEND_URL}/frontend/reset-password.html?token=${resetToken}`;
-
-
-    // -----------------------------------------
-    // RESEND
-    // -----------------------------------------
-
-    const resend =
-        new Resend(
-            process.env.RESEND_API_KEY
+        console.error(
+            "FORGOT PASSWORD ERROR:",
+            err
         );
 
 
-    // -----------------------------------------
-    // SEND EMAIL
-    // -----------------------------------------
+        return res.status(500).json({
 
-    const emailResult =
-        await resend.emails.send({
-
-            from:
-                "Raptora <noreply@raptora.in>",
-
-            to:
-                user.email,
-
-            subject:
-                "Raptora Password Reset",
-
-            html: `
-
-                <div style="
-                    font-family: Arial, sans-serif;
-                    max-width: 600px;
-                    margin: auto;
-                    padding: 20px;
-                ">
-
-                    <h2>
-                        Reset Your Raptora Password
-                    </h2>
-
-                    <p>
-                        Hello ${user.name},
-                    </p>
-
-                    <p>
-                        We received a request to reset
-                        your Raptora password.
-                    </p>
-
-                    <p>
-                        Click the button below to create
-                        a new password:
-                    </p>
-
-                    <p>
-
-                        <a
-                            href="${resetUrl}"
-                            style="
-                                display:inline-block;
-                                padding:12px 20px;
-                                background:#007bff;
-                                color:white;
-                                text-decoration:none;
-                                border-radius:6px;
-                            "
-                        >
-                            Reset Password
-                        </a>
-
-                    </p>
-
-                    <p>
-                        This link will expire in 15 minutes.
-                    </p>
-
-                    <p>
-                        If you did not request this
-                        password reset, you can safely
-                        ignore this email.
-                    </p>
-
-                </div>
-
-            `
+            message:
+                "Server Error"
 
         });
 
-
-    console.log(
-        "RESEND RESULT:",
-        emailResult
-    );
-
-
-    // -----------------------------------------
-    // RESPONSE
-    // -----------------------------------------
-
-    return res.json({
-
-        message:
-            "If an account exists, a reset link has been sent."
-
-    });
-
-}
-
-catch (err) {
-
-    console.error(
-        "FORGOT PASSWORD ERROR:",
-        err
-    );
-
-
-    return res.status(500).json({
-
-        message:
-            "Server Error"
-
-    });
-
-}
-
+    }
 
 };
+
+
+
 
 // =====================================================
 // RESET PASSWORD
@@ -682,160 +653,159 @@ catch (err) {
 exports.resetPassword = async (req, res) => {
 
 
-try {
+    try {
 
-    const {
-        token
-    } = req.params;
-
-
-    const {
-        password
-    } = req.body;
+        const {
+            token
+        } = req.params;
 
 
-    // -----------------------------------------
-    // VALIDATE PASSWORD
-    // -----------------------------------------
+        const {
+            password
+        } = req.body;
 
-    if (!password) {
 
-        return res.status(400).json({
+        // -----------------------------------------
+        // VALIDATE PASSWORD
+        // -----------------------------------------
+
+        if (!password) {
+
+            return res.status(400).json({
+
+                message:
+                    "Password is required"
+
+            });
+
+        }
+
+
+        if (password.length < 6) {
+
+            return res.status(400).json({
+
+                message:
+                    "Password must be at least 6 characters long."
+
+            });
+
+        }
+
+
+        // -----------------------------------------
+        // HASH RESET TOKEN
+        // -----------------------------------------
+
+        const hashedToken =
+            crypto
+                .createHash("sha256")
+                .update(token)
+                .digest("hex");
+
+
+        // -----------------------------------------
+        // FIND USER
+        // -----------------------------------------
+
+        const user =
+            await User.findOne({
+
+                resetPasswordToken:
+                    hashedToken,
+
+                resetPasswordExpires: {
+
+                    $gt:
+                        Date.now()
+
+                }
+
+            });
+
+
+        // -----------------------------------------
+        // INVALID TOKEN
+        // -----------------------------------------
+
+        if (!user) {
+
+            return res.status(400).json({
+
+                message:
+                    "Invalid or expired reset link"
+
+            });
+
+        }
+
+
+        // -----------------------------------------
+        // HASH NEW PASSWORD
+        // -----------------------------------------
+
+        const hashedPassword =
+            await bcrypt.hash(
+                password,
+                10
+            );
+
+
+        user.password =
+            hashedPassword;
+
+
+        // -----------------------------------------
+        // CLEAR RESET TOKEN
+        // -----------------------------------------
+
+        user.resetPasswordToken =
+            null;
+
+        user.resetPasswordExpires =
+            null;
+
+
+        // -----------------------------------------
+        // SAVE
+        // -----------------------------------------
+
+        await user.save({
+            validateBeforeSave: false
+        });
+
+
+        // -----------------------------------------
+        // SUCCESS
+        // -----------------------------------------
+
+        return res.json({
+
+            success:
+                true,
 
             message:
-                "Password is required"
+                "Password reset successful"
 
         });
 
     }
 
+    catch (err) {
 
-    if (password.length < 6) {
-
-        return res.status(400).json({
-
-            message:
-                "Password must be at least 6 characters long."
-
-        });
-
-    }
-
-
-    // -----------------------------------------
-    // HASH RESET TOKEN
-    // -----------------------------------------
-
-    const hashedToken =
-        crypto
-            .createHash("sha256")
-            .update(token)
-            .digest("hex");
-
-
-    // -----------------------------------------
-    // FIND USER
-    // -----------------------------------------
-
-    const user =
-        await User.findOne({
-
-            resetPasswordToken:
-                hashedToken,
-
-            resetPasswordExpires: {
-
-                $gt:
-                    Date.now()
-
-            }
-
-        });
-
-
-    // -----------------------------------------
-    // INVALID TOKEN
-    // -----------------------------------------
-
-    if (!user) {
-
-        return res.status(400).json({
-
-            message:
-                "Invalid or expired reset link"
-
-        });
-
-    }
-
-
-    // -----------------------------------------
-    // HASH NEW PASSWORD
-    // -----------------------------------------
-
-    const hashedPassword =
-        await bcrypt.hash(
-            password,
-            10
+        console.error(
+            "RESET PASSWORD ERROR:",
+            err
         );
 
 
-    user.password =
-        hashedPassword;
+        return res.status(500).json({
 
+            message:
+                "Server Error"
 
-    // -----------------------------------------
-    // CLEAR RESET TOKEN
-    // -----------------------------------------
+        });
 
-    user.resetPasswordToken =
-        null;
-
-    user.resetPasswordExpires =
-        null;
-
-
-    // -----------------------------------------
-    // SAVE
-    // -----------------------------------------
-
-    await user.save({
-        validateBeforeSave: false
-    });
-
-
-    // -----------------------------------------
-    // SUCCESS
-    // -----------------------------------------
-
-    return res.json({
-
-        success:
-            true,
-
-        message:
-            "Password reset successful"
-
-    });
-
-}
-
-catch (err) {
-
-    console.error(
-        "RESET PASSWORD ERROR:",
-        err
-    );
-
-
-    return res.status(500).json({
-
-        message:
-            "Server Error"
-
-    });
-
-}
-
+    }
 
 };
