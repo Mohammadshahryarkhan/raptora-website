@@ -190,6 +190,10 @@ const userSchema = new mongoose.Schema(
             type: String,
             default: "Raptora Member"
         },
+        referralBadge: {
+    type: String,
+    default: "Raptora Member"
+},
 
 
         // =====================================================
