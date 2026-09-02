@@ -1731,42 +1731,103 @@ function loadMentorshipFromDatabase(
 
 
     /* =================================================
-       PROGRESS
+       MENTORSHIP PROGRESS
+       
+       Automatically calculated from:
+       START DATE → END DATE → TODAY
     ================================================= */
 
-    const progressData =
-        user.mentorshipProgress ||
-        {};
-
-
-    const completed =
-        Number(
-            progressData.completedMilestones ||
-            0
+    const startDay =
+        new Date(
+            start.getFullYear(),
+            start.getMonth(),
+            start.getDate()
         );
 
 
-    const total =
-        Number(
-            progressData.totalMilestones ||
-            10
+    const endDay =
+        new Date(
+            end.getFullYear(),
+            end.getMonth(),
+            end.getDate()
         );
+
+
+    const today =
+        new Date(
+            now.getFullYear(),
+            now.getMonth(),
+            now.getDate()
+        );
+
+
+    /* =================================================
+       TOTAL PLAN DURATION
+    ================================================= */
+
+    const totalDuration =
+        endDay.getTime() -
+        startDay.getTime();
+
+
+    /* =================================================
+       ELAPSED PLAN DURATION
+    ================================================= */
+
+    const elapsedDuration =
+        today.getTime() -
+        startDay.getTime();
 
 
     let progress = 0;
 
 
+    /* =================================================
+       BEFORE PLAN STARTS
+    ================================================= */
+
     if (
-        total > 0
+        today < startDay
     ) {
 
-        progress =
-            (completed /
-                total) *
-            100;
+        progress = 0;
 
     }
 
+
+    /* =================================================
+       PLAN COMPLETED
+    ================================================= */
+
+    else if (
+        today >= endDay
+    ) {
+
+        progress = 100;
+
+    }
+
+
+    /* =================================================
+       PLAN CURRENTLY ACTIVE
+    ================================================= */
+
+    else if (
+        totalDuration > 0
+    ) {
+
+        progress =
+            (
+                elapsedDuration /
+                totalDuration
+            ) * 100;
+
+    }
+
+
+    /* =================================================
+       SAFETY
+    ================================================= */
 
     progress =
         Math.max(
@@ -1778,17 +1839,30 @@ function loadMentorshipFromDatabase(
         );
 
 
+    const roundedProgress =
+        Math.round(
+            progress
+        );
+
+
+    /* =================================================
+       UPDATE PROGRESS BAR
+    ================================================= */
+
     document.getElementById(
         "progressFill"
     ).style.width =
-        progress + "%";
+        roundedProgress + "%";
 
+
+    /* =================================================
+       UPDATE PROGRESS TEXT
+    ================================================= */
 
     document.getElementById(
         "progressText"
     ).innerText =
-        Math.round(progress) +
-        "%";
+        roundedProgress + "%";
 
 
     /* =================================================
