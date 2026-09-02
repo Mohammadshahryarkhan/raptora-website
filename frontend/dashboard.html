@@ -202,7 +202,7 @@
 
 
 /* =====================================================
-   BADGE + REFERRAL
+   REWARDS
 ===================================================== */
 
 .reward-grid {
@@ -225,10 +225,26 @@
     margin-bottom: 12px;
 }
 
+.reward-card h3 {
+    margin-top: 5px;
+    margin-bottom: 8px;
+}
+
+.reward-card p {
+    color: #aaa;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
 .reward-number {
     font-size: 28px;
     font-weight: 700;
 }
+
+
+/* =====================================================
+   BADGE
+===================================================== */
 
 .badge {
     display: inline-block;
@@ -240,6 +256,50 @@
     border: 1px solid rgba(229, 9, 20, 0.3);
     font-size: 12px;
     font-weight: 600;
+}
+
+
+/* =====================================================
+   REFERRAL CODE
+===================================================== */
+
+.referral-code-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 12px;
+}
+
+.referral-code-row strong {
+    flex: 1;
+    background: #1a1a1a;
+    border: 1px solid #333;
+    border-radius: 8px;
+    padding: 10px 12px;
+    color: #ffffff;
+    font-size: 15px;
+    letter-spacing: 1px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.referral-code-row button {
+    border: none;
+    background: #e50914;
+    color: white;
+    padding: 10px 14px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-family: inherit;
+    font-weight: 600;
+    white-space: nowrap;
+    transition: 0.2s ease;
+}
+
+.referral-code-row button:hover {
+    background: #ff1a25;
+    transform: translateY(-1px);
 }
 
 
@@ -400,6 +460,15 @@
     .calendar-day {
         padding: 8px 2px;
         font-size: 11px;
+    }
+
+    .referral-code-row {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .referral-code-row button {
+        width: 100%;
     }
 
 }
@@ -752,6 +821,46 @@
     <div class="reward-grid">
 
 
+        <!-- REFERRAL CODE -->
+
+        <div class="reward-card referral-code-card">
+
+            <i class="fa-solid fa-gift"></i>
+
+            <h3>
+                Your Referral Code
+            </h3>
+
+            <div class="referral-code-row">
+
+                <strong id="referralCode">
+                    Loading...
+                </strong>
+
+                <button
+                    type="button"
+                    onclick="copyReferralCode()">
+
+                    <i class="fa-solid fa-copy"></i>
+
+                    Copy
+
+                </button>
+
+            </div>
+
+            <p id="referralMessage">
+
+                Share your code with friends and earn referral points.
+
+            </p>
+
+        </div>
+
+
+
+        <!-- REFERRAL POINTS -->
+
         <div class="reward-card">
 
             <i class="fa-solid fa-star"></i>
@@ -778,6 +887,8 @@
         </div>
 
 
+
+        <!-- BADGE -->
 
         <div class="reward-card">
 
@@ -1616,6 +1727,39 @@ function loadMentorshipFromDatabase(
 
 
     /* =================================================
+       REFERRAL CODE
+    ================================================= */
+
+    document.getElementById(
+        "referralCode"
+    ).innerText =
+        user.referralCode ||
+        "Not Available";
+
+
+    /* =================================================
+       REFERRAL POINTS
+    ================================================= */
+
+    document.getElementById(
+        "referralPoints"
+    ).innerText =
+        user.referralPoints ||
+        0;
+
+
+    /* =================================================
+       REFERRAL BADGE
+    ================================================= */
+
+    document.getElementById(
+        "badge"
+    ).innerText =
+        user.referralBadge ||
+        "Raptora Member";
+
+
+    /* =================================================
        NO ACTIVE MENTORSHIP
     ================================================= */
 
@@ -1630,19 +1774,6 @@ function loadMentorshipFromDatabase(
 
         noMentorship.style.display =
             "block";
-
-
-        document.getElementById(
-            "referralPoints"
-        ).innerText =
-            user.referralPoints || 0;
-
-
-        document.getElementById(
-            "badge"
-        ).innerText =
-            user.badge ||
-            "Raptora Member";
 
 
         return;
@@ -1732,7 +1863,7 @@ function loadMentorshipFromDatabase(
 
     /* =================================================
        MENTORSHIP PROGRESS
-       
+
        Automatically calculated from:
        START DATE → END DATE → TODAY
     ================================================= */
@@ -1864,27 +1995,162 @@ function loadMentorshipFromDatabase(
     ).innerText =
         roundedProgress + "%";
 
-
-    /* =================================================
-       REFERRAL POINTS
-    ================================================= */
-
-    document.getElementById(
-        "referralPoints"
-    ).innerText =
-        user.referralPoints ||
-        0;
+}
 
 
-    /* =================================================
-       BADGE
-    ================================================= */
+/* =====================================================
+   COPY REFERRAL CODE
+===================================================== */
 
-    document.getElementById(
-        "badge"
-    ).innerText =
-        user.badge ||
-        "Raptora Member";
+function copyReferralCode() {
+
+    const referralCodeElement =
+        document.getElementById(
+            "referralCode"
+        );
+
+
+    const referralCode =
+        referralCodeElement.innerText.trim();
+
+
+    if (
+        !referralCode ||
+        referralCode === "Loading..." ||
+        referralCode === "Not Available"
+    ) {
+
+        alert(
+            "Referral code is not available yet."
+        );
+
+        return;
+
+    }
+
+
+    if (
+        navigator.clipboard &&
+        window.isSecureContext
+    ) {
+
+        navigator.clipboard
+            .writeText(referralCode)
+            .then(function() {
+
+                showReferralCopiedMessage();
+
+            })
+            .catch(function() {
+
+                fallbackCopyReferralCode(
+                    referralCode
+                );
+
+            });
+
+    }
+
+    else {
+
+        fallbackCopyReferralCode(
+            referralCode
+        );
+
+    }
+
+}
+
+
+/* =====================================================
+   FALLBACK COPY
+===================================================== */
+
+function fallbackCopyReferralCode(
+    referralCode
+) {
+
+    const textarea =
+        document.createElement(
+            "textarea"
+        );
+
+
+    textarea.value =
+        referralCode;
+
+
+    textarea.style.position =
+        "fixed";
+
+    textarea.style.left =
+        "-9999px";
+
+
+    document.body.appendChild(
+        textarea
+    );
+
+
+    textarea.select();
+
+
+    try {
+
+        document.execCommand(
+            "copy"
+        );
+
+
+        showReferralCopiedMessage();
+
+    }
+
+    catch (error) {
+
+        alert(
+            "Unable to copy the referral code. Please copy it manually."
+        );
+
+    }
+
+
+    document.body.removeChild(
+        textarea
+    );
+
+}
+
+
+/* =====================================================
+   REFERRAL COPIED MESSAGE
+===================================================== */
+
+function showReferralCopiedMessage() {
+
+    const message =
+        document.getElementById(
+            "referralMessage"
+        );
+
+
+    if (!message) {
+
+        return;
+
+    }
+
+
+    message.innerText =
+        "Referral code copied! Share it with your friends 🎉";
+
+
+    setTimeout(function() {
+
+        message.innerText =
+            "Share your code with friends and earn referral points.";
+
+    }, 2500);
 
 }
 
