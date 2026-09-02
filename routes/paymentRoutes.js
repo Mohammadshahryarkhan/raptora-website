@@ -793,6 +793,62 @@ router.post(
             }
 
 
+            // =====================================================
+            // DUPLICATE PAYMENT PROTECTION
+            // =====================================================
+            //
+            // If this exact Razorpay payment/order was already
+            // successfully processed, DO NOT activate the plan
+            // again and DO NOT award referral points again.
+            //
+            // =====================================================
+
+            if (
+                String(user.razorpayPaymentId || "") ===
+                String(razorpay_payment_id)
+                ||
+                String(user.razorpayOrderId || "") ===
+                String(razorpay_order_id)
+            ) {
+
+                console.log(
+                    "DUPLICATE PAYMENT VERIFICATION BLOCKED:",
+                    {
+                        user:
+                            user.email,
+
+                        orderId:
+                            razorpay_order_id,
+
+                        paymentId:
+                            razorpay_payment_id
+                    }
+                );
+
+                return res.status(200).json({
+
+                    success: true,
+
+                    alreadyProcessed:
+                        true,
+
+                    message:
+                        "This payment has already been processed.",
+
+                    paymentId:
+                        razorpay_payment_id,
+
+                    orderId:
+                        razorpay_order_id,
+
+                    referralReward:
+                        0
+
+                });
+
+            }
+
+
             // -----------------------------------------
             // IDENTIFY PLAN
             // -----------------------------------------
@@ -1225,6 +1281,9 @@ router.post(
 
                 success:
                     true,
+
+                alreadyProcessed:
+                    false,
 
                 message:
                     "Payment verified and mentor plan activated.",
