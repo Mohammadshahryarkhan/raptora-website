@@ -22,7 +22,7 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
 
-<!-- Existing Dashboard CSS -->
+<!-- Dashboard CSS -->
 <link rel="stylesheet"
       href="css/dashboard.css">
 
@@ -30,7 +30,7 @@
 <style>
 
 /* =====================================================
-   RAPTORA DASHBOARD ADDITIONS
+   RAPTORA DASHBOARD
 ===================================================== */
 
 .dashboard-section {
@@ -242,6 +242,7 @@
     font-weight: 600;
 }
 
+
 /* =====================================================
    CALENDAR
 ===================================================== */
@@ -271,6 +272,11 @@
     cursor: pointer;
 }
 
+.calendar-header button:hover {
+    background: #e50914;
+    border-color: #e50914;
+}
+
 .calendar-days {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
@@ -282,6 +288,8 @@
     padding: 9px 3px;
     border-radius: 8px;
     font-size: 12px;
+    min-height: 18px;
+    transition: 0.2s ease;
 }
 
 .calendar-day.heading {
@@ -289,15 +297,41 @@
     font-weight: 600;
 }
 
-.calendar-day.today {
-    background: #e50914;
-    color: white;
-    font-weight: 600;
+.calendar-day.empty {
+    background: transparent;
 }
 
-.calendar-day.milestone-day {
-    border: 1px solid #e50914;
-    color: #ff5a62;
+
+/* =====================================================
+   TODAY
+===================================================== */
+
+.calendar-day.today {
+    outline: 2px solid #ffffff;
+    outline-offset: -2px;
+    font-weight: 700;
+}
+
+
+/* =====================================================
+   ACTIVE MENTORSHIP = RED
+===================================================== */
+
+.calendar-day.mentorship-active {
+    background: #e50914;
+    color: white;
+    font-weight: 700;
+}
+
+
+/* =====================================================
+   AFTER MENTORSHIP = GREEN
+===================================================== */
+
+.calendar-day.mentorship-completed {
+    background: #22c55e;
+    color: white;
+    font-weight: 700;
 }
 
 
@@ -353,6 +387,19 @@
 
     .plan-name {
         font-size: 21px;
+    }
+
+    .calendar {
+        padding: 15px;
+    }
+
+    .calendar-days {
+        gap: 4px;
+    }
+
+    .calendar-day {
+        padding: 8px 2px;
+        font-size: 11px;
     }
 
 }
@@ -761,15 +808,6 @@
 
 
 
-    
-
-   
-
-
-
-
-
-
     <!-- =================================================
          CALENDAR
     ================================================== -->
@@ -787,7 +825,9 @@
         <div class="calendar-header">
 
 
-            <button onclick="previousMonth()">
+            <button
+                type="button"
+                onclick="previousMonth()">
 
                 <i class="fa-solid fa-chevron-left"></i>
 
@@ -801,12 +841,47 @@
             </strong>
 
 
-            <button onclick="nextMonth()">
+            <button
+                type="button"
+                onclick="nextMonth()">
 
                 <i class="fa-solid fa-chevron-right"></i>
 
             </button>
 
+
+        </div>
+
+
+        <div class="calendar-days">
+
+            <div class="calendar-day heading">
+                Sun
+            </div>
+
+            <div class="calendar-day heading">
+                Mon
+            </div>
+
+            <div class="calendar-day heading">
+                Tue
+            </div>
+
+            <div class="calendar-day heading">
+                Wed
+            </div>
+
+            <div class="calendar-day heading">
+                Thu
+            </div>
+
+            <div class="calendar-day heading">
+                Fri
+            </div>
+
+            <div class="calendar-day heading">
+                Sat
+            </div>
 
         </div>
 
@@ -834,26 +909,22 @@
    CONFIGURATION
 ===================================================== */
 
-/*
-   THIS IS YOUR CURRENT LIVE RENDER BACKEND.
-
-   DO NOT USE:
-   https://raptora-website-1.onrender.com
-
-   USE:
-   https://raptora-website.onrender.com
-*/
-
 const API_BASE_URL =
     "https://raptora-website.onrender.com";
 
 
 /* =====================================================
-   LOGIN CHECK
+   GLOBAL STATE
 ===================================================== */
 
-const storedName =
-    localStorage.getItem("name");
+let currentUser = null;
+
+let calendarDate = new Date();
+
+
+/* =====================================================
+   LOGIN CHECK
+===================================================== */
 
 const storedToken =
     localStorage.getItem("token");
@@ -870,6 +941,10 @@ if (!storedToken) {
 /* =====================================================
    INITIAL NAME
 ===================================================== */
+
+const storedName =
+    localStorage.getItem("name");
+
 
 document.getElementById(
     "studentName"
@@ -934,214 +1009,8 @@ function formatDate(date) {
 
 
 /* =====================================================
-   LOAD MENTORSHIP FROM LOCAL STORAGE
-===================================================== */
-
-function loadMentorship() {
-
-    const raw =
-        localStorage.getItem(
-            "raptoraMentorship"
-        );
-
-
-    const noMentorship =
-        document.getElementById(
-            "noMentorship"
-        );
-
-
-    const activeMentorship =
-        document.getElementById(
-            "activeMentorship"
-        );
-
-
-    if (!raw) {
-
-        activeMentorship.style.display =
-            "none";
-
-        noMentorship.style.display =
-            "block";
-
-        return;
-
-    }
-
-
-    let data;
-
-
-    try {
-
-        data =
-            JSON.parse(raw);
-
-    }
-
-    catch (error) {
-
-        console.error(
-            "Invalid mentorship data:",
-            error
-        );
-
-        activeMentorship.style.display =
-            "none";
-
-        noMentorship.style.display =
-            "block";
-
-        return;
-
-    }
-
-
-    if (!data.active) {
-
-        activeMentorship.style.display =
-            "none";
-
-        noMentorship.style.display =
-            "block";
-
-        return;
-
-    }
-
-
-    activeMentorship.style.display =
-        "block";
-
-    noMentorship.style.display =
-        "none";
-
-
-    document.getElementById(
-        "planName"
-    ).innerText =
-        data.planName ||
-        "Mentor Plan";
-
-
-    const start =
-        new Date(
-            data.startDate
-        );
-
-
-    const end =
-        new Date(
-            data.endDate
-        );
-
-
-    document.getElementById(
-        "startDate"
-    ).innerText =
-        formatDate(start);
-
-
-    document.getElementById(
-        "endDate"
-    ).innerText =
-        formatDate(end);
-
-
-    const now =
-        new Date();
-
-
-    const difference =
-        end.getTime() -
-        now.getTime();
-
-
-    const days =
-        Math.max(
-            0,
-            Math.ceil(
-                difference /
-                (1000 * 60 * 60 * 24)
-            )
-        );
-
-
-    document.getElementById(
-        "daysRemaining"
-    ).innerText =
-        days;
-
-
-    const totalDuration =
-        end.getTime() -
-        start.getTime();
-
-
-    const elapsed =
-        now.getTime() -
-        start.getTime();
-
-
-    let progress = 0;
-
-
-    if (totalDuration > 0) {
-
-        progress =
-            (elapsed /
-                totalDuration) *
-            100;
-
-    }
-
-
-    progress =
-        Math.max(
-            0,
-            Math.min(
-                100,
-                progress
-            )
-        );
-
-
-    document.getElementById(
-        "progressFill"
-    ).style.width =
-        progress + "%";
-
-
-    document.getElementById(
-        "progressText"
-    ).innerText =
-        Math.round(progress) +
-        "%";
-
-
-    document.getElementById(
-        "referralPoints"
-    ).innerText =
-        data.referralPoints || 0;
-
-
-    document.getElementById(
-        "badge"
-    ).innerText =
-        data.badge ||
-        "Raptora Member";
-
-}
-
-
-/* =====================================================
    CALENDAR
 ===================================================== */
-
-let calendarDate =
-    new Date();
-
 
 function renderCalendar() {
 
@@ -1150,70 +1019,57 @@ function renderCalendar() {
             "calendarDays"
         );
 
-
     const calendarTitle =
         document.getElementById(
             "calendarTitle"
         );
 
 
+    if (
+        !calendarDays ||
+        !calendarTitle
+    ) {
+
+        return;
+
+    }
+
+
+    calendarDays.innerHTML = "";
+
+
     const year =
         calendarDate.getFullYear();
-
 
     const month =
         calendarDate.getMonth();
 
 
-    calendarTitle.innerText =
-        calendarDate.toLocaleDateString(
-            "en-IN",
-            {
-                month: "long",
-                year: "numeric"
-            }
-        );
+    const monthNames = [
 
+        "January",
+        "February",
+        "March",
+        "April",
+        "May",
+        "June",
+        "July",
+        "August",
+        "September",
+        "October",
+        "November",
+        "December"
 
-    calendarDays.innerHTML =
-        "";
-
-
-    const dayNames = [
-        "Sun",
-        "Mon",
-        "Tue",
-        "Wed",
-        "Thu",
-        "Fri",
-        "Sat"
     ];
 
 
-    dayNames.forEach(
-        day => {
-
-            const element =
-                document.createElement(
-                    "div"
-                );
+    calendarTitle.innerText =
+        `${monthNames[month]} ${year}`;
 
 
-            element.className =
-                "calendar-day heading";
-
-
-            element.innerText =
-                day;
-
-
-            calendarDays.appendChild(
-                element
-            );
-
-        }
-    );
-
+    /* =================================================
+       FIRST DAY / DAYS IN MONTH
+    ================================================= */
 
     const firstDay =
         new Date(
@@ -1231,32 +1087,107 @@ function renderCalendar() {
         ).getDate();
 
 
+    /* =================================================
+       MENTORSHIP DATES
+    ================================================= */
+
+    let mentorshipStart = null;
+
+    let mentorshipEnd = null;
+
+
+    if (
+        currentUser &&
+        currentUser.mentorSubscription &&
+        currentUser.mentorSubscription.active === true
+    ) {
+
+        const rawStart =
+            currentUser
+                .mentorSubscription
+                .startDate;
+
+        const rawEnd =
+            currentUser
+                .mentorSubscription
+                .endDate;
+
+
+        if (rawStart) {
+
+            mentorshipStart =
+                new Date(rawStart);
+
+            mentorshipStart.setHours(
+                0,
+                0,
+                0,
+                0
+            );
+
+        }
+
+
+        if (rawEnd) {
+
+            mentorshipEnd =
+                new Date(rawEnd);
+
+            mentorshipEnd.setHours(
+                23,
+                59,
+                59,
+                999
+            );
+
+        }
+
+    }
+
+
+    /* =================================================
+       TODAY
+    ================================================= */
+
+    const today =
+        new Date();
+
+    today.setHours(
+        0,
+        0,
+        0,
+        0
+    );
+
+
+    /* =================================================
+       EMPTY DAYS
+    ================================================= */
+
     for (
         let i = 0;
         i < firstDay;
         i++
     ) {
 
-        const empty =
+        const emptyDay =
             document.createElement(
                 "div"
             );
 
-
-        empty.className =
-            "calendar-day";
-
+        emptyDay.className =
+            "calendar-day empty";
 
         calendarDays.appendChild(
-            empty
+            emptyDay
         );
 
     }
 
 
-    const today =
-        new Date();
-
+    /* =================================================
+       CREATE DAYS
+    ================================================= */
 
     for (
         let day = 1;
@@ -1264,48 +1195,97 @@ function renderCalendar() {
         day++
     ) {
 
-        const element =
+        const date =
+            new Date(
+                year,
+                month,
+                day
+            );
+
+        date.setHours(
+            0,
+            0,
+            0,
+            0
+        );
+
+
+        const dayElement =
             document.createElement(
                 "div"
             );
 
 
-        element.className =
+        dayElement.className =
             "calendar-day";
 
 
-        element.innerText =
+        dayElement.innerText =
             day;
 
 
+        /* =============================================
+           TODAY
+        ============================================= */
+
         if (
-
-            day ===
-                today.getDate() &&
-
-            month ===
-                today.getMonth() &&
-
-            year ===
-                today.getFullYear()
-
+            date.getTime() ===
+            today.getTime()
         ) {
 
-            element.classList.add(
+            dayElement.classList.add(
                 "today"
             );
 
         }
 
 
+        /* =============================================
+           RED = MENTORSHIP ACTIVE
+        ============================================= */
+
+        if (
+            mentorshipStart &&
+            mentorshipEnd &&
+            date >= mentorshipStart &&
+            date <= mentorshipEnd
+        ) {
+
+            dayElement.classList.add(
+                "mentorship-active"
+            );
+
+        }
+
+
+        /* =============================================
+           GREEN = AFTER MENTORSHIP
+        ============================================= */
+
+        else if (
+            mentorshipEnd &&
+            date > mentorshipEnd
+        ) {
+
+            dayElement.classList.add(
+                "mentorship-completed"
+            );
+
+        }
+
+
         calendarDays.appendChild(
-            element
+            dayElement
         );
 
     }
 
 }
 
+
+/* =====================================================
+   PREVIOUS MONTH
+===================================================== */
 
 function previousMonth() {
 
@@ -1318,6 +1298,10 @@ function previousMonth() {
 }
 
 
+/* =====================================================
+   NEXT MONTH
+===================================================== */
+
 function nextMonth() {
 
     calendarDate.setMonth(
@@ -1325,54 +1309,6 @@ function nextMonth() {
     );
 
     renderCalendar();
-
-}
-
-
-/* =====================================================
-   MILESTONE STATUS
-===================================================== */
-
-function updateMilestones() {
-
-    const profileCompleted =
-        !!localStorage.getItem(
-            "name"
-        ) &&
-        !!localStorage.getItem(
-            "phone"
-        );
-
-
-    if (profileCompleted) {
-
-        document.getElementById(
-            "milestone1"
-        ).classList.add(
-            "completed"
-        );
-
-    }
-
-
-    const mentorship =
-        localStorage.getItem(
-            "raptoraMentorActive"
-        );
-
-
-    if (
-        mentorship ===
-        "true"
-    ) {
-
-        document.getElementById(
-            "milestone2"
-        ).classList.add(
-            "completed"
-        );
-
-    }
 
 }
 
@@ -1437,7 +1373,8 @@ async function loadUserData() {
 
         console.log(
             "Loading user from:",
-            API_BASE_URL + "/api/auth/me"
+            API_BASE_URL +
+            "/api/auth/me"
         );
 
 
@@ -1457,15 +1394,10 @@ async function loadUserData() {
                             "application/json"
 
                     }
+
                 }
             );
 
-
-        /*
-        ==================================================
-        READ RESPONSE
-        ==================================================
-        */
 
         let data = null;
 
@@ -1498,21 +1430,13 @@ async function loadUserData() {
         );
 
 
-        /*
-        ==================================================
-        AUTHENTICATION FAILURE
-        ==================================================
-        */
+        /* =============================================
+           EXPIRED LOGIN
+        ============================================= */
 
         if (
             response.status === 401
         ) {
-
-            console.error(
-                "Authentication failed:",
-                data
-            );
-
 
             localStorage.removeItem(
                 "token"
@@ -1533,13 +1457,13 @@ async function loadUserData() {
         }
 
 
-        /*
-        ==================================================
-        OTHER SERVER ERROR
-        ==================================================
-        */
+        /* =============================================
+           OTHER SERVER ERROR
+        ============================================= */
 
-        if (!response.ok) {
+        if (
+            !response.ok
+        ) {
 
             throw new Error(
                 data.message ||
@@ -1550,11 +1474,9 @@ async function loadUserData() {
         }
 
 
-        /*
-        ==================================================
-        API SUCCESS CHECK
-        ==================================================
-        */
+        /* =============================================
+           SUCCESS CHECK
+        ============================================= */
 
         if (
             !data.success
@@ -1567,12 +1489,6 @@ async function loadUserData() {
 
         }
 
-
-        /*
-        ==================================================
-        USER
-        ==================================================
-        */
 
         const user =
             data.user;
@@ -1587,11 +1503,17 @@ async function loadUserData() {
         }
 
 
-        /*
-        ==================================================
-        NAME
-        ==================================================
-        */
+        /* =============================================
+           SAVE USER GLOBALLY
+        ============================================= */
+
+        currentUser =
+            user;
+
+
+        /* =============================================
+           NAME
+        ============================================= */
 
         document.getElementById(
             "studentName"
@@ -1600,11 +1522,9 @@ async function loadUserData() {
             "Student";
 
 
-        /*
-        ==================================================
-        UPDATE LOCAL STORAGE
-        ==================================================
-        */
+        /* =============================================
+           UPDATE LOCAL STORAGE
+        ============================================= */
 
         if (user.name) {
 
@@ -1636,15 +1556,20 @@ async function loadUserData() {
         }
 
 
-        /*
-        ==================================================
-        LOAD MENTORSHIP
-        ==================================================
-        */
+        /* =============================================
+           LOAD MENTORSHIP
+        ============================================= */
 
         loadMentorshipFromDatabase(
             user
         );
+
+
+        /* =============================================
+           NOW RENDER CALENDAR
+        ============================================= */
+
+        renderCalendar();
 
     }
 
@@ -1656,15 +1581,6 @@ async function loadUserData() {
             error
         );
 
-
-        /*
-        IMPORTANT:
-
-        Do NOT remove the token here.
-
-        A temporary Render/network error
-        should NOT log the user out.
-        */
 
         alert(
             "Unable to load your dashboard right now. Please try again."
@@ -1699,11 +1615,9 @@ function loadMentorshipFromDatabase(
         user.mentorSubscription;
 
 
-    /*
-    ==================================================
-    NO ACTIVE MENTORSHIP
-    ==================================================
-    */
+    /* =================================================
+       NO ACTIVE MENTORSHIP
+    ================================================= */
 
     if (
         !subscription ||
@@ -1717,10 +1631,6 @@ function loadMentorshipFromDatabase(
         noMentorship.style.display =
             "block";
 
-
-        /*
-        Still show rewards from database.
-        */
 
         document.getElementById(
             "referralPoints"
@@ -1740,11 +1650,9 @@ function loadMentorshipFromDatabase(
     }
 
 
-    /*
-    ==================================================
-    ACTIVE MENTORSHIP
-    ==================================================
-    */
+    /* =================================================
+       ACTIVE MENTORSHIP
+    ================================================= */
 
     activeMentorship.style.display =
         "block";
@@ -1754,11 +1662,9 @@ function loadMentorshipFromDatabase(
         "none";
 
 
-    /*
-    ==================================================
-    PLAN
-    ==================================================
-    */
+    /* =================================================
+       PLAN
+    ================================================= */
 
     document.getElementById(
         "planName"
@@ -1767,11 +1673,9 @@ function loadMentorshipFromDatabase(
         "Mentor Plan";
 
 
-    /*
-    ==================================================
-    DATES
-    ==================================================
-    */
+    /* =================================================
+       DATES
+    ================================================= */
 
     const start =
         new Date(
@@ -1797,11 +1701,9 @@ function loadMentorshipFromDatabase(
         formatDate(end);
 
 
-    /*
-    ==================================================
-    DAYS REMAINING
-    ==================================================
-    */
+    /* =================================================
+       DAYS REMAINING
+    ================================================= */
 
     const now =
         new Date();
@@ -1828,11 +1730,9 @@ function loadMentorshipFromDatabase(
         days;
 
 
-    /*
-    ==================================================
-    MENTORSHIP PROGRESS
-    ==================================================
-    */
+    /* =================================================
+       PROGRESS
+    ================================================= */
 
     const progressData =
         user.mentorshipProgress ||
@@ -1891,11 +1791,9 @@ function loadMentorshipFromDatabase(
         "%";
 
 
-    /*
-    ==================================================
-    REFERRAL POINTS
-    ==================================================
-    */
+    /* =================================================
+       REFERRAL POINTS
+    ================================================= */
 
     document.getElementById(
         "referralPoints"
@@ -1904,11 +1802,9 @@ function loadMentorshipFromDatabase(
         0;
 
 
-    /*
-    ==================================================
-    BADGE
-    ==================================================
-    */
+    /* =================================================
+       BADGE
+    ================================================= */
 
     document.getElementById(
         "badge"
@@ -1926,10 +1822,6 @@ function loadMentorshipFromDatabase(
 document.addEventListener(
     "DOMContentLoaded",
     function() {
-
-        renderCalendar();
-
-        updateMilestones();
 
         loadUserData();
 
