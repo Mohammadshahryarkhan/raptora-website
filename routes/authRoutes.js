@@ -126,6 +126,8 @@ referralCode:
     user.referralCode || null,
                     referralPoints:
                         user.referralPoints || 0
+                    referralBadge:
+    user.referralBadge || "Raptora Member",
 
                 }
 
