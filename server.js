@@ -17,7 +17,6 @@ const mccRoutes = require("./routes/mccRoutes");
 const mentorRoutes = require("./routes/mentorRoutes");
 const paymentRoutes = require("./routes/paymentRoutes");
 const messageRoutes = require("./routes/messageRoutes");
-app.use("/api/messages", messageRoutes);
 
 
 // =====================================================
@@ -25,6 +24,7 @@ app.use("/api/messages", messageRoutes);
 // =====================================================
 
 const app = express();
+
 
 // =====================================================
 // MIDDLEWARE
@@ -43,15 +43,19 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use(express.static(__dirname));
 
+
 // =====================================================
 // HOME ROUTE
 // =====================================================
 
 app.get("/", (req, res) => {
+
     res.sendFile(
         path.join(__dirname, "index.html")
     );
+
 });
+
 
 // =====================================================
 // API ROUTES
@@ -92,6 +96,12 @@ app.use(
     paymentRoutes
 );
 
+app.use(
+    "/api/messages",
+    messageRoutes
+);
+
+
 // =====================================================
 // TEST ROUTE
 // =====================================================
@@ -104,6 +114,7 @@ app.get("/test", (req, res) => {
     });
 
 });
+
 
 // =====================================================
 // HEALTH CHECK
@@ -122,6 +133,7 @@ app.get("/api/health", (req, res) => {
 
 });
 
+
 // =====================================================
 // 404 API HANDLER
 // =====================================================
@@ -138,6 +150,7 @@ app.use("/api", (req, res) => {
     });
 
 });
+
 
 // =====================================================
 // GLOBAL ERROR HANDLER
@@ -160,6 +173,7 @@ app.use((err, req, res, next) => {
     });
 
 });
+
 
 // =====================================================
 // MONGODB CONNECTION
@@ -184,6 +198,7 @@ mongoose
         );
 
     });
+
 
 // =====================================================
 // START SERVER
