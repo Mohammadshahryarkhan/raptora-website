@@ -1,3 +1,4 @@
+
 const express = require("express");
 const authMiddleware = require("../middleware/authMiddleware");
 const authController = require("../controllers/authController");
@@ -174,6 +175,87 @@ router.get(
 
                 message:
                     "Unable to load user data."
+
+            });
+
+        }
+
+    }
+);
+
+
+// =====================================================
+// ADMIN - GET ALL STUDENTS
+// =====================================================
+
+router.get(
+    "/users",
+    authMiddleware,
+    async (req, res) => {
+
+        try {
+
+            const admin =
+                await User.findById(req.user.id);
+
+
+            if (
+                !admin ||
+                admin.role !== "admin"
+            ) {
+
+                return res.status(403).json({
+
+                    success: false,
+
+                    message:
+                        "Admin access required."
+
+                });
+
+            }
+
+
+            const users =
+                await User.find({
+                    role: "student"
+                })
+                .select(
+                    "_id name email phone assignedMentor"
+                )
+                .populate(
+                    "assignedMentor",
+                    "name email"
+                )
+                .sort({
+                    name: 1
+                });
+
+
+            res.json({
+
+                success: true,
+
+                users
+
+            });
+
+        }
+
+        catch (error) {
+
+            console.error(
+                "Admin users fetch error:",
+                error
+            );
+
+
+            res.status(500).json({
+
+                success: false,
+
+                message:
+                    "Unable to fetch students."
 
             });
 
