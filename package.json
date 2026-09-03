@@ -29,6 +29,7 @@
     "resend": "^6.0.0",
     "razorpay": "^2.9.6",
     "multer": "^2.0.2"
+    "cloudinary": "^2.7.0"
   },
   "devDependencies": {
     "nodemon": "^3.1.14"
