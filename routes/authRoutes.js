@@ -1,4 +1,3 @@
-
 const express = require("express");
 const authMiddleware = require("../middleware/authMiddleware");
 const authController = require("../controllers/authController");
@@ -63,6 +62,10 @@ router.get(
 
                 user: {
 
+                    // =================================================
+                    // BASIC USER DETAILS
+                    // =================================================
+
                     name:
                         user.name,
 
@@ -83,6 +86,14 @@ router.get(
                             active: false
 
                         },
+
+
+                    // =================================================
+                    // ASSIGNED MENTOR
+                    // =================================================
+
+                    assignedMentor:
+                        user.assignedMentor || null,
 
 
                     // =================================================
@@ -120,15 +131,29 @@ router.get(
 
 
                     // =================================================
+                    // REFERRAL CODE
+                    // =================================================
+
+                    referralCode:
+                        user.referralCode || null,
+
+
+                    // =================================================
                     // REFERRAL POINTS
                     // =================================================
-referralCode:
-    user.referralCode || null,
-                    referralPoints:
-    user.referralPoints || 0,
 
-referralBadge:
-    user.referralBadge || "Raptora Member",
+                    referralPoints:
+                        user.referralPoints || 0,
+
+
+                    // =================================================
+                    // REFERRAL BADGE
+                    // =================================================
+
+                    referralBadge:
+                        user.referralBadge ||
+                        "Raptora Member"
+
                 }
 
             });
@@ -183,4 +208,3 @@ router.post(
 // =====================================================
 
 module.exports = router;
-
