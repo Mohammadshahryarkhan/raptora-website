@@ -59,9 +59,6 @@ const userSchema = new mongoose.Schema(
             trim: true
         },
 
-        // IMPORTANT:
-        // Default value prevents old users without a phone
-        // number from failing when their document is saved.
         phone: {
             type: String,
             default: "",
@@ -71,6 +68,32 @@ const userSchema = new mongoose.Schema(
         password: {
             type: String,
             required: true
+        },
+
+
+        // =====================================================
+        // USER ROLE
+        // =====================================================
+
+        role: {
+            type: String,
+            enum: [
+                "student",
+                "mentor",
+                "admin"
+            ],
+            default: "student"
+        },
+
+
+        // =====================================================
+        // ASSIGNED MENTOR
+        // =====================================================
+
+        assignedMentor: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "User",
+            default: null
         },
 
 
@@ -187,18 +210,14 @@ const userSchema = new mongoose.Schema(
         // =====================================================
 
         badge: {
-    type: String,
-    default: "Raptora Member"
-},
+            type: String,
+            default: "Raptora Member"
+        },
 
-referralBadge: {
-    type: String,
-    default: "Raptora Member"
-},
         referralBadge: {
-    type: String,
-    default: "Raptora Member"
-},
+            type: String,
+            default: "Raptora Member"
+        },
 
 
         // =====================================================
@@ -227,26 +246,27 @@ referralBadge: {
 
 
         // =====================================================
-        // REFERRAL POINTS
+        // REFERRAL SYSTEM
         // =====================================================
 
         referralCode: {
-    type: String,
-    unique: true,
-    sparse: true,
-    default: null
-},
+            type: String,
+            unique: true,
+            sparse: true,
+            default: null
+        },
 
-referredBy: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "User",
-    default: null
-},
+        referredBy: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "User",
+            default: null
+        },
 
-referralPoints: {
-    type: Number,
-    default: 0
-}
+        referralPoints: {
+            type: Number,
+            default: 0
+        }
+
     },
 
     {
@@ -261,4 +281,3 @@ referralPoints: {
 
 module.exports =
     mongoose.model("User", userSchema);
-
