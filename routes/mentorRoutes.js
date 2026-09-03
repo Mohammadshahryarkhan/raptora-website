@@ -4,28 +4,45 @@ const router = express.Router();
 
 const User = require("../models/User");
 const authMiddleware = require("../middleware/authMiddleware");
+
+
+// =====================================================
+// ADMIN ONLY MIDDLEWARE
+// =====================================================
+
 const adminOnly = async (req, res, next) => {
+
     try {
+
         const user = await User.findById(req.user.id);
 
         if (!user || user.role !== "admin") {
+
             return res.status(403).json({
                 success: false,
                 message: "Admin access required."
             });
+
         }
 
         next();
 
     } catch (error) {
-        console.error("Admin verification error:", error);
+
+        console.error(
+            "Admin verification error:",
+            error
+        );
 
         return res.status(500).json({
             success: false,
             message: "Unable to verify admin access."
         });
+
     }
+
 };
+
 
 // =====================================================
 // GET ALL MENTOR PLANS
@@ -91,7 +108,10 @@ router.get("/", async (req, res) => {
 
     } catch (error) {
 
-        console.error("Mentor fetch error:", error);
+        console.error(
+            "Mentor fetch error:",
+            error
+        );
 
         res.status(500).json({
             success: false,
@@ -134,7 +154,100 @@ router.get(
 
             res.status(500).json({
                 success: false,
-                message: "Unable to fetch mentor accounts"
+                message:
+                    "Unable to fetch mentor accounts"
+            });
+
+        }
+
+    }
+);
+
+
+// =====================================================
+// GET STUDENTS ASSIGNED TO LOGGED-IN MENTOR
+// =====================================================
+
+router.get(
+    "/my-students",
+    authMiddleware,
+    async (req, res) => {
+
+        try {
+
+            // ---------------------------------------------
+            // FIND LOGGED-IN MENTOR
+            // ---------------------------------------------
+
+            const mentor = await User.findById(
+                req.user.id
+            );
+
+
+            if (!mentor) {
+
+                return res.status(404).json({
+                    success: false,
+                    message:
+                        "Mentor account not found."
+                });
+
+            }
+
+
+            // ---------------------------------------------
+            // VERIFY MENTOR ROLE
+            // ---------------------------------------------
+
+            if (mentor.role !== "mentor") {
+
+                return res.status(403).json({
+                    success: false,
+                    message:
+                        "Mentor access required."
+                });
+
+            }
+
+
+            // ---------------------------------------------
+            // FIND ASSIGNED STUDENTS
+            // ---------------------------------------------
+
+            const students = await User.find({
+                assignedMentor: mentor._id
+            })
+                .select(
+                    "_id name email phone assignedMentor"
+                )
+                .sort({
+                    name: 1
+                });
+
+
+            // ---------------------------------------------
+            // RETURN STUDENTS
+            // ---------------------------------------------
+
+            res.json({
+
+                success: true,
+
+                students
+
+            });
+
+        } catch (error) {
+
+            console.error(
+                "My students fetch error:",
+                error
+            );
+
+            res.status(500).json({
+                success: false,
+                message:
+                    "Unable to fetch assigned students."
             });
 
         }
@@ -165,7 +278,10 @@ router.post(
             // VALIDATE EMAILS
             // ---------------------------------------------
 
-            if (!studentEmail || !mentorEmail) {
+            if (
+                !studentEmail ||
+                !mentorEmail
+            ) {
 
                 return res.status(400).json({
                     success: false,
@@ -177,19 +293,25 @@ router.post(
 
 
             const cleanStudentEmail =
-                studentEmail.trim().toLowerCase();
+                studentEmail
+                    .trim()
+                    .toLowerCase();
+
 
             const cleanMentorEmail =
-                mentorEmail.trim().toLowerCase();
+                mentorEmail
+                    .trim()
+                    .toLowerCase();
 
 
             // ---------------------------------------------
             // FIND STUDENT
             // ---------------------------------------------
 
-            const student = await User.findOne({
-                email: cleanStudentEmail
-            });
+            const student =
+                await User.findOne({
+                    email: cleanStudentEmail
+                });
 
 
             if (!student) {
@@ -207,9 +329,10 @@ router.post(
             // FIND MENTOR
             // ---------------------------------------------
 
-            const mentor = await User.findOne({
-                email: cleanMentorEmail
-            });
+            const mentor =
+                await User.findOne({
+                    email: cleanMentorEmail
+                });
 
 
             if (!mentor) {
@@ -227,7 +350,9 @@ router.post(
             // VERIFY MENTOR ROLE
             // ---------------------------------------------
 
-            if (mentor.role !== "mentor") {
+            if (
+                mentor.role !== "mentor"
+            ) {
 
                 return res.status(400).json({
                     success: false,
@@ -242,7 +367,9 @@ router.post(
             // VERIFY STUDENT IS NOT A MENTOR
             // ---------------------------------------------
 
-            if (student.role === "mentor") {
+            if (
+                student.role === "mentor"
+            ) {
 
                 return res.status(400).json({
                     success: false,
@@ -293,15 +420,23 @@ router.post(
                     "Mentor assigned successfully.",
 
                 student: {
+
                     id: student._id,
+
                     name: student.name,
+
                     email: student.email
+
                 },
 
                 mentor: {
+
                     id: mentor._id,
+
                     name: mentor.name,
+
                     email: mentor.email
+
                 }
 
             });
@@ -342,6 +477,10 @@ router.post(
             } = req.body;
 
 
+            // ---------------------------------------------
+            // VALIDATE EMAIL
+            // ---------------------------------------------
+
             if (!studentEmail) {
 
                 return res.status(400).json({
@@ -352,6 +491,10 @@ router.post(
 
             }
 
+
+            // ---------------------------------------------
+            // FIND STUDENT
+            // ---------------------------------------------
 
             const student =
                 await User.findOne({
@@ -373,10 +516,18 @@ router.post(
             }
 
 
+            // ---------------------------------------------
+            // REMOVE MENTOR
+            // ---------------------------------------------
+
             student.assignedMentor = null;
 
             await student.save();
 
+
+            // ---------------------------------------------
+            // RETURN RESULT
+            // ---------------------------------------------
 
             res.json({
 
@@ -405,5 +556,9 @@ router.post(
     }
 );
 
+
+// =====================================================
+// EXPORT
+// =====================================================
 
 module.exports = router;
