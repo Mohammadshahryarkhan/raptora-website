@@ -1,28 +1,12 @@
-
 const mongoose = require("mongoose");
-
-
-// =====================================================
-// MESSAGE SCHEMA
-// =====================================================
 
 const messageSchema = new mongoose.Schema(
     {
-
-        // =====================================================
-        // SENDER
-        // =====================================================
-
         sender: {
             type: mongoose.Schema.Types.ObjectId,
             ref: "User",
             required: true
         },
-
-
-        // =====================================================
-        // RECEIVER
-        // =====================================================
 
         receiver: {
             type: mongoose.Schema.Types.ObjectId,
@@ -30,36 +14,25 @@ const messageSchema = new mongoose.Schema(
             required: true
         },
 
-
-        // =====================================================
-        // MESSAGE TYPE
-        // =====================================================
-
         type: {
             type: String,
             enum: [
                 "text",
                 "link",
-                "class"
+                "class",
+                "image",
+                "video",
+                "pdf",
+                "file"
             ],
             default: "text"
         },
 
-
-        // =====================================================
-        // MESSAGE CONTENT
-        // =====================================================
-
         content: {
             type: String,
-            required: true,
+            default: "",
             trim: true
         },
-
-
-        // =====================================================
-        // LINK
-        // =====================================================
 
         url: {
             type: String,
@@ -67,43 +40,61 @@ const messageSchema = new mongoose.Schema(
             trim: true
         },
 
+        // Uploaded file information
+        fileUrl: {
+            type: String,
+            default: null,
+            trim: true
+        },
 
-        // =====================================================
-        // READ STATUS
-        // =====================================================
+        fileName: {
+            type: String,
+            default: null,
+            trim: true
+        },
+
+        mimeType: {
+            type: String,
+            default: null,
+            trim: true
+        },
+
+        fileSize: {
+            type: Number,
+            default: null
+        },
 
         read: {
             type: Boolean,
             default: false
         }
-
     },
-
     {
         timestamps: true
     }
 );
 
 
-// =====================================================
-// INDEXES
-// =====================================================
-
-// Makes loading a conversation faster.
+// Conversation query index
 messageSchema.index({
     sender: 1,
     receiver: 1,
     createdAt: 1
 });
 
+
+// Unread message query index
 messageSchema.index({
     receiver: 1,
     read: 1
 });
 
 
-// =====================================================
-// EXPORT MODEL
-// =====================================================
+// File message query index
+messageSchema.index({
+    type: 1,
+    createdAt: 1
+});
+
 
 module.exports = mongoose.model("Message", messageSchema);
