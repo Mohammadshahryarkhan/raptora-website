@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -11,18 +10,12 @@
 
 <title>Raptora | Dashboard</title>
 
-
-<!-- Google Font -->
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
       rel="stylesheet">
 
-
-<!-- Font Awesome -->
 <link rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
-
-<!-- Dashboard CSS -->
 <link rel="stylesheet"
       href="css/dashboard.css">
 
@@ -429,22 +422,14 @@
 
 .mentor-chat-container {
     display: none;
-
     width: 100%;
-
     margin-top: 30px;
     margin-bottom: 30px;
-
     background: #111;
-
     border: 1px solid #292929;
-
     border-radius: 16px;
-
     overflow: hidden;
-
-    box-shadow:
-        0 10px 35px rgba(255, 0, 0, .15);
+    box-shadow: 0 10px 35px rgba(255, 0, 0, .15);
 }
 
 
@@ -454,69 +439,49 @@
 
 .mentor-chat-header {
     display: flex;
-
     align-items: center;
     justify-content: space-between;
-
     padding: 18px 22px;
-
     background: #181818;
-
     border-bottom: 1px solid #292929;
 }
 
 .mentor-chat-header-left {
     display: flex;
-
     align-items: center;
-
     gap: 12px;
 }
 
 .mentor-chat-avatar {
     width: 44px;
     height: 44px;
-
     display: flex;
-
     align-items: center;
     justify-content: center;
-
     background: #c40000;
-
     border-radius: 50%;
-
     font-size: 18px;
 }
 
 .mentor-chat-header h3 {
     margin: 0;
-
     font-size: 16px;
 }
 
 .mentor-online-status {
     color: #55e889;
-
     font-size: 12px;
-
     margin-top: 3px;
 }
 
 .chat-close-button {
     width: 36px;
     height: 36px;
-
     border: 1px solid #333;
-
     background: #111;
-
     color: #aaa;
-
     border-radius: 8px;
-
     cursor: pointer;
-
     font-size: 15px;
 }
 
@@ -533,37 +498,23 @@
 
 .mentor-chat-messages {
     height: 430px;
-
     padding: 20px;
-
     overflow-y: auto;
-
-    background:
-        linear-gradient(
-            180deg,
-            #0d0d0d,
-            #111
-        );
+    background: linear-gradient(180deg, #0d0d0d, #111);
 }
 
 .chat-empty {
     height: 100%;
-
     display: flex;
-
     align-items: center;
     justify-content: center;
-
     text-align: center;
-
     color: #777;
-
     font-size: 14px;
 }
 
 .chat-message {
     display: flex;
-
     margin-bottom: 14px;
 }
 
@@ -577,43 +528,30 @@
 
 .chat-bubble {
     max-width: 70%;
-
     padding: 11px 15px;
-
     border-radius: 14px;
-
     font-size: 14px;
-
     line-height: 1.5;
-
     word-break: break-word;
 }
 
 .chat-message.student .chat-bubble {
     background: #c40000;
-
     color: white;
-
     border-bottom-right-radius: 4px;
 }
 
 .chat-message.mentor .chat-bubble {
     background: #202020;
-
     color: #eee;
-
     border: 1px solid #292929;
-
     border-bottom-left-radius: 4px;
 }
 
 .chat-message-time {
     display: block;
-
     margin-top: 5px;
-
     font-size: 10px;
-
     opacity: .65;
 }
 
@@ -624,9 +562,7 @@
 
 .chat-link {
     color: white;
-
     text-decoration: underline;
-
     word-break: break-all;
 }
 
@@ -636,38 +572,99 @@
 
 
 /* =====================================================
+   ATTACHMENT DISPLAY
+===================================================== */
+
+.chat-attachment {
+    margin-top: 8px;
+}
+
+.chat-attachment-image {
+    display: block;
+    width: 100%;
+    max-width: 280px;
+    max-height: 300px;
+    object-fit: contain;
+    border-radius: 10px;
+    border: 1px solid rgba(255,255,255,0.12);
+    cursor: pointer;
+}
+
+.chat-attachment-video {
+    display: block;
+    width: 100%;
+    max-width: 320px;
+    max-height: 300px;
+    border-radius: 10px;
+    background: #000;
+}
+
+.chat-file-card {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 12px;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 10px;
+    color: white;
+    text-decoration: none;
+    max-width: 320px;
+}
+
+.chat-file-card:hover {
+    border-color: #e50914;
+    background: rgba(229,9,20,0.08);
+}
+
+.chat-file-icon {
+    width: 38px;
+    height: 38px;
+    border-radius: 8px;
+    background: rgba(229,9,20,0.15);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ff4b55;
+    flex-shrink: 0;
+}
+
+.chat-file-name {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 12px;
+}
+
+.chat-file-label {
+    font-size: 10px;
+    color: #999;
+    margin-top: 2px;
+}
+
+
+/* =====================================================
    CHAT INPUT
 ===================================================== */
 
 .mentor-chat-input-area {
     display: flex;
-
-    gap: 10px;
-
+    align-items: center;
+    gap: 8px;
     padding: 15px;
-
     background: #181818;
-
     border-top: 1px solid #292929;
 }
 
 .mentor-chat-input {
     flex: 1;
-
     border: 1px solid #333;
-
     background: #0d0d0d;
-
     color: white;
-
     padding: 12px 15px;
-
     border-radius: 10px;
-
     outline: none;
-
     font-family: inherit;
-
     resize: none;
 }
 
@@ -675,35 +672,96 @@
     border-color: #ff2d2d;
 }
 
+
+/* =====================================================
+   ATTACHMENT BUTTON
+===================================================== */
+
+.mentor-chat-attach {
+    width: 46px;
+    height: 46px;
+    border: 1px solid #333;
+    background: #111;
+    color: #aaa;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 17px;
+    transition: .2s;
+    flex-shrink: 0;
+}
+
+.mentor-chat-attach:hover {
+    color: white;
+    border-color: #e50914;
+    background: #1a1a1a;
+}
+
+.mentor-chat-attach:disabled {
+    opacity: .5;
+    cursor: not-allowed;
+}
+
+
+/* =====================================================
+   FILE NAME / UPLOAD STATUS
+===================================================== */
+
+.attachment-status {
+    display: none;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 15px 0;
+    background: #181818;
+    color: #aaa;
+    font-size: 12px;
+}
+
+.attachment-status.active {
+    display: flex;
+}
+
+.attachment-status i {
+    color: #e50914;
+}
+
+.attachment-remove {
+    border: none;
+    background: transparent;
+    color: #777;
+    cursor: pointer;
+    font-size: 13px;
+}
+
+.attachment-remove:hover {
+    color: #ff4b55;
+}
+
+
+/* =====================================================
+   SEND BUTTON
+===================================================== */
+
 .mentor-chat-send {
     width: 48px;
-
+    height: 46px;
     border: none;
-
     background: #c40000;
-
     color: white;
-
     border-radius: 10px;
-
     cursor: pointer;
-
     font-size: 16px;
-
     transition: .2s;
+    flex-shrink: 0;
 }
 
 .mentor-chat-send:hover {
     background: #ff2d2d;
-
     transform: translateY(-1px);
 }
 
 .mentor-chat-send:disabled {
     opacity: .5;
-
     cursor: not-allowed;
-
     transform: none;
 }
 
@@ -714,37 +772,25 @@
 
 .chat-actions {
     display: flex;
-
     gap: 8px;
-
     padding: 10px 15px 0;
-
     background: #181818;
 }
 
 .chat-action-button {
     border: 1px solid #333;
-
     background: #111;
-
     color: #ccc;
-
     padding: 7px 10px;
-
     border-radius: 8px;
-
     cursor: pointer;
-
     font-family: inherit;
-
     font-size: 12px;
-
     transition: .2s;
 }
 
 .chat-action-button:hover {
     border-color: #ff2d2d;
-
     color: white;
 }
 
@@ -755,23 +801,18 @@
 
 .no-mentor-chat {
     padding: 40px 20px;
-
     text-align: center;
-
     color: #888;
 }
 
 .no-mentor-chat i {
     font-size: 40px;
-
     color: #e50914;
-
     margin-bottom: 15px;
 }
 
 .no-mentor-chat h3 {
     color: white;
-
     margin-bottom: 8px;
 }
 
@@ -834,6 +875,16 @@
 
     .mentor-chat-input-area {
         padding: 10px;
+    }
+
+    .mentor-chat-attach {
+        width: 42px;
+        height: 42px;
+    }
+
+    .mentor-chat-send {
+        width: 44px;
+        height: 42px;
     }
 
 }
@@ -909,7 +960,6 @@
 </div>
 
 
-
 <!-- =====================================================
      MAIN
 ===================================================== -->
@@ -934,7 +984,6 @@
     </button>
 
 </div>
-
 
 
 <!-- =====================================================
@@ -963,13 +1012,11 @@
 </div>
 
 
-
 <!-- =====================================================
      EXISTING DASHBOARD CARDS
 ===================================================== -->
 
 <div class="cards">
-
 
     <div
         class="card"
@@ -987,7 +1034,6 @@
         </p>
 
     </div>
-
 
 
     <div
@@ -1009,7 +1055,6 @@
     </div>
 
 
-
     <div
         class="card"
         onclick="openProfile()"
@@ -1027,9 +1072,7 @@
 
     </div>
 
-
 </div>
-
 
 
 <!-- =====================================================
@@ -1042,11 +1085,8 @@
 
 
     <h2 class="section-title">
-
         Your Raptora Mentorship
-
     </h2>
-
 
 
     <div
@@ -1054,16 +1094,12 @@
         class="no-mentorship">
 
         <h2>
-
             Start Your Mentorship
-
         </h2>
 
         <p>
-
             Get personalized admission guidance
             from Raptora mentors.
-
         </p>
 
         <a
@@ -1077,7 +1113,6 @@
     </div>
 
 
-
     <div
         id="activeMentorship"
         class="active-mentorship">
@@ -1086,15 +1121,11 @@
         <div class="active-header">
 
             <h2>
-
                 Active Mentorship
-
             </h2>
 
             <span class="active-badge">
-
                 ACTIVE
-
             </span>
 
         </div>
@@ -1162,7 +1193,6 @@
         </div>
 
 
-
         <div class="progress-container">
 
             <div class="progress-top">
@@ -1191,7 +1221,6 @@
 
 
     </div>
-
 
 
     <!-- =================================================
@@ -1236,7 +1265,6 @@
         </div>
 
 
-
         <div class="reward-card">
 
             <i class="fa-solid fa-star"></i>
@@ -1261,7 +1289,6 @@
             </p>
 
         </div>
-
 
 
         <div class="reward-card">
@@ -1292,7 +1319,6 @@
     </div>
 
 
-
     <!-- =================================================
          CALENDAR
     ================================================== -->
@@ -1320,9 +1346,7 @@
 
 
             <strong id="calendarTitle">
-
                 —
-
             </strong>
 
 
@@ -1381,7 +1405,6 @@
     </div>
 
 
-
     <!-- =================================================
          MENTOR CHAT
     ================================================== -->
@@ -1410,9 +1433,7 @@
                 <div>
 
                     <h3 id="mentorChatName">
-
                         Raptora Mentor
-
                     </h3>
 
                     <div class="mentor-online-status">
@@ -1441,7 +1462,6 @@
         </div>
 
 
-
         <!-- CHAT MESSAGES -->
 
         <div
@@ -1464,7 +1484,6 @@
             </div>
 
         </div>
-
 
 
         <!-- CHAT ACTIONS -->
@@ -1497,10 +1516,59 @@
         </div>
 
 
+        <!-- ATTACHMENT STATUS -->
+
+        <div
+            id="attachmentStatus"
+            class="attachment-status">
+
+            <i class="fa-solid fa-paperclip"></i>
+
+            <span id="attachmentFileName">
+                No file selected
+            </span>
+
+            <button
+                type="button"
+                class="attachment-remove"
+                onclick="clearSelectedFile()"
+                title="Remove attachment">
+
+                <i class="fa-solid fa-xmark"></i>
+
+            </button>
+
+        </div>
+
 
         <!-- CHAT INPUT -->
 
         <div class="mentor-chat-input-area">
+
+
+            <!-- Hidden File Input -->
+
+            <input
+                type="file"
+                id="mentorChatFile"
+                accept="image/jpeg,image/png,image/webp,image/gif,video/mp4,video/webm,video/quicktime,application/pdf"
+                style="display:none;"
+                onchange="handleFileSelection(event)">
+
+
+            <!-- Attachment Button -->
+
+            <button
+                id="mentorChatAttach"
+                class="mentor-chat-attach"
+                type="button"
+                onclick="openFilePicker()"
+                title="Attach photo, video or PDF">
+
+                <i class="fa-solid fa-paperclip"></i>
+
+            </button>
+
 
             <textarea
                 id="mentorChatInput"
@@ -1533,7 +1601,6 @@
 </div>
 
 
-
 <script>
 
 /* =====================================================
@@ -1557,6 +1624,8 @@ let mentorChatOpen = false;
 let mentorChatInterval = null;
 
 let mentorId = null;
+
+let selectedChatFile = null;
 
 
 /* =====================================================
@@ -1726,11 +1795,6 @@ async function loadMentorConversation() {
     }
 
 
-    /*
-       The backend will provide assignedMentor
-       in the next backend step.
-    */
-
     const assignedMentor =
         currentUser.assignedMentor;
 
@@ -1739,6 +1803,7 @@ async function loadMentorConversation() {
 
         messagesContainer.innerHTML = `
             <div class="no-mentor-chat">
+
                 <i class="fa-solid fa-user-tie"></i>
 
                 <h3>No Mentor Assigned Yet</h3>
@@ -1747,6 +1812,7 @@ async function loadMentorConversation() {
                     Your mentor will appear here once
                     Raptora assigns one to your account.
                 </p>
+
             </div>
         `;
 
@@ -1846,7 +1912,9 @@ async function loadMentorConversation() {
 
         messagesContainer.innerHTML = `
             <div class="chat-empty">
+
                 <div>
+
                     <i class="fa-solid fa-triangle-exclamation"
                        style="font-size:30px;color:#e50914;"></i>
 
@@ -1857,7 +1925,9 @@ async function loadMentorConversation() {
                     <small style="color:#666;">
                         ${escapeHtml(error.message)}
                     </small>
+
                 </div>
+
             </div>
         `;
 
@@ -1870,9 +1940,7 @@ async function loadMentorConversation() {
    RENDER MESSAGES
 ===================================================== */
 
-function renderMentorMessages(
-    messages
-) {
+function renderMentorMessages(messages) {
 
     const container =
         document.getElementById(
@@ -1891,6 +1959,7 @@ function renderMentorMessages(
 
         container.innerHTML = `
             <div class="chat-empty">
+
                 <div>
 
                     <i class="fa-solid fa-comments"
@@ -1905,6 +1974,7 @@ function renderMentorMessages(
                     </small>
 
                 </div>
+
             </div>
         `;
 
@@ -1932,9 +2002,7 @@ function renderMentorMessages(
 
 
         const messageWrapper =
-            document.createElement(
-                "div"
-            );
+            document.createElement("div");
 
 
         messageWrapper.className =
@@ -1947,9 +2015,7 @@ function renderMentorMessages(
 
 
         const bubble =
-            document.createElement(
-                "div"
-            );
+            document.createElement("div");
 
 
         bubble.className =
@@ -1962,14 +2028,13 @@ function renderMentorMessages(
             );
 
 
-        /*
-           If a URL exists, make it clickable.
-        */
+        /* ---------------------------------------------
+           NORMAL URL
+        --------------------------------------------- */
 
         if (message.url) {
 
-            messageContent +=
-                `
+            messageContent += `
                 <br>
                 <a
                     class="chat-link"
@@ -1982,7 +2047,19 @@ function renderMentorMessages(
                     Open Link
 
                 </a>
-                `;
+            `;
+
+        }
+
+
+        /* ---------------------------------------------
+           FILE ATTACHMENT
+        --------------------------------------------- */
+
+        if (message.fileUrl) {
+
+            messageContent +=
+                renderAttachment(message);
 
         }
 
@@ -2034,6 +2111,317 @@ function renderMentorMessages(
 
 
 /* =====================================================
+   RENDER ATTACHMENT
+===================================================== */
+
+function renderAttachment(message) {
+
+    const url =
+        escapeAttribute(
+            message.fileUrl
+        );
+
+
+    const fileName =
+        escapeHtml(
+            message.fileName ||
+            "Attachment"
+        );
+
+
+    const mimeType =
+        String(
+            message.mimeType || ""
+        );
+
+
+    /* IMAGE */
+
+    if (
+        mimeType.startsWith("image/")
+    ) {
+
+        return `
+            <div class="chat-attachment">
+
+                <a
+                    href="${url}"
+                    target="_blank"
+                    rel="noopener noreferrer">
+
+                    <img
+                        src="${url}"
+                        class="chat-attachment-image"
+                        alt="${fileName}"
+                        loading="lazy">
+
+                </a>
+
+            </div>
+        `;
+
+    }
+
+
+    /* VIDEO */
+
+    if (
+        mimeType.startsWith("video/")
+    ) {
+
+        return `
+            <div class="chat-attachment">
+
+                <video
+                    class="chat-attachment-video"
+                    controls
+                    preload="metadata">
+
+                    <source
+                        src="${url}"
+                        type="${escapeAttribute(mimeType)}">
+
+                    Your browser does not support video playback.
+
+                </video>
+
+            </div>
+        `;
+
+    }
+
+
+    /* PDF / OTHER FILE */
+
+    return `
+        <div class="chat-attachment">
+
+            <a
+                href="${url}"
+                class="chat-file-card"
+                target="_blank"
+                rel="noopener noreferrer">
+
+                <div class="chat-file-icon">
+
+                    <i class="fa-solid fa-file-pdf"></i>
+
+                </div>
+
+                <div>
+
+                    <div class="chat-file-name">
+                        ${fileName}
+                    </div>
+
+                    <div class="chat-file-label">
+                        ${mimeType === "application/pdf"
+                            ? "PDF Document"
+                            : "Open Attachment"}
+                    </div>
+
+                </div>
+
+            </a>
+
+        </div>
+    `;
+
+}
+
+
+/* =====================================================
+   OPEN FILE PICKER
+===================================================== */
+
+function openFilePicker() {
+
+    const fileInput =
+        document.getElementById(
+            "mentorChatFile"
+        );
+
+
+    if (!fileInput) {
+
+        return;
+
+    }
+
+
+    fileInput.click();
+
+}
+
+
+/* =====================================================
+   HANDLE FILE SELECTION
+===================================================== */
+
+function handleFileSelection(event) {
+
+    const file =
+        event.target.files &&
+        event.target.files[0];
+
+
+    if (!file) {
+
+        return;
+
+    }
+
+
+    const allowedTypes = [
+
+        "image/jpeg",
+        "image/png",
+        "image/webp",
+        "image/gif",
+
+        "video/mp4",
+        "video/webm",
+        "video/quicktime",
+
+        "application/pdf"
+
+    ];
+
+
+    if (
+        !allowedTypes.includes(
+            file.type
+        )
+    ) {
+
+        alert(
+            "Only photos, videos and PDF files are allowed."
+        );
+
+
+        clearSelectedFile();
+
+        return;
+
+    }
+
+
+    const maxSize =
+        50 * 1024 * 1024;
+
+
+    if (
+        file.size > maxSize
+    ) {
+
+        alert(
+            "File is too large. Maximum size is 50 MB."
+        );
+
+
+        clearSelectedFile();
+
+        return;
+
+    }
+
+
+    selectedChatFile =
+        file;
+
+
+    const status =
+        document.getElementById(
+            "attachmentStatus"
+        );
+
+
+    const fileName =
+        document.getElementById(
+            "attachmentFileName"
+        );
+
+
+    if (status) {
+
+        status.classList.add(
+            "active"
+        );
+
+    }
+
+
+    if (fileName) {
+
+        fileName.innerText =
+            file.name;
+
+    }
+
+
+    document.getElementById(
+        "mentorChatInput"
+    ).focus();
+
+}
+
+
+/* =====================================================
+   CLEAR SELECTED FILE
+===================================================== */
+
+function clearSelectedFile() {
+
+    selectedChatFile =
+        null;
+
+
+    const fileInput =
+        document.getElementById(
+            "mentorChatFile"
+        );
+
+
+    if (fileInput) {
+
+        fileInput.value =
+            "";
+
+    }
+
+
+    const status =
+        document.getElementById(
+            "attachmentStatus"
+        );
+
+
+    if (status) {
+
+        status.classList.remove(
+            "active"
+        );
+
+    }
+
+
+    const fileName =
+        document.getElementById(
+            "attachmentFileName"
+        );
+
+
+    if (fileName) {
+
+        fileName.innerText =
+            "No file selected";
+
+    }
+
+}
+
+
+/* =====================================================
    SEND MENTOR MESSAGE
 ===================================================== */
 
@@ -2051,6 +2439,12 @@ async function sendMentorMessage() {
         );
 
 
+    const attachButton =
+        document.getElementById(
+            "mentorChatAttach"
+        );
+
+
     if (!input) {
 
         return;
@@ -2062,7 +2456,14 @@ async function sendMentorMessage() {
         input.value.trim();
 
 
-    if (!content) {
+    /* ---------------------------------------------
+       NO TEXT AND NO FILE
+    --------------------------------------------- */
+
+    if (
+        !content &&
+        !selectedChatFile
+    ) {
 
         return;
 
@@ -2084,7 +2485,113 @@ async function sendMentorMessage() {
         true;
 
 
+    if (attachButton) {
+
+        attachButton.disabled =
+            true;
+
+    }
+
+
     try {
+
+
+        /* =============================================
+           FILE UPLOAD
+        ============================================= */
+
+        if (selectedChatFile) {
+
+            const formData =
+                new FormData();
+
+
+            formData.append(
+                "file",
+                selectedChatFile
+            );
+
+
+            formData.append(
+                "receiverId",
+                mentorId
+            );
+
+
+            if (content) {
+
+                formData.append(
+                    "content",
+                    content
+                );
+
+            }
+
+
+            const response =
+                await fetch(
+                    API_BASE_URL +
+                    "/api/messages/upload",
+                    {
+                        method: "POST",
+
+                        headers: {
+
+                            "Authorization":
+                                "Bearer " +
+                                storedToken
+
+                        },
+
+                        body:
+                            formData
+
+                    }
+                );
+
+
+            const data =
+                await response.json();
+
+
+            if (!response.ok) {
+
+                throw new Error(
+                    data.message ||
+                    "Unable to upload attachment."
+                );
+
+            }
+
+
+            if (!data.success) {
+
+                throw new Error(
+                    data.message ||
+                    "Unable to upload attachment."
+                );
+
+            }
+
+
+            input.value =
+                "";
+
+
+            clearSelectedFile();
+
+
+            await loadMentorConversation();
+
+
+            return;
+
+        }
+
+
+        /* =============================================
+           NORMAL TEXT MESSAGE
+        ============================================= */
 
         const response =
             await fetch(
@@ -2096,7 +2603,8 @@ async function sendMentorMessage() {
                     headers: {
 
                         "Authorization":
-                            "Bearer " + storedToken,
+                            "Bearer " +
+                            storedToken,
 
                         "Content-Type":
                             "application/json"
@@ -2145,7 +2653,8 @@ async function sendMentorMessage() {
         }
 
 
-        input.value = "";
+        input.value =
+            "";
 
 
         await loadMentorConversation();
@@ -2171,6 +2680,15 @@ async function sendMentorMessage() {
 
         sendButton.disabled =
             false;
+
+
+        if (attachButton) {
+
+            attachButton.disabled =
+                false;
+
+        }
+
 
         input.focus();
 
@@ -2204,7 +2722,8 @@ async function markMentorMessagesRead() {
                 headers: {
 
                     "Authorization":
-                        "Bearer " + storedToken
+                        "Bearer " +
+                        storedToken
 
                 }
 
@@ -2243,7 +2762,8 @@ async function updateUnreadCount() {
                     headers: {
 
                         "Authorization":
-                            "Bearer " + storedToken
+                            "Bearer " +
+                            storedToken
 
                     }
 
@@ -2260,8 +2780,12 @@ async function updateUnreadCount() {
             data.success
         ) {
 
+            /*
+               Backend returns "count".
+            */
+
             updateChatBadge(
-                data.unreadCount || 0
+                data.count || 0
             );
 
         }
@@ -2284,9 +2808,7 @@ async function updateUnreadCount() {
    UPDATE CHAT BADGE
 ===================================================== */
 
-function updateChatBadge(
-    count
-) {
+function updateChatBadge(count) {
 
     const badge =
         document.getElementById(
@@ -2379,9 +2901,7 @@ function stopMentorChatPolling() {
    CHAT KEYBOARD
 ===================================================== */
 
-function handleChatKeydown(
-    event
-) {
+function handleChatKeydown(event) {
 
     /*
        Enter = send
@@ -2489,9 +3009,7 @@ function insertMeetLink() {
    ESCAPE HTML
 ===================================================== */
 
-function escapeHtml(
-    value
-) {
+function escapeHtml(value) {
 
     return String(value)
         .replace(/&/g, "&amp;")
@@ -2507,9 +3025,7 @@ function escapeHtml(
    ESCAPE ATTRIBUTE
 ===================================================== */
 
-function escapeAttribute(
-    value
-) {
+function escapeAttribute(value) {
 
     return String(value)
         .replace(/&/g, "&amp;")
@@ -2575,7 +3091,8 @@ function renderCalendar() {
     }
 
 
-    calendarDays.innerHTML = "";
+    calendarDays.innerHTML =
+        "";
 
 
     const year =
@@ -2623,9 +3140,11 @@ function renderCalendar() {
         ).getDate();
 
 
-    let mentorshipStart = null;
+    let mentorshipStart =
+        null;
 
-    let mentorshipEnd = null;
+    let mentorshipEnd =
+        null;
 
 
     if (
@@ -2828,6 +3347,7 @@ function logout() {
 
     stopMentorChatPolling();
 
+
     localStorage.removeItem(
         "token"
     );
@@ -2890,7 +3410,8 @@ async function loadUserData() {
                     headers: {
 
                         "Authorization":
-                            "Bearer " + token,
+                            "Bearer " +
+                            token,
 
                         "Content-Type":
                             "application/json"
@@ -3030,10 +3551,6 @@ async function loadUserData() {
         renderCalendar();
 
 
-        /*
-           Load unread messages immediately.
-        */
-
         updateUnreadCount();
 
     }
@@ -3060,9 +3577,7 @@ async function loadUserData() {
    LOAD MENTORSHIP
 ===================================================== */
 
-function loadMentorshipFromDatabase(
-    user
-) {
+function loadMentorshipFromDatabase(user) {
 
     const noMentorship =
         document.getElementById(
@@ -3217,14 +3732,16 @@ function loadMentorshipFromDatabase(
         startDay.getTime();
 
 
-    let progress = 0;
+    let progress =
+        0;
 
 
     if (
         today < startDay
     ) {
 
-        progress = 0;
+        progress =
+            0;
 
     }
 
@@ -3232,7 +3749,8 @@ function loadMentorshipFromDatabase(
         today >= endDay
     ) {
 
-        progress = 100;
+        progress =
+            100;
 
     }
 
@@ -3268,13 +3786,15 @@ function loadMentorshipFromDatabase(
     document.getElementById(
         "progressFill"
     ).style.width =
-        roundedProgress + "%";
+        roundedProgress +
+        "%";
 
 
     document.getElementById(
         "progressText"
     ).innerText =
-        roundedProgress + "%";
+        roundedProgress +
+        "%";
 
 }
 
@@ -3316,7 +3836,9 @@ function copyReferralCode() {
     ) {
 
         navigator.clipboard
-            .writeText(referralCode)
+            .writeText(
+                referralCode
+            )
             .then(function() {
 
                 showReferralCopiedMessage();
@@ -3454,4 +3976,3 @@ document.addEventListener(
 </body>
 
 </html>
-
