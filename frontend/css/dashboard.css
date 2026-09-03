@@ -227,3 +227,331 @@ body{
     color:#d9d9d9;
 
 }
+/* =====================================================
+   MENTOR CHAT SIDEBAR ITEM
+===================================================== */
+
+.sidebar-chat-item {
+    position: relative;
+}
+
+.sidebar-chat-item a {
+    position: relative;
+}
+
+.chat-unread-badge {
+    margin-left: auto;
+    min-width: 20px;
+    height: 20px;
+    padding: 0 6px;
+
+    display: none;
+    align-items: center;
+    justify-content: center;
+
+    background: #ff2d2d;
+    color: white;
+
+    border-radius: 50px;
+
+    font-size: 11px;
+    font-weight: 700;
+}
+
+
+/* =====================================================
+   MENTOR CHAT BUTTON
+===================================================== */
+
+.mentor-chat-link {
+    cursor: pointer;
+}
+
+.mentor-chat-link i {
+    color: #ff2d2d;
+    transition: .3s;
+}
+
+.mentor-chat-link:hover i {
+    color: white;
+}
+
+
+/* =====================================================
+   CHAT PAGE / PANEL
+===================================================== */
+
+.mentor-chat-container {
+    display: none;
+
+    width: 100%;
+    min-height: 600px;
+
+    margin-top: 30px;
+
+    background: #111;
+
+    border: 1px solid #292929;
+
+    border-radius: 16px;
+
+    overflow: hidden;
+
+    box-shadow:
+        0 10px 35px rgba(255, 0, 0, .15);
+}
+
+
+/* =====================================================
+   CHAT HEADER
+===================================================== */
+
+.mentor-chat-header {
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 18px 22px;
+
+    background: #181818;
+
+    border-bottom: 1px solid #292929;
+}
+
+.mentor-chat-header-left {
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+}
+
+.mentor-chat-avatar {
+    width: 42px;
+    height: 42px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    background: #c40000;
+
+    border-radius: 50%;
+
+    font-size: 18px;
+}
+
+.mentor-chat-header h3 {
+    margin: 0;
+
+    font-size: 16px;
+}
+
+.mentor-online-status {
+    color: #55e889;
+
+    font-size: 12px;
+
+    margin-top: 3px;
+}
+
+
+/* =====================================================
+   CHAT MESSAGES
+===================================================== */
+
+.mentor-chat-messages {
+    height: 430px;
+
+    padding: 20px;
+
+    overflow-y: auto;
+
+    background:
+        linear-gradient(
+            180deg,
+            #0d0d0d,
+            #111
+        );
+}
+
+.chat-message {
+    display: flex;
+
+    margin-bottom: 14px;
+}
+
+.chat-message.student {
+    justify-content: flex-end;
+}
+
+.chat-message.mentor {
+    justify-content: flex-start;
+}
+
+.chat-bubble {
+    max-width: 70%;
+
+    padding: 11px 15px;
+
+    border-radius: 14px;
+
+    font-size: 14px;
+
+    line-height: 1.5;
+}
+
+.chat-message.student .chat-bubble {
+    background: #c40000;
+
+    color: white;
+
+    border-bottom-right-radius: 4px;
+}
+
+.chat-message.mentor .chat-bubble {
+    background: #202020;
+
+    color: #eee;
+
+    border: 1px solid #292929;
+
+    border-bottom-left-radius: 4px;
+}
+
+.chat-message-time {
+    display: block;
+
+    margin-top: 5px;
+
+    font-size: 10px;
+
+    opacity: .65;
+}
+
+
+/* =====================================================
+   CHAT INPUT
+===================================================== */
+
+.mentor-chat-input-area {
+    display: flex;
+
+    gap: 10px;
+
+    padding: 15px;
+
+    background: #181818;
+
+    border-top: 1px solid #292929;
+}
+
+.mentor-chat-input {
+    flex: 1;
+
+    border: 1px solid #333;
+
+    background: #0d0d0d;
+
+    color: white;
+
+    padding: 12px 15px;
+
+    border-radius: 10px;
+
+    outline: none;
+
+    font-family: inherit;
+}
+
+.mentor-chat-input:focus {
+    border-color: #ff2d2d;
+}
+
+.mentor-chat-send {
+    width: 48px;
+
+    border: none;
+
+    background: #c40000;
+
+    color: white;
+
+    border-radius: 10px;
+
+    cursor: pointer;
+
+    font-size: 16px;
+
+    transition: .2s;
+}
+
+.mentor-chat-send:hover {
+    background: #ff2d2d;
+
+    transform: translateY(-1px);
+}
+
+
+/* =====================================================
+   CHAT ACTION BUTTONS
+===================================================== */
+
+.chat-actions {
+    display: flex;
+
+    gap: 8px;
+
+    padding: 10px 15px 0;
+
+    background: #181818;
+}
+
+.chat-action-button {
+    border: 1px solid #333;
+
+    background: #111;
+
+    color: #ccc;
+
+    padding: 7px 10px;
+
+    border-radius: 8px;
+
+    cursor: pointer;
+
+    font-family: inherit;
+
+    font-size: 12px;
+
+    transition: .2s;
+}
+
+.chat-action-button:hover {
+    border-color: #ff2d2d;
+
+    color: white;
+}
+
+
+/* =====================================================
+   MOBILE CHAT
+===================================================== */
+
+@media(max-width:700px) {
+
+    .mentor-chat-container {
+        min-height: 500px;
+    }
+
+    .mentor-chat-messages {
+        height: 350px;
+    }
+
+    .chat-bubble {
+        max-width: 85%;
+    }
+
+}
