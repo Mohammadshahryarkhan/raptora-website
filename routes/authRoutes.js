@@ -216,9 +216,28 @@ router.get(
             }
 
 
+            // =====================================================
+            // GET STUDENTS
+            // Includes old users where role was never stored
+            // =====================================================
+
             const users =
                 await User.find({
-                    role: "student"
+
+                    $or: [
+
+                        {
+                            role: "student"
+                        },
+
+                        {
+                            role: {
+                                $exists: false
+                            }
+                        }
+
+                    ]
+
                 })
                 .select(
                     "_id name email phone assignedMentor"
@@ -290,3 +309,4 @@ router.post(
 // =====================================================
 
 module.exports = router;
+
