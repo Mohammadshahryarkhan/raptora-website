@@ -16,6 +16,7 @@ const comedkRoutes = require("./routes/comedkRoutes");
 const mccRoutes = require("./routes/mccRoutes");
 const mentorRoutes = require("./routes/mentorRoutes");
 const paymentRoutes = require("./routes/paymentRoutes");
+const messageRoutes = require("./routes/messageRoutes");
 
 // =====================================================
 // CREATE APP
