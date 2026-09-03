@@ -18,13 +18,13 @@
         body {
             font-family: Arial, sans-serif;
             background: #080808;
-            color: white;
+            color: #ffffff;
             min-height: 100vh;
         }
 
         header {
-            background: #111;
-            border-bottom: 1px solid #222;
+            background: #111111;
+            border-bottom: 1px solid #222222;
             padding: 20px 30px;
             display: flex;
             justify-content: space-between;
@@ -38,7 +38,7 @@
         }
 
         .admin-label {
-            color: #aaa;
+            color: #aaaaaa;
             font-size: 14px;
         }
 
@@ -49,17 +49,17 @@
         }
 
         h1 {
-            margin-bottom: 10px;
+            margin-bottom: 8px;
         }
 
         .subtitle {
-            color: #888;
+            color: #888888;
             margin-bottom: 30px;
         }
 
         .card {
             background: #121212;
-            border: 1px solid #222;
+            border: 1px solid #222222;
             border-radius: 14px;
             padding: 25px;
             margin-bottom: 25px;
@@ -75,19 +75,17 @@
             gap: 15px;
         }
 
-        input,
-        select {
+        input {
             width: 100%;
             padding: 13px;
             background: #080808;
-            color: white;
-            border: 1px solid #333;
+            color: #ffffff;
+            border: 1px solid #333333;
             border-radius: 8px;
             outline: none;
         }
 
-        input:focus,
-        select:focus {
+        input:focus {
             border-color: #e50914;
         }
 
@@ -96,21 +94,13 @@
             border-radius: 8px;
             padding: 13px 20px;
             background: #e50914;
-            color: white;
+            color: #ffffff;
             font-weight: bold;
             cursor: pointer;
         }
 
         button:hover {
             background: #c70812;
-        }
-
-        .secondary {
-            background: #222;
-        }
-
-        .secondary:hover {
-            background: #333;
         }
 
         .danger {
@@ -154,7 +144,7 @@
 
         .user {
             background: #0b0b0b;
-            border: 1px solid #222;
+            border: 1px solid #222222;
             border-radius: 10px;
             padding: 15px;
         }
@@ -165,16 +155,23 @@
         }
 
         .user-email {
-            color: #999;
+            color: #999999;
             font-size: 14px;
         }
 
+        .assignment {
+            color: #e50914;
+            font-size: 13px;
+            margin-top: 8px;
+        }
+
         .empty {
-            color: #777;
+            color: #777777;
             padding: 15px 0;
         }
 
         @media (max-width: 750px) {
+
             .form-grid {
                 grid-template-columns: 1fr;
             }
@@ -197,20 +194,30 @@
 <body>
 
 <header>
-    <div class="logo">RAPTORA</div>
-    <div class="admin-label">Admin Dashboard</div>
+
+    <div class="logo">
+        RAPTORA
+    </div>
+
+    <div class="admin-label">
+        Admin Dashboard
+    </div>
+
 </header>
+
 
 <main>
 
     <h1>Mentor Management</h1>
 
     <p class="subtitle">
-        Assign mentors to Raptora students.
+        Assign and manage mentors for Raptora students.
     </p>
 
 
-    <!-- ASSIGN MENTOR -->
+    <!-- =================================================
+         ASSIGN MENTOR
+    ================================================== -->
 
     <div class="card">
 
@@ -236,12 +243,17 @@
 
         </div>
 
-        <div id="status" class="status"></div>
+        <div
+            id="status"
+            class="status"
+        ></div>
 
     </div>
 
 
-    <!-- REMOVE ASSIGNMENT -->
+    <!-- =================================================
+         REMOVE MENTOR
+    ================================================== -->
 
     <div class="card">
 
@@ -269,9 +281,14 @@
     </div>
 
 
-    <!-- USERS -->
+    <!-- =================================================
+         STUDENTS AND MENTORS
+    ================================================== -->
 
     <div class="lists">
+
+
+        <!-- STUDENTS -->
 
         <div class="card">
 
@@ -288,6 +305,8 @@
 
         </div>
 
+
+        <!-- MENTORS -->
 
         <div class="card">
 
@@ -316,7 +335,7 @@ const API_BASE_URL =
 
 
 // =====================================================
-// GET TOKEN
+// GET LOGIN TOKEN
 // =====================================================
 
 const token =
@@ -346,11 +365,11 @@ function showStatus(message, type) {
     const status =
         document.getElementById("status");
 
-    status.textContent = message;
+    status.textContent =
+        message;
 
     status.className =
         "status " + type;
-
 }
 
 
@@ -373,7 +392,10 @@ async function assignMentor() {
             .trim();
 
 
-    if (!studentEmail || !mentorEmail) {
+    if (
+        !studentEmail ||
+        !mentorEmail
+    ) {
 
         showStatus(
             "Enter both student and mentor email.",
@@ -393,11 +415,13 @@ async function assignMentor() {
                     method: "POST",
 
                     headers: {
+
                         "Content-Type":
                             "application/json",
 
                         "Authorization":
                             `Bearer ${token}`
+
                     },
 
                     body: JSON.stringify({
@@ -409,6 +433,7 @@ async function assignMentor() {
                             mentorEmail
 
                     })
+
                 }
             );
 
@@ -443,7 +468,12 @@ async function assignMentor() {
             .getElementById("mentorEmail")
             .value = "";
 
-    } catch (error) {
+
+        loadStudents();
+
+    }
+
+    catch (error) {
 
         console.error(error);
 
@@ -451,7 +481,9 @@ async function assignMentor() {
             "Unable to connect to Raptora server.",
             "error"
         );
+
     }
+
 }
 
 
@@ -488,11 +520,13 @@ async function removeMentor() {
                     method: "POST",
 
                     headers: {
+
                         "Content-Type":
                             "application/json",
 
                         "Authorization":
                             `Bearer ${token}`
+
                     },
 
                     body: JSON.stringify({
@@ -501,6 +535,7 @@ async function removeMentor() {
                             studentEmail
 
                     })
+
                 }
             );
 
@@ -531,7 +566,12 @@ async function removeMentor() {
             .getElementById("removeStudentEmail")
             .value = "";
 
-    } catch (error) {
+
+        loadStudents();
+
+    }
+
+    catch (error) {
 
         console.error(error);
 
@@ -539,7 +579,9 @@ async function removeMentor() {
             "Unable to connect to Raptora server.",
             "error"
         );
+
     }
+
 }
 
 
@@ -560,8 +602,10 @@ async function loadMentors() {
                 `${API_BASE_URL}/api/mentors/users`,
                 {
                     headers: {
+
                         "Authorization":
                             `Bearer ${token}`
+
                     }
                 }
             );
@@ -574,9 +618,14 @@ async function loadMentors() {
         if (!response.ok) {
 
             container.innerHTML =
-                `<div class="empty">
-                    ${data.message || "Unable to load mentors."}
-                </div>`;
+                `
+                <div class="empty">
+                    ${escapeHtml(
+                        data.message ||
+                        "Unable to load mentors."
+                    )}
+                </div>
+                `;
 
             return;
         }
@@ -588,9 +637,11 @@ async function loadMentors() {
         ) {
 
             container.innerHTML =
-                `<div class="empty">
+                `
+                <div class="empty">
                     No mentor accounts found.
-                </div>`;
+                </div>
+                `;
 
             return;
         }
@@ -598,32 +649,46 @@ async function loadMentors() {
 
         container.innerHTML =
             data.mentors
-                .map(mentor => `
+                .map(mentor => {
 
-                    <div class="user">
+                    return `
 
-                        <div class="user-name">
-                            ${escapeHtml(mentor.name)}
+                        <div class="user">
+
+                            <div class="user-name">
+                                ${escapeHtml(
+                                    mentor.name
+                                )}
+                            </div>
+
+                            <div class="user-email">
+                                ${escapeHtml(
+                                    mentor.email
+                                )}
+                            </div>
+
                         </div>
 
-                        <div class="user-email">
-                            ${escapeHtml(mentor.email)}
-                        </div>
+                    `;
 
-                    </div>
-
-                `)
+                })
                 .join("");
 
-    } catch (error) {
+    }
+
+    catch (error) {
 
         console.error(error);
 
         container.innerHTML =
-            `<div class="empty">
+            `
+            <div class="empty">
                 Unable to load mentors.
-            </div>`;
+            </div>
+            `;
+
     }
+
 }
 
 
@@ -644,71 +709,115 @@ async function loadStudents() {
                 `${API_BASE_URL}/api/auth/users`,
                 {
                     headers: {
+
                         "Authorization":
                             `Bearer ${token}`
+
                     }
                 }
             );
-
-
-        if (!response.ok) {
-
-            container.innerHTML =
-                `<div class="empty">
-                    Student list API not available yet.
-                </div>`;
-
-            return;
-        }
 
 
         const data =
             await response.json();
 
 
-        if (
-            !data.users ||
-            data.users.length === 0
-        ) {
+        if (!response.ok) {
 
             container.innerHTML =
-                `<div class="empty">
+                `
+                <div class="empty">
+                    ${escapeHtml(
+                        data.message ||
+                        "Unable to load students."
+                    )}
+                </div>
+                `;
+
+            return;
+        }
+
+
+        const students =
+            data.users || [];
+
+
+        if (students.length === 0) {
+
+            container.innerHTML =
+                `
+                <div class="empty">
                     No students found.
-                </div>`;
+                </div>
+                `;
 
             return;
         }
 
 
         container.innerHTML =
-            data.users
-                .filter(user => user.role !== "mentor")
-                .map(user => `
+            students
+                .map(user => {
 
-                    <div class="user">
+                    let mentorText =
+                        "No mentor assigned";
 
-                        <div class="user-name">
-                            ${escapeHtml(user.name)}
+
+                    if (
+                        user.assignedMentor &&
+                        user.assignedMentor.name
+                    ) {
+
+                        mentorText =
+                            `Mentor: ${escapeHtml(
+                                user.assignedMentor.name
+                            )}`;
+
+                    }
+
+
+                    return `
+
+                        <div class="user">
+
+                            <div class="user-name">
+                                ${escapeHtml(
+                                    user.name
+                                )}
+                            </div>
+
+                            <div class="user-email">
+                                ${escapeHtml(
+                                    user.email
+                                )}
+                            </div>
+
+                            <div class="assignment">
+                                ${mentorText}
+                            </div>
+
                         </div>
 
-                        <div class="user-email">
-                            ${escapeHtml(user.email)}
-                        </div>
+                    `;
 
-                    </div>
-
-                `)
+                })
                 .join("");
 
-    } catch (error) {
+    }
+
+    catch (error) {
 
         console.error(error);
 
         container.innerHTML =
-            `<div class="empty">
-                Student list will be available after the admin users API is added.
-            </div>`;
+            `
+            <div class="empty">
+                Unable to load students.
+            </div>
+            `;
+
     }
+
 }
 
 
@@ -724,6 +833,7 @@ function escapeHtml(value) {
         .replace(/>/g, "&gt;")
         .replace(/"/g, "&quot;")
         .replace(/'/g, "&#039;");
+
 }
 
 
@@ -738,4 +848,5 @@ loadStudents();
 </script>
 
 </body>
+
 </html>
