@@ -1,5 +1,4 @@
 const express = require("express");
-const mongoose = require("mongoose");
 
 const router = express.Router();
 
@@ -64,32 +63,18 @@ router.get("/", async (req, res) => {
 
         ];
 
-
         res.json({
-
             success: true,
-
             mentors
-
         });
 
-    }
+    } catch (error) {
 
-    catch (error) {
-
-        console.error(
-            "Mentor fetch error:",
-            error
-        );
-
+        console.error("Mentor fetch error:", error);
 
         res.status(500).json({
-
             success: false,
-
-            message:
-                "Unable to fetch mentors"
-
+            message: "Unable to fetch mentors"
         });
 
     }
@@ -114,32 +99,21 @@ router.get(
                 .select("_id name email phone role")
                 .sort({ name: 1 });
 
-
             res.json({
-
                 success: true,
-
                 mentors
-
             });
 
-        }
-
-        catch (error) {
+        } catch (error) {
 
             console.error(
                 "Mentor users fetch error:",
                 error
             );
 
-
             res.status(500).json({
-
                 success: false,
-
-                message:
-                    "Unable to fetch mentor accounts"
-
+                message: "Unable to fetch mentor accounts"
             });
 
         }
@@ -149,77 +123,59 @@ router.get(
 
 
 // =====================================================
-// ASSIGN MENTOR TO STUDENT
+// ASSIGN MENTOR TO STUDENT USING EMAILS
 // =====================================================
 
 router.post(
-    "/assign",
+    "/assign-by-email",
     authMiddleware,
     async (req, res) => {
 
         try {
 
             const {
-                studentId,
-                mentorId
+                studentEmail,
+                mentorEmail
             } = req.body;
 
 
             // ---------------------------------------------
-            // VALIDATE IDS
+            // VALIDATE EMAILS
             // ---------------------------------------------
 
-            if (
-                !studentId ||
-                !mentorId
-            ) {
+            if (!studentEmail || !mentorEmail) {
 
                 return res.status(400).json({
-
                     success: false,
-
                     message:
-                        "Student ID and Mentor ID are required."
-
+                        "Student email and mentor email are required."
                 });
 
             }
 
 
-            if (
-                !mongoose.Types.ObjectId.isValid(studentId) ||
-                !mongoose.Types.ObjectId.isValid(mentorId)
-            ) {
+            const cleanStudentEmail =
+                studentEmail.trim().toLowerCase();
 
-                return res.status(400).json({
-
-                    success: false,
-
-                    message:
-                        "Invalid student or mentor ID."
-
-                });
-
-            }
+            const cleanMentorEmail =
+                mentorEmail.trim().toLowerCase();
 
 
             // ---------------------------------------------
             // FIND STUDENT
             // ---------------------------------------------
 
-            const student =
-                await User.findById(studentId);
+            const student = await User.findOne({
+                email: cleanStudentEmail
+            });
 
 
             if (!student) {
 
                 return res.status(404).json({
-
                     success: false,
-
                     message:
-                        "Student not found."
-
+                        "Student account not found."
                 });
 
             }
@@ -229,55 +185,65 @@ router.post(
             // FIND MENTOR
             // ---------------------------------------------
 
-            const mentor =
-                await User.findById(mentorId);
+            const mentor = await User.findOne({
+                email: cleanMentorEmail
+            });
 
 
             if (!mentor) {
 
                 return res.status(404).json({
-
                     success: false,
-
                     message:
-                        "Mentor not found."
-
+                        "Mentor account not found."
                 });
 
             }
 
 
             // ---------------------------------------------
-            // MAKE SURE SELECTED USER IS A MENTOR
+            // VERIFY MENTOR ROLE
             // ---------------------------------------------
 
             if (mentor.role !== "mentor") {
 
                 return res.status(400).json({
-
                     success: false,
-
                     message:
-                        "Selected user is not a mentor."
-
+                        "The selected account is not a mentor."
                 });
 
             }
 
 
             // ---------------------------------------------
-            // MAKE SURE TARGET IS NOT A MENTOR
+            // VERIFY STUDENT IS NOT A MENTOR
             // ---------------------------------------------
 
             if (student.role === "mentor") {
 
                 return res.status(400).json({
-
                     success: false,
-
                     message:
-                        "A mentor cannot be assigned as a student."
+                        "The selected student account is marked as a mentor."
+                });
 
+            }
+
+
+            // ---------------------------------------------
+            // PREVENT SELF ASSIGNMENT
+            // ---------------------------------------------
+
+            if (
+                student._id.toString() ===
+                mentor._id.toString()
+            ) {
+
+                return res.status(400).json({
+                    success: false,
+                    message:
+                        "A mentor cannot be assigned to themselves."
                 });
 
             }
@@ -294,7 +260,7 @@ router.post(
 
 
             // ---------------------------------------------
-            // RETURN UPDATED INFORMATION
+            // RETURN RESULT
             // ---------------------------------------------
 
             res.json({
@@ -305,44 +271,30 @@ router.post(
                     "Mentor assigned successfully.",
 
                 student: {
-
                     id: student._id,
-
                     name: student.name,
+                    email: student.email
+                },
 
-                    email: student.email,
-
-                    assignedMentor: {
-
-                        id: mentor._id,
-
-                        name: mentor.name,
-
-                        email: mentor.email
-
-                    }
-
+                mentor: {
+                    id: mentor._id,
+                    name: mentor.name,
+                    email: mentor.email
                 }
 
             });
 
-        }
-
-        catch (error) {
+        } catch (error) {
 
             console.error(
                 "Mentor assignment error:",
                 error
             );
 
-
             res.status(500).json({
-
                 success: false,
-
                 message:
                     "Unable to assign mentor."
-
             });
 
         }
@@ -352,7 +304,7 @@ router.post(
 
 
 // =====================================================
-// REMOVE ASSIGNED MENTOR
+// REMOVE MENTOR ASSIGNMENT
 // =====================================================
 
 router.post(
@@ -363,53 +315,36 @@ router.post(
         try {
 
             const {
-                studentId
+                studentEmail
             } = req.body;
 
 
-            if (!studentId) {
+            if (!studentEmail) {
 
                 return res.status(400).json({
-
                     success: false,
-
                     message:
-                        "Student ID is required."
-
-                });
-
-            }
-
-
-            if (
-                !mongoose.Types.ObjectId.isValid(studentId)
-            ) {
-
-                return res.status(400).json({
-
-                    success: false,
-
-                    message:
-                        "Invalid student ID."
-
+                        "Student email is required."
                 });
 
             }
 
 
             const student =
-                await User.findById(studentId);
+                await User.findOne({
+                    email:
+                        studentEmail
+                            .trim()
+                            .toLowerCase()
+                });
 
 
             if (!student) {
 
                 return res.status(404).json({
-
                     success: false,
-
                     message:
-                        "Student not found."
-
+                        "Student account not found."
                 });
 
             }
@@ -429,23 +364,17 @@ router.post(
 
             });
 
-        }
-
-        catch (error) {
+        } catch (error) {
 
             console.error(
                 "Remove mentor assignment error:",
                 error
             );
 
-
             res.status(500).json({
-
                 success: false,
-
                 message:
                     "Unable to remove mentor assignment."
-
             });
 
         }
