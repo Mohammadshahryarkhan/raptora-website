@@ -17,6 +17,7 @@ const mccRoutes = require("./routes/mccRoutes");
 const mentorRoutes = require("./routes/mentorRoutes");
 const paymentRoutes = require("./routes/paymentRoutes");
 const messageRoutes = require("./routes/messageRoutes");
+app.use("/api/messages", messageRoutes);
 
 
 // =====================================================
@@ -34,7 +35,7 @@ app.use(cors());
 app.use(express.json());
 
 app.use(express.urlencoded({ extended: true }));
-app.use("/api/messages", messageRoutes);
+
 
 // =====================================================
 // SERVE FRONTEND
