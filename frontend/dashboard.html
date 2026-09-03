@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 
 <html lang="en">
@@ -498,6 +499,33 @@
                 <i class="fa-solid fa-house"></i>
 
                 Dashboard
+
+            </a>
+
+        </li>
+
+
+        <!-- =================================================
+             MENTOR CHAT
+        ================================================== -->
+
+        <li class="sidebar-chat-item">
+
+            <a href="#"
+               class="mentor-chat-link"
+               onclick="openMentorChat(event)">
+
+                <i class="fa-solid fa-comments"></i>
+
+                Mentor Chat
+
+                <span
+                    id="chatUnreadBadge"
+                    class="chat-unread-badge">
+
+                    0
+
+                </span>
 
             </a>
 
@@ -1087,6 +1115,21 @@ function openCollegeSearch() {
 
     window.location.href =
         "../college-list.html";
+
+}
+
+
+/* =====================================================
+   MENTOR CHAT
+===================================================== */
+
+function openMentorChat(event) {
+
+    event.preventDefault();
+
+    alert(
+        "Mentor Chat will be available here."
+    );
 
 }
 
@@ -2173,3 +2216,4 @@ document.addEventListener(
 </body>
 
 </html>
+
