@@ -4,7 +4,28 @@ const router = express.Router();
 
 const User = require("../models/User");
 const authMiddleware = require("../middleware/authMiddleware");
+const adminOnly = async (req, res, next) => {
+    try {
+        const user = await User.findById(req.user.id);
 
+        if (!user || user.role !== "admin") {
+            return res.status(403).json({
+                success: false,
+                message: "Admin access required."
+            });
+        }
+
+        next();
+
+    } catch (error) {
+        console.error("Admin verification error:", error);
+
+        return res.status(500).json({
+            success: false,
+            message: "Unable to verify admin access."
+        });
+    }
+};
 
 // =====================================================
 // GET ALL MENTOR PLANS
@@ -129,6 +150,7 @@ router.get(
 router.post(
     "/assign-by-email",
     authMiddleware,
+    adminOnly,
     async (req, res) => {
 
         try {
@@ -310,6 +332,7 @@ router.post(
 router.post(
     "/remove-assignment",
     authMiddleware,
+    adminOnly,
     async (req, res) => {
 
         try {
