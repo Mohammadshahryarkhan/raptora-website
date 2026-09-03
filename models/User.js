@@ -1,10 +1,4 @@
-
 const mongoose = require("mongoose");
-
-
-// =====================================================
-// MILESTONE SCHEMA
-// =====================================================
 
 const milestoneSchema = new mongoose.Schema(
     {
@@ -28,19 +22,12 @@ const milestoneSchema = new mongoose.Schema(
             default: null
         }
     },
-    {
-        _id: false
-    }
+    { _id: false }
 );
 
 
-// =====================================================
-// USER SCHEMA
-// =====================================================
-
 const userSchema = new mongoose.Schema(
     {
-
         // =====================================================
         // BASIC USER DETAILS
         // =====================================================
@@ -77,11 +64,7 @@ const userSchema = new mongoose.Schema(
 
         role: {
             type: String,
-            enum: [
-                "student",
-                "mentor",
-                "admin"
-            ],
+            enum: ["student", "mentor", "admin"],
             default: "student"
         },
 
@@ -157,7 +140,6 @@ const userSchema = new mongoose.Schema(
                 type: String,
                 default: null
             }
-
         },
 
 
@@ -191,7 +173,6 @@ const userSchema = new mongoose.Schema(
                 type: String,
                 default: "Getting Started"
             }
-
         },
 
 
@@ -214,6 +195,11 @@ const userSchema = new mongoose.Schema(
             default: "Raptora Member"
         },
 
+
+        // =====================================================
+        // REFERRAL BADGE
+        // =====================================================
+
         referralBadge: {
             type: String,
             default: "Raptora Member"
@@ -226,13 +212,14 @@ const userSchema = new mongoose.Schema(
 
         paymentStatus: {
             type: String,
-            enum: [
-                "pending",
-                "paid",
-                "failed"
-            ],
+            enum: ["pending", "paid", "failed"],
             default: "pending"
         },
+
+
+        // =====================================================
+        // RAZORPAY DETAILS
+        // =====================================================
 
         razorpayPaymentId: {
             type: String,
@@ -246,7 +233,7 @@ const userSchema = new mongoose.Schema(
 
 
         // =====================================================
-        // REFERRAL SYSTEM
+        // REFERRAL CODE
         // =====================================================
 
         referralCode: {
@@ -256,17 +243,26 @@ const userSchema = new mongoose.Schema(
             default: null
         },
 
+
+        // =====================================================
+        // REFERRED BY
+        // =====================================================
+
         referredBy: {
             type: mongoose.Schema.Types.ObjectId,
             ref: "User",
             default: null
         },
 
+
+        // =====================================================
+        // REFERRAL POINTS
+        // =====================================================
+
         referralPoints: {
             type: Number,
             default: 0
         }
-
     },
 
     {
@@ -275,9 +271,7 @@ const userSchema = new mongoose.Schema(
 );
 
 
-// =====================================================
-// EXPORT MODEL
-// =====================================================
-
-module.exports =
-    mongoose.model("User", userSchema);
+module.exports = mongoose.model(
+    "User",
+    userSchema
+);
