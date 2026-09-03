@@ -3,16 +3,21 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 ```
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
 <title>RAPTORA | Mentor Dashboard</title>
 
-<link rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
 <style>
+
     * {
         box-sizing: border-box;
     }
@@ -55,10 +60,18 @@
         cursor: pointer;
     }
 
+    .logout:hover {
+        background: #c70710;
+    }
+
     .dashboard {
         display: flex;
         height: calc(100vh - 70px);
     }
+
+    /* ================================
+       STUDENTS
+    ================================= */
 
     .students {
         width: 300px;
@@ -95,10 +108,15 @@
         margin-top: 5px;
     }
 
+    /* ================================
+       CHAT
+    ================================= */
+
     .chat {
         flex: 1;
         display: flex;
         flex-direction: column;
+        min-width: 0;
     }
 
     .chat-header {
@@ -138,6 +156,7 @@
         padding: 11px 14px;
         border-radius: 12px;
         line-height: 1.4;
+        word-break: break-word;
     }
 
     .message.student {
@@ -158,28 +177,39 @@
         margin-top: 5px;
     }
 
+    /* ================================
+       ATTACHMENTS
+    ================================= */
+
     .attachment-image {
         max-width: 300px;
         max-height: 300px;
         border-radius: 8px;
-        margin-top: 7px;
+        margin-top: 8px;
         display: block;
+        object-fit: cover;
     }
 
     .attachment-video {
         max-width: 320px;
+        width: 100%;
         border-radius: 8px;
-        margin-top: 7px;
+        margin-top: 8px;
     }
 
     .file-card {
         display: block;
         margin-top: 8px;
-        padding: 10px;
+        padding: 11px;
         border-radius: 8px;
-        background: rgba(0,0,0,.25);
+        background: rgba(0, 0, 0, .25);
         color: white;
         text-decoration: none;
+        word-break: break-word;
+    }
+
+    .file-card:hover {
+        background: rgba(0, 0, 0, .4);
     }
 
     .file-card i {
@@ -188,10 +218,15 @@
 
     .attachment-bar {
         min-height: 35px;
-        padding: 0 18px;
+        padding: 6px 18px;
         color: #aaa;
         font-size: 13px;
+        background: #111;
     }
+
+    /* ================================
+       MESSAGE COMPOSER
+    ================================= */
 
     .composer {
         display: flex;
@@ -211,6 +246,7 @@
         color: white;
         cursor: pointer;
         font-size: 18px;
+        flex-shrink: 0;
     }
 
     .attach-button:hover {
@@ -219,12 +255,17 @@
 
     #message-input {
         flex: 1;
+        min-width: 0;
         background: #1b1b1b;
         border: 1px solid #333;
         color: white;
         border-radius: 22px;
         padding: 12px 16px;
         outline: none;
+    }
+
+    #message-input:focus {
+        border-color: #e50914;
     }
 
     .send-button {
@@ -236,6 +277,11 @@
         color: white;
         cursor: pointer;
         font-size: 17px;
+        flex-shrink: 0;
+    }
+
+    .send-button:hover {
+        background: #c70710;
     }
 
     .send-button:disabled {
@@ -248,6 +294,11 @@
     }
 
     @media (max-width: 700px) {
+
+        .navbar {
+            padding: 0 15px;
+        }
+
         .students {
             width: 220px;
         }
@@ -255,7 +306,13 @@
         .message {
             max-width: 85%;
         }
+
+        .nav-title {
+            font-size: 17px;
+        }
+
     }
+
 </style>
 ```
 
@@ -263,47 +320,77 @@
 
 <body>
 
+<!-- =====================================================
+     NAVBAR
+===================================================== -->
+
 <header class="navbar">
 
 ```
 <div>
-    <img src="frontend/register.png"
-         class="logo"
-         alt="Raptora">
+
+    <img
+        src="frontend/register.png"
+        class="logo"
+        alt="Raptora">
+
 </div>
+
 
 <div class="nav-title">
     Mentor Dashboard
 </div>
 
-<button class="logout" onclick="logout()">
+
+<button
+    class="logout"
+    onclick="logout()">
+
     Logout
+
 </button>
 ```
 
 </header>
 
+<!-- =====================================================
+     DASHBOARD
+===================================================== -->
+
 <div class="dashboard">
 
 ```
-<!-- STUDENTS -->
+<!-- =================================================
+     STUDENTS
+================================================== -->
 
 <aside class="students">
 
-    <h2>My Students</h2>
+    <h2>
+        My Students
+    </h2>
+
 
     <div id="students-list">
+
         <div class="empty">
             Loading students...
         </div>
+
     </div>
 
 </aside>
 
 
-<!-- CHAT -->
+
+<!-- =================================================
+     CHAT
+================================================== -->
 
 <main class="chat">
+
+
+    <!-- CHAT HEADER -->
 
     <div class="chat-header">
 
@@ -318,8 +405,12 @@
     </div>
 
 
-    <div id="messages"
-         class="messages">
+
+    <!-- MESSAGES -->
+
+    <div
+        id="messages"
+        class="messages">
 
         <div class="empty">
             Select a student to start chatting.
@@ -328,12 +419,22 @@
     </div>
 
 
-    <div id="attachment-status"
-         class="attachment-bar">
+
+    <!-- ATTACHMENT STATUS -->
+
+    <div
+        id="attachment-status"
+        class="attachment-bar">
     </div>
 
 
+
+    <!-- COMPOSER -->
+
     <div class="composer">
+
+
+        <!-- FILE INPUT -->
 
         <input
             type="file"
@@ -341,7 +442,11 @@
             accept="image/jpeg,image/png,image/webp,image/gif,video/mp4,video/webm,video/quicktime,application/pdf">
 
 
+
+        <!-- ATTACHMENT BUTTON -->
+
         <button
+            type="button"
             class="attach-button"
             onclick="openFilePicker()"
             title="Attach photo, video or PDF">
@@ -351,6 +456,9 @@
         </button>
 
 
+
+        <!-- TEXT INPUT -->
+
         <input
             type="text"
             id="message-input"
@@ -358,7 +466,11 @@
             autocomplete="off">
 
 
+
+        <!-- SEND -->
+
         <button
+            type="button"
             class="send-button"
             id="send-button"
             onclick="sendMessage()">
@@ -376,22 +488,38 @@
 
 <script>
 
-const API_BASE_URL = "https://raptora-website.onrender.com";
 
-const token = localStorage.getItem("token");
+// =====================================================
+// CONFIGURATION
+// =====================================================
+
+const API_BASE_URL =
+    "https://raptora-website.onrender.com";
+
+
+const token =
+    localStorage.getItem("token");
+
 
 let currentStudent = null;
+
 let selectedFile = null;
+
 let pollingTimer = null;
 
 
+
 // =====================================================
-// AUTH
+// AUTH CHECK
 // =====================================================
 
 if (!token) {
-    window.location.href = "frontend/login.html";
+
+    window.location.href =
+        "frontend/login.html";
+
 }
+
 
 
 // =====================================================
@@ -402,107 +530,11 @@ function logout() {
 
     localStorage.removeItem("token");
 
-    window.location.href = "frontend/login.html";
+    window.location.href =
+        "frontend/login.html";
+
 }
 
-
-// =====================================================
-// LOAD STUDENTS
-// =====================================================
-
-async function loadStudents() {
-
-    try {
-
-        const response = await fetch(
-            `${API_BASE_URL}/api/auth/users`,
-            {
-                headers: {
-                    Authorization: `Bearer ${token}`
-                }
-            }
-        );
-
-        const data = await response.json();
-
-        if (!response.ok || !data.success) {
-            throw new Error(data.message || "Unable to load students");
-        }
-
-        renderStudents(data.users || []);
-
-    } catch (error) {
-
-        console.error(error);
-
-        document.getElementById("students-list").innerHTML = `
-            <div class="empty">
-                ${escapeHtml(error.message)}
-            </div>
-        `;
-    }
-}
-
-
-// =====================================================
-// RENDER STUDENTS
-// =====================================================
-
-function renderStudents(users) {
-
-    const container =
-        document.getElementById("students-list");
-
-    const mentorId = getCurrentMentorId();
-
-    const students = users.filter(user => {
-
-        if (!user.assignedMentor) {
-            return false;
-        }
-
-        const assignedId =
-            typeof user.assignedMentor === "object"
-                ? user.assignedMentor._id
-                : user.assignedMentor;
-
-        return assignedId === mentorId;
-
-    });
-
-
-    if (!students.length) {
-
-        container.innerHTML = `
-            <div class="empty">
-                No students assigned yet.
-            </div>
-        `;
-
-        return;
-    }
-
-
-    container.innerHTML = students.map(student => {
-
-        return `
-            <div
-                class="student"
-                onclick='selectStudent(${JSON.stringify(student)})'>
-
-                <div class="student-name">
-                    ${escapeHtml(student.name)}
-                </div>
-
-                <div class="student-email">
-                    ${escapeHtml(student.email)}
-                </div>
-
-            </div>
-        `;
-
-    }).join("");
-}
 
 
 // =====================================================
@@ -513,46 +545,240 @@ function getCurrentMentorId() {
 
     try {
 
-        const payload =
-            JSON.parse(atob(token.split(".")[1]));
+        const parts =
+            token.split(".");
 
-        return payload.id || payload._id;
+        const payload =
+            JSON.parse(
+                atob(parts[1])
+            );
+
+        return (
+            payload.id ||
+            payload._id
+        );
 
     } catch (error) {
 
-        console.error("Unable to read token", error);
+        console.error(
+            "Unable to read token:",
+            error
+        );
 
         return null;
+
     }
+
 }
+
+
+
+// =====================================================
+// LOAD MY STUDENTS
+// =====================================================
+
+async function loadStudents() {
+
+    try {
+
+        const response =
+            await fetch(
+                `${API_BASE_URL}/api/mentors/my-students`,
+                {
+                    method: "GET",
+
+                    headers: {
+                        Authorization:
+                            `Bearer ${token}`
+                    }
+                }
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if (
+            !response.ok ||
+            !data.success
+        ) {
+
+            throw new Error(
+                data.message ||
+                "Unable to load students."
+            );
+
+        }
+
+
+        renderStudents(
+            data.students || []
+        );
+
+
+    } catch (error) {
+
+        console.error(
+            "Students error:",
+            error
+        );
+
+
+        document.getElementById(
+            "students-list"
+        ).innerHTML = `
+
+            <div class="empty">
+
+                ${escapeHtml(error.message)}
+
+            </div>
+
+        `;
+
+    }
+
+}
+
+
+
+// =====================================================
+// RENDER STUDENTS
+// =====================================================
+
+function renderStudents(students) {
+
+    const container =
+        document.getElementById(
+            "students-list"
+        );
+
+
+    if (!students.length) {
+
+        container.innerHTML = `
+
+            <div class="empty">
+
+                No students assigned yet.
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    container.innerHTML =
+        students.map(
+            (student, index) => {
+
+                return `
+
+                    <div
+                        class="student"
+                        data-student-id="${escapeAttribute(student._id)}"
+                        onclick="selectStudentByIndex(${index})">
+
+                        <div class="student-name">
+
+                            ${escapeHtml(student.name)}
+
+                        </div>
+
+                        <div class="student-email">
+
+                            ${escapeHtml(student.email)}
+
+                        </div>
+
+                    </div>
+
+                `;
+
+            }
+        ).join("");
+
+
+    // Store students safely
+    window.mentorStudents =
+        students;
+
+}
+
 
 
 // =====================================================
 // SELECT STUDENT
 // =====================================================
 
-function selectStudent(student) {
+function selectStudentByIndex(index) {
 
-    currentStudent = student;
+    const students =
+        window.mentorStudents || [];
+
+
+    const student =
+        students[index];
+
+
+    if (!student) {
+        return;
+    }
+
+
+    currentStudent =
+        student;
+
 
     document
         .querySelectorAll(".student")
-        .forEach(el => el.classList.remove("active"));
+        .forEach(
+            element =>
+                element.classList.remove(
+                    "active"
+                )
+        );
 
-    event.currentTarget.classList.add("active");
+
+    const selectedElement =
+        document.querySelector(
+            `[data-student-id="${student._id}"]`
+        );
 
 
-    document.getElementById("chat-student-name").textContent =
+    if (selectedElement) {
+
+        selectedElement.classList.add(
+            "active"
+        );
+
+    }
+
+
+    document.getElementById(
+        "chat-student-name"
+    ).textContent =
         student.name;
 
-    document.getElementById("chat-student-email").textContent =
+
+    document.getElementById(
+        "chat-student-email"
+    ).textContent =
         student.email;
 
+
+    clearSelectedFile();
 
     loadConversation();
 
     startPolling();
+
 }
+
 
 
 // =====================================================
@@ -561,33 +787,63 @@ function selectStudent(student) {
 
 async function loadConversation() {
 
-    if (!currentStudent) return;
+    if (!currentStudent) {
+        return;
+    }
+
 
     try {
 
-        const response = await fetch(
-            `${API_BASE_URL}/api/messages/conversation/${currentStudent._id}`,
-            {
-                headers: {
-                    Authorization: `Bearer ${token}`
+        const response =
+            await fetch(
+
+                `${API_BASE_URL}/api/messages/conversation/${currentStudent._id}`,
+
+                {
+                    method: "GET",
+
+                    headers: {
+                        Authorization:
+                            `Bearer ${token}`
+                    }
                 }
-            }
-        );
 
-        const data = await response.json();
+            );
 
-        if (!response.ok || !data.success) {
-            throw new Error(data.message || "Unable to load messages");
+
+        const data =
+            await response.json();
+
+
+        if (
+            !response.ok ||
+            !data.success
+        ) {
+
+            throw new Error(
+                data.message ||
+                "Unable to load messages."
+            );
+
         }
 
-        renderMessages(data.messages || []);
+
+        renderMessages(
+            data.messages || []
+        );
+
 
     } catch (error) {
 
-        console.error("Conversation error:", error);
+        console.error(
+            "Conversation error:",
+            error
+        );
 
     }
+
 }
+
 
 
 // =====================================================
@@ -597,14 +853,22 @@ async function loadConversation() {
 function startPolling() {
 
     if (pollingTimer) {
-        clearInterval(pollingTimer);
+
+        clearInterval(
+            pollingTimer
+        );
+
     }
 
-    pollingTimer = setInterval(
-        loadConversation,
-        5000
-    );
+
+    pollingTimer =
+        setInterval(
+            loadConversation,
+            5000
+        );
+
 }
+
 
 
 // =====================================================
@@ -614,86 +878,127 @@ function startPolling() {
 function renderMessages(messages) {
 
     const container =
-        document.getElementById("messages");
+        document.getElementById(
+            "messages"
+        );
+
 
     if (!messages.length) {
 
         container.innerHTML = `
+
             <div class="empty">
+
                 No messages yet.
+
             </div>
+
         `;
 
         return;
+
     }
 
 
-    container.innerHTML = messages.map(message => {
-
-        const senderId =
-            typeof message.sender === "object"
-                ? message.sender._id
-                : message.sender;
-
-        const mentorId =
-            getCurrentMentorId();
-
-        const isMentor =
-            senderId === mentorId;
+    const mentorId =
+        getCurrentMentorId();
 
 
-        let attachment = "";
+    container.innerHTML =
+        messages.map(
+            message => {
 
-        if (message.fileUrl) {
-
-            attachment =
-                renderAttachment(message);
-
-        }
+                const senderId =
+                    typeof message.sender === "object"
+                        ? message.sender._id
+                        : message.sender;
 
 
-        return `
-            <div class="message ${isMentor ? "mentor" : "student"}">
+                const isMentor =
+                    String(senderId) ===
+                    String(mentorId);
 
-                ${
-                    message.content
-                        ? `<div>${escapeHtml(message.content)}</div>`
-                        : ""
+
+                let attachment = "";
+
+
+                if (message.fileUrl) {
+
+                    attachment =
+                        renderAttachment(
+                            message
+                        );
+
                 }
 
-                ${attachment}
 
-                <span class="message-time">
-                    ${formatTime(message.createdAt)}
-                </span>
+                return `
 
-            </div>
-        `;
+                    <div
+                        class="message ${isMentor ? "mentor" : "student"}">
 
-    }).join("");
+                        ${
+                            message.content
+                                ? `<div>${escapeHtml(message.content)}</div>`
+                                : ""
+                        }
+
+                        ${attachment}
+
+                        <span class="message-time">
+
+                            ${formatTime(message.createdAt)}
+
+                        </span>
+
+                    </div>
+
+                `;
+
+            }
+        ).join("");
 
 
     container.scrollTop =
         container.scrollHeight;
+
 }
 
 
+
 // =====================================================
-// ATTACHMENT RENDERER
+// RENDER ATTACHMENT
 // =====================================================
 
 function renderAttachment(message) {
 
-    const url = message.fileUrl || "";
-    const name = message.fileName || "Attachment";
-    const mime = message.mimeType || "";
+    const url =
+        message.fileUrl || "";
 
 
-    if (mime.startsWith("image/")) {
+    const name =
+        message.fileName ||
+        "Attachment";
+
+
+    const mime =
+        message.mimeType ||
+        "";
+
+
+
+    // IMAGE
+
+    if (
+        mime.startsWith("image/")
+    ) {
 
         return `
-            <a href="${escapeAttribute(url)}"
-               target="_blank">
+
+            <a
+                href="${escapeAttribute(url)}"
+                target="_blank"
+                rel="noopener noreferrer">
 
                 <img
                     src="${escapeAttribute(url)}"
@@ -701,30 +1006,48 @@ function renderAttachment(message) {
                     alt="${escapeAttribute(name)}">
 
             </a>
+
         `;
+
     }
 
 
-    if (mime.startsWith("video/")) {
+
+    // VIDEO
+
+    if (
+        mime.startsWith("video/")
+    ) {
 
         return `
+
             <video
                 class="attachment-video"
-                controls>
+                controls
+                preload="metadata">
 
                 <source
                     src="${escapeAttribute(url)}"
                     type="${escapeAttribute(mime)}">
 
+                Your browser does not support video.
+
             </video>
+
         `;
+
     }
 
 
+
+    // PDF / OTHER FILE
+
     return `
+
         <a
             href="${escapeAttribute(url)}"
             target="_blank"
+            rel="noopener noreferrer"
             class="file-card">
 
             <i class="fa-solid fa-file-pdf"></i>
@@ -732,27 +1055,36 @@ function renderAttachment(message) {
             ${escapeHtml(name)}
 
         </a>
+
     `;
+
 }
 
 
+
 // =====================================================
-// FILE PICKER
+// OPEN FILE PICKER
 // =====================================================
 
 function openFilePicker() {
 
     if (!currentStudent) {
 
-        alert("Please select a student first.");
+        alert(
+            "Please select a student first."
+        );
 
         return;
+
     }
+
 
     document
         .getElementById("file-input")
         .click();
+
 }
+
 
 
 // =====================================================
@@ -761,31 +1093,98 @@ function openFilePicker() {
 
 document
     .getElementById("file-input")
-    .addEventListener("change", function(event) {
+    .addEventListener(
+        "change",
+        function(event) {
 
-        const file =
-            event.target.files[0];
-
-        if (!file) return;
+            const file =
+                event.target.files[0];
 
 
-        if (file.size > 50 * 1024 * 1024) {
+            if (!file) {
+                return;
+            }
 
-            alert("File must be 50MB or smaller.");
 
-            event.target.value = "";
 
-            return;
+            // 50MB LIMIT
+
+            if (
+                file.size >
+                50 * 1024 * 1024
+            ) {
+
+                alert(
+                    "File must be 50MB or smaller."
+                );
+
+
+                event.target.value =
+                    "";
+
+
+                selectedFile =
+                    null;
+
+
+                return;
+
+            }
+
+
+            selectedFile =
+                file;
+
+
+            document.getElementById(
+                "attachment-status"
+            ).textContent =
+                `📎 ${file.name}`;
+
         }
+    );
 
 
-        selectedFile = file;
+
+// =====================================================
+// CLEAR SELECTED FILE
+// =====================================================
+
+function clearSelectedFile() {
+
+    selectedFile =
+        null;
 
 
-        document.getElementById("attachment-status").textContent =
-            `📎 ${file.name}`;
+    const input =
+        document.getElementById(
+            "file-input"
+        );
 
-    });
+
+    if (input) {
+
+        input.value =
+            "";
+
+    }
+
+
+    const status =
+        document.getElementById(
+            "attachment-status"
+        );
+
+
+    if (status) {
+
+        status.textContent =
+            "";
+
+    }
+
+}
+
 
 
 // =====================================================
@@ -796,28 +1195,43 @@ async function sendMessage() {
 
     if (!currentStudent) {
 
-        alert("Please select a student first.");
+        alert(
+            "Please select a student first."
+        );
 
         return;
+
     }
 
 
     const input =
-        document.getElementById("message-input");
+        document.getElementById(
+            "message-input"
+        );
+
 
     const content =
         input.value.trim();
 
 
-    if (!content && !selectedFile) {
+    if (
+        !content &&
+        !selectedFile
+    ) {
+
         return;
+
     }
 
 
     const sendButton =
-        document.getElementById("send-button");
+        document.getElementById(
+            "send-button"
+        );
 
-    sendButton.disabled = true;
+
+    sendButton.disabled =
+        true;
 
 
     try {
@@ -825,8 +1239,9 @@ async function sendMessage() {
         let response;
 
 
+
         // =============================================
-        // FILE MESSAGE
+        // SEND FILE
         // =============================================
 
         if (selectedFile) {
@@ -834,10 +1249,12 @@ async function sendMessage() {
             const formData =
                 new FormData();
 
+
             formData.append(
                 "receiverId",
                 currentStudent._id
             );
+
 
             if (content) {
 
@@ -845,6 +1262,7 @@ async function sendMessage() {
                     "content",
                     content
                 );
+
             }
 
 
@@ -854,87 +1272,118 @@ async function sendMessage() {
             );
 
 
-            response = await fetch(
-                `${API_BASE_URL}/api/messages/upload`,
-                {
-                    method: "POST",
+            response =
+                await fetch(
+                    `${API_BASE_URL}/api/messages/upload`,
+                    {
+                        method: "POST",
 
-                    headers: {
-                        Authorization: `Bearer ${token}`
-                    },
+                        headers: {
+                            Authorization:
+                                `Bearer ${token}`
+                        },
 
-                    body: formData
-                }
-            );
+                        body: formData
+                    }
+                );
 
         }
 
 
+
         // =============================================
-        // NORMAL TEXT MESSAGE
+        // SEND TEXT
         // =============================================
 
         else {
 
-            response = await fetch(
-                `${API_BASE_URL}/api/messages/send`,
-                {
-                    method: "POST",
+            response =
+                await fetch(
+                    `${API_BASE_URL}/api/messages/send`,
+                    {
+                        method: "POST",
 
-                    headers: {
-                        "Content-Type": "application/json",
-                        Authorization: `Bearer ${token}`
-                    },
+                        headers: {
 
-                    body: JSON.stringify({
-                        receiverId:
-                            currentStudent._id,
+                            "Content-Type":
+                                "application/json",
 
-                        content
-                    })
-                }
-            );
+                            Authorization:
+                                `Bearer ${token}`
+
+                        },
+
+                        body: JSON.stringify({
+
+                            receiverId:
+                                currentStudent._id,
+
+                            content:
+                                content
+
+                        })
+
+                    }
+                );
 
         }
+
 
 
         const data =
             await response.json();
 
 
-        if (!response.ok || !data.success) {
+        if (
+            !response.ok ||
+            !data.success
+        ) {
 
             throw new Error(
                 data.message ||
                 "Message could not be sent."
             );
+
         }
 
 
-        input.value = "";
 
-        selectedFile = null;
+        // CLEAR COMPOSER
 
-        document.getElementById("file-input").value = "";
+        input.value =
+            "";
 
-        document.getElementById("attachment-status").textContent = "";
+        clearSelectedFile();
 
+
+
+        // REFRESH CHAT
 
         await loadConversation();
 
 
     } catch (error) {
 
-        console.error(error);
+        console.error(
+            "Send message error:",
+            error
+        );
 
-        alert(error.message);
+
+        alert(
+            error.message
+        );
+
 
     } finally {
 
-        sendButton.disabled = false;
+        sendButton.disabled =
+            false;
 
     }
+
 }
+
 
 
 // =====================================================
@@ -943,16 +1392,23 @@ async function sendMessage() {
 
 document
     .getElementById("message-input")
-    .addEventListener("keydown", function(event) {
+    .addEventListener(
+        "keydown",
+        function(event) {
 
-        if (event.key === "Enter") {
+            if (
+                event.key === "Enter"
+            ) {
 
-            event.preventDefault();
+                event.preventDefault();
 
-            sendMessage();
+                sendMessage();
+
+            }
+
         }
+    );
 
-    });
 
 
 // =====================================================
@@ -961,42 +1417,71 @@ document
 
 function formatTime(date) {
 
-    if (!date) return "";
+    if (!date) {
+        return "";
+    }
 
-    return new Date(date).toLocaleString(
-        [],
-        {
-            hour: "2-digit",
-            minute: "2-digit"
-        }
-    );
+
+    return new Date(date)
+        .toLocaleString(
+            [],
+            {
+                hour: "2-digit",
+                minute: "2-digit"
+            }
+        );
+
 }
+
 
 
 function escapeHtml(value) {
 
-    return String(value ?? "")
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
+    return String(
+        value ?? ""
+    )
+        .replace(
+            /&/g,
+            "&amp;"
+        )
+        .replace(
+            /</g,
+            "&lt;"
+        )
+        .replace(
+            />/g,
+            "&gt;"
+        )
+        .replace(
+            /"/g,
+            "&quot;"
+        )
+        .replace(
+            /'/g,
+            "&#039;"
+        );
+
 }
+
 
 
 function escapeAttribute(value) {
 
     return escapeHtml(value);
+
 }
 
 
+
 // =====================================================
-// START
+// START DASHBOARD
 // =====================================================
 
 loadStudents();
 
+
 </script>
 
 </body>
+
 </html>
