@@ -1,6 +1,5 @@
 
 <!DOCTYPE html>
-
 <html lang="en">
 
 <head>
@@ -425,6 +424,359 @@
 
 
 /* =====================================================
+   MENTOR CHAT
+===================================================== */
+
+.mentor-chat-container {
+    display: none;
+
+    width: 100%;
+
+    margin-top: 30px;
+    margin-bottom: 30px;
+
+    background: #111;
+
+    border: 1px solid #292929;
+
+    border-radius: 16px;
+
+    overflow: hidden;
+
+    box-shadow:
+        0 10px 35px rgba(255, 0, 0, .15);
+}
+
+
+/* =====================================================
+   CHAT HEADER
+===================================================== */
+
+.mentor-chat-header {
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 18px 22px;
+
+    background: #181818;
+
+    border-bottom: 1px solid #292929;
+}
+
+.mentor-chat-header-left {
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+}
+
+.mentor-chat-avatar {
+    width: 44px;
+    height: 44px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    background: #c40000;
+
+    border-radius: 50%;
+
+    font-size: 18px;
+}
+
+.mentor-chat-header h3 {
+    margin: 0;
+
+    font-size: 16px;
+}
+
+.mentor-online-status {
+    color: #55e889;
+
+    font-size: 12px;
+
+    margin-top: 3px;
+}
+
+.chat-close-button {
+    width: 36px;
+    height: 36px;
+
+    border: 1px solid #333;
+
+    background: #111;
+
+    color: #aaa;
+
+    border-radius: 8px;
+
+    cursor: pointer;
+
+    font-size: 15px;
+}
+
+.chat-close-button:hover {
+    color: white;
+    border-color: #e50914;
+    background: #1a1a1a;
+}
+
+
+/* =====================================================
+   CHAT MESSAGES
+===================================================== */
+
+.mentor-chat-messages {
+    height: 430px;
+
+    padding: 20px;
+
+    overflow-y: auto;
+
+    background:
+        linear-gradient(
+            180deg,
+            #0d0d0d,
+            #111
+        );
+}
+
+.chat-empty {
+    height: 100%;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    text-align: center;
+
+    color: #777;
+
+    font-size: 14px;
+}
+
+.chat-message {
+    display: flex;
+
+    margin-bottom: 14px;
+}
+
+.chat-message.student {
+    justify-content: flex-end;
+}
+
+.chat-message.mentor {
+    justify-content: flex-start;
+}
+
+.chat-bubble {
+    max-width: 70%;
+
+    padding: 11px 15px;
+
+    border-radius: 14px;
+
+    font-size: 14px;
+
+    line-height: 1.5;
+
+    word-break: break-word;
+}
+
+.chat-message.student .chat-bubble {
+    background: #c40000;
+
+    color: white;
+
+    border-bottom-right-radius: 4px;
+}
+
+.chat-message.mentor .chat-bubble {
+    background: #202020;
+
+    color: #eee;
+
+    border: 1px solid #292929;
+
+    border-bottom-left-radius: 4px;
+}
+
+.chat-message-time {
+    display: block;
+
+    margin-top: 5px;
+
+    font-size: 10px;
+
+    opacity: .65;
+}
+
+
+/* =====================================================
+   CHAT LINKS
+===================================================== */
+
+.chat-link {
+    color: white;
+
+    text-decoration: underline;
+
+    word-break: break-all;
+}
+
+.chat-link:hover {
+    color: #ffb0b0;
+}
+
+
+/* =====================================================
+   CHAT INPUT
+===================================================== */
+
+.mentor-chat-input-area {
+    display: flex;
+
+    gap: 10px;
+
+    padding: 15px;
+
+    background: #181818;
+
+    border-top: 1px solid #292929;
+}
+
+.mentor-chat-input {
+    flex: 1;
+
+    border: 1px solid #333;
+
+    background: #0d0d0d;
+
+    color: white;
+
+    padding: 12px 15px;
+
+    border-radius: 10px;
+
+    outline: none;
+
+    font-family: inherit;
+
+    resize: none;
+}
+
+.mentor-chat-input:focus {
+    border-color: #ff2d2d;
+}
+
+.mentor-chat-send {
+    width: 48px;
+
+    border: none;
+
+    background: #c40000;
+
+    color: white;
+
+    border-radius: 10px;
+
+    cursor: pointer;
+
+    font-size: 16px;
+
+    transition: .2s;
+}
+
+.mentor-chat-send:hover {
+    background: #ff2d2d;
+
+    transform: translateY(-1px);
+}
+
+.mentor-chat-send:disabled {
+    opacity: .5;
+
+    cursor: not-allowed;
+
+    transform: none;
+}
+
+
+/* =====================================================
+   CHAT ACTION BUTTONS
+===================================================== */
+
+.chat-actions {
+    display: flex;
+
+    gap: 8px;
+
+    padding: 10px 15px 0;
+
+    background: #181818;
+}
+
+.chat-action-button {
+    border: 1px solid #333;
+
+    background: #111;
+
+    color: #ccc;
+
+    padding: 7px 10px;
+
+    border-radius: 8px;
+
+    cursor: pointer;
+
+    font-family: inherit;
+
+    font-size: 12px;
+
+    transition: .2s;
+}
+
+.chat-action-button:hover {
+    border-color: #ff2d2d;
+
+    color: white;
+}
+
+
+/* =====================================================
+   NO MENTOR ASSIGNED
+===================================================== */
+
+.no-mentor-chat {
+    padding: 40px 20px;
+
+    text-align: center;
+
+    color: #888;
+}
+
+.no-mentor-chat i {
+    font-size: 40px;
+
+    color: #e50914;
+
+    margin-bottom: 15px;
+}
+
+.no-mentor-chat h3 {
+    color: white;
+
+    margin-bottom: 8px;
+}
+
+
+/* =====================================================
    LOADING
 ===================================================== */
 
@@ -472,6 +824,18 @@
         width: 100%;
     }
 
+    .mentor-chat-messages {
+        height: 350px;
+    }
+
+    .chat-bubble {
+        max-width: 85%;
+    }
+
+    .mentor-chat-input-area {
+        padding: 10px;
+    }
+
 }
 
 </style>
@@ -504,10 +868,6 @@
 
         </li>
 
-
-        <!-- =================================================
-             MENTOR CHAT
-        ================================================== -->
 
         <li class="sidebar-chat-item">
 
@@ -689,10 +1049,6 @@
 
 
 
-    <!-- =================================================
-         NO MENTORSHIP
-    ================================================== -->
-
     <div
         id="noMentorship"
         class="no-mentorship">
@@ -721,10 +1077,6 @@
     </div>
 
 
-
-    <!-- =================================================
-         ACTIVE MENTORSHIP
-    ================================================== -->
 
     <div
         id="activeMentorship"
@@ -849,8 +1201,6 @@
     <div class="reward-grid">
 
 
-        <!-- REFERRAL CODE -->
-
         <div class="reward-card referral-code-card">
 
             <i class="fa-solid fa-gift"></i>
@@ -887,8 +1237,6 @@
 
 
 
-        <!-- REFERRAL POINTS -->
-
         <div class="reward-card">
 
             <i class="fa-solid fa-star"></i>
@@ -915,8 +1263,6 @@
         </div>
 
 
-
-        <!-- BADGE -->
 
         <div class="reward-card">
 
@@ -1035,6 +1381,152 @@
     </div>
 
 
+
+    <!-- =================================================
+         MENTOR CHAT
+    ================================================== -->
+
+    <div
+        id="mentorChatContainer"
+        class="mentor-chat-container">
+
+
+        <!-- CHAT HEADER -->
+
+        <div class="mentor-chat-header">
+
+
+            <div class="mentor-chat-header-left">
+
+                <div
+                    id="mentorChatAvatar"
+                    class="mentor-chat-avatar">
+
+                    <i class="fa-solid fa-user-tie"></i>
+
+                </div>
+
+
+                <div>
+
+                    <h3 id="mentorChatName">
+
+                        Raptora Mentor
+
+                    </h3>
+
+                    <div class="mentor-online-status">
+
+                        <i class="fa-solid fa-circle"
+                           style="font-size:7px;"></i>
+
+                        Mentor Communication
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <button
+                class="chat-close-button"
+                onclick="closeMentorChat()"
+                title="Close Chat">
+
+                <i class="fa-solid fa-xmark"></i>
+
+            </button>
+
+        </div>
+
+
+
+        <!-- CHAT MESSAGES -->
+
+        <div
+            id="mentorChatMessages"
+            class="mentor-chat-messages">
+
+            <div class="chat-empty">
+
+                <div>
+
+                    <i class="fa-solid fa-comments"
+                       style="font-size:35px;color:#e50914;margin-bottom:12px;"></i>
+
+                    <p>
+                        Loading your mentor conversation...
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- CHAT ACTIONS -->
+
+        <div class="chat-actions">
+
+            <button
+                class="chat-action-button"
+                type="button"
+                onclick="insertMeetLink()">
+
+                <i class="fa-solid fa-video"></i>
+
+                Meet / Zoom Link
+
+            </button>
+
+
+            <button
+                class="chat-action-button"
+                type="button"
+                onclick="insertLink()">
+
+                <i class="fa-solid fa-link"></i>
+
+                Share Link
+
+            </button>
+
+        </div>
+
+
+
+        <!-- CHAT INPUT -->
+
+        <div class="mentor-chat-input-area">
+
+            <textarea
+                id="mentorChatInput"
+                class="mentor-chat-input"
+                rows="1"
+                maxlength="2000"
+                placeholder="Message your mentor..."
+                onkeydown="handleChatKeydown(event)"></textarea>
+
+
+            <button
+                id="mentorChatSend"
+                class="mentor-chat-send"
+                type="button"
+                onclick="sendMentorMessage()">
+
+                <i class="fa-solid fa-paper-plane"></i>
+
+            </button>
+
+        </div>
+
+
+    </div>
+
+
 </div>
 
 
@@ -1059,6 +1551,12 @@ const API_BASE_URL =
 let currentUser = null;
 
 let calendarDate = new Date();
+
+let mentorChatOpen = false;
+
+let mentorChatInterval = null;
+
+let mentorId = null;
 
 
 /* =====================================================
@@ -1120,16 +1618,904 @@ function openCollegeSearch() {
 
 
 /* =====================================================
-   MENTOR CHAT
+   OPEN MENTOR CHAT
 ===================================================== */
 
-function openMentorChat(event) {
+async function openMentorChat(event) {
 
-    event.preventDefault();
+    if (event) {
 
-    alert(
-        "Mentor Chat will be available here."
-    );
+        event.preventDefault();
+
+    }
+
+
+    const container =
+        document.getElementById(
+            "mentorChatContainer"
+        );
+
+
+    if (!container) {
+
+        return;
+
+    }
+
+
+    mentorChatOpen = true;
+
+
+    container.style.display =
+        "block";
+
+
+    container.scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+    });
+
+
+    await loadMentorConversation();
+
+
+    startMentorChatPolling();
+
+}
+
+
+/* =====================================================
+   CLOSE MENTOR CHAT
+===================================================== */
+
+function closeMentorChat() {
+
+    const container =
+        document.getElementById(
+            "mentorChatContainer"
+        );
+
+
+    if (container) {
+
+        container.style.display =
+            "none";
+
+    }
+
+
+    mentorChatOpen = false;
+
+
+    stopMentorChatPolling();
+
+}
+
+
+/* =====================================================
+   LOAD MENTOR CONVERSATION
+===================================================== */
+
+async function loadMentorConversation() {
+
+    const messagesContainer =
+        document.getElementById(
+            "mentorChatMessages"
+        );
+
+
+    if (!messagesContainer) {
+
+        return;
+
+    }
+
+
+    if (!currentUser) {
+
+        messagesContainer.innerHTML = `
+            <div class="chat-empty">
+                <div>
+                    <p>Loading your account...</p>
+                </div>
+            </div>
+        `;
+
+        return;
+
+    }
+
+
+    /*
+       The backend will provide assignedMentor
+       in the next backend step.
+    */
+
+    const assignedMentor =
+        currentUser.assignedMentor;
+
+
+    if (!assignedMentor) {
+
+        messagesContainer.innerHTML = `
+            <div class="no-mentor-chat">
+                <i class="fa-solid fa-user-tie"></i>
+
+                <h3>No Mentor Assigned Yet</h3>
+
+                <p>
+                    Your mentor will appear here once
+                    Raptora assigns one to your account.
+                </p>
+            </div>
+        `;
+
+        updateChatBadge(0);
+
+        return;
+
+    }
+
+
+    mentorId =
+        typeof assignedMentor === "object"
+            ? assignedMentor._id
+            : assignedMentor;
+
+
+    if (
+        typeof assignedMentor === "object" &&
+        assignedMentor.name
+    ) {
+
+        document.getElementById(
+            "mentorChatName"
+        ).innerText =
+            assignedMentor.name;
+
+    }
+
+
+    try {
+
+        const response =
+            await fetch(
+                API_BASE_URL +
+                "/api/messages/conversation/" +
+                mentorId,
+                {
+                    method: "GET",
+
+                    headers: {
+
+                        "Authorization":
+                            "Bearer " + storedToken,
+
+                        "Content-Type":
+                            "application/json"
+
+                    }
+
+                }
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                data.message ||
+                "Unable to load conversation."
+            );
+
+        }
+
+
+        if (!data.success) {
+
+            throw new Error(
+                data.message ||
+                "Unable to load conversation."
+            );
+
+        }
+
+
+        renderMentorMessages(
+            data.messages || []
+        );
+
+
+        await markMentorMessagesRead();
+
+
+        updateUnreadCount();
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "Mentor chat error:",
+            error
+        );
+
+
+        messagesContainer.innerHTML = `
+            <div class="chat-empty">
+                <div>
+                    <i class="fa-solid fa-triangle-exclamation"
+                       style="font-size:30px;color:#e50914;"></i>
+
+                    <p>
+                        Unable to load your mentor chat.
+                    </p>
+
+                    <small style="color:#666;">
+                        ${escapeHtml(error.message)}
+                    </small>
+                </div>
+            </div>
+        `;
+
+    }
+
+}
+
+
+/* =====================================================
+   RENDER MESSAGES
+===================================================== */
+
+function renderMentorMessages(
+    messages
+) {
+
+    const container =
+        document.getElementById(
+            "mentorChatMessages"
+        );
+
+
+    if (!container) {
+
+        return;
+
+    }
+
+
+    if (!messages || messages.length === 0) {
+
+        container.innerHTML = `
+            <div class="chat-empty">
+                <div>
+
+                    <i class="fa-solid fa-comments"
+                       style="font-size:35px;color:#e50914;margin-bottom:12px;"></i>
+
+                    <p>
+                        No messages yet.
+                    </p>
+
+                    <small>
+                        Start the conversation with your mentor.
+                    </small>
+
+                </div>
+            </div>
+        `;
+
+        return;
+
+    }
+
+
+    container.innerHTML = "";
+
+
+    messages.forEach(function(message) {
+
+        const senderId =
+            message.sender &&
+            (
+                message.sender._id ||
+                message.sender
+            );
+
+
+        const isStudent =
+            String(senderId) ===
+            String(currentUser._id);
+
+
+        const messageWrapper =
+            document.createElement(
+                "div"
+            );
+
+
+        messageWrapper.className =
+            "chat-message " +
+            (
+                isStudent
+                    ? "student"
+                    : "mentor"
+            );
+
+
+        const bubble =
+            document.createElement(
+                "div"
+            );
+
+
+        bubble.className =
+            "chat-bubble";
+
+
+        let messageContent =
+            escapeHtml(
+                message.content || ""
+            );
+
+
+        /*
+           If a URL exists, make it clickable.
+        */
+
+        if (message.url) {
+
+            messageContent +=
+                `
+                <br>
+                <a
+                    class="chat-link"
+                    href="${escapeAttribute(message.url)}"
+                    target="_blank"
+                    rel="noopener noreferrer">
+
+                    <i class="fa-solid fa-arrow-up-right-from-square"></i>
+
+                    Open Link
+
+                </a>
+                `;
+
+        }
+
+
+        const createdAt =
+            message.createdAt
+                ? new Date(message.createdAt)
+                : null;
+
+
+        const timeText =
+            createdAt &&
+            !isNaN(createdAt.getTime())
+                ? createdAt.toLocaleTimeString(
+                    "en-IN",
+                    {
+                        hour: "2-digit",
+                        minute: "2-digit"
+                    }
+                )
+                : "";
+
+
+        bubble.innerHTML =
+            messageContent +
+            `
+                <span class="chat-message-time">
+                    ${timeText}
+                </span>
+            `;
+
+
+        messageWrapper.appendChild(
+            bubble
+        );
+
+
+        container.appendChild(
+            messageWrapper
+        );
+
+    });
+
+
+    container.scrollTop =
+        container.scrollHeight;
+
+}
+
+
+/* =====================================================
+   SEND MENTOR MESSAGE
+===================================================== */
+
+async function sendMentorMessage() {
+
+    const input =
+        document.getElementById(
+            "mentorChatInput"
+        );
+
+
+    const sendButton =
+        document.getElementById(
+            "mentorChatSend"
+        );
+
+
+    if (!input) {
+
+        return;
+
+    }
+
+
+    const content =
+        input.value.trim();
+
+
+    if (!content) {
+
+        return;
+
+    }
+
+
+    if (!mentorId) {
+
+        alert(
+            "No mentor is assigned to your account yet."
+        );
+
+        return;
+
+    }
+
+
+    sendButton.disabled =
+        true;
+
+
+    try {
+
+        const response =
+            await fetch(
+                API_BASE_URL +
+                "/api/messages/send",
+                {
+                    method: "POST",
+
+                    headers: {
+
+                        "Authorization":
+                            "Bearer " + storedToken,
+
+                        "Content-Type":
+                            "application/json"
+
+                    },
+
+                    body:
+                        JSON.stringify({
+
+                            receiverId:
+                                mentorId,
+
+                            content:
+                                content,
+
+                            type:
+                                "text"
+
+                        })
+
+                }
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                data.message ||
+                "Unable to send message."
+            );
+
+        }
+
+
+        if (!data.success) {
+
+            throw new Error(
+                data.message ||
+                "Unable to send message."
+            );
+
+        }
+
+
+        input.value = "";
+
+
+        await loadMentorConversation();
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "Send mentor message error:",
+            error
+        );
+
+
+        alert(
+            error.message ||
+            "Unable to send message."
+        );
+
+    }
+
+    finally {
+
+        sendButton.disabled =
+            false;
+
+        input.focus();
+
+    }
+
+}
+
+
+/* =====================================================
+   MARK MESSAGES READ
+===================================================== */
+
+async function markMentorMessagesRead() {
+
+    if (!mentorId) {
+
+        return;
+
+    }
+
+
+    try {
+
+        await fetch(
+            API_BASE_URL +
+            "/api/messages/read/" +
+            mentorId,
+            {
+                method: "PUT",
+
+                headers: {
+
+                    "Authorization":
+                        "Bearer " + storedToken
+
+                }
+
+            }
+        );
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "Mark messages read error:",
+            error
+        );
+
+    }
+
+}
+
+
+/* =====================================================
+   UNREAD COUNT
+===================================================== */
+
+async function updateUnreadCount() {
+
+    try {
+
+        const response =
+            await fetch(
+                API_BASE_URL +
+                "/api/messages/unread",
+                {
+                    method: "GET",
+
+                    headers: {
+
+                        "Authorization":
+                            "Bearer " + storedToken
+
+                    }
+
+                }
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if (
+            response.ok &&
+            data.success
+        ) {
+
+            updateChatBadge(
+                data.unreadCount || 0
+            );
+
+        }
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "Unread count error:",
+            error
+        );
+
+    }
+
+}
+
+
+/* =====================================================
+   UPDATE CHAT BADGE
+===================================================== */
+
+function updateChatBadge(
+    count
+) {
+
+    const badge =
+        document.getElementById(
+            "chatUnreadBadge"
+        );
+
+
+    if (!badge) {
+
+        return;
+
+    }
+
+
+    const safeCount =
+        Number(count || 0);
+
+
+    if (safeCount <= 0) {
+
+        badge.style.display =
+            "none";
+
+        badge.innerText =
+            "0";
+
+        return;
+
+    }
+
+
+    badge.style.display =
+        "inline-flex";
+
+
+    badge.innerText =
+        safeCount > 99
+            ? "99+"
+            : safeCount;
+
+}
+
+
+/* =====================================================
+   CHAT POLLING
+===================================================== */
+
+function startMentorChatPolling() {
+
+    stopMentorChatPolling();
+
+
+    mentorChatInterval =
+        setInterval(
+            async function() {
+
+                if (!mentorChatOpen) {
+
+                    return;
+
+                }
+
+
+                await loadMentorConversation();
+
+            },
+            5000
+        );
+
+}
+
+
+function stopMentorChatPolling() {
+
+    if (mentorChatInterval) {
+
+        clearInterval(
+            mentorChatInterval
+        );
+
+        mentorChatInterval =
+            null;
+
+    }
+
+}
+
+
+/* =====================================================
+   CHAT KEYBOARD
+===================================================== */
+
+function handleChatKeydown(
+    event
+) {
+
+    /*
+       Enter = send
+       Shift + Enter = new line
+    */
+
+    if (
+        event.key === "Enter" &&
+        !event.shiftKey
+    ) {
+
+        event.preventDefault();
+
+        sendMentorMessage();
+
+    }
+
+}
+
+
+/* =====================================================
+   SHARE LINK
+===================================================== */
+
+function insertLink() {
+
+    const input =
+        document.getElementById(
+            "mentorChatInput"
+        );
+
+
+    if (!input) {
+
+        return;
+
+    }
+
+
+    const url =
+        prompt(
+            "Paste the link you want to share:"
+        );
+
+
+    if (!url) {
+
+        return;
+
+    }
+
+
+    input.value =
+        url.trim();
+
+
+    input.focus();
+
+}
+
+
+/* =====================================================
+   SHARE MEET / ZOOM LINK
+===================================================== */
+
+function insertMeetLink() {
+
+    const input =
+        document.getElementById(
+            "mentorChatInput"
+        );
+
+
+    if (!input) {
+
+        return;
+
+    }
+
+
+    const url =
+        prompt(
+            "Paste your Google Meet or Zoom link:"
+        );
+
+
+    if (!url) {
+
+        return;
+
+    }
+
+
+    input.value =
+        "Class link: " +
+        url.trim();
+
+
+    input.focus();
+
+}
+
+
+/* =====================================================
+   ESCAPE HTML
+===================================================== */
+
+function escapeHtml(
+    value
+) {
+
+    return String(value)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+
+}
+
+
+/* =====================================================
+   ESCAPE ATTRIBUTE
+===================================================== */
+
+function escapeAttribute(
+    value
+) {
+
+    return String(value)
+        .replace(/&/g, "&amp;")
+        .replace(/"/g, "&quot;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;");
 
 }
 
@@ -1221,10 +2607,6 @@ function renderCalendar() {
         `${monthNames[month]} ${year}`;
 
 
-    /* =================================================
-       FIRST DAY / DAYS IN MONTH
-    ================================================= */
-
     const firstDay =
         new Date(
             year,
@@ -1240,10 +2622,6 @@ function renderCalendar() {
             0
         ).getDate();
 
-
-    /* =================================================
-       MENTORSHIP DATES
-    ================================================= */
 
     let mentorshipStart = null;
 
@@ -1299,10 +2677,6 @@ function renderCalendar() {
     }
 
 
-    /* =================================================
-       TODAY
-    ================================================= */
-
     const today =
         new Date();
 
@@ -1313,10 +2687,6 @@ function renderCalendar() {
         0
     );
 
-
-    /* =================================================
-       EMPTY DAYS
-    ================================================= */
 
     for (
         let i = 0;
@@ -1338,10 +2708,6 @@ function renderCalendar() {
 
     }
 
-
-    /* =================================================
-       CREATE DAYS
-    ================================================= */
 
     for (
         let day = 1;
@@ -1378,10 +2744,6 @@ function renderCalendar() {
             day;
 
 
-        /* =============================================
-           TODAY
-        ============================================= */
-
         if (
             date.getTime() ===
             today.getTime()
@@ -1393,10 +2755,6 @@ function renderCalendar() {
 
         }
 
-
-        /* =============================================
-           RED = MENTORSHIP ACTIVE
-        ============================================= */
 
         if (
             mentorshipStart &&
@@ -1410,11 +2768,6 @@ function renderCalendar() {
             );
 
         }
-
-
-        /* =============================================
-           GREEN = AFTER MENTORSHIP
-        ============================================= */
 
         else if (
             mentorshipEnd &&
@@ -1473,6 +2826,8 @@ function nextMonth() {
 
 function logout() {
 
+    stopMentorChatPolling();
+
     localStorage.removeItem(
         "token"
     );
@@ -1502,7 +2857,7 @@ function logout() {
 
 
 /* =====================================================
-   LOAD USER DATA FROM MONGODB
+   LOAD USER DATA
 ===================================================== */
 
 async function loadUserData() {
@@ -1524,13 +2879,6 @@ async function loadUserData() {
 
 
     try {
-
-        console.log(
-            "Loading user from:",
-            API_BASE_URL +
-            "/api/auth/me"
-        );
-
 
         const response =
             await fetch(
@@ -1565,28 +2913,12 @@ async function loadUserData() {
 
         catch (jsonError) {
 
-            console.error(
-                "Invalid server response:",
-                jsonError
-            );
-
             throw new Error(
                 "Server returned an invalid response."
             );
 
         }
 
-
-        console.log(
-            "Dashboard API:",
-            response.status,
-            data
-        );
-
-
-        /* =============================================
-           EXPIRED LOGIN
-        ============================================= */
 
         if (
             response.status === 401
@@ -1611,10 +2943,6 @@ async function loadUserData() {
         }
 
 
-        /* =============================================
-           OTHER SERVER ERROR
-        ============================================= */
-
         if (
             !response.ok
         ) {
@@ -1627,10 +2955,6 @@ async function loadUserData() {
 
         }
 
-
-        /* =============================================
-           SUCCESS CHECK
-        ============================================= */
 
         if (
             !data.success
@@ -1657,17 +2981,9 @@ async function loadUserData() {
         }
 
 
-        /* =============================================
-           SAVE USER GLOBALLY
-        ============================================= */
-
         currentUser =
             user;
 
-
-        /* =============================================
-           NAME
-        ============================================= */
 
         document.getElementById(
             "studentName"
@@ -1675,10 +2991,6 @@ async function loadUserData() {
             user.name ||
             "Student";
 
-
-        /* =============================================
-           UPDATE LOCAL STORAGE
-        ============================================= */
 
         if (user.name) {
 
@@ -1710,20 +3022,19 @@ async function loadUserData() {
         }
 
 
-        /* =============================================
-           LOAD MENTORSHIP
-        ============================================= */
-
         loadMentorshipFromDatabase(
             user
         );
 
 
-        /* =============================================
-           NOW RENDER CALENDAR
-        ============================================= */
-
         renderCalendar();
+
+
+        /*
+           Load unread messages immediately.
+        */
+
+        updateUnreadCount();
 
     }
 
@@ -1746,7 +3057,7 @@ async function loadUserData() {
 
 
 /* =====================================================
-   LOAD MENTORSHIP FROM MONGODB
+   LOAD MENTORSHIP
 ===================================================== */
 
 function loadMentorshipFromDatabase(
@@ -1769,20 +3080,12 @@ function loadMentorshipFromDatabase(
         user.mentorSubscription;
 
 
-    /* =================================================
-       REFERRAL CODE
-    ================================================= */
-
     document.getElementById(
         "referralCode"
     ).innerText =
         user.referralCode ||
         "Not Available";
 
-
-    /* =================================================
-       REFERRAL POINTS
-    ================================================= */
 
     document.getElementById(
         "referralPoints"
@@ -1791,20 +3094,12 @@ function loadMentorshipFromDatabase(
         0;
 
 
-    /* =================================================
-       REFERRAL BADGE
-    ================================================= */
-
     document.getElementById(
         "badge"
     ).innerText =
         user.referralBadge ||
         "Raptora Member";
 
-
-    /* =================================================
-       NO ACTIVE MENTORSHIP
-    ================================================= */
 
     if (
         !subscription ||
@@ -1824,10 +3119,6 @@ function loadMentorshipFromDatabase(
     }
 
 
-    /* =================================================
-       ACTIVE MENTORSHIP
-    ================================================= */
-
     activeMentorship.style.display =
         "block";
 
@@ -1836,20 +3127,12 @@ function loadMentorshipFromDatabase(
         "none";
 
 
-    /* =================================================
-       PLAN
-    ================================================= */
-
     document.getElementById(
         "planName"
     ).innerText =
         subscription.plan ||
         "Mentor Plan";
 
-
-    /* =================================================
-       DATES
-    ================================================= */
 
     const start =
         new Date(
@@ -1874,10 +3157,6 @@ function loadMentorshipFromDatabase(
     ).innerText =
         formatDate(end);
 
-
-    /* =================================================
-       DAYS REMAINING
-    ================================================= */
 
     const now =
         new Date();
@@ -1904,13 +3183,6 @@ function loadMentorshipFromDatabase(
         days;
 
 
-    /* =================================================
-       MENTORSHIP PROGRESS
-
-       Automatically calculated from:
-       START DATE → END DATE → TODAY
-    ================================================= */
-
     const startDay =
         new Date(
             start.getFullYear(),
@@ -1935,18 +3207,10 @@ function loadMentorshipFromDatabase(
         );
 
 
-    /* =================================================
-       TOTAL PLAN DURATION
-    ================================================= */
-
     const totalDuration =
         endDay.getTime() -
         startDay.getTime();
 
-
-    /* =================================================
-       ELAPSED PLAN DURATION
-    ================================================= */
 
     const elapsedDuration =
         today.getTime() -
@@ -1956,10 +3220,6 @@ function loadMentorshipFromDatabase(
     let progress = 0;
 
 
-    /* =================================================
-       BEFORE PLAN STARTS
-    ================================================= */
-
     if (
         today < startDay
     ) {
@@ -1968,11 +3228,6 @@ function loadMentorshipFromDatabase(
 
     }
 
-
-    /* =================================================
-       PLAN COMPLETED
-    ================================================= */
-
     else if (
         today >= endDay
     ) {
@@ -1980,11 +3235,6 @@ function loadMentorshipFromDatabase(
         progress = 100;
 
     }
-
-
-    /* =================================================
-       PLAN CURRENTLY ACTIVE
-    ================================================= */
 
     else if (
         totalDuration > 0
@@ -1998,10 +3248,6 @@ function loadMentorshipFromDatabase(
 
     }
 
-
-    /* =================================================
-       SAFETY
-    ================================================= */
 
     progress =
         Math.max(
@@ -2019,19 +3265,11 @@ function loadMentorshipFromDatabase(
         );
 
 
-    /* =================================================
-       UPDATE PROGRESS BAR
-    ================================================= */
-
     document.getElementById(
         "progressFill"
     ).style.width =
         roundedProgress + "%";
 
-
-    /* =================================================
-       UPDATE PROGRESS TEXT
-    ================================================= */
 
     document.getElementById(
         "progressText"
