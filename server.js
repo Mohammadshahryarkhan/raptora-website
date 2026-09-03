@@ -18,6 +18,7 @@ const mentorRoutes = require("./routes/mentorRoutes");
 const paymentRoutes = require("./routes/paymentRoutes");
 const messageRoutes = require("./routes/messageRoutes");
 
+
 // =====================================================
 // CREATE APP
 // =====================================================
@@ -33,6 +34,7 @@ app.use(cors());
 app.use(express.json());
 
 app.use(express.urlencoded({ extended: true }));
+app.use("/api/messages", messageRoutes);
 
 // =====================================================
 // SERVE FRONTEND
